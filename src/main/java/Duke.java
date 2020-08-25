@@ -8,11 +8,6 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
-        System.out.println("\t--------------------------");
-        System.out.println("\tHello! I'm Duke");
-        System.out.println("\tWhat can I do for you?");
-        System.out.println("\t--------------------------");
-
         while (true) {
             String input;
             Scanner in = new Scanner(System.in);
