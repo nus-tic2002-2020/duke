@@ -1,7 +1,31 @@
-Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
 
+Welcome to PROJECT >>>
+====================================================================================
+====================================================================================
+===  DDDDDDDDD     UUU      UUU  KKK      KKK  EEEEEEEEEEEE            A0177803Y ===
+===  DDDDDDDDDD    UUU      UUU  KKK     KKK   EEEEEEEEEEE                       ===
+===  DDD     DDD   UUU      UUU  KKK    KKK    EEE                               ===
+===  DDD      DDD  UUU      UUU  KKK   KKK     EEEEEEEEEE                        ===
+===  DDD      DDD  UUU      UUU  KKK  KKK      EEEEEEEEEE                        ===
+===  DDD      DDD  UUU      UUU  KKKKKKK       EEE                               ===
+===  DDD      DDD  UUU      UUU  KKKKKK        EEE           NOTEPAD,            ===
+===  DDD     DDD   UUU      UUU  KKK KKKK      EEE           TASK MANAGER,       ===
+===  DDDDDDDDDD     UUUUUUUUUU   KKK   KKKK    EEEEEEEEEEE   BUDGET ASSISTANT,   ===
+===  DDDDDDDDD       UUUUUUUU    KKK     KKKK  EEEEEEEEEEEE  AND MORE...!        ===
+====================================================================================
+====================================================================================
+26 August 2020                                                             Wednesday
+
+	----------------------------------------------------------------------------
+	Hello! I'm Duke, your all-rounded personal assistant!
+	What do you need done today?
+
+		#commands     >>> List Duke's commands.
+		#listtask     >>> List all the tasks in memory.
+		#markdone X   >>> Mark task X as done.
+		#quitduke     >>> Exit Project Duke.
+			......more coming soon!
+	----------------------------------------------------------------------------
+	----------------------------------------------------------------------------
+	Added: read book                                 26-Aug-2020 (Wed), 14:51:05
+	----------------------------------------------------------------------------
