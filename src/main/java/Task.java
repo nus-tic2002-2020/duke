@@ -10,40 +10,33 @@ public abstract class Task {
 
     //CONSTRUCTORS--------------------------------------
     public Task(String description, Date addDate) {
-
         this.addDate = addDate;
         this.description = description;
     }
 
     public Task() {
-
     }
 
     //SET STATEMENTS------------------------------------
     public void markAsDone(Date doneDate) {
-
         this.isDone = true;
         this.doneDate = doneDate;
     }
 
     //GET STATEMENTS------------------------------------
     public Date getAddDate() {
-
         return (this.addDate);
     }
 
     public Date getDoneDate() {
-
         return (this.doneDate);
     }
 
     public String getDescription() {
-
         return (this.description.toString());
     }
 
     public String getStatusIcon() {
-
         if(this.isDone){
             return ("[\u2713]");
         } else {
@@ -61,5 +54,6 @@ public abstract class Task {
     public abstract Date getTargetDate();
     public abstract String getTaskIcon();
     public abstract String getWithinBudget();
+    public abstract void printList();
     public abstract void markAsDone(Date doneDate, Double itemPrice);
 }

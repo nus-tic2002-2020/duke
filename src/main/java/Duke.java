@@ -67,6 +67,7 @@ public class Duke {
 
         Task[] tasks = new Task[100];
         int taskCount = 0;
+        int taskOutstanding = 0;
 
         while (true) {
             String input;
@@ -83,17 +84,16 @@ public class Duke {
                     int taskIndex = Integer.parseInt(input.substring(10)) - 1;
                     Date doneDate = new Date();
 
-
                     if(tasks[taskIndex] instanceof Shoplist) {
                         String inputPrice;
-                        Scanner markdone = new Scanner(System.in);
+                        Scanner markDone = new Scanner(System.in);
 
                         System.out.println(dukeDivider);
                         System.out.println("\tWhat is the price you paid for " +
                                 tasks[taskIndex].getDescription() + "?");
                         System.out.println(dukeDivider);
 
-                        inputPrice = markdone.nextLine();
+                        inputPrice = markDone.nextLine();
                         Double itemPrice = Double.parseDouble(inputPrice.substring(1));
                         tasks[taskIndex].markAsDone(doneDate, itemPrice);
 
@@ -102,35 +102,12 @@ public class Duke {
                     }
 
                     System.out.println(dukeDivider);
-                    System.out.print("\t" + (taskIndex + 1) + ". ");
-                    System.out.print(tasks[taskIndex].getTaskIcon());
-                    System.out.print(tasks[taskIndex].getStatusIcon() + " ");
-                    System.out.println(String.format("%1$-35s%2$34s",
-                            tasks[taskIndex].getDescription(), "Added: " +
-                                    taskDate.format(tasks[taskIndex].getAddDate())));
-
-                    if(tasks[taskIndex] instanceof Event) {
-                        System.out.println("\t\t\tFrom     : " +
-                                taskDate.format(tasks[taskIndex].getStartDate()));
-                        System.out.println("\t\t\tTo       : " +
-                                taskDate.format(tasks[taskIndex].getEndDate()));
-                        System.out.println("\t\t\tDone     : " +
-                                taskDate.format(tasks[taskIndex].getDoneDate()));
-                    } else if(tasks[taskIndex] instanceof Deadline) {
-                        System.out.println("\t\t\tDeadline : " +
-                                taskDate.format(tasks[taskIndex].getTargetDate()));
-                        System.out.println("\t\t\tDone     : " +
-                                taskDate.format(tasks[taskIndex].getDoneDate()) + " " +
-                                tasks[taskIndex].getDoneAhead());
-                    } else if(tasks[taskIndex] instanceof Shoplist) {
-                        System.out.println("\t\t\tBudget   : $" +
-                                String.format("%10.2f", tasks[taskIndex].getItemBudget()));
-                        System.out.println("\t\t\tActual   : $" +
-                                String.format("%10.2f", tasks[taskIndex].getItemPrice()) + " " +
-                                tasks[taskIndex].getWithinBudget());
-                        System.out.println("\t\t\tDone     : " +
-                                taskDate.format(tasks[taskIndex].getDoneDate()));
-                    }
+                    System.out.print("\t" + String.format("%3d", (taskIndex + 1)) + ". ");
+                    tasks[taskIndex].printList();
+                    taskOutstanding--;
+                    System.out.println("\tYou have " + taskOutstanding +
+                            " outstanding task(s) in your list.");
+                    System.out.println("\tEnter command \"#listnotes\" to see them all.");
                     System.out.println(dukeDivider);
 
                 } else if(input.substring(0,9).equals("#quitduke")) { //Exit Project Duke.
@@ -138,6 +115,8 @@ public class Duke {
                     Scanner quitDuke = new Scanner(System.in);
 
                     System.out.println(dukeDivider);
+                    System.out.println("\tYou have " + taskOutstanding +
+                            " outstanding task(s) in your list.");
                     System.out.println("\tAre you sure you want to quit?");
                     System.out.println("\tAll data would be lost.");
                     System.out.println("\tReply \"Y\" to confirm.");
@@ -161,61 +140,23 @@ public class Duke {
                     System.out.println(dukeDivider);
                     System.out.println("\tHere are the things you told me to note:-");
                     for (int i = 0; i < taskCount; i++) {
-                        System.out.print("\t" + (i + 1) + ". ");
-                        System.out.print(tasks[i].getTaskIcon());
-                        System.out.print(tasks[i].getStatusIcon() + " ");
-                        System.out.println(String.format("%1$-35s%2$34s",
-                                tasks[i].getDescription(), "Added: " +
-                                taskDate.format(tasks[i].getAddDate())));
-
-                        if(tasks[i] instanceof Event) {
-                            System.out.println("\t\t\tFrom     : " +
-                                    taskDate.format(tasks[i].getStartDate()));
-                            System.out.println("\t\t\tTo       : " +
-                                    taskDate.format(tasks[i].getEndDate()));
-                            if (tasks[i].isDone) {
-                                System.out.println("\t\t\tDone     : " +
-                                        taskDate.format(tasks[i].getDoneDate()));
-                            }
-                        } else if(tasks[i] instanceof Deadline) {
-                            System.out.println("\t\t\tDeadline : " +
-                                    taskDate.format(tasks[i].getTargetDate()));
-                            if (tasks[i].isDone) {
-                                System.out.println("\t\t\tDone     : " +
-                                        taskDate.format(tasks[i].getDoneDate()) + " " +
-                                        tasks[i].getDoneAhead());
-                            }
-                        } else if(tasks[i] instanceof Shoplist) {
-                            System.out.println("\t\t\tBudget   : $" +
-                                    String.format("%10.2f", tasks[i].getItemBudget()));
-                            if (tasks[i].isDone) {
-                                System.out.println("\t\t\tActual   : $" +
-                                        String.format("%10.2f", tasks[i].getItemPrice()) + " " +
-                                        tasks[i].getWithinBudget());
-                                System.out.println("\t\t\tDone     : " +
-                                        taskDate.format(tasks[i].getDoneDate()));
-                            }
-                        } else if (tasks[i].isDone) {
-                            System.out.println("\t\t\tDone     : " +
-                                    taskDate.format(tasks[i].getDoneDate()));
-                        }
+                        System.out.print("\t" + String.format("%3d", (i + 1)) + ". ");
+                        tasks[i].printList();
                     }
+                    System.out.println("\tYou have " + taskOutstanding +
+                            " outstanding task(s) in your list.");
+                    System.out.println("\tEnter command \"#listnotes\" to see them all.");
                     System.out.println(dukeDivider);
                 }
 
             } else if (input.substring(0,1).equals("@")) { //New Note Commands
                 Date addDate = new Date();
+                System.out.println(dukeDivider);
 
                 if(input.substring(0,5).equals("@task")) { //Add a new task without a deadline.
-                    System.out.println(dukeDivider);
                     Task t = new Todo(input.substring(6), addDate);
                     tasks[taskCount] = t;
-                    System.out.println(String.format("%1$-38s%2$39s", "\tAdded: " +
-                            tasks[taskCount].getTaskIcon() + " " +
-                            tasks[taskCount].getDescription(),
-                            taskDate.format(tasks[taskCount].getAddDate())));
-                    taskCount++;
-                    System.out.println(dukeDivider);
+                    System.out.println("\tNoted! I've added a new task to the list.");
 
                 } else if(input.substring(0,6).equals("@event")){ //Add a new event.
                     input = input.substring(7);
@@ -224,20 +165,9 @@ public class Duke {
                     Date startDate = inputDate.parse(inputTokens[1]);
                     Date endDate = inputDate.parse(inputTokens[2]);
 
-                    System.out.println(dukeDivider);
                     Task t = new Event(description, startDate, endDate, addDate);
                     tasks[taskCount] = t;
-                    System.out.println(String.format("%1$-38s%2$39s", "\tAdded: " +
-                            tasks[taskCount].getTaskIcon() + " " +
-                            tasks[taskCount].getDescription() + " (" +
-                            tasks[taskCount].getDurationMinutes() + "mins)",
-                            taskDate.format(tasks[taskCount].getAddDate())));
-                    System.out.println("\t\t\tFrom     : " +
-                            taskDate.format(tasks[taskCount].getStartDate()));
-                    System.out.println("\t\t\tTo       : " +
-                            taskDate.format(tasks[taskCount].getEndDate()));
-                    taskCount++;
-                    System.out.println(dukeDivider);
+                    System.out.println("\tNoted! I've added a new event to the list.");
 
                 } else if(input.substring(0,9).equals("@deadline")){ //Add a new task with a deadline.
                     input = input.substring(10);
@@ -245,17 +175,9 @@ public class Duke {
                     String description = inputTokens[0];
                     Date targetDate = inputDate.parse(inputTokens[1]);
 
-                    System.out.println(dukeDivider);
                     Task t = new Deadline(description, targetDate, addDate);
                     tasks[taskCount] = t;
-                    System.out.println(String.format("%1$-38s%2$39s", "\tAdded: " +
-                            tasks[taskCount].getTaskIcon() + " " +
-                            tasks[taskCount].getDescription(),
-                            taskDate.format(tasks[taskCount].getAddDate())));
-                    System.out.println("\t\t\tDeadline : " +
-                            taskDate.format(tasks[taskCount].getTargetDate()));
-                    taskCount++;
-                    System.out.println(dukeDivider);
+                    System.out.println("\tNoted! I've added a new deadline to the list.");
 
                 } else if(input.substring(0,9).equals("@shoplist")){ //Add a new shopping list item.
                     input = input.substring(10);
@@ -263,19 +185,18 @@ public class Duke {
                     String description = inputTokens[0];
                     Double itemBudget = Double.parseDouble(inputTokens[1]);
 
-                    System.out.println(dukeDivider);
                     Task t = new Shoplist(description, itemBudget, addDate);
                     tasks[taskCount] = t;
-                    System.out.println(String.format("%1$-38s%2$39s", "\tAdded: " +
-                            tasks[taskCount].getTaskIcon() + " " +
-                            tasks[taskCount].getDescription(),
-                            taskDate.format(tasks[taskCount].getAddDate())));
-                    System.out.print("\t\t\tBudget   : $");
-                    System.out.println(String.format("%10.2f", tasks[taskCount].getItemBudget()));
-                    taskCount++;
-                    System.out.println(dukeDivider);
-
+                    System.out.println("\tNoted! I've added a new shopping item to the list.");
                 }
+
+                System.out.print("\t" + String.format("%3d", (taskCount + 1)) + ". ");
+                tasks[taskCount].printList();
+                taskCount++;
+                taskOutstanding++;
+                System.out.println("\tYou have " + taskOutstanding + " outstanding task(s) in your list.");
+                System.out.println("\tEnter command \"#listnotes\" to see them all.");
+                System.out.println(dukeDivider);
             }
         }
     }
