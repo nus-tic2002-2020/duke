@@ -1,31 +1,49 @@
 import java.util.Date;
 
-public class Task {
-    protected Date addDate;
-    protected Date doneDate;
-    protected String description;
-    protected boolean isDone;
+public abstract class Task {
 
+    //VARIABLES-----------------------------------------
+    protected Date addDate;
+    protected Date doneDate = null;
+    protected String description;
+    protected boolean isDone = false;
+
+    //CONSTRUCTORS--------------------------------------
     public Task(String description, Date addDate) {
+
         this.addDate = addDate;
         this.description = description;
-        this.isDone = false;
     }
 
+    public Task() {
+
+    }
+
+    //SET STATEMENTS------------------------------------
+    public void markAsDone(Date doneDate) {
+
+        this.isDone = true;
+        this.doneDate = doneDate;
+    }
+
+    //GET STATEMENTS------------------------------------
     public Date getAddDate() {
+
         return (this.addDate);
     }
 
     public Date getDoneDate() {
+
         return (this.doneDate);
     }
 
     public String getDescription() {
-        return (this.description.toString());
 
+        return (this.description.toString());
     }
 
     public String getStatusIcon() {
+
         if(this.isDone){
             return ("[\u2713]");
         } else {
@@ -33,8 +51,15 @@ public class Task {
         }
     }
 
-    public void markAsDone(Date doneDate) {
-        this.isDone = true;
-        this.doneDate = doneDate;
-    }
+    //ABSTRACT METHODS
+    public abstract String getDoneAhead();
+    public abstract long getDurationMinutes();
+    public abstract Date getEndDate();
+    public abstract Double getItemBudget();
+    public abstract Double getItemPrice();
+    public abstract Date getStartDate();
+    public abstract Date getTargetDate();
+    public abstract String getTaskIcon();
+    public abstract String getWithinBudget();
+    public abstract void markAsDone(Date doneDate, Double itemPrice);
 }
