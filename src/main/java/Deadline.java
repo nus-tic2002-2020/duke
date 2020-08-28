@@ -37,13 +37,13 @@ public class Deadline extends Todo {
         System.out.print(this.getTaskIcon());
         System.out.print(this.getStatusIcon() + " ");
         System.out.println(String.format("%1$-30s%2$29s",
-                this.getDescription(), "Added: " +
-                taskDate.format(this.getAddDate())));
+                this.description.toString(), "Added: " +
+                taskDate.format(this.addDate)));
         System.out.println("\t\t\tDeadline : " +
-                taskDate.format(this.getTargetDate()));
+                taskDate.format(this.targetDate));
         if (this.isDone) {
             System.out.println("\t\t\tDone     : " +
-                    taskDate.format(this.getDoneDate()) + " " +
+                    taskDate.format(this.doneDate) + " " +
                     this.getDoneAhead());
         }
     }

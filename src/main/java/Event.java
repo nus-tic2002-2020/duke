@@ -35,17 +35,17 @@ public class Event extends Task {
         System.out.print(this.getTaskIcon());
         System.out.print(this.getStatusIcon() + " ");
         System.out.println(String.format("%1$-30s%2$29s",
-                this.getDescription() + " (" +
-                this.getDurationMinutes() +
+                this.description.toString() + " (" +
+                this.durationMinutes +
                 "mins)", "Added: " +
-                taskDate.format(this.getAddDate())));
+                taskDate.format(this.addDate)));
         System.out.println("\t\t\tFrom     : " +
-                taskDate.format(this.getStartDate()));
+                taskDate.format(this.startDate));
         System.out.println("\t\t\tTo       : " +
-                taskDate.format(this.getEndDate()));
+                taskDate.format(this.endDate));
         if (this.isDone) {
             System.out.println("\t\t\tDone     : " +
-                    taskDate.format(this.getDoneDate()));
+                    taskDate.format(this.doneDate));
         }
     }
 

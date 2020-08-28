@@ -17,28 +17,29 @@ public class Duke {
 
         //List of commands for Duke
         String dukeCommands =
-                "\t\t***New Note Commands***\n" +
-                "\t\t@deadline     >>> Add a new task with a deadline.\n" +
-                "\t\t\tE.g. \"@deadline <task description>/<deadline>\"\n" +
+                "\t\t***New Task Commands***\n" +
+                "\t\t@deadline     >>> Add a new todo task with a deadline.\n" +
+                "\t\t\tE.g. \"@deadline <todo description>/<deadline>\"\n" +
                 "\t\t@event        >>> Add a new event.\n" +
                 "\t\t\tE.g. \"@event <event description>/<from>/<to>\"\n" +
                 "\t\t@shoplist     >>> Add a new shopping list item.\n" +
                 "\t\t\tE.g. \"@shoplist <item description>/<item budget>\"\n" +
-                "\t\t@task         >>> Add a new task without a deadline.\n" +
-                "\t\t\tE.g. \"@task <task description>\"\n" +
-                "\t\t********************************************************************" +
-                "\n" +
+                "\t\t@todo         >>> Add a new todo task without a deadline.\n" +
+                "\t\t\tE.g. \"@todo <todo description>\"\n" +
+                "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
+                "\n\n" +
                 "\t\t***Generic Commands***\n" +
                 "\t\t#commands     >>> List all available Duke's commands.\n" +
                 "\t\t#listnotes    >>> List all the notes in memory.\n" +
                 "\t\t#markdone X   >>> Mark note X as done.\n" +
                 "\t\t#quitduke     >>> Exit Project Duke.\n" +
-                "\t\t********************************************************************" +
-                "\n" +
+                "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
+                "\n\n" +
                 "\t\t***Data Entry Formats***\n" +
                 "\t\tDate-Time     >>> dd-MMM-yyyy HH:mm\n" +
-                "\t\tPrice         >>> $X.xx\n" +
-                "\t\t********************************************************************";
+                "\t\tBudget/Price  >>> $X.xx\n" +
+                "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
+                "\n";
 
         //Project Duke's opening logo
         String logo =
@@ -102,6 +103,7 @@ public class Duke {
                     }
 
                     System.out.println(dukeDivider);
+                    System.out.println("\tNoted! I've marked Task #" + (taskIndex + 1) + " as done.");
                     System.out.print("\t" + String.format("%3d", (taskIndex + 1)) + ". ");
                     tasks[taskIndex].printList();
                     taskOutstanding--;
@@ -153,10 +155,10 @@ public class Duke {
                 Date addDate = new Date();
                 System.out.println(dukeDivider);
 
-                if(input.substring(0,5).equals("@task")) { //Add a new task without a deadline.
+                if(input.substring(0,5).equals("@todo")) { //Add a new todo task without a deadline.
                     Task t = new Todo(input.substring(6), addDate);
                     tasks[taskCount] = t;
-                    System.out.println("\tNoted! I've added a new task to the list.");
+                    System.out.println("\tNoted! I've added a new todo task to the list.");
 
                 } else if(input.substring(0,6).equals("@event")){ //Add a new event.
                     input = input.substring(7);
@@ -169,7 +171,7 @@ public class Duke {
                     tasks[taskCount] = t;
                     System.out.println("\tNoted! I've added a new event to the list.");
 
-                } else if(input.substring(0,9).equals("@deadline")){ //Add a new task with a deadline.
+                } else if(input.substring(0,9).equals("@deadline")){ //Add a new todo task with a deadline.
                     input = input.substring(10);
                     String[] inputTokens = input.split("/",2);
                     String description = inputTokens[0];
@@ -177,7 +179,7 @@ public class Duke {
 
                     Task t = new Deadline(description, targetDate, addDate);
                     tasks[taskCount] = t;
-                    System.out.println("\tNoted! I've added a new deadline to the list.");
+                    System.out.println("\tNoted! I've added a new deadline task to the list.");
 
                 } else if(input.substring(0,9).equals("@shoplist")){ //Add a new shopping list item.
                     input = input.substring(10);

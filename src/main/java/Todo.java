@@ -27,11 +27,11 @@ public class Todo extends Task {
         System.out.print(this.getTaskIcon());
         System.out.print(this.getStatusIcon() + " ");
         System.out.println(String.format("%1$-30s%2$29s",
-                this.getDescription(), "Added: " +
-                taskDate.format(this.getAddDate())));
+                this.description.toString(), "Added: " +
+                taskDate.format(this.addDate)));
         if (this.isDone) {
             System.out.println("\t\t\tDone     : " +
-                    taskDate.format(this.getDoneDate()));
+                    taskDate.format(this.doneDate));
         }
     }
 
