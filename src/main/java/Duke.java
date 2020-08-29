@@ -1,6 +1,6 @@
 public class Duke {
     public static void print(String[] args){
-
+        println("Bye. Hope to see you again soon!");
     }
     public static void main(String[] args) {
         String logo = " ____        _        \n"
