@@ -8,28 +8,71 @@ import java.util.regex.Pattern;
 public class Duke {
 
     public static String humanName;
+   // public static String [] listOfThings;
+    // Storing userSentence into list
 
-    public static void echoCommands ()
+    public static String[] storeList(String[] listOfThings, String input){
+        int counter = 0;
+        while(true){
+            if(listOfThings[counter] == null){
+                listOfThings[counter] = input;
+                System.out.println("\tadded: " + input);
+                break;
+            }
+            counter++;
+        }//end while loop
+        return listOfThings;
+    }
+
+//print list
+    public static void printListOfThings(String [] listOfThings){
+        if (listOfThings[0] == null){
+            System.out.println(humanName+"\tthe list is empty!");
+            return;
+        }
+
+        for (int i = 1 ; i <= listOfThings.length ; i++){
+            System.out.println("\t" + i + ". " + listOfThings[i-1] );
+            if(listOfThings[i] == null){
+                System.out.println("\tOk that's about everything!");
+                return;
+            }
+        }
+    }
+
+
+    public static String [] echoCommands (String[] listOfThings)
     {
         String userSentence;
         Scanner input = new Scanner(System.in);
         userSentence = input.nextLine();
 
-        Pattern pattern = Pattern.compile(".*" + "bye" + ".*");
-        Matcher matcher = pattern.matcher(userSentence);
-        if (matcher.find()){
-            System.out.println("\tBye! Hope to see you again soon" +  humanName);
+        Pattern pattern1  = Pattern.compile((".*" + "bye" + ".*"), Pattern.CASE_INSENSITIVE);
+        Matcher matcher1  = pattern1.matcher(userSentence);
+        if (matcher1.find()){
+            System.out.println("\tBye! Hope to see you again soon " +  humanName);
             System.exit(0);
         }
 
-        else {
-            System.out.println("\t" + userSentence);
+
+        Pattern pattern2 = Pattern.compile((".*" + "list" + ".*"), Pattern.CASE_INSENSITIVE);
+        Matcher matcher2 = pattern2.matcher(userSentence);
+        if (matcher2.find()) {
+            printListOfThings(listOfThings);
         }
+
+
+        else {
+        listOfThings = storeList(listOfThings, userSentence);
+           // System.out.println("\tAdded: "+ userSentence);
+        }
+        return listOfThings;
     }
 
 
 
     public static void main(String[] args) {
+        String[] List = new String[100];
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -54,7 +97,8 @@ public class Duke {
         //Maybe list out supported commands?
 
         while(true){
-            echoCommands();
+            //echoCommands();
+            List = echoCommands(List);
         }
 
 
