@@ -4,14 +4,13 @@ import java.util.Date;
 public class Event extends Task {
 
     //VARIABLES-----------------------------------------
-    SimpleDateFormat taskDate = new SimpleDateFormat("dd-MMM-yyyy (E), HH:mm:ss");
     protected Date startDate;
     protected Date endDate;
-    protected long durationMinutes;
+    private long durationMinutes;
 
     //CONSTRUCTORS--------------------------------------
-    public Event(String description, Date startDate, Date endDate, Date addDate) {
-        super(description, addDate);
+    public Event(int serialNum, String description, Date startDate, Date endDate, Date addDate) {
+        super(serialNum, description, addDate);
         this.startDate = startDate;
         this.endDate = endDate;
         this.durationMinutes = (endDate.getTime() - startDate.getTime())/60000;
@@ -32,6 +31,8 @@ public class Event extends Task {
 
     //GET STATEMENTS------------------------------------
     public void printList(){
+        System.out.print("\t" + String.format("%3d", this.serialNum));
+        System.out.print(". ");
         System.out.print(this.getTaskIcon());
         System.out.print(this.getStatusIcon() + " ");
         System.out.println(String.format("%1$-30s%2$29s",

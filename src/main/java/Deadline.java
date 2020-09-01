@@ -4,13 +4,12 @@ import java.util.Date;
 public class Deadline extends Todo {
 
     //VARIABLES-----------------------------------------
-    SimpleDateFormat taskDate = new SimpleDateFormat("dd-MMM-yyyy (E), HH:mm:ss");
     protected Date targetDate;
-    protected boolean doneAhead = false;
+    private boolean doneAhead = false;
 
     //CONSTRUCTORS--------------------------------------
-    public Deadline(String description, Date targetDate, Date addDate) {
-        super(description, addDate);
+    public Deadline(int serialNum, String description, Date targetDate, Date addDate) {
+        super(serialNum, description, addDate);
         this.targetDate = targetDate;
     }
 
@@ -23,10 +22,7 @@ public class Deadline extends Todo {
         this.targetDate = targetDate;
     }
 
-    @Override
-    public void markAsDone(Date doneDate) {
-        this.isDone = true;
-        this.doneDate = doneDate;
+    public void setDoneAhead(Date doneDate) {
         if(doneDate.compareTo(this.targetDate) < 0) {
             this.doneAhead = true;
         }
@@ -34,6 +30,8 @@ public class Deadline extends Todo {
 
     //GET STATEMENTS------------------------------------
     public void printList(){
+        System.out.print("\t" + String.format("%3d", this.serialNum));
+        System.out.print(". ");
         System.out.print(this.getTaskIcon());
         System.out.print(this.getStatusIcon() + " ");
         System.out.println(String.format("%1$-30s%2$29s",

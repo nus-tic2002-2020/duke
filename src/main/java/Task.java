@@ -1,17 +1,25 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public abstract class Task {
 
+    protected final SimpleDateFormat taskDate = new SimpleDateFormat("dd-MMM-yyyy (E), HH:mm:ss");
+
     //VARIABLES-----------------------------------------
     protected Date addDate;
     protected Date doneDate = null;
+    protected int serialNum;
     protected String description;
     protected boolean isDone = false;
+    protected static int tasksOutstanding;
+    protected static int tasksCompleted;
 
     //CONSTRUCTORS--------------------------------------
-    public Task(String description, Date addDate) {
+    public Task(int serialNum, String description, Date addDate) {
         this.addDate = addDate;
         this.description = description;
+        this.serialNum = serialNum;
+        tasksOutstanding++;
     }
 
     public Task() {
@@ -19,8 +27,17 @@ public abstract class Task {
 
     //SET STATEMENTS------------------------------------
     public void markAsDone(Date doneDate) {
-        this.isDone = true;
-        this.doneDate = doneDate;
+        if(this.isDone) {
+            System.out.println("\tTask #" + this.serialNum + " was already done!");
+        } else {
+            this.isDone = true;
+            this.doneDate = doneDate;
+            tasksOutstanding--;
+            tasksCompleted++;
+            System.out.println("\tNoted! I've marked Task #" + this.serialNum + " as done.");
+        }
+        System.out.print(". ");
+        this.printList();
     }
 
     //GET STATEMENTS------------------------------------
@@ -42,6 +59,14 @@ public abstract class Task {
         } else {
             return ("[\u2718]");
         }
+    }
+
+    public static int getTasksOutstanding() {
+        return (tasksOutstanding);
+    }
+
+    public static int getTasksCompleted() {
+        return (tasksCompleted);
     }
 
     //ABSTRACT METHODS

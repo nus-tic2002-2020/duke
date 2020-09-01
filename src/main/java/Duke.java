@@ -18,26 +18,26 @@ public class Duke {
         //List of commands for Duke
         String dukeCommands =
                 "\t\t***New Task Commands***\n" +
-                "\t\t@deadline     >>> Add a new todo task with a deadline.\n" +
+                "\t\t@deadline          >>> Add a new todo task with a deadline.\n" +
                 "\t\t\tE.g. \"@deadline <todo description>/<deadline>\"\n" +
-                "\t\t@event        >>> Add a new event.\n" +
+                "\t\t@event             >>> Add a new event.\n" +
                 "\t\t\tE.g. \"@event <event description>/<from>/<to>\"\n" +
-                "\t\t@shoplist     >>> Add a new shopping list item.\n" +
+                "\t\t@shoplist          >>> Add a new shopping list item.\n" +
                 "\t\t\tE.g. \"@shoplist <item description>/<item budget>\"\n" +
-                "\t\t@todo         >>> Add a new todo task without a deadline.\n" +
+                "\t\t@todo              >>> Add a new todo task without a deadline.\n" +
                 "\t\t\tE.g. \"@todo <todo description>\"\n" +
                 "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
                 "\n\n" +
                 "\t\t***Generic Commands***\n" +
-                "\t\t#commands     >>> List all available Duke's commands.\n" +
-                "\t\t#listnotes    >>> List all the notes in memory.\n" +
-                "\t\t#markdone X   >>> Mark note X as done.\n" +
-                "\t\t#quitduke     >>> Exit Project Duke.\n" +
+                "\t\t#commands          >>> List all available Duke's commands.\n" +
+                "\t\t#listnotes         >>> List all the notes in memory.\n" +
+                "\t\t#markdone x/y/z    >>> Mark notes x, y and z as done.\n" +
+                "\t\t#quitduke          >>> Exit Project Duke.\n" +
                 "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
                 "\n\n" +
                 "\t\t***Data Entry Formats***\n" +
-                "\t\tDate-Time     >>> dd-MMM-yyyy HH:mm\n" +
-                "\t\tBudget/Price  >>> $X.xx\n" +
+                "\t\tDate-Time          >>> dd-MMM-yyyy HH:mm\n" +
+                "\t\tBudget/Price       >>> $X.xx\n" +
                 "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
                 "\n";
 
@@ -68,7 +68,6 @@ public class Duke {
 
         Task[] tasks = new Task[100];
         int taskCount = 0;
-        int taskOutstanding = 0;
 
         while (true) {
             String input;
@@ -82,33 +81,19 @@ public class Duke {
                     System.out.println(dukeDivider);
 
                 } else if(input.substring(0,9).equals("#markdone")) { //Mark a note as done.
-                    int taskIndex = Integer.parseInt(input.substring(10)) - 1;
+
                     Date doneDate = new Date();
-
-                    if(tasks[taskIndex] instanceof Shoplist) {
-                        String inputPrice;
-                        Scanner markDone = new Scanner(System.in);
-
-                        System.out.println(dukeDivider);
-                        System.out.println("\tWhat is the price you paid for " +
-                                tasks[taskIndex].getDescription() + "?");
-                        System.out.println(dukeDivider);
-
-                        inputPrice = markDone.nextLine();
-                        Double itemPrice = Double.parseDouble(inputPrice.substring(1));
-                        tasks[taskIndex].markAsDone(doneDate, itemPrice);
-
-                    } else {
-                        tasks[taskIndex].markAsDone(doneDate);
-                    }
+                    input = input.substring(10);
+                    String[] doneIndexes = input.split("/");
 
                     System.out.println(dukeDivider);
-                    System.out.println("\tNoted! I've marked Task #" + (taskIndex + 1) + " as done.");
-                    System.out.print("\t" + String.format("%3d", (taskIndex + 1)) + ". ");
-                    tasks[taskIndex].printList();
-                    taskOutstanding--;
-                    System.out.println("\tYou have " + taskOutstanding +
-                            " outstanding task(s) in your list.");
+                    for(String doneIndex: doneIndexes){
+                        int taskIndex = Integer.parseInt(doneIndex) - 1;
+                        tasks[taskIndex].markAsDone(doneDate);
+                    }
+                    System.out.println("\tYou have completed " + Task.getTasksCompleted() +
+                            " task(s)! " + Task.getTasksOutstanding() +
+                            " more task(s) outstanding in your list.");
                     System.out.println("\tEnter command \"#listnotes\" to see them all.");
                     System.out.println(dukeDivider);
 
@@ -117,7 +102,7 @@ public class Duke {
                     Scanner quitDuke = new Scanner(System.in);
 
                     System.out.println(dukeDivider);
-                    System.out.println("\tYou have " + taskOutstanding +
+                    System.out.println("\tYou have " + Task.getTasksOutstanding() +
                             " outstanding task(s) in your list.");
                     System.out.println("\tAre you sure you want to quit?");
                     System.out.println("\tAll data would be lost.");
@@ -135,17 +120,15 @@ public class Duke {
                         System.out.println(dukeDivider);
                         System.out.println("\tYay! Thanks for staying!");
                         System.out.println(dukeDivider);
-                        continue;
                     }
 
                 } else if(input.substring(0,10).equals("#listnotes")) { //List all the notes in memory.
                     System.out.println(dukeDivider);
                     System.out.println("\tHere are the things you told me to note:-");
                     for (int i = 0; i < taskCount; i++) {
-                        System.out.print("\t" + String.format("%3d", (i + 1)) + ". ");
                         tasks[i].printList();
                     }
-                    System.out.println("\tYou have " + taskOutstanding +
+                    System.out.println("\tYou have " + Task.getTasksOutstanding() +
                             " outstanding task(s) in your list.");
                     System.out.println("\tEnter command \"#listnotes\" to see them all.");
                     System.out.println(dukeDivider);
@@ -156,7 +139,7 @@ public class Duke {
                 System.out.println(dukeDivider);
 
                 if(input.substring(0,5).equals("@todo")) { //Add a new todo task without a deadline.
-                    Task t = new Todo(input.substring(6), addDate);
+                    Task t = new Todo((taskCount+1), input.substring(6), addDate);
                     tasks[taskCount] = t;
                     System.out.println("\tNoted! I've added a new todo task to the list.");
 
@@ -167,7 +150,7 @@ public class Duke {
                     Date startDate = inputDate.parse(inputTokens[1]);
                     Date endDate = inputDate.parse(inputTokens[2]);
 
-                    Task t = new Event(description, startDate, endDate, addDate);
+                    Task t = new Event((taskCount+1), description, startDate, endDate, addDate);
                     tasks[taskCount] = t;
                     System.out.println("\tNoted! I've added a new event to the list.");
 
@@ -177,7 +160,7 @@ public class Duke {
                     String description = inputTokens[0];
                     Date targetDate = inputDate.parse(inputTokens[1]);
 
-                    Task t = new Deadline(description, targetDate, addDate);
+                    Task t = new Deadline((taskCount+1), description, targetDate, addDate);
                     tasks[taskCount] = t;
                     System.out.println("\tNoted! I've added a new deadline task to the list.");
 
@@ -187,16 +170,14 @@ public class Duke {
                     String description = inputTokens[0];
                     Double itemBudget = Double.parseDouble(inputTokens[1]);
 
-                    Task t = new Shoplist(description, itemBudget, addDate);
+                    Task t = new Shoplist((taskCount+1), description, itemBudget, addDate);
                     tasks[taskCount] = t;
                     System.out.println("\tNoted! I've added a new shopping item to the list.");
                 }
 
-                System.out.print("\t" + String.format("%3d", (taskCount + 1)) + ". ");
                 tasks[taskCount].printList();
                 taskCount++;
-                taskOutstanding++;
-                System.out.println("\tYou have " + taskOutstanding + " outstanding task(s) in your list.");
+                System.out.println("\tYou have " + Task.getTasksOutstanding() + " outstanding task(s) in your list.");
                 System.out.println("\tEnter command \"#listnotes\" to see them all.");
                 System.out.println(dukeDivider);
             }

@@ -1,17 +1,17 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Shoplist extends Todo {
 
     //VARIABLES-----------------------------------------
-    SimpleDateFormat taskDate = new SimpleDateFormat("dd-MMM-yyyy (E), HH:mm:ss");
     protected Double itemBudget;
     protected Double itemPrice;
-    protected boolean withinBudget = false;
+    private boolean withinBudget = false;
 
     //CONSTRUCTORS--------------------------------------
-    public Shoplist(String description, Double itemBudget, Date addDate) {
-        super(description, addDate);
+    public Shoplist(int serialNum, String description, Double itemBudget, Date addDate) {
+        super(serialNum, description, addDate);
         this.itemBudget = itemBudget;
     }
 
@@ -24,17 +24,38 @@ public class Shoplist extends Todo {
         this.itemBudget = itemBudget;
     }
 
-    public void markAsDone(Date doneDate, Double itemPrice) {
-        this.isDone = true;
-        this.doneDate = doneDate;
-        this.itemPrice = itemPrice;
-        if(itemPrice <= itemBudget){
-            this.withinBudget = true;
+    @Override
+    public void markAsDone(Date doneDate) {
+        if(this.isDone) {
+            System.out.println("\tTask #" + this.serialNum + " was already done!");
+        } else {
+            String inputPrice;
+            Scanner markDone = new Scanner(System.in);
+            System.out.println("\tWhat is the price you paid for " +
+                    this.description + "?");
+            inputPrice = markDone.nextLine();
+            this.itemPrice = Double.parseDouble(inputPrice.substring(1));
+            if(itemPrice <= itemBudget){
+                this.withinBudget = true;
+            }
+            this.isDone = true;
+            this.doneDate = doneDate;
+            tasksOutstanding--;
+            tasksCompleted++;
+            System.out.println("\tNoted! I've marked Task #" + this.serialNum + " as done.");
         }
+        System.out.print(". ");
+        this.printList();
+    }
+
+    public void setItemPrice(Double itemPrice) {
+
     }
 
     //GET STATEMENTS------------------------------------
     public void printList(){
+        System.out.print("\t" + String.format("%3d", this.serialNum));
+        System.out.print(". ");
         System.out.print(this.getTaskIcon());
         System.out.print(this.getStatusIcon() + " ");
         System.out.println(String.format("%1$-30s%2$29s",
@@ -45,7 +66,7 @@ public class Shoplist extends Todo {
         if (this.isDone) {
             System.out.println("\t\t\tActual   : $" +
                     String.format("%10.2f", this.itemPrice) +
-                    " " + this.withinBudget);
+                    " " + getWithinBudget());
             System.out.println("\t\t\tDone     : " +
                     taskDate.format(this.doneDate));
         }
