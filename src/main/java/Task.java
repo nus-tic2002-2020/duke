@@ -36,11 +36,23 @@ public abstract class Task {
             tasksCompleted++;
             System.out.println("\tNoted! I've marked Task #" + this.serialNum + " as done.");
         }
-        System.out.print(". ");
         this.printList();
     }
 
+    public static void deleteNewTask(){
+        tasksOutstanding--;
+    }
+
     //GET STATEMENTS------------------------------------
+    public void printList(){
+
+        System.out.print("\t" + String.format("%3d", this.serialNum));
+        System.out.print(". ");
+        System.out.print(this.getTaskIcon());
+        System.out.print(this.getStatusIcon() + " ");
+        Echo.listWrap(this.description, 28, this.addDate);
+    }
+
     public Date getAddDate() {
         return (this.addDate);
     }
@@ -79,6 +91,5 @@ public abstract class Task {
     public abstract Date getTargetDate();
     public abstract String getTaskIcon();
     public abstract String getWithinBudget();
-    public abstract void printList();
     public abstract void markAsDone(Date doneDate, Double itemPrice);
 }

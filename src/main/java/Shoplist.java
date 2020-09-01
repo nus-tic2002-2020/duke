@@ -1,4 +1,3 @@
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -54,13 +53,7 @@ public class Shoplist extends Todo {
 
     //GET STATEMENTS------------------------------------
     public void printList(){
-        System.out.print("\t" + String.format("%3d", this.serialNum));
-        System.out.print(". ");
-        System.out.print(this.getTaskIcon());
-        System.out.print(this.getStatusIcon() + " ");
-        System.out.println(String.format("%1$-30s%2$29s",
-                this.description.toString(), "Added: " +
-                taskDate.format(this.addDate)));
+        super.printList();
         System.out.println("\t\t\tBudget   : $" +
                 String.format("%10.2f", this.itemBudget));
         if (this.isDone) {

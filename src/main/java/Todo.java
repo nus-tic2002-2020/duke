@@ -1,4 +1,3 @@
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Todo extends Task {
@@ -20,13 +19,7 @@ public class Todo extends Task {
 
     //GET STATEMENTS------------------------------------
     public void printList(){
-        System.out.print("\t" + String.format("%3d", this.serialNum));
-        System.out.print(". ");
-        System.out.print(this.getTaskIcon());
-        System.out.print(this.getStatusIcon() + " ");
-        System.out.println(String.format("%1$-30s%2$29s",
-                this.description.toString(), "Added: " +
-                taskDate.format(this.addDate)));
+        super.printList();
         if (this.isDone) {
             System.out.println("\t\t\tDone     : " +
                     taskDate.format(this.doneDate));

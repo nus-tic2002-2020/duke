@@ -1,5 +1,5 @@
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Deadline extends Todo {
 
@@ -8,9 +8,14 @@ public class Deadline extends Todo {
     private boolean doneAhead = false;
 
     //CONSTRUCTORS--------------------------------------
-    public Deadline(int serialNum, String description, Date targetDate, Date addDate) {
+    public Deadline(int serialNum, String description, Date targetDate, Date addDate) throws DateException {
         super(serialNum, description, addDate);
-        this.targetDate = targetDate;
+        Date now = new Date();
+        if(targetDate.compareTo(now) < 0 ){
+            throw new DateException("TargetDate", true);
+        } else {
+            this.targetDate = targetDate;
+        }
     }
 
     public Deadline() {
@@ -18,25 +23,27 @@ public class Deadline extends Todo {
     }
 
     //SET STATEMENTS------------------------------------
-    public void setTargetDate(Date targetDate) {
-        this.targetDate = targetDate;
+    public void setTargetDate(Date targetDate) throws DateException {
+        Date now = new Date();
+        if(targetDate.compareTo(now) < 0 ){
+            throw new DateException("TargetDate", false);
+        } else {
+            this.targetDate = targetDate;
+        }
     }
 
-    public void setDoneAhead(Date doneDate) {
+    @Override
+    public void markAsDone(Date doneDate) {
+        super.markAsDone(doneDate);
         if(doneDate.compareTo(this.targetDate) < 0) {
             this.doneAhead = true;
         }
     }
 
+
     //GET STATEMENTS------------------------------------
     public void printList(){
-        System.out.print("\t" + String.format("%3d", this.serialNum));
-        System.out.print(". ");
-        System.out.print(this.getTaskIcon());
-        System.out.print(this.getStatusIcon() + " ");
-        System.out.println(String.format("%1$-30s%2$29s",
-                this.description.toString(), "Added: " +
-                taskDate.format(this.addDate)));
+        super.printList();
         System.out.println("\t\t\tDeadline : " +
                 taskDate.format(this.targetDate));
         if (this.isDone) {

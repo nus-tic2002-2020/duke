@@ -1,19 +1,27 @@
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Event extends Task {
 
     //VARIABLES-----------------------------------------
-    protected Date startDate;
-    protected Date endDate;
+    protected Date startDate = null;
+    protected Date endDate = null;
     private long durationMinutes;
 
     //CONSTRUCTORS--------------------------------------
-    public Event(int serialNum, String description, Date startDate, Date endDate, Date addDate) {
+    public Event(int serialNum, String description, Date startDate, Date endDate, Date addDate) throws DateException {
         super(serialNum, description, addDate);
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.durationMinutes = (endDate.getTime() - startDate.getTime())/60000;
+        Date now = new Date();
+        if(startDate.compareTo(now) < 0 ){
+            throw new DateException("StartB4Now", true);
+        } else {
+                this.startDate = startDate;
+        }
+        if(this.startDate.compareTo(endDate) > 0 ){
+            throw new DateException("EndB4Start", true);
+        } else {
+            this.endDate = endDate;
+            this.durationMinutes = (endDate.getTime() - this.startDate.getTime()) / 60000;
+        }
     }
 
     public Event() {
@@ -21,25 +29,42 @@ public class Event extends Task {
     }
 
     //SET STATEMENTS------------------------------------
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setStartDate(Date startDate) throws DateException {
+        Date now = new Date();
+        if(startDate.compareTo(now) < 0 ){
+            throw new DateException("StartB4Now", false);
+        } else {
+            if(this.endDate != null) {
+                if(startDate.compareTo(this.endDate) > 0 ) {
+                    throw new DateException("StartAFEnd", false);
+                } else {
+                    this.startDate = startDate;
+                    this.durationMinutes = (this.endDate.getTime() - startDate.getTime()) / 60000;
+                }
+            } else {
+                this.startDate = startDate;
+            }
+        }
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setEndDate(Date endDate) throws DateException {
+        if(this.startDate == null){
+            throw new DateException("NoStartDate", false);
+        } else {
+            if(this.startDate.compareTo(endDate) > 0 ){
+                throw new DateException("EndB4Start", false);
+            } else {
+                this.endDate = endDate;
+                this.durationMinutes = (endDate.getTime() - this.startDate.getTime()) / 60000;
+            }
+        }
     }
 
     //GET STATEMENTS------------------------------------
     public void printList(){
-        System.out.print("\t" + String.format("%3d", this.serialNum));
-        System.out.print(". ");
-        System.out.print(this.getTaskIcon());
-        System.out.print(this.getStatusIcon() + " ");
-        System.out.println(String.format("%1$-30s%2$29s",
-                this.description.toString() + " (" +
-                this.durationMinutes +
-                "mins)", "Added: " +
-                taskDate.format(this.addDate)));
+        super.printList();
+        System.out.println("\t\t\tDuration : " +
+                this.durationMinutes + "mins");
         System.out.println("\t\t\tFrom     : " +
                 taskDate.format(this.startDate));
         System.out.println("\t\t\tTo       : " +
