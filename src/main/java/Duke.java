@@ -14,26 +14,35 @@ public class Duke {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
-    public static void echo() {
+    public static void command() {
+        String[] list = new String[10]; // create list!
+        int index = 0;
+
         Scanner in = new Scanner(System.in);
         String line;
-        line = in.nextLine();
-        printLine();
+        //printLine();
         String endconvo = "bye";
 
-        if (line.equals(endconvo)) {
-            bye();
-            printLine();
-            return;
+        while (true) {
+            line = in.nextLine();
+            if (line.equals(endconvo)) { //if user enter bye
+                bye();
+                printLine();
+                return;
 
-        } else {
-            System.out.println(line);
-            printLine();
-            echo();
+            } else if (line.equals("list")) {  //number of list
+                for (int i = 0; i < index; i++) {
+                    System.out.println(i + 1 + ". " + list[i]);
+                }
+
+            } else {
+                System.out.println("added: " + line); //add to the list
+                list[index] = line;
+                index++;
+            }
+
         }
-
     }
-
 
 
     public static void main(String[] args) {
@@ -47,7 +56,7 @@ public class Duke {
 
         greet();
         printLine();
-        echo();
+        command();
 
     }
 }
