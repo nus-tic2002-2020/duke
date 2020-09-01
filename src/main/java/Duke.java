@@ -1,9 +1,11 @@
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
     private static final int MAX_TASKS = 100;
 
-    private static String[] tasks = new String[MAX_TASKS];
+    private static Task[] tasks = new Task[MAX_TASKS];
     private static int countTasks = 0;
 
     public static void main(String[] args) {
@@ -21,7 +23,7 @@ public class Duke {
 
         while(exit <= 0) { // If exit code is 0, continue
             String input = in.nextLine();
-            exit = task(input.trim());
+            exit = call(input.trim());
         }
     }
 
@@ -43,18 +45,22 @@ public class Duke {
         System.out.println("    ____________________________________________________________");
     }
 
-    public static int task(String task) {
-        if (!task.isBlank()) {
-            switch (task) {
+    public static int call(String input) {
+        String[] args = input.split(" ");
+        if (args.length > 0 && !args[0].isBlank()) {
+            String command = args[0];
+            switch (command) {
                 case "list":
                     printTasks();
+                    break;
+                case "done":
+                    doneTasks(args);
                     break;
                 case "bye":
                     bye();
                     return 1;
                 default:
-                    //echo(task);
-                    addTask(task);
+                    addTask(input);
             }
         }
         return 0;
@@ -66,18 +72,40 @@ public class Duke {
         System.out.println("    ____________________________________________________________");
     }
 
-    public static void addTask(String task) {
+    public static void doneTasks(String[] args) {
+        System.out.println("    ____________________________________________________________");
+        System.out.println("    Power la! I've marked this task(s) as done:");
+        for (int i = 1; i < args.length; i++) { // Skip first: command
+            int intTask = Integer.parseInt(args[i]); //TODO: Exception handling
+
+            if (intTask < MAX_TASKS && tasks[intTask] != null) { // Has task at list index
+                Task t = tasks[intTask];
+
+                t.markAsDone();
+
+                // Print done task
+                System.out.printf("       %s %s\n", t.getStatusIcon(), t);
+            }
+
+        }
+        System.out.println("    ____________________________________________________________");
+    }
+
+    public static void addTask(String description) {
         if (countTasks < MAX_TASKS) {
-            tasks[countTasks++] = task;
-            echo("added: " + task);
+            Task t = new Task(description);
+            tasks[countTasks++] = t;
+            echo("added: " + t);
         } else {
             errorTaskFull();
         }
     }
     public static void printTasks() {
         System.out.println("    ____________________________________________________________");
+        System.out.println("    Here are the tasks in your list:");
         for(int i = 0; i < countTasks; i++) {
-            System.out.printf("     %d. %s\n", i+1, tasks[i]);
+            Task t = tasks[i];
+            System.out.printf("     %d.%s %s\n", i+1, t.getStatusIcon(), t);
         }
         System.out.println("    ____________________________________________________________");
     }
