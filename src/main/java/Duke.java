@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+
 public class Duke {
 
     public static void greet() {
@@ -15,8 +16,9 @@ public class Duke {
     }
 
     public static void command() {
-        String[] list = new String[10]; // create list!
-        int index = 0;
+        String[] list = new String[5]; // create list!
+        Task[] tasks = new Task[5];
+        int pointer = 0;
 
         Scanner in = new Scanner(System.in);
         String line;
@@ -31,14 +33,27 @@ public class Duke {
                 return;
 
             } else if (line.equals("list")) {  //number of list
-                for (int i = 0; i < index; i++) {
-                    System.out.println(i + 1 + ". " + list[i]);
-                }
+                System.out.println("Here are the tasks in your lists: ");
+                for (int i = 0; i < pointer; i++) {
+                    System.out.println(i + 1 + ". " + "[" +tasks[i].symbols() + "] "
+                            + tasks[i].description); //shows tasklist
 
-            } else {
+}
+                }else if (line.contains("done")){
+                int j = Integer.parseInt(line.substring(5)) - 1; //refer to which list is done and mark it
+                    Task currenttask = tasks[j];
+                    currenttask.markDone();
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.println("[" + currenttask.symbols() + "] " + currenttask.description);
+
+
+                } else {
                 System.out.println("added: " + line); //add to the list
-                list[index] = line;
-                index++;
+                list[pointer] = line;
+                Task newtask = new Task(line);
+                newtask.description = line;
+                tasks[pointer] = newtask;
+                pointer++;
             }
 
         }
