@@ -1,20 +1,22 @@
 public class  Budget {
 
     //VARIABLES-----------------------------------------
-    protected double budgetSet;
-    protected double budgetUsed = 0;
-    protected double budgetBalance;
-    protected boolean isOpen = true;
-    protected boolean isOverBudget;
+    private double budgetSet;
+    private double budgetRevised;
+    private double budgetUsed = 0;
+    private double budgetBalance;
+    private boolean isRevised = false;
+    private boolean isOverBudget;
 
-    protected static double totalBudgetSet;
-    protected static double totalBudgetUsed = 0;
+    private static double totalBudgetSet;
+    private static double totalBudgetUsed = 0;
     private static double totalBudgetBalance;
     private static boolean isTotalOverBudget;
 
     //CONSTRUCTORS--------------------------------------
     public Budget(double budgetSet) {
         this.budgetSet = budgetSet;
+        this.budgetRevised = this.budgetSet;
         totalBudgetSet = totalBudgetSet + budgetSet;
         totalBudgetBalance = totalBudgetSet - totalBudgetUsed;
         isTotalOverBudget = totalBudgetBalance < 0;
@@ -42,34 +44,22 @@ public class  Budget {
         isTotalOverBudget = totalBudgetBalance < 0;
     }
 
-    private void transferBalanceIn(double balanceIn) {
-        this.budgetSet = this.budgetSet + balanceIn;
-        this.budgetBalance = this.budgetSet - budgetUsed;
+    private void transferBudgetIn(double balanceIn) {
+        this.budgetRevised = this.budgetRevised + balanceIn;
+        this.budgetBalance = this.budgetRevised - budgetUsed;
         this.isOverBudget = this.budgetBalance < 0;
+        this.isRevised = true;
     }
 
-    public boolean transferBalanceOut(double balanceOut, Budget target) {
-        if (!this.isOpen) {
-            return false;
-        } else if (this.budgetBalance < balanceOut) {
+    public boolean transferBudgetOut(double balanceOut, Budget target) {
+        if (this.budgetBalance < balanceOut) {
             return false;
         } else {
-            this.budgetSet = this.budgetSet - balanceOut;
-            this.budgetBalance = this.budgetSet - budgetUsed;
-            target.transferBalanceIn(balanceOut);
-            if (this.budgetBalance == 0) {
-                this.closeBudget();
-            }
+            this.budgetRevised = this.budgetRevised - balanceOut;
+            this.budgetBalance = this.budgetRevised - budgetUsed;
+            target.transferBudgetIn(balanceOut);
+            this.isRevised = true;
             return true;
-        }
-    }
-
-    public boolean closeBudget() {
-        if(!this.isOverBudget){
-            this.isOpen = false;
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -77,6 +67,10 @@ public class  Budget {
     //GET STATEMENTS------------------------------------
     public double getBudgetSet(){
         return this.budgetSet;
+    }
+
+    public double getBudgetRevised(){
+        return this.budgetRevised;
     }
 
     public double getBudgetUsed(){
@@ -87,8 +81,8 @@ public class  Budget {
         return this.budgetBalance;
     }
 
-    public boolean getIsOpen(){
-        return this.isOpen;
+    public boolean getIsRevised(){
+        return this.isRevised;
     }
 
     public boolean getIsOverBudget(){
@@ -105,6 +99,10 @@ public class  Budget {
 
     public static double getTotalBudgetBalance(){
         return totalBudgetBalance;
+    }
+
+    public static boolean getIsTotalOverBudget(){
+        return isTotalOverBudget;
     }
 
 }

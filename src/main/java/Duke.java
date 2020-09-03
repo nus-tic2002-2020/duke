@@ -130,13 +130,13 @@ public class Duke implements DukeUI {
                                     }
                                 }
                             }
-                            System.out.println("\n\tDeletions completed...");
+                            System.out.println("\n\tDeletion(s) completed...");
 
-                            System.out.println("\t...renumbering the remaining notes...");
+                            System.out.println("\t...renumbering the remaining note(s)...");
                             for(int i=0; i<tasks.size(); i++){
                                 System.out.print("\t#");
                                 System.out.print(String.format("%3d", tasks.get(i).getSerialNum()));
-                                System.out.print(" >>> ");
+                                System.out.print("\t >>> ");
                                 tasks.get(i).setSerialNum(i+1);
                                 System.out.print("\t#");
                                 System.out.print(String.format("%3d", tasks.get(i).getSerialNum()));

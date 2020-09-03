@@ -1,3 +1,4 @@
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -11,6 +12,7 @@ public interface DukeUI {
     SimpleDateFormat TASK_DATE = new SimpleDateFormat("dd-MMM-yyyy (E), HH:mm:ss");
     SimpleDateFormat DATE_TODAY = new SimpleDateFormat("dd MMMM yyyy");
     SimpleDateFormat DAY_TODAY = new SimpleDateFormat("EEEE");
+    SimpleDateFormat YEAR_TODAY = new SimpleDateFormat("yyyy");
     SimpleDateFormat INPUT_DATE = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
 
     //List of commands for Duke
@@ -63,9 +65,10 @@ public interface DukeUI {
 
 
     //METHODS-------------------------------------------
-    static void printOnStartup(Date now) {
+    static void printOnStartup(Date now) throws ParseException {
         System.out.print("\nWelcome to PROJECT >>>\n" + DUKE_LOGO);
-        System.out.print(String.format("%1$-42s%2$42s", DATE_TODAY.format(now), DAY_TODAY.format(now)) + "\n\n");
+        System.out.println(String.format("%1$-42s%2$42s", DATE_TODAY.format(now), DAY_TODAY.format(now)));
+        System.out.println(String.format("%1$-42s%2$42s", ZodiacYear.getZodiacYear(now), SunSign.getSunSign(now)) + "\n");
 
         System.out.println(DUKE_DIVIDER);
         System.out.println("\tHello! I'm Duke, your all-rounded personal assistant!");

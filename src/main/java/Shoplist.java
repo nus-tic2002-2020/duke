@@ -55,6 +55,10 @@ public class Shoplist extends Todo {
     public void printDetails(){
         System.out.println("\t\t\tBudget   : $" +
                 String.format("%10.2f", this.getItemBudget()));
+        if (this.itemBudget.getIsRevised()) {
+            System.out.println("\t\t\tRevised  : $" +
+                    String.format("%10.2f", this.getItemBudgetRevised()));
+        }
         if (this.isDone) {
             System.out.println("\t\t\tActual   : $" +
                     String.format("%10.2f", this.getItemPrice()) +
@@ -68,6 +72,10 @@ public class Shoplist extends Todo {
         return (this.itemBudget.getBudgetSet());
     }
 
+    public double getItemBudgetRevised() {
+        return (this.itemBudget.getBudgetRevised());
+    }
+
     public double getItemPrice() {
         return (this.itemBudget.getBudgetUsed());
     }
@@ -75,6 +83,8 @@ public class Shoplist extends Todo {
     public String getWithinBudget() {
         if(this.itemBudget.getIsOverBudget()){
             return "\u2612\t$" + String.format("%10.2f", Math.abs(this.itemBudget.getBudgetBalance())) + " over budget.";
+        } else if(this.itemBudget.getBudgetBalance() == 0) {
+            return "\u2611\t" + String.format("%10.2f", 0.00) + " right on budget!";
         } else {
             return "\u2611\t$" + String.format("%10.2f", Math.abs(this.itemBudget.getBudgetBalance())) + " under budget.";
         }
