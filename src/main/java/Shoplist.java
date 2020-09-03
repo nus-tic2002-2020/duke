@@ -4,80 +4,79 @@ import java.util.Scanner;
 public class Shoplist extends Todo {
 
     //VARIABLES-----------------------------------------
-    protected Double itemBudget;
-    protected Double itemPrice;
-    private boolean withinBudget = false;
+    protected Budget itemBudget;
+
 
     //CONSTRUCTORS--------------------------------------
-    public Shoplist(int serialNum, String description, Double itemBudget, Date addDate) {
+    public Shoplist(int serialNum, String description, double itemBudget, Date addDate) {
         super(serialNum, description, addDate);
-        this.itemBudget = itemBudget;
+        this.itemBudget = new Budget(itemBudget);
     }
 
     public Shoplist() {
         super();
     }
 
+
     //SET STATEMENTS------------------------------------
-    public void setItemBudget(Double itemBudget) {
-        this.itemBudget = itemBudget;
+    public void setItemBudget(double itemBudget) {
+        this.itemBudget.setBudgetSet(itemBudget);
     }
 
     @Override
-    public void markAsDone(Date doneDate) {
+    public boolean markAsDone(Date doneDate) {
         if(this.isDone) {
             System.out.println("\tTask #" + this.serialNum + " was already done!");
         } else {
             String inputPrice;
             Scanner markDone = new Scanner(System.in);
             System.out.println("\tWhat is the price you paid for " +
-                    this.description + "?");
+                    this.description.toString() + "?");
             inputPrice = markDone.nextLine();
-            this.itemPrice = Double.parseDouble(inputPrice.substring(1));
-            if(itemPrice <= itemBudget){
-                this.withinBudget = true;
-            }
+            double itemPrice = Double.parseDouble(inputPrice.substring(1));
+            itemBudget.setBudgetUsed(itemPrice);
             this.isDone = true;
             this.doneDate = doneDate;
             tasksOutstanding--;
             tasksCompleted++;
             System.out.println("\tNoted! I've marked Task #" + this.serialNum + " as done.");
         }
-        System.out.print(". ");
         this.printList();
+        return false;
     }
 
-    public void setItemPrice(Double itemPrice) {
-
+    public void setItemPrice(double itemPrice) {
+        this.itemBudget.setBudgetUsed(itemPrice);
     }
+
 
     //GET STATEMENTS------------------------------------
-    public void printList(){
-        super.printList();
+    @Override
+    public void printDetails(){
         System.out.println("\t\t\tBudget   : $" +
-                String.format("%10.2f", this.itemBudget));
+                String.format("%10.2f", this.getItemBudget()));
         if (this.isDone) {
             System.out.println("\t\t\tActual   : $" +
-                    String.format("%10.2f", this.itemPrice) +
-                    " " + getWithinBudget());
+                    String.format("%10.2f", this.getItemPrice()) +
+                    " " + this.getWithinBudget());
             System.out.println("\t\t\tDone     : " +
-                    taskDate.format(this.doneDate));
+                    TASK_DATE.format(this.doneDate));
         }
     }
 
-    public Double getItemBudget() {
-        return (this.itemBudget);
+    public double getItemBudget() {
+        return (this.itemBudget.getBudgetSet());
     }
 
-    public Double getItemPrice() {
-        return (this.itemPrice);
+    public double getItemPrice() {
+        return (this.itemBudget.getBudgetUsed());
     }
 
     public String getWithinBudget() {
-        if(this.withinBudget){
-            return("\u2611");
+        if(this.itemBudget.getIsOverBudget()){
+            return "\u2612\t$" + String.format("%10.2f", Math.abs(this.itemBudget.getBudgetBalance())) + " over budget.";
         } else {
-            return("\u2612");
+            return "\u2611\t$" + String.format("%10.2f", Math.abs(this.itemBudget.getBudgetBalance())) + " under budget.";
         }
     }
 
@@ -85,4 +84,5 @@ public class Shoplist extends Todo {
     public String getTaskIcon() {
         return("[S]");
     }
+
 }

@@ -1,23 +1,27 @@
 import java.util.Date;
 
-public class Event extends Task {
+public class Event extends Note {
 
     //VARIABLES-----------------------------------------
     protected Date startDate = null;
     protected Date endDate = null;
     private long durationMinutes;
+    protected static int eventsOutstanding;
+    protected static int eventsCompleted;
+
 
     //CONSTRUCTORS--------------------------------------
     public Event(int serialNum, String description, Date startDate, Date endDate, Date addDate) throws DateException {
         super(serialNum, description, addDate);
+        eventsOutstanding++;
         Date now = new Date();
         if(startDate.compareTo(now) < 0 ){
-            throw new DateException("StartB4Now", true);
+            throw new DateException("StartB4Now", "Event", true);
         } else {
                 this.startDate = startDate;
         }
         if(this.startDate.compareTo(endDate) > 0 ){
-            throw new DateException("EndB4Start", true);
+            throw new DateException("EndB4Start", "Event", true);
         } else {
             this.endDate = endDate;
             this.durationMinutes = (endDate.getTime() - this.startDate.getTime()) / 60000;
@@ -25,18 +29,47 @@ public class Event extends Task {
     }
 
     public Event() {
-        super();
+        eventsOutstanding++;
     }
 
+
     //SET STATEMENTS------------------------------------
+    @Override
+    public boolean markAsDone(Date doneDate) {
+        if(super.markAsDone(doneDate)) {
+            eventsOutstanding--;
+            eventsCompleted++;
+            this.printList();
+            return true;
+        } else {
+            this.printList();
+            return false;
+        }
+    }
+
+    public static void deleteNewNote(){
+        eventsOutstanding--;
+    }
+
+    public void deleteExistingNote() {
+        if(isDone){
+            System.out.print("\tEvent #" + this.serialNum + " was already done!");
+            System.out.println("\t...deleting the event anyway...");
+            eventsCompleted--;
+        } else {
+            System.out.println("\tNoted! I've deleted Event #" + this.serialNum + ".");
+            eventsOutstanding--;
+        }
+    }
+
     public void setStartDate(Date startDate) throws DateException {
         Date now = new Date();
         if(startDate.compareTo(now) < 0 ){
-            throw new DateException("StartB4Now", false);
+            throw new DateException("StartB4Now", "Event", false);
         } else {
             if(this.endDate != null) {
                 if(startDate.compareTo(this.endDate) > 0 ) {
-                    throw new DateException("StartAFEnd", false);
+                    throw new DateException("StartAFEnd", "Event", false);
                 } else {
                     this.startDate = startDate;
                     this.durationMinutes = (this.endDate.getTime() - startDate.getTime()) / 60000;
@@ -49,10 +82,10 @@ public class Event extends Task {
 
     public void setEndDate(Date endDate) throws DateException {
         if(this.startDate == null){
-            throw new DateException("NoStartDate", false);
+            throw new DateException("NoStartDate", "Event", false);
         } else {
             if(this.startDate.compareTo(endDate) > 0 ){
-                throw new DateException("EndB4Start", false);
+                throw new DateException("EndB4Start", "Event", false);
             } else {
                 this.endDate = endDate;
                 this.durationMinutes = (endDate.getTime() - this.startDate.getTime()) / 60000;
@@ -60,53 +93,35 @@ public class Event extends Task {
         }
     }
 
+
     //GET STATEMENTS------------------------------------
-    public void printList(){
-        super.printList();
-        System.out.println("\t\t\tDuration : " +
-                this.durationMinutes + "mins");
-        System.out.println("\t\t\tFrom     : " +
-                taskDate.format(this.startDate));
-        System.out.println("\t\t\tTo       : " +
-                taskDate.format(this.endDate));
-        if (this.isDone) {
-            System.out.println("\t\t\tDone     : " +
-                    taskDate.format(this.doneDate));
-        }
-    }
+    public Date getStartDate() { return (this.startDate); }
 
-    public Date getStartDate() {
-        return (this.startDate);
-    }
-
-    public Date getEndDate() {
-        return (this.endDate);
-    }
+    public Date getEndDate() { return (this.endDate); }
 
     public long getDurationMinutes() {
         return (this.durationMinutes);
     }
 
-    public String getTaskIcon() {
-        return("[E]");
+    @Override
+    public void printDetails(){
+        System.out.println("\t\t\tDuration : " +
+                this.durationMinutes + "mins");
+        System.out.println("\t\t\tFrom     : " +
+                TASK_DATE.format(this.startDate));
+        System.out.println("\t\t\tTo       : " +
+                TASK_DATE.format(this.endDate));
+        if (this.isDone) {
+            System.out.println("\t\t\tDone     : " +
+                    TASK_DATE.format(this.doneDate));
+        }
     }
 
-    //ABSTRACT TASK METHODS
-    @Override
-    public String getDoneAhead() {
-        return null;
+    public static int getEventsOutstanding() {
+        return (eventsOutstanding);
     }
-    public Double getItemBudget() {
-        return null;
+
+    public static int getEventsCompleted() {
+        return (eventsCompleted);
     }
-    public Double getItemPrice() {
-        return null;
-    }
-    public Date getTargetDate() {
-        return null;
-    }
-    public String getWithinBudget() {
-        return null;
-    }
-    public void markAsDone(Date doneDate, Double itemPrice){ }
 }

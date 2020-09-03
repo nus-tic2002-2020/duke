@@ -1,5 +1,4 @@
 import java.util.Date;
-import java.util.Scanner;
 
 public class Deadline extends Todo {
 
@@ -7,12 +6,13 @@ public class Deadline extends Todo {
     protected Date targetDate;
     private boolean doneAhead = false;
 
+
     //CONSTRUCTORS--------------------------------------
     public Deadline(int serialNum, String description, Date targetDate, Date addDate) throws DateException {
         super(serialNum, description, addDate);
         Date now = new Date();
         if(targetDate.compareTo(now) < 0 ){
-            throw new DateException("TargetDate", true);
+            throw new DateException("TargetDate", "Todo", true);
         } else {
             this.targetDate = targetDate;
         }
@@ -22,33 +22,35 @@ public class Deadline extends Todo {
         super();
     }
 
+
     //SET STATEMENTS------------------------------------
     public void setTargetDate(Date targetDate) throws DateException {
         Date now = new Date();
         if(targetDate.compareTo(now) < 0 ){
-            throw new DateException("TargetDate", false);
+            throw new DateException("TargetDate", "Todo", false);
         } else {
             this.targetDate = targetDate;
         }
     }
 
     @Override
-    public void markAsDone(Date doneDate) {
+    public boolean markAsDone(Date doneDate) {
         super.markAsDone(doneDate);
         if(doneDate.compareTo(this.targetDate) < 0) {
             this.doneAhead = true;
         }
+        return false;
     }
 
 
     //GET STATEMENTS------------------------------------
-    public void printList(){
-        super.printList();
+    @Override
+    public void printDetails(){
         System.out.println("\t\t\tDeadline : " +
-                taskDate.format(this.targetDate));
+                TASK_DATE.format(this.targetDate));
         if (this.isDone) {
             System.out.println("\t\t\tDone     : " +
-                    taskDate.format(this.doneDate) + " " +
+                    TASK_DATE.format(this.doneDate) + " " +
                     this.getDoneAhead());
         }
     }
