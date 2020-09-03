@@ -32,6 +32,31 @@ public class Event extends Note {
         eventsOutstanding++;
     }
 
+    public Event(int serialNum, String description, Date addDate, Date doneDate,
+                 boolean isDone, Date startDate, Date endDate, long durationMinutes) {
+        this.serialNum = serialNum;
+        this.description = description;
+        this.addDate = addDate;
+        this.doneDate = doneDate;
+        this.isDone = isDone;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.durationMinutes = durationMinutes;
+        eventsCompleted++;
+    }
+
+    public Event(int serialNum, String description, Date addDate,
+                 boolean isDone, Date startDate, Date endDate, long durationMinutes) {
+        this.serialNum = serialNum;
+        this.description = description;
+        this.addDate = addDate;
+        this.isDone = isDone;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.durationMinutes = durationMinutes;
+        eventsOutstanding++;
+    }
+
 
     //SET STATEMENTS------------------------------------
     @Override
@@ -93,7 +118,6 @@ public class Event extends Note {
         }
     }
 
-
     //GET STATEMENTS------------------------------------
     public Date getStartDate() { return (this.startDate); }
 
@@ -123,5 +147,22 @@ public class Event extends Note {
 
     public static int getEventsCompleted() {
         return (eventsCompleted);
+    }
+
+    public String getSaveText() {
+        String text = "Event/" +
+                this.serialNum + "/" +
+                this.description.toString() + "/" +
+                INPUT_DATE.format(this.addDate) + "/" +
+                this.isDone + "/" +
+                INPUT_DATE.format(this.startDate) + "/" +
+                INPUT_DATE.format(this.endDate) + "/" +
+                this.durationMinutes;
+        if(isDone) {
+            text = text + "/" + INPUT_DATE.format(this.doneDate) + "\n";
+        } else {
+            text = text + "\n";
+        }
+        return text;
     }
 }

@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,8 +13,37 @@ public class Duke implements DukeUI {
 
         //Run startup sequence
         DukeUI.printOnStartup(now);
+        ArrayList<Task> tasks;
 
-        ArrayList<Task> tasks = new ArrayList<Task>();
+        File fileDir = new File("data");
+        if(!fileDir.exists()){ fileDir.mkdirs(); }
+
+        File savedNotes = new File("data/notes.txt");
+        DukeStorage dukeStorage = new DukeStorage(savedNotes, "data/notes.txt");
+
+        while(true) {
+            try {
+                if(savedNotes.createNewFile()) {
+                    tasks = new ArrayList<Task>();
+                    System.out.println(DUKE_DIVIDER);
+                    System.out.println("\tNo saved notes were found.");
+                } else {
+                    tasks = dukeStorage.readFromFile();
+                    System.out.println(DUKE_DIVIDER);
+                    System.out.println("\tSaved notes were found and loaded.");
+                    DukeUI.printOutstanding();
+                    System.out.println("\tUse command \"#listnotes\" to see them all.");
+                }
+                System.out.println(DUKE_DIVIDER);
+                break;
+            } catch (IOException | ParseException e) {
+                tasks = new ArrayList<Task>();
+                System.out.println(DUKE_DIVIDER);
+                System.out.println("\tDue to a fatal error, #savenotes is unavailable.");
+                System.out.println(DUKE_DIVIDER);
+                break;
+            }
+        }
 
         while (true) {
             String input;
@@ -35,35 +66,47 @@ public class Duke implements DukeUI {
                             throw new CommandException("There seems to be invalid characters behind #commands.");
                         }
 
-                    //Exit Project Duke.
-                    } else if(input.startsWith("#quitduke")) {
-                        if(input.substring(9).equals("")) {
-                            String confirmQuit;
-                            Scanner quitDuke = new Scanner(System.in);
-
-                            System.out.println(DUKE_DIVIDER);
-                            DukeUI.printOutstanding();
-                            System.out.println("\tAre you sure you want to quit?");
-                            System.out.println("\tAll data would be lost.");
-                            System.out.println("\tReply \"Y\" to confirm or any character(s) to cancel.");
-                            System.out.println(DUKE_DIVIDER);
-
-                            confirmQuit = quitDuke.nextLine();
-
-                            if(confirmQuit.equals("Y")) {
-                                System.out.println(DUKE_DIVIDER);
-                                System.out.println("\tGood Bye! Hope to see you again soon!");
-                                System.out.println(DUKE_DIVIDER);
-                                break;
-
-                            } else {
-                                System.out.println(DUKE_DIVIDER);
-                                System.out.println("\tYay! Thanks for staying!");
-                                System.out.println(DUKE_DIVIDER);
+                    //Delete a note and re-order the rest.
+                    } else if(input.startsWith("#delete")) {
+                        if(input.substring(7,8).equals(" ")) {
+                            Date doneDate = new Date();
+                            String[] doneSerials = input.substring(8).split("/");
+                            int[] taskSerials = new int[doneSerials.length];
+                            for(int i=0; i<doneSerials.length; i++){
+                                taskSerials[i] = Integer.parseInt(doneSerials[i]);
                             }
 
+                            System.out.println(DUKE_DIVIDER);
+                            for(int taskSerial: taskSerials) {
+                                for (Task task: tasks) {
+                                    if (task.getSerialNum() == taskSerial) {
+                                        task.deleteExistingNote();
+                                        tasks.remove(task);
+                                        break;
+                                    }
+                                }
+                            }
+                            System.out.println("\n\tDeletion(s) completed...");
+
+                            System.out.println("\t...renumbering the remaining note(s)...");
+                            for(int i=0; i<tasks.size(); i++){
+                                System.out.print("\t#");
+                                System.out.print(String.format("%3d", tasks.get(i).getSerialNum()));
+                                System.out.print("\t >>> ");
+                                tasks.get(i).setSerialNum(i+1);
+                                System.out.print("\t#");
+                                System.out.print(String.format("%3d", tasks.get(i).getSerialNum()));
+                                System.out.print("\n");
+                            }
+
+                            System.out.println("\tThe remaining notes have been renumbered!\n");
+                            DukeUI.printCompleted();
+                            DukeUI.printOutstanding();
+                            System.out.println("\tUse command \"#listnotes\" to see them all.");
+                            System.out.println(DUKE_DIVIDER);
+
                         } else {
-                            throw new CommandException("There seems to be invalid characters behind #quitduke.");
+                            throw new CommandException("There seems to be invalid characters behind #delete.");
                         }
 
                     //List all the notes in memory.
@@ -110,47 +153,65 @@ public class Duke implements DukeUI {
                             throw new CommandException("There seems to be invalid characters behind #markdone.");
                         }
 
-                    //Delete a note and re-order the rest.
-                    } else if(input.startsWith("#delete")) {
-                        if(input.substring(7,8).equals(" ")) {
-                            Date doneDate = new Date();
-                            String[] doneSerials = input.substring(8).split("/");
-                            int[] taskSerials = new int[doneSerials.length];
-                            for(int i=0; i<doneSerials.length; i++){
-                                taskSerials[i] = Integer.parseInt(doneSerials[i]);
-                            }
+                    //Exit Project Duke.
+                    } else if(input.startsWith("#quitduke")) {
+                        if(input.substring(9).equals("")) {
+                            String confirmQuit;
+                            Scanner quitDuke = new Scanner(System.in);
 
                             System.out.println(DUKE_DIVIDER);
-                            for(int taskSerial: taskSerials) {
-                                for (Task task: tasks) {
-                                    if (task.getSerialNum() == taskSerial) {
-                                        task.deleteExistingNote();
-                                        tasks.remove(task);
-                                        break;
-                                    }
-                                }
-                            }
-                            System.out.println("\n\tDeletion(s) completed...");
-
-                            System.out.println("\t...renumbering the remaining note(s)...");
-                            for(int i=0; i<tasks.size(); i++){
-                                System.out.print("\t#");
-                                System.out.print(String.format("%3d", tasks.get(i).getSerialNum()));
-                                System.out.print("\t >>> ");
-                                tasks.get(i).setSerialNum(i+1);
-                                System.out.print("\t#");
-                                System.out.print(String.format("%3d", tasks.get(i).getSerialNum()));
-                                System.out.print("\n");
-                            }
-
-                            System.out.println("\tThe remaining notes have been renumbered!\n");
-                            DukeUI.printCompleted();
                             DukeUI.printOutstanding();
-                            System.out.println("\tUse command \"#listnotes\" to see them all.");
+                            System.out.println("\tAre you sure you want to quit?");
+                            System.out.println("\tAll unsaved data would be lost.");
+                            System.out.println("\tReply \"Y\" to confirm or any character(s) to abort.");
+                            System.out.println(DUKE_DIVIDER);
+
+                            confirmQuit = quitDuke.nextLine();
+
+                            if(confirmQuit.equals("Y")) {
+                                System.out.println(DUKE_DIVIDER);
+                                System.out.println("\tGood Bye! Hope to see you again soon!");
+                                System.out.println(DUKE_DIVIDER);
+                                break;
+
+                            } else {
+                                System.out.println(DUKE_DIVIDER);
+                                System.out.println("\tYay! Thanks for staying!");
+                                System.out.println(DUKE_DIVIDER);
+                            }
+
+                        } else {
+                            throw new CommandException("There seems to be invalid characters behind #quitduke.");
+                        }
+
+                    //Save existing notes.
+                    } else if(input.startsWith("#savenotes")) {
+                        if(input.substring(10).equals("")) {
+                            String confirmSave;
+                            Scanner saveNotes = new Scanner(System.in);
+
+                            System.out.println(DUKE_DIVIDER);
+                            DukeUI.printOutstanding();
+                            System.out.println("\tAre you sure you want to save?");
+                            System.out.println("\tExisting saved data would be overwritten.");
+                            System.out.println("\tReply \"Y\" to confirm or any character(s) to abort.");
+                            System.out.println(DUKE_DIVIDER);
+
+                            confirmSave = saveNotes.nextLine();
+
+                            if(confirmSave.equals("Y")) {
+                                dukeStorage.writeToFile(tasks);
+                                System.out.println(DUKE_DIVIDER);
+                                System.out.println("\tSave operation completed!");
+
+                            } else {
+                                System.out.println(DUKE_DIVIDER);
+                                System.out.println("\tSave operation cancelled!");
+                            }
                             System.out.println(DUKE_DIVIDER);
 
                         } else {
-                            throw new CommandException("There seems to be invalid characters behind #delete.");
+                            throw new CommandException("There seems to be invalid characters behind #savenotes.");
                         }
 
                     } else {
@@ -216,6 +277,7 @@ public class Duke implements DukeUI {
                 System.out.println(DUKE_DIVIDER);
                 System.out.println("\tI don't understand what you mean by...\n");
                 DukeUI.commandWrap(input, 66);
+                e.printStackTrace();
                 System.out.println("\tThe task(s) you mentioned cannot be found.");
                 System.out.println("\tThere could be errors or omissions in the data entry, format or delimiters.");
                 System.out.println("\tUse command #commands to see the correct format for command attributes.");

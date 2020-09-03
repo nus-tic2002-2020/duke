@@ -17,8 +17,7 @@ public abstract class Note implements Task {
         this.addDate = addDate;
     }
 
-    public Note() {
-    }
+    public Note() {}
 
 
     //SET STATEMENTS------------------------------------
@@ -84,6 +83,8 @@ public abstract class Note implements Task {
         }
     }
 
-    //GET STATEMENTS------------------------------------
+
+    //ABSTRACT METHODS----------------------------------
     public abstract void deleteExistingNote();
+
 }

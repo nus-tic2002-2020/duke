@@ -31,7 +31,7 @@ public enum ZodiacYear implements DukeUI{
         for(ZodiacYear year: ZodiacYear.values()){
             Date start = INPUT_DATE.parse(year.from);
             Date end = INPUT_DATE.parse(year.to);
-            if(date.compareTo(start)>0 && date.compareTo(end)<0){
+            if(date.compareTo(start)>=0 && date.compareTo(end)<=0){
                 return year.year;
             }
         }

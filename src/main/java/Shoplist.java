@@ -13,10 +13,19 @@ public class Shoplist extends Todo {
         this.itemBudget = new Budget(itemBudget);
     }
 
-    public Shoplist() {
-        super();
+    public Shoplist() { super(); }
+
+    public Shoplist(int serialNum, String description, Date addDate, Date doneDate,
+                boolean isDone, Budget itemBudget) {
+        super(serialNum, description, addDate, doneDate, isDone);
+        this.itemBudget = itemBudget;
     }
 
+    public Shoplist(int serialNum, String description, Date addDate,
+                    boolean isDone, Budget itemBudget) {
+        super(serialNum, description, addDate, isDone);
+        this.itemBudget = itemBudget;
+    }
 
     //SET STATEMENTS------------------------------------
     public void setItemBudget(double itemBudget) {
@@ -84,7 +93,7 @@ public class Shoplist extends Todo {
         if(this.itemBudget.getIsOverBudget()){
             return "\u2612\t$" + String.format("%10.2f", Math.abs(this.itemBudget.getBudgetBalance())) + " over budget.";
         } else if(this.itemBudget.getBudgetBalance() == 0) {
-            return "\u2611\t" + String.format("%10.2f", 0.00) + " right on budget!";
+            return "\u2611\t$" + String.format("%10.2f", 0.00) + " right on budget!";
         } else {
             return "\u2611\t$" + String.format("%10.2f", Math.abs(this.itemBudget.getBudgetBalance())) + " under budget.";
         }
@@ -93,6 +102,23 @@ public class Shoplist extends Todo {
     @Override
     public String getTaskIcon() {
         return("[S]");
+    }
+
+    @Override
+    public String getSaveText() {
+        String text = "Shoplist/" +
+                this.serialNum + "/" +
+                this.description.toString() + "/" +
+                INPUT_DATE.format(this.addDate) + "/" +
+                this.isDone + "/" +
+                this.itemBudget.getSaveText();
+
+        if(isDone) {
+            text = text + "/" + INPUT_DATE.format(this.doneDate) + "\n";
+        } else {
+            text = text + "\n";
+        }
+        return text;
     }
 
 }

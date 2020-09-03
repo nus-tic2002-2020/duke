@@ -17,6 +17,25 @@ public class Todo extends Note {
         tasksOutstanding++;
     }
 
+    public Todo(int serialNum, String description, Date addDate, Date doneDate,
+                 boolean isDone) {
+        this.serialNum = serialNum;
+        this.description = description;
+        this.addDate = addDate;
+        this.doneDate = doneDate;
+        this.isDone = isDone;
+        tasksCompleted++;
+    }
+
+    public Todo(int serialNum, String description, Date addDate,
+                boolean isDone) {
+        this.serialNum = serialNum;
+        this.description = description;
+        this.addDate = addDate;
+        this.isDone = isDone;
+        tasksOutstanding++;
+    }
+
 
     //SET STATEMENTS------------------------------------
     @Override
@@ -55,5 +74,20 @@ public class Todo extends Note {
 
     public static int getTasksCompleted() {
         return (tasksCompleted);
+    }
+
+    public String getSaveText() {
+        String text = "Todo/" +
+                this.serialNum + "/" +
+                this.description.toString() + "/" +
+                INPUT_DATE.format(this.addDate) + "/" +
+                this.isDone;
+
+        if(isDone) {
+            text = text + "/" + INPUT_DATE.format(this.doneDate) + "\n";
+        } else {
+            text = text + "\n";
+        }
+        return text;
     }
 }

@@ -22,6 +22,20 @@ public class Deadline extends Todo {
         super();
     }
 
+    public Deadline(int serialNum, String description, Date addDate, Date doneDate,
+                boolean isDone, Date targetDate, boolean doneAhead) {
+        super(serialNum, description, addDate, doneDate, isDone);
+        this.targetDate = targetDate;
+        this.doneAhead = doneAhead;
+    }
+
+    public Deadline(int serialNum, String description, Date addDate,
+                    boolean isDone, Date targetDate, boolean doneAhead) {
+        super(serialNum, description, addDate, isDone);
+        this.targetDate = targetDate;
+        this.doneAhead = doneAhead;
+    }
+
 
     //SET STATEMENTS------------------------------------
     public void setTargetDate(Date targetDate) throws DateException {
@@ -72,4 +86,21 @@ public class Deadline extends Todo {
         return("[D]");
     }
 
+    @Override
+    public String getSaveText() {
+        String text = "Deadline/" +
+                this.serialNum + "/" +
+                this.description.toString() + "/" +
+                INPUT_DATE.format(this.addDate) + "/" +
+                this.isDone + "/" +
+                this.targetDate + "/" +
+                this.doneAhead;
+
+        if(isDone) {
+            text = text + "/" + INPUT_DATE.format(this.doneDate) + "\n";
+        } else {
+            text = text + "\n";
+        }
+        return text;
+    }
 }

@@ -1,0 +1,2 @@
+Shoplist/1/sweets/04-Sep-2020 02:58/true/5.0/5.0/5.0/0.0/false/false/04-Sep-2020 02:58
+Shoplist/2/rice/04-Sep-2020 02:58/true/78.0/78.0/67.0/11.0/false/false/04-Sep-2020 03:00

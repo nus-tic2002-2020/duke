@@ -22,7 +22,17 @@ public class  Budget {
         isTotalOverBudget = totalBudgetBalance < 0;
     }
 
-    public Budget() {
+    public Budget() {}
+
+    public Budget(double budgetSet, double budgetRevised,
+                  double budgetUsed, double budgetBalance,
+                  boolean isRevised, boolean isOverBudget) {
+        this.budgetSet = budgetSet;
+        this.budgetRevised = budgetRevised;
+        this.budgetUsed = budgetUsed;
+        this.budgetBalance = budgetBalance;
+        this.isRevised = isRevised;
+        this.isOverBudget = isOverBudget;
     }
 
     //SET STATEMENTS------------------------------------
@@ -103,6 +113,16 @@ public class  Budget {
 
     public static boolean getIsTotalOverBudget(){
         return isTotalOverBudget;
+    }
+
+    public String getSaveText() {
+        String text = this.budgetSet + "/" +
+                this.budgetRevised + "/" +
+                this.budgetUsed + "/" +
+                this.budgetBalance + "/" +
+                this.isRevised + "/" +
+                this.isOverBudget;
+        return text;
     }
 
 }

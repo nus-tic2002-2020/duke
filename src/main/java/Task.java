@@ -16,5 +16,6 @@ public interface Task extends DukeUI {
     String getStatusIcon();
     int getSerialNum();
     void deleteExistingNote();
+    public abstract String getSaveText();
 
 }
