@@ -18,14 +18,16 @@ public interface DukeUI {
     //List of commands for Duke
     String DUKE_COMMANDS =
                     "\t\t***New Note Commands***\n" +
+                    "\t\t@bill            >>> Add a new todo task with a deadline.\n" +
+                    "\t\t\tE.g.\t@bill <bill description>/<deadline>/<amount payable>\n" +
                     "\t\t@deadline        >>> Add a new todo task with a deadline.\n" +
-                    "\t\t\tE.g. \"@deadline <todo description>/<deadline>\"\n" +
+                    "\t\t\tE.g.\t@deadline <todo description>/<deadline>\n" +
                     "\t\t@event           >>> Add a new event.\n" +
-                    "\t\t\tE.g. \"@event <event description>/<from>/<to>\"\n" +
+                    "\t\t\tE.g.\t@event <event description>/<from>/<to>\n" +
                     "\t\t@shoplist        >>> Add a new shopping list item.\n" +
-                    "\t\t\tE.g. \"@shoplist <item description>/<item budget>\"\n" +
+                    "\t\t\tE.g.\t@shoplist <item description>/<item budget>\n" +
                     "\t\t@todo            >>> Add a new todo task without a deadline.\n" +
-                    "\t\t\tE.g. \"@todo <todo description>\"\n" +
+                    "\t\t\tE.g.\t@todo <todo description>\n" +
                     "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
                     "\n\n" +
                     "\t\t***Generic Commands***\n" +
@@ -86,10 +88,16 @@ public interface DukeUI {
         System.out.println("\tYou have...");
         System.out.print("\t\t");
         System.out.print(String.format("%3d", Todo.getTasksOutstanding()));
-        System.out.print(" outstanding task(s), and\n");
+        System.out.print(" outstanding task(s),\n");
         System.out.print("\t\t");
         System.out.print(String.format("%3d", Event.getEventsOutstanding()));
-        System.out.print(" outstanding events(s)\n");
+        System.out.print(" outstanding events(s), and\n");
+        if(Budget.getIsTotalOverBudget()){
+            System.out.print("\t\t  a budget overrun of $");
+        } else {
+            System.out.print("\t\t  a healthy budget balance of $");
+        }
+        System.out.println(String.format("%,14.2f", Math.abs(Budget.getTotalBudgetBalance())));
         System.out.println("\t\t\t\t\t\t\t\t...in your list.");
     }
 

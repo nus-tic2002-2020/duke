@@ -214,6 +214,38 @@ public class Duke implements DukeUI {
                             throw new CommandException("There seems to be invalid characters behind #savenotes.");
                         }
 
+                    //Transfer budgets from one item to another.
+                    } else if(input.startsWith("#transfer")) {
+                        if(input.substring(9,10).equals(" ")) {
+                            String[] inputTokens = input.substring(10).split("/\\$|/", 3);
+                            int from = Integer.parseInt(inputTokens[0]);
+                            int to = Integer.parseInt(inputTokens[1]);
+                            double amount = Double.parseDouble(inputTokens[2]);
+
+                            for(int i=0; i<tasks.size(); i++){
+                                if(tasks.get(i).getSerialNum() == from) { from = i; }
+                                if(tasks.get(i).getSerialNum() == to) { to = i; }
+                            }
+
+                            Budget fromBudget = tasks.get(from).getBudgetObject();
+                            Budget toBudget = tasks.get(to).getBudgetObject();
+
+                            System.out.println(DUKE_DIVIDER);
+                            if(fromBudget.transferBudgetOut(amount, toBudget)){
+                                System.out.println("\tBudget transferred from...");
+                                tasks.get(from).printList();
+                                System.out.println("\t...to");
+                                tasks.get(to).printList();
+                                DukeUI.printCompleted();
+                                DukeUI.printOutstanding();
+                                System.out.println("\tUse command \"#listnotes\" to see them all.");
+                            }
+                            System.out.println(DUKE_DIVIDER);
+
+                        } else {
+                            throw new CommandException("There seems to be invalid characters behind #transfer.");
+                        }
+
                     } else {
                         throw new CommandException("It seems to be an invalid Generic Command.");
                     }
@@ -259,6 +291,17 @@ public class Duke implements DukeUI {
                         Task t = new Shoplist((tasks.size() + 1), description, itemBudget, addDate);
                         tasks.add(t);
                         System.out.println("\tNoted! I've added a new shopping item to the list.");
+
+                    //Add a new bill payment with a deadline.
+                    } else if (input.startsWith("@bill ")) {
+                        String[] inputTokens = input.substring(6).split("/\\$|/", 3);
+                        String description = inputTokens[0];
+                        Date targetDate = INPUT_DATE.parse(inputTokens[1]);
+                        double itemBudget = Double.parseDouble(inputTokens[2]);
+
+                        Task t = new Bill((tasks.size() + 1), description, targetDate, itemBudget, addDate);
+                        tasks.add(t);
+                        System.out.println("\tNoted! I've added a new bill payment to the list.");
 
                     } else {
                         throw new CommandException("It seems to be an invalid New Task Command.");

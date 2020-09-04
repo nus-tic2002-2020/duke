@@ -1,16 +1,16 @@
-public class  Budget {
+public class Budget {
 
     //VARIABLES-----------------------------------------
     private double budgetSet;
     private double budgetRevised;
     private double budgetUsed = 0;
-    private double budgetBalance;
+    private double budgetBalance = 0;
     private boolean isRevised = false;
     private boolean isOverBudget;
 
     private static double totalBudgetSet;
     private static double totalBudgetUsed = 0;
-    private static double totalBudgetBalance;
+    private static double totalBudgetBalance = 0;
     private static boolean isTotalOverBudget;
 
     //CONSTRUCTORS--------------------------------------
@@ -18,8 +18,6 @@ public class  Budget {
         this.budgetSet = budgetSet;
         this.budgetRevised = this.budgetSet;
         totalBudgetSet = totalBudgetSet + budgetSet;
-        totalBudgetBalance = totalBudgetSet - totalBudgetUsed;
-        isTotalOverBudget = totalBudgetBalance < 0;
     }
 
     public Budget() {}
@@ -33,6 +31,10 @@ public class  Budget {
         this.budgetBalance = budgetBalance;
         this.isRevised = isRevised;
         this.isOverBudget = isOverBudget;
+        totalBudgetSet = totalBudgetSet + budgetSet;
+        totalBudgetUsed = totalBudgetUsed + budgetUsed;
+        totalBudgetBalance = totalBudgetBalance + budgetBalance;
+        isTotalOverBudget = totalBudgetBalance < 0;
     }
 
     //SET STATEMENTS------------------------------------
@@ -40,9 +42,7 @@ public class  Budget {
         this.budgetSet = budgetSet;
         this.budgetBalance = this.budgetSet - budgetUsed;
         this.isOverBudget = this.budgetBalance < 0;
-        totalBudgetUsed = totalBudgetUsed + budgetUsed;
-        totalBudgetBalance = totalBudgetSet - totalBudgetUsed;
-        isTotalOverBudget = totalBudgetBalance < 0;
+        totalBudgetSet = totalBudgetSet + budgetSet;
     }
 
     public void setBudgetUsed(double budgetUsed) {
@@ -50,27 +50,38 @@ public class  Budget {
         this.budgetBalance = this.budgetSet - budgetUsed;
         this.isOverBudget = this.budgetBalance < 0;
         totalBudgetUsed = totalBudgetUsed + budgetUsed;
-        totalBudgetBalance = totalBudgetSet - totalBudgetUsed;
+        totalBudgetBalance = totalBudgetBalance + this.budgetBalance;
         isTotalOverBudget = totalBudgetBalance < 0;
     }
 
     private void transferBudgetIn(double balanceIn) {
+        totalBudgetBalance = totalBudgetBalance - this.budgetBalance;
         this.budgetRevised = this.budgetRevised + balanceIn;
         this.budgetBalance = this.budgetRevised - budgetUsed;
+        totalBudgetBalance = totalBudgetBalance + this.budgetBalance;
         this.isOverBudget = this.budgetBalance < 0;
         this.isRevised = true;
     }
 
     public boolean transferBudgetOut(double balanceOut, Budget target) {
-        if (this.budgetBalance < balanceOut) {
-            return false;
-        } else {
-            this.budgetRevised = this.budgetRevised - balanceOut;
-            this.budgetBalance = this.budgetRevised - budgetUsed;
-            target.transferBudgetIn(balanceOut);
-            this.isRevised = true;
-            return true;
+        if(this.budgetUsed == 0 && this.budgetRevised < balanceOut) {
+                System.out.println("\tThere is insufficient budget set in the originating budget\n" +
+                        "\tto effect the transfer.");
+                return false;
+        } else if (this.budgetUsed > 0 && this.budgetBalance < balanceOut) {
+                System.out.println("\tThere is insufficient budget balance in the originating budget\n" +
+                        "\tto effect the transfer.");
+                return false;
         }
+
+        totalBudgetBalance = totalBudgetBalance - this.budgetBalance;
+        this.budgetRevised = this.budgetRevised - balanceOut;
+        this.budgetBalance = this.budgetRevised - budgetUsed;
+        totalBudgetBalance = totalBudgetBalance + this.budgetBalance;
+        this.isRevised = true;
+        target.transferBudgetIn(balanceOut);
+        System.out.println("\tThe budget transfer is successful.");
+        return true;
     }
 
 

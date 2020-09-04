@@ -165,4 +165,10 @@ public class Event extends Note {
         }
         return text;
     }
+
+    //ABSTRACT METHODS----------------------------------
+    public Budget getBudgetObject() {
+        return null;
+    }
+
 }

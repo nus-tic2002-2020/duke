@@ -44,6 +44,33 @@ public class DukeStorage implements DukeUI {
         while (read.hasNext()) {
             String[] readIndexes = read.nextLine().split("/");
             switch (readIndexes[0]) {
+                case "Bill" -> {
+                    int serialNum = Integer.parseInt(readIndexes[1]);
+                    String description = readIndexes[2];
+                    Date addDate = INPUT_DATE.parse(readIndexes[3]);
+                    boolean isDone = Boolean.parseBoolean(readIndexes[4]);
+                    Date targetDate = INPUT_DATE.parse(readIndexes[5]);
+                    boolean doneAhead = Boolean.parseBoolean(readIndexes[6]);
+                    double budgetSet = Double.parseDouble(readIndexes[7]);
+                    double budgetRevised = Double.parseDouble(readIndexes[8]);
+                    double budgetUsed = Double.parseDouble(readIndexes[9]);
+                    double budgetBalance = Double.parseDouble(readIndexes[10]);
+                    boolean isRevised = Boolean.parseBoolean(readIndexes[11]);
+                    boolean isOverBudget = Boolean.parseBoolean(readIndexes[12]);
+                    Budget itemBudget = new Budget(budgetSet, budgetRevised, budgetUsed,
+                            budgetBalance, isRevised, isOverBudget);
+
+                    if(isDone) {
+                        Date doneDate = INPUT_DATE.parse(readIndexes[13]);
+                        Task task = new Bill(serialNum, description, addDate, doneDate,
+                                isDone, targetDate, doneAhead, itemBudget);
+                        tasks.add(task);
+                    } else {
+                        Task task = new Bill(serialNum, description, addDate,
+                                isDone, targetDate, doneAhead, itemBudget);
+                        tasks.add(task);
+                    }
+                }
                 case "Deadline" -> {
                     int serialNum = Integer.parseInt(readIndexes[1]);
                     String description = readIndexes[2];

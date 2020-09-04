@@ -4,11 +4,12 @@ public class Deadline extends Todo {
 
     //VARIABLES-----------------------------------------
     protected Date targetDate;
-    private boolean doneAhead = false;
+    protected boolean doneAhead = false;
 
 
     //CONSTRUCTORS--------------------------------------
-    public Deadline(int serialNum, String description, Date targetDate, Date addDate) throws DateException {
+    public Deadline(int serialNum, String description, Date targetDate,
+                    Date addDate) throws DateException {
         super(serialNum, description, addDate);
         Date now = new Date();
         if(targetDate.compareTo(now) < 0 ){
@@ -102,5 +103,10 @@ public class Deadline extends Todo {
             text = text + "\n";
         }
         return text;
+    }
+
+    //ABSTRACT METHODS----------------------------------
+    public Budget getBudgetObject() {
+        return null;
     }
 }

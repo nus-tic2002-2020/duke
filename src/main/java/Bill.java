@@ -1,29 +1,30 @@
 import java.util.Date;
 import java.util.Scanner;
 
-public class Shoplist extends Todo {
+public class Bill extends Deadline {
 
     //VARIABLES-----------------------------------------
     protected Budget itemBudget;
 
 
     //CONSTRUCTORS--------------------------------------
-    public Shoplist(int serialNum, String description, double itemBudget, Date addDate) {
-        super(serialNum, description, addDate);
+    public Bill(int serialNum, String description, Date targetDate, double itemBudget,
+                Date addDate) throws DateException {
+        super(serialNum, description, targetDate, addDate);
         this.itemBudget = new Budget(itemBudget);
     }
 
-    public Shoplist() { super(); }
+    public Bill() { super(); }
 
-    public Shoplist(int serialNum, String description, Date addDate, Date doneDate,
-                boolean isDone, Budget itemBudget) {
-        super(serialNum, description, addDate, doneDate, isDone);
+    public Bill(int serialNum, String description, Date addDate, Date doneDate,
+                boolean isDone, Date targetDate, boolean doneAhead, Budget itemBudget) {
+        super(serialNum, description, addDate, doneDate, isDone, targetDate, doneAhead);
         this.itemBudget = itemBudget;
     }
 
-    public Shoplist(int serialNum, String description, Date addDate,
-                    boolean isDone, Budget itemBudget) {
-        super(serialNum, description, addDate, isDone);
+    public Bill(int serialNum, String description, Date addDate,
+                boolean isDone, Date targetDate, boolean doneAhead, Budget itemBudget) {
+        super(serialNum, description, addDate, isDone, targetDate, doneAhead);
         this.itemBudget = itemBudget;
     }
 
@@ -39,7 +40,7 @@ public class Shoplist extends Todo {
         } else {
             String inputPrice;
             Scanner markDone = new Scanner(System.in);
-            System.out.println("\tWhat is the price you paid for " +
+            System.out.println("\tWhat is the amount you paid for " +
                     this.description.toString() + "?");
             inputPrice = markDone.nextLine();
             double itemPrice = Double.parseDouble(inputPrice.substring(1));
@@ -107,16 +108,18 @@ public class Shoplist extends Todo {
 
     @Override
     public String getTaskIcon() {
-        return("[S]");
+        return("[B]");
     }
 
     @Override
     public String getSaveText() {
-        String text = "Shoplist/" +
+        String text = "Bill/" +
                 this.serialNum + "/" +
                 this.description.toString() + "/" +
                 INPUT_DATE.format(this.addDate) + "/" +
                 this.isDone + "/" +
+                INPUT_DATE.format(this.targetDate) + "/" +
+                this.doneAhead + "/" +
                 this.itemBudget.getSaveText();
 
         if(isDone) {
@@ -126,5 +129,4 @@ public class Shoplist extends Todo {
         }
         return text;
     }
-
 }

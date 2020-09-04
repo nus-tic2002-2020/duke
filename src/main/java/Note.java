@@ -86,5 +86,5 @@ public abstract class Note implements Task {
 
     //ABSTRACT METHODS----------------------------------
     public abstract void deleteExistingNote();
-
+    public abstract Budget getBudgetObject();
 }
