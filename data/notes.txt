@@ -1,3 +1,1 @@
-Shoplist/1/sweets/04-Sep-2020 11:18/true/5123.0/5452.0/5452.0/0.0/true/false/04-Sep-2020 11:20
-Shoplist/2/rice/04-Sep-2020 11:19/true/5678345.0/5678016.0/345345.0/5332671.0/true/false/04-Sep-2020 11:29
-Bill/3/utilitites/04-Sep-2020 11:20/false/06-Sep-2020 15:00/false/75342.0/75342.0/0.0/0.0/false/false
+Todo/1/read books/06-Sep-2020 03:36/false

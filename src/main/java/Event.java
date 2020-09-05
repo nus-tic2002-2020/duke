@@ -14,18 +14,9 @@ public class Event extends Note {
     public Event(int serialNum, String description, Date startDate, Date endDate, Date addDate) throws DateException {
         super(serialNum, description, addDate);
         eventsOutstanding++;
-        Date now = new Date();
-        if(startDate.compareTo(now) < 0 ){
-            throw new DateException("StartB4Now", "Event", true);
-        } else {
-                this.startDate = startDate;
-        }
-        if(this.startDate.compareTo(endDate) > 0 ){
-            throw new DateException("EndB4Start", "Event", true);
-        } else {
-            this.endDate = endDate;
-            this.durationMinutes = (endDate.getTime() - this.startDate.getTime()) / 60000;
-        }
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.durationMinutes = (endDate.getTime() - this.startDate.getTime()) / 60000;
     }
 
     public Event() {
@@ -60,7 +51,7 @@ public class Event extends Note {
 
     //SET STATEMENTS------------------------------------
     @Override
-    public boolean markAsDone(Date doneDate) {
+    public boolean markAsDone(Date doneDate) throws CommandException {
         if(super.markAsDone(doneDate)) {
             eventsOutstanding--;
             eventsCompleted++;
@@ -70,10 +61,6 @@ public class Event extends Note {
             this.printList();
             return false;
         }
-    }
-
-    public static void deleteNewNote(){
-        eventsOutstanding--;
     }
 
     public void deleteExistingNote() {
@@ -90,11 +77,11 @@ public class Event extends Note {
     public void setStartDate(Date startDate) throws DateException {
         Date now = new Date();
         if(startDate.compareTo(now) < 0 ){
-            throw new DateException("StartB4Now", "Event", false);
+            throw new DateException(startDate, "StartB4Now");
         } else {
             if(this.endDate != null) {
                 if(startDate.compareTo(this.endDate) > 0 ) {
-                    throw new DateException("StartAFEnd", "Event", false);
+                    throw new DateException(startDate, "StartAFEnd");
                 } else {
                     this.startDate = startDate;
                     this.durationMinutes = (this.endDate.getTime() - startDate.getTime()) / 60000;
@@ -107,10 +94,10 @@ public class Event extends Note {
 
     public void setEndDate(Date endDate) throws DateException {
         if(this.startDate == null){
-            throw new DateException("NoStartDate", "Event", false);
+            throw new DateException(endDate, "NoStartDate");
         } else {
-            if(this.startDate.compareTo(endDate) > 0 ){
-                throw new DateException("EndB4Start", "Event", false);
+            if(endDate.compareTo(this.startDate) > 0 ){
+                throw new DateException(endDate, "EndB4Start");
             } else {
                 this.endDate = endDate;
                 this.durationMinutes = (endDate.getTime() - this.startDate.getTime()) / 60000;
@@ -130,7 +117,7 @@ public class Event extends Note {
     @Override
     public void printDetails(){
         System.out.println("\t\t\tDuration : " +
-                this.durationMinutes + "mins");
+                String.format("%,5d", this.durationMinutes) +  "mins");
         System.out.println("\t\t\tFrom     : " +
                 TASK_DATE.format(this.startDate));
         System.out.println("\t\t\tTo       : " +
@@ -139,6 +126,11 @@ public class Event extends Note {
             System.out.println("\t\t\tDone     : " +
                     TASK_DATE.format(this.doneDate));
         }
+    }
+
+    @Override
+    public String getTaskIcon() throws CommandException {
+        return NoteType.getTaskIcon("Event");
     }
 
     public static int getEventsOutstanding() {

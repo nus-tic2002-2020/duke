@@ -21,7 +21,7 @@ public abstract class Note implements Task {
 
 
     //SET STATEMENTS------------------------------------
-    public boolean markAsDone(Date doneDate) {
+    public boolean markAsDone(Date doneDate) throws CommandException {
         if(this.isDone) {
             System.out.println("\tNote #" + this.serialNum + " was already done!");
             return false;
@@ -55,7 +55,7 @@ public abstract class Note implements Task {
         return (this.doneDate);
     }
 
-    public void printList(){
+    public void printList() throws CommandException {
         System.out.print("\t" + String.format("%3d", this.serialNum));
         System.out.print(". ");
         System.out.print(this.getTaskIcon());
@@ -71,9 +71,6 @@ public abstract class Note implements Task {
         }
     }
 
-    public String getTaskIcon() {
-        return("[T]");
-    }
 
     public String getStatusIcon() {
         if(this.isDone){
@@ -84,7 +81,10 @@ public abstract class Note implements Task {
     }
 
 
+
+
     //ABSTRACT METHODS----------------------------------
     public abstract void deleteExistingNote();
     public abstract Budget getBudgetObject();
+    public abstract String getTaskIcon() throws CommandException;
 }

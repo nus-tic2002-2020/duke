@@ -34,7 +34,7 @@ public class Bill extends Deadline {
     }
 
     @Override
-    public boolean markAsDone(Date doneDate) {
+    public boolean markAsDone(Date doneDate) throws CommandException {
         if(this.isDone) {
             System.out.println("\tTask #" + this.serialNum + " was already done!");
         } else {
@@ -53,6 +53,12 @@ public class Bill extends Deadline {
         }
         this.printList();
         return false;
+    }
+
+    @Override
+    public void deleteExistingNote() {
+        super.deleteExistingNote();
+        this.itemBudget.deleteExistingBudget();
     }
 
     public void setItemPrice(double itemPrice) {
@@ -95,20 +101,12 @@ public class Bill extends Deadline {
     }
 
     public String getWithinBudget() {
-        if(this.itemBudget.getIsOverBudget()){
-            return "\u2612\t$" + String.format("%,14.2f",
-                    Math.abs(this.itemBudget.getBudgetBalance())) + " over budget.";
-        } else if(this.itemBudget.getBudgetBalance() == 0) {
-            return "\u2611\t$" + String.format("%,14.2f", 0.00) + " right on budget!";
-        } else {
-            return "\u2611\t$" + String.format("%,14.2f",
-                    Math.abs(this.itemBudget.getBudgetBalance())) + " under budget.";
-        }
+        return this.itemBudget.getWithinBudget();
     }
 
     @Override
-    public String getTaskIcon() {
-        return("[B]");
+    public String getTaskIcon() throws CommandException {
+        return NoteType.getTaskIcon("Bill");
     }
 
     @Override

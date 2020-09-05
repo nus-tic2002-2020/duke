@@ -29,13 +29,13 @@ public enum SunSign implements DukeUI{
     public static String getSunSign(Date date) throws ParseException {
 
 
-        for(SunSign month: SunSign.values()){
-            String from = month.from + "-" + YEAR_TODAY.format(date) + " 00:00:00";
-            String to = month.to + "-" + YEAR_TODAY.format(date)  + " 23:59:59";
+        for(SunSign sign: SunSign.values()){
+            String from = sign.from + "-" + YEAR_TODAY.format(date) + " 00:00:00";
+            String to = sign.to + "-" + YEAR_TODAY.format(date)  + " 23:59:59";
             Date start = INPUT_DATE.parse(from);
             Date end = INPUT_DATE.parse(to);
             if(date.compareTo(start)>=0 && date.compareTo(end)<=0){
-                return month.month;
+                return sign.month;
             }
         }
         return "ERROR";

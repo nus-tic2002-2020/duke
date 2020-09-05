@@ -4,11 +4,11 @@ import java.util.Date;
 public interface Task extends DukeUI {
 
     //SET STATEMENTS------------------------------------
-    boolean markAsDone(Date doneDate);
+    boolean markAsDone(Date doneDate) throws CommandException;
     void setSerialNum(int serialNum);
 
     //GET STATEMENTS------------------------------------
-    void printList();
+    void printList() throws CommandException;
     void printDetails();
     Date getAddDate();
     Date getDoneDate();

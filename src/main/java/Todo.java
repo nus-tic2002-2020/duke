@@ -39,7 +39,7 @@ public class Todo extends Note {
 
     //SET STATEMENTS------------------------------------
     @Override
-    public boolean markAsDone(Date doneDate) {
+    public boolean markAsDone(Date doneDate) throws CommandException {
         if(super.markAsDone(doneDate)) {
             tasksOutstanding--;
             tasksCompleted++;
@@ -49,10 +49,6 @@ public class Todo extends Note {
             this.printList();
             return false;
         }
-    }
-
-    public static void deleteNewNote(){
-        tasksOutstanding--;
     }
 
     public void deleteExistingNote() {
@@ -74,6 +70,10 @@ public class Todo extends Note {
 
     public static int getTasksCompleted() {
         return (tasksCompleted);
+    }
+
+    public String getTaskIcon() throws CommandException {
+        return NoteType.getTaskIcon("Todo");
     }
 
     public String getSaveText() {

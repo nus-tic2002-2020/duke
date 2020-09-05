@@ -1,4 +1,4 @@
-public class CommandException extends Exception{
+public class CommandException extends Exception {
 
     String message;
 
@@ -13,5 +13,15 @@ public class CommandException extends Exception{
 
     public String getMessage(){
         return message;
+    }
+
+    public void printExplanation(String input) {
+
+        DukeUI.printDivider();
+        System.out.println("\tI don't understand what you mean by...\n");
+        DukeUI.commandWrap(input, 66);
+        System.out.println("\t" + this.message);
+        DukeUI.suggestCommands();
+        DukeUI.printDivider();
     }
 }

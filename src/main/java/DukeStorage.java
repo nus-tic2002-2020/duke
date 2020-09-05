@@ -15,10 +15,29 @@ public class DukeStorage implements DukeUI {
 
 
     //CONSTRUCTORS--------------------------------------
-    public DukeStorage(File file, String path){
-        this.file = file;
+    public DukeStorage(String path){
+
+        int lastSlash = 0;
+        for (int i = 0; i < path.length(); i++) {
+            if (path.substring(i, i + 1).equals("/")) {
+                lastSlash = i;
+            }
+        }
+
+        File fileDir = new File(path.substring(0, lastSlash));
+        if(!fileDir.exists()){ fileDir.mkdirs(); }
+
+        this.file = new File(path);
         this.path = path;
     }
+
+
+    //GET STATEMENTS----------------------------------
+    public String getPath() { return this.path; }
+
+
+    //SET STATEMENTS----------------------------------
+    public void setFile(File file) { this.file = file; }
 
 
     //WRITE STATEMENTS----------------------------------
@@ -32,14 +51,14 @@ public class DukeStorage implements DukeUI {
     }
 
     public String noteToText(Task task) {
-        String text = task.getSaveText();
-        return text;
+        return task.getSaveText();
     }
 
     //LOAD STATEMENTS-----------------------------------
     public ArrayList<Task> readFromFile() throws FileNotFoundException, ParseException {
 
-        ArrayList<Task> tasks = new ArrayList<Task>();
+        ArrayList<Task> notes = new ArrayList<Task>();
+        Task note = null;
         Scanner read = new Scanner(file);
         while (read.hasNext()) {
             String[] readIndexes = read.nextLine().split("/");
@@ -62,13 +81,11 @@ public class DukeStorage implements DukeUI {
 
                     if(isDone) {
                         Date doneDate = INPUT_DATE.parse(readIndexes[13]);
-                        Task task = new Bill(serialNum, description, addDate, doneDate,
+                        note = new Bill(serialNum, description, addDate, doneDate,
                                 isDone, targetDate, doneAhead, itemBudget);
-                        tasks.add(task);
                     } else {
-                        Task task = new Bill(serialNum, description, addDate,
+                        note = new Bill(serialNum, description, addDate,
                                 isDone, targetDate, doneAhead, itemBudget);
-                        tasks.add(task);
                     }
                 }
                 case "Deadline" -> {
@@ -81,13 +98,11 @@ public class DukeStorage implements DukeUI {
 
                     if(isDone) {
                         Date doneDate = INPUT_DATE.parse(readIndexes[7]);
-                        Task task = new Deadline(serialNum, description, addDate, doneDate,
+                        note = new Deadline(serialNum, description, addDate, doneDate,
                                 isDone, targetDate, doneAhead);
-                        tasks.add(task);
                     } else {
-                        Task task = new Deadline(serialNum, description, addDate,
+                        note = new Deadline(serialNum, description, addDate,
                                 isDone, targetDate, doneAhead);
-                        tasks.add(task);
                     }
                 }
                 case "Event" -> {
@@ -101,13 +116,11 @@ public class DukeStorage implements DukeUI {
 
                     if(isDone) {
                         Date doneDate = INPUT_DATE.parse(readIndexes[8]);
-                        Task task = new Event(serialNum, description, addDate, doneDate,
+                        note = new Event(serialNum, description, addDate, doneDate,
                                 isDone, startDate, endDate, durationMinutes);
-                        tasks.add(task);
                     } else {
-                        Task task = new Event(serialNum, description, addDate,
+                        note = new Event(serialNum, description, addDate,
                                 isDone, startDate, endDate, durationMinutes);
-                        tasks.add(task);
                     }
                 }
                 case "Shoplist" -> {
@@ -126,13 +139,11 @@ public class DukeStorage implements DukeUI {
 
                     if(isDone) {
                         Date doneDate = INPUT_DATE.parse(readIndexes[11]);
-                        Task task = new Shoplist(serialNum, description, addDate, doneDate,
+                        note = new Shoplist(serialNum, description, addDate, doneDate,
                                 isDone, itemBudget);
-                        tasks.add(task);
                     } else {
-                        Task task = new Shoplist(serialNum, description, addDate,
+                        note = new Shoplist(serialNum, description, addDate,
                                 isDone, itemBudget);
-                        tasks.add(task);
                     }
                 }
                 case "Todo" -> {
@@ -143,17 +154,16 @@ public class DukeStorage implements DukeUI {
 
                     if(isDone) {
                         Date doneDate = INPUT_DATE.parse(readIndexes[5]);
-                        Task task = new Todo(serialNum, description, addDate, doneDate,
+                        note = new Todo(serialNum, description, addDate, doneDate,
                                 isDone);
-                        tasks.add(task);
                     } else {
-                        Task task = new Todo(serialNum, description, addDate,
+                        note = new Todo(serialNum, description, addDate,
                                 isDone);
-                        tasks.add(task);
                     }
                 }
             }
+            notes.add(note);
         }
-        return tasks;
+        return notes;
     }
 }

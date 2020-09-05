@@ -47,7 +47,7 @@ public class Budget {
 
     public void setBudgetUsed(double budgetUsed) {
         this.budgetUsed = budgetUsed;
-        this.budgetBalance = this.budgetSet - budgetUsed;
+        this.budgetBalance = this.budgetRevised - budgetUsed;
         this.isOverBudget = this.budgetBalance < 0;
         totalBudgetUsed = totalBudgetUsed + budgetUsed;
         totalBudgetBalance = totalBudgetBalance + this.budgetBalance;
@@ -57,8 +57,10 @@ public class Budget {
     private void transferBudgetIn(double balanceIn) {
         totalBudgetBalance = totalBudgetBalance - this.budgetBalance;
         this.budgetRevised = this.budgetRevised + balanceIn;
-        this.budgetBalance = this.budgetRevised - budgetUsed;
-        totalBudgetBalance = totalBudgetBalance + this.budgetBalance;
+        if(budgetUsed != 0){
+            this.budgetBalance = this.budgetRevised - budgetUsed;
+            totalBudgetBalance = totalBudgetBalance + this.budgetBalance;
+        }
         this.isOverBudget = this.budgetBalance < 0;
         this.isRevised = true;
     }
@@ -76,12 +78,20 @@ public class Budget {
 
         totalBudgetBalance = totalBudgetBalance - this.budgetBalance;
         this.budgetRevised = this.budgetRevised - balanceOut;
-        this.budgetBalance = this.budgetRevised - budgetUsed;
-        totalBudgetBalance = totalBudgetBalance + this.budgetBalance;
+        if(budgetUsed != 0){
+            this.budgetBalance = this.budgetRevised - budgetUsed;
+            totalBudgetBalance = totalBudgetBalance + this.budgetBalance;
+        }
         this.isRevised = true;
         target.transferBudgetIn(balanceOut);
         System.out.println("\tThe budget transfer is successful.");
         return true;
+    }
+
+    public void deleteExistingBudget() {
+        totalBudgetSet = totalBudgetSet - this.budgetSet;
+        totalBudgetUsed = totalBudgetUsed - this.budgetUsed;
+        totalBudgetBalance = totalBudgetBalance - this.budgetBalance;
     }
 
 
@@ -136,4 +146,26 @@ public class Budget {
         return text;
     }
 
+    public String getWithinBudget() {
+        if(this.getIsOverBudget()){
+            return "\u2612\t$" + String.format("%,14.2f",
+                    Math.abs(this.getBudgetBalance())) + " over budget.";
+        } else if(this.getBudgetBalance() == 0) {
+            return "\u2611\t$" + String.format("%,14.2f", 0.00) + " right on budget!";
+        } else {
+            return "\u2611\t$" + String.format("%,14.2f",
+                    Math.abs(this.getBudgetBalance())) + " under budget.";
+        }
+    }
+
+    public static void printBudgetReport(){
+        String budgetReport = "$" + String.format("%,14.2f", Math.abs(totalBudgetBalance));
+        if(isTotalOverBudget){
+            System.out.println(String.format("%1$s%2$22s", "\t\t  a budget overrun of", budgetReport.toString()));
+        } else if(totalBudgetBalance == 0) {
+            System.out.println(String.format("%1$s%2$22s", "\t\t  a balanced budget balance of", budgetReport.toString()));
+        } else {
+            System.out.println(String.format("%1$s%2$22s", "\t\t  a healthy budget balance of", budgetReport.toString()));
+        }
+    }
 }
