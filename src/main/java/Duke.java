@@ -12,12 +12,19 @@ public class Duke {
         ifBye();
     }
 
-    private static String[] taskList = new String[100];
+    public static void greeting(){
+        System.out.println("\t____________________________________________________________");
+        System.out.println("\tHello! I'm Duke");
+        System.out.println("\tWhat can I do for you?");
+        System.out.println("\t____________________________________________________________");
+    }
+
+    private static Task[] taskList = new Task[100]; //use Task file
     private static int numberOfTask = 0;
 
     //add
-    public static void setTaskList(String input){
-        taskList[numberOfTask] = input;
+    public static void setTaskList(Task description){
+        taskList[numberOfTask] = description;
         numberOfTask++;
     }
 
@@ -25,16 +32,13 @@ public class Duke {
     public static void getTaskList(){
         System.out.println("\t____________________________________________________________");
         for (int i = 0; i< numberOfTask; i++){
-            System.out.println("\t" + (i+1) + ". " + taskList[i]);
+            System.out.println("\t" + (i+1) + ". ["  +taskList[i].getStatusIcon()+ "]" +taskList[i].getDescription());
         }
         System.out.println("\t____________________________________________________________");
     }
 
-    public static void greeting(){
-        System.out.println("\t____________________________________________________________");
-        System.out.println("\tHello! I'm Duke");
-        System.out.println("\tWhat can I do for you?");
-        System.out.println("\t____________________________________________________________");
+    public static String itIsDone(int thatTask){
+        return taskList[thatTask].setDone();
     }
 
     public static void ifBye(){
@@ -51,13 +55,20 @@ public class Duke {
             } else if (input.equals("list")) {
                 getTaskList();
                 break;
+            } else if (input.split(" ") ){
+                String part1 = input[0];
+                String part2 = input[1];
+                if (part1.equals("done")){
+                    itIsDone(part2);
+                }
             }
             //none of the above
-            setTaskList(input);
-            System.out.println("\t____________________________________________________________");
+            setTaskList(new Task(input));
+            System.out.println("\t_________________________________f___________________________");
             System.out.print("\tadded: ");
             System.out.println(input);
             System.out.println("\t____________________________________________________________");
+
             input = getInput.nextLine();
         }
     }
