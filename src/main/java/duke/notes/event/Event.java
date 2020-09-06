@@ -72,7 +72,7 @@ public class Event extends Note {
     public void deleteExistingNote() {
         if(isDone){
             System.out.print("\tEvent #" + this.serialNum + " was already done!");
-            System.out.println("\t...deleting the event anyway...");
+            System.out.println("\t...deleting the event anyway.");
             eventsCompleted--;
         } else {
             System.out.println("\tNoted! I've deleted Event #" + this.serialNum + ".");
@@ -162,6 +162,11 @@ public class Event extends Note {
             text = text + "\n";
         }
         return text;
+    }
+
+    @Override
+    public String getObjectClass() {
+        return "Event";
     }
 
     //ABSTRACT METHODS----------------------------------

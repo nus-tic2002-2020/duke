@@ -1,35 +1,39 @@
-package duke.notes.todo;
+package duke.notes.event;
 
-import duke.budget.*;
-import duke.commands.*;
-import duke.notes.*;
+import duke.budget.Budget;
+import duke.commands.CommandException;
+import duke.commands.DateException;
+import duke.notes.NoteType;
+
 import java.util.Date;
 import java.util.Scanner;
 
-public class Bill extends Deadline {
+public class Wedding extends Event {
 
     //VARIABLES-----------------------------------------
     protected Budget itemBudget;
 
 
     //CONSTRUCTORS--------------------------------------
-    public Bill(int serialNum, String description, Date targetDate, double itemBudget,
-                Date addDate) throws DateException {
-        super(serialNum, description, targetDate, addDate);
+    public Wedding(int serialNum, String description, Date startDate, Date endDate,
+                   double itemBudget, Date addDate) throws DateException {
+        super(serialNum, description, startDate, endDate, addDate);
         this.itemBudget = new Budget(itemBudget);
     }
 
-    public Bill() { super(); }
+    public Wedding() {
+        super();
+    }
 
-    public Bill(int serialNum, String description, Date addDate, Date doneDate,
-                boolean isDone, Date targetDate, boolean doneAhead, Budget itemBudget) {
-        super(serialNum, description, addDate, doneDate, isDone, targetDate, doneAhead);
+    public Wedding(int serialNum, String description, Date addDate, Date doneDate, boolean isDone,
+                    Date startDate, Date endDate, long durationMinutes, Budget itemBudget)  {
+        super(serialNum, description, addDate, doneDate, isDone, startDate,  endDate,  durationMinutes);
         this.itemBudget = itemBudget;
     }
 
-    public Bill(int serialNum, String description, Date addDate,
-                boolean isDone, Date targetDate, boolean doneAhead, Budget itemBudget) {
-        super(serialNum, description, addDate, isDone, targetDate, doneAhead);
+    public Wedding(int serialNum, String description, Date addDate, boolean isDone,
+                    Date startDate, Date endDate, long durationMinutes, Budget itemBudget) {
+        super(serialNum, description, addDate, isDone, startDate,  endDate,  durationMinutes);
         this.itemBudget = itemBudget;
     }
 
@@ -40,24 +44,10 @@ public class Bill extends Deadline {
 
     @Override
     public boolean markAsDone(Date doneDate) throws CommandException {
-        if(this.isDone) {
-            System.out.println("\tTask #" + this.serialNum + " was already done!");
-        } else {
-            String inputPrice;
-            Scanner markDone = new Scanner(System.in);
-            System.out.println("\tWhat is the amount you paid for " +
-                    this.description.toString() + "?");
-            inputPrice = markDone.nextLine();
-            double itemPrice = Double.parseDouble(inputPrice.substring(1));
-            itemBudget.setBudgetUsed(itemPrice);
-            this.isDone = true;
-            this.doneDate = doneDate;
-            tasksOutstanding--;
-            tasksCompleted++;
-            System.out.println("\tNoted! I've marked Task #" + this.serialNum + " as done.");
+        if (!this.isDone) {
+            this.itemBudget.setBudgetUsed(this.itemBudget.getBudgetRevised());
         }
-        this.printList();
-        return false;
+        return super.markAsDone(doneDate);
     }
 
     @Override
@@ -73,7 +63,7 @@ public class Bill extends Deadline {
 
     //GET STATEMENTS------------------------------------
     @Override
-    public void printDetails(){
+    public void printDetails() {
         System.out.println("\t\t\tBudget   : $" +
                 String.format("%,14.2f", this.getItemBudget()));
         if (this.itemBudget.getIsRevised()) {
@@ -111,20 +101,20 @@ public class Bill extends Deadline {
 
     @Override
     public String getTaskIcon() throws CommandException {
-        return NoteType.getTaskIcon("Bill");
+        return NoteType.getTaskIcon("Wedding");
     }
 
     @Override
     public String getSaveText() {
-        String text = "Bill/" +
+        String text = "Wedding/" +
                 this.serialNum + "/" +
                 this.description.toString() + "/" +
                 INPUT_DATE.format(this.addDate) + "/" +
                 this.isDone + "/" +
-                INPUT_DATE.format(this.targetDate) + "/" +
-                this.doneAhead + "/" +
+                INPUT_DATE.format(this.startDate) + "/" +
+                INPUT_DATE.format(this.endDate) + "/" +
+                this.getDurationMinutes() + "/" +
                 this.itemBudget.getSaveText();
-
         if(isDone) {
             text = text + "/" + INPUT_DATE.format(this.doneDate) + "\n";
         } else {
@@ -135,6 +125,6 @@ public class Bill extends Deadline {
 
     @Override
     public String getObjectClass() {
-        return "Bill";
+        return "Wedding";
     }
 }

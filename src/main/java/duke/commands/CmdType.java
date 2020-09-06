@@ -27,7 +27,7 @@ public enum CmdType {
                 return type;
             }
         }
-        throw new CommandException("There is no " + cmdType + "type of command in Duke, yet.");
+        throw new CommandException("There is no " + cmdType + " type of command in Duke, yet.");
     }
 
     public static String getCommand(String cmdType) throws CommandException {
@@ -37,7 +37,7 @@ public enum CmdType {
                 return type.command;
             }
         }
-        throw new CommandException("There is no " + cmdType + "type of command in Duke, yet.");
+        throw new CommandException("There is no " + cmdType + " type of command in Duke, yet.");
     }
 
     public static String getShortCommand(String cmdType) throws CommandException {
@@ -47,6 +47,6 @@ public enum CmdType {
                 return type.shortCommand;
             }
         }
-        throw new CommandException("There is no " + cmdType + "type of command in Duke, yet.");
+        throw new CommandException("There is no " + cmdType + " type of command in Duke, yet.");
     }
 }

@@ -25,6 +25,7 @@ public class WipeCommand extends DukeCommand implements DukeUI {
             String confirmWipe;
             Scanner wipeDuke = new Scanner(System.in);
 
+            DukeUI.printCompleted();
             DukeUI.printOutstanding();
             System.out.println("\tAre you sure you want to wipe Duke's Memory?");
             System.out.println("\tAll data, including saved files, would be lost.");

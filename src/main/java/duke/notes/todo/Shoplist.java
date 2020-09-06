@@ -39,9 +39,7 @@ public class Shoplist extends Todo {
 
     @Override
     public boolean markAsDone(Date doneDate) throws CommandException {
-        if(this.isDone) {
-            System.out.println("\tTask #" + this.serialNum + " was already done!");
-        } else {
+        if(!this.isDone) {
             String inputPrice;
             Scanner markDone = new Scanner(System.in);
             System.out.println("\tWhat is the price you paid for " +
@@ -49,14 +47,8 @@ public class Shoplist extends Todo {
             inputPrice = markDone.nextLine();
             double itemPrice = Double.parseDouble(inputPrice.substring(1));
             itemBudget.setBudgetUsed(itemPrice);
-            this.isDone = true;
-            this.doneDate = doneDate;
-            tasksOutstanding--;
-            tasksCompleted++;
-            System.out.println("\tNoted! I've marked Task #" + this.serialNum + " as done.");
         }
-        this.printList();
-        return false;
+        return super.markAsDone(doneDate);
     }
 
     @Override
@@ -128,6 +120,11 @@ public class Shoplist extends Todo {
             text = text + "\n";
         }
         return text;
+    }
+
+    @Override
+    public String getObjectClass() {
+        return "Shoplist";
     }
 
 }

@@ -25,7 +25,7 @@ public class ExitCommand extends DukeCommand implements DukeUI {
             Scanner quitDuke = new Scanner(System.in);
 
             DukeUI.printOutstanding();
-            System.out.println("\tAre you sure you want to quit?");
+            System.out.println("\tAre you sure you want to exit Duke?");
             System.out.println("\tAll unsaved data would be lost.");
             DukeUI.askForConfirmation();
             DukeUI.printDivider();

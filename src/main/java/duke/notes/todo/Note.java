@@ -78,7 +78,6 @@ public abstract class Note implements Task {
         }
     }
 
-
     public String getStatusIcon() {
         if(this.isDone){
             return ("[\u2713]");
@@ -88,10 +87,9 @@ public abstract class Note implements Task {
     }
 
 
-
-
     //ABSTRACT METHODS----------------------------------
     public abstract void deleteExistingNote();
     public abstract Budget getBudgetObject();
     public abstract String getTaskIcon() throws CommandException;
+    public abstract String getObjectClass();
 }

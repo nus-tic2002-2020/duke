@@ -1,1 +1,5 @@
-Todo/1/read books/06-Sep-2020 03:36/false
+Todo/1/read books/06-Sep-2020 21:17/true/06-Sep-2020 21:26
+Shoplist/2/Birthday gift for Cindy's 39th/06-Sep-2020 21:23/true/324.0/324.0/523.0/-199.0/false/true/06-Sep-2020 21:26
+Birthday/3/Cindy's 39th/06-Sep-2020 21:23/true/24-Sep-2020 12:00/24-Sep-2020 15:00/180/06-Sep-2020 21:26
+Wedding/4/John and Jenny/06-Sep-2020 21:24/true/23-Sep-2020 17:00/23-Sep-2020 23:00/360/668.88/668.88/668.88/0.0/false/false/06-Sep-2020 21:26
+Shoplist/5/sweets/06-Sep-2020 21:26/true/34154.0/34154.0/23456.0/10698.0/false/false/06-Sep-2020 21:26

@@ -101,6 +101,11 @@ public class Deadline extends Todo {
         return text;
     }
 
+    @Override
+    public String getObjectClass() {
+        return "Deadline";
+    }
+
     //ABSTRACT METHODS----------------------------------
     public Budget getBudgetObject() {
         return null;

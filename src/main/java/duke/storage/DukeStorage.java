@@ -95,6 +95,24 @@ public class DukeStorage implements DukeUI {
                                 isDone, targetDate, doneAhead, itemBudget);
                     }
                 }
+                case "Birthday" -> {
+                    int serialNum = Integer.parseInt(readIndexes[1]);
+                    String description = readIndexes[2];
+                    Date addDate = INPUT_DATE.parse(readIndexes[3]);
+                    boolean isDone = Boolean.parseBoolean(readIndexes[4]);
+                    Date startDate = INPUT_DATE.parse(readIndexes[5]);
+                    Date endDate = INPUT_DATE.parse(readIndexes[6]);
+                    long durationMinutes = Long.parseLong(readIndexes[7]);
+
+                    if(isDone) {
+                        Date doneDate = INPUT_DATE.parse(readIndexes[8]);
+                        note = new Birthday(serialNum, description, addDate, doneDate,
+                                isDone, startDate, endDate, durationMinutes);
+                    } else {
+                        note = new Birthday(serialNum, description, addDate,
+                                isDone, startDate, endDate, durationMinutes);
+                    }
+                }
                 case "Deadline" -> {
                     int serialNum = Integer.parseInt(readIndexes[1]);
                     String description = readIndexes[2];
@@ -166,6 +184,32 @@ public class DukeStorage implements DukeUI {
                     } else {
                         note = new Todo(serialNum, description, addDate,
                                 isDone);
+                    }
+                }
+                case "Wedding" -> {
+                    int serialNum = Integer.parseInt(readIndexes[1]);
+                    String description = readIndexes[2];
+                    Date addDate = INPUT_DATE.parse(readIndexes[3]);
+                    boolean isDone = Boolean.parseBoolean(readIndexes[4]);
+                    Date startDate = INPUT_DATE.parse(readIndexes[5]);
+                    Date endDate = INPUT_DATE.parse(readIndexes[6]);
+                    long durationMinutes = Long.parseLong(readIndexes[7]);
+                    double budgetSet = Double.parseDouble(readIndexes[8]);
+                    double budgetRevised = Double.parseDouble(readIndexes[8]);
+                    double budgetUsed = Double.parseDouble(readIndexes[9]);
+                    double budgetBalance = Double.parseDouble(readIndexes[10]);
+                    boolean isRevised = Boolean.parseBoolean(readIndexes[11]);
+                    boolean isOverBudget = Boolean.parseBoolean(readIndexes[12]);
+                    Budget itemBudget = new Budget(budgetSet, budgetRevised, budgetUsed,
+                            budgetBalance, isRevised, isOverBudget);
+
+                    if(isDone) {
+                        Date doneDate = INPUT_DATE.parse(readIndexes[8]);
+                        note = new Wedding(serialNum, description, addDate, doneDate,
+                                isDone, startDate, endDate, durationMinutes, itemBudget);
+                    } else {
+                        note = new Wedding(serialNum, description, addDate,
+                                isDone, startDate, endDate, durationMinutes, itemBudget);
                     }
                 }
             }

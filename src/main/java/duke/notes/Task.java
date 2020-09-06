@@ -22,5 +22,5 @@ public interface Task extends DukeUI {
     void deleteExistingNote();
     public abstract String getSaveText();
     public abstract Budget getBudgetObject();
-
+    public abstract String getObjectClass();
 }

@@ -29,6 +29,9 @@ public interface DukeUI {
                     "\t\t*** New Note Commands ***\n" +
                     "\t\t@bill            >>> Add a new todo task with a deadline.\n" +
                     "\t\t\tE.g. @bill <Description> /by <Date-Time> /for <Budget/Price>\n" +
+                    "\t\t@birthday        >>> Add a new birthday event.\n" +
+                    "\t\t\tE.g. @birthday <Person> /from <Date-Time> /to <Date-Time>\n" +
+                    "\t\t\t\t/for <Budget/Price>\n" +
                     "\t\t@deadline        >>> Add a new todo task with a deadline.\n" +
                     "\t\t\tE.g. @deadline <Description> /by <Date-Time>\n" +
                     "\t\t@event           >>> Add a new event.\n" +
@@ -179,7 +182,7 @@ public interface DukeUI {
         System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t...on your list.");
     }
 
-    static void printOnStartup(Date now, boolean isLoadedFromFile) throws ParseException {
+    static void printOnStartup(Date now, boolean isLoadedFromFile) throws ParseException, CommandException {
         System.out.print("\nWelcome to PROJECT >>>\n" + DUKE_LOGO);
         System.out.println(String.format("%1$-42s%2$42s", DATE_TODAY.format(now), DAY_TODAY.format(now)));
         System.out.println(String.format("%1$-42s%2$42s", ZodiacYear.getZodiacYear(now), SunSign.getSunSign(now)) + "\n");
@@ -209,15 +212,18 @@ public interface DukeUI {
         System.out.println(DUKE_COMMANDS);
     }
 
-    static void suggestCommands() {
-        System.out.println("\tUse command #commands to see a list of things I can do for you.");
+    static void suggestCommands() throws CommandException {
+        System.out.println("\tUse command " + CmdType.getCommand("COMMANDS").toString() +
+                " to see a list of things I can do for you.");
     }
 
-    static void suggestFormat() {
-        System.out.println("\tUse command #commands to see the correct format for command attributes.");
+    static void suggestFormat() throws CommandException {
+        System.out.println("\tUse command " + CmdType.getCommand("COMMANDS").toString() +
+                " to see the correct format for command attributes.");
     }
 
-    static void suggestListNotes() {
-        System.out.println("\tEnter command \"#listnotes\" to see them all.");
+    static void suggestListNotes() throws CommandException {
+        System.out.println("\tEnter command " + CmdType.getCommand("LISTNOTES").toString() +
+                " to see them all.");
     }
 }

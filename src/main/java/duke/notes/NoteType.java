@@ -29,60 +29,66 @@ public enum NoteType {
     public static NoteType getKey(String noteType) throws CommandException {
 
         for(NoteType type: NoteType.values()){
-            if(noteType.equals(type.constructor) || noteType.equals(type.command) || noteType.equals(type.shortCommand)){
+            if(noteType.equals(type.constructor) || noteType.equals(type.command) ||
+                    noteType.equals(type.shortCommand) || noteType.equals(type.toString())){
                 return type;
             }
         }
-        throw new CommandException("There is no " + noteType + "type of notes in Duke, yet.");
+        throw new CommandException("There is no " + noteType + " type of notes in Duke, yet.");
     }
 
     public static String getConstructor(String noteType) throws CommandException {
 
         for(NoteType type: NoteType.values()){
-            if(noteType.equals(type.constructor) || noteType.equals(type.command) || noteType.equals(type.shortCommand)){
+            if(noteType.equals(type.constructor) || noteType.equals(type.command) ||
+                    noteType.equals(type.shortCommand) || noteType.equals(type.toString())){
                 return type.constructor;
             }
         }
-        throw new CommandException("There is no " + noteType + "type of notes in Duke, yet.");
+        throw new CommandException("There is no " + noteType + " type of notes in Duke, yet.");
     }
 
     public static String getCommand(String noteType) throws CommandException {
 
         for(NoteType type: NoteType.values()){
-            if(noteType.equals(type.constructor) || noteType.equals(type.command) || noteType.equals(type.shortCommand)){
+            if(noteType.equals(type.constructor) || noteType.equals(type.command) ||
+                    noteType.equals(type.shortCommand) || noteType.equals(type.toString())){
                 return type.command;
             }
         }
-        throw new CommandException("There is no " + noteType + "type of notes in Duke, yet.");
+        throw new CommandException("There is no " + noteType + " type of notes in Duke, yet.");
     }
 
     public static String getShortCommand(String noteType) throws CommandException {
 
         for(NoteType type: NoteType.values()){
-            if(noteType.equals(type.constructor) || noteType.equals(type.command) || noteType.equals(type.shortCommand)){
+            if(noteType.equals(type.constructor) || noteType.equals(type.command) ||
+                    noteType.equals(type.shortCommand) || noteType.equals(type.toString())){
                 return type.shortCommand;
             }
         }
-        throw new CommandException("There is no " + noteType + "type of notes in Duke, yet.");
+        throw new CommandException("There is no " + noteType + " type of notes in Duke, yet.");
     }
 
     public static String getTaskIcon(String noteType) throws CommandException {
 
         for(NoteType type: NoteType.values()){
-            if(noteType.equals(type.constructor) || noteType.equals(type.command) || noteType.equals(type.shortCommand)){
+            if(noteType.equals(type.constructor) || noteType.equals(type.command) ||
+                    noteType.equals(type.shortCommand) || noteType.equals(type.toString())){
                 return type.taskIcon;
             }
         }
-        throw new CommandException("There is no " + noteType + "type of notes in Duke, yet.");
+        throw new CommandException("There is no " + noteType + " type of notes in Duke, yet.");
     }
 
     public static String getLowercaseName(String noteType) throws CommandException {
 
         for(NoteType type: NoteType.values()){
-            if(noteType.equals(type.constructor) || noteType.equals(type.command) || noteType.equals(type.shortCommand)){
+            if(noteType.equals(type.constructor) || noteType.equals(type.command) ||
+                    noteType.equals(type.shortCommand) || noteType.equals(type.toString())){
                 return type.lowercaseName;
             }
         }
-        throw new CommandException("There is no " + noteType + "type of notes in Duke, yet.");
+        throw new CommandException("There is no " + noteType + " type of notes in Duke, yet.");
     }
 }

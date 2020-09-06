@@ -29,7 +29,7 @@ public class Duke implements DukeParser, DukeUI {
         }
     }
 
-    public void run() throws ParseException, IOException {
+    public void run() throws ParseException, IOException, CommandException {
 
         boolean confirmExit = false;
 

@@ -1,5 +1,6 @@
 package duke.parser;
 
+import duke.commands.CommandException;
 import duke.ui.*;
 
 public class PrefixException extends Exception {
@@ -8,7 +9,7 @@ public class PrefixException extends Exception {
         super();
     }
 
-    public void printExplanation(String input) {
+    public void printExplanation(String input) throws CommandException {
 
         DukeUI.printDivider();
         System.out.println("\tI don't understand what you mean by...\n");

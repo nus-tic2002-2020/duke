@@ -150,12 +150,12 @@ public class Budget {
 
     public String getWithinBudget() {
         if(this.getIsOverBudget()){
-            return "\u2612\t$" + String.format("%,14.2f",
+            return "\u26A0\t$" + String.format("%,14.2f",
                     Math.abs(this.getBudgetBalance())) + " over budget.";
         } else if(this.getBudgetBalance() == 0) {
-            return "\u2611\t$" + String.format("%,14.2f", 0.00) + " right on budget!";
+            return "\u26A1\t$" + String.format("%,14.2f", 0.00) + " right on budget!";
         } else {
-            return "\u2611\t$" + String.format("%,14.2f",
+            return "\u263A\t$" + String.format("%,14.2f",
                     Math.abs(this.getBudgetBalance())) + " under budget.";
         }
     }

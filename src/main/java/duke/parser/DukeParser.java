@@ -100,6 +100,9 @@ public interface DukeParser {
                     case "BILL" -> {
                         delimiters = new String[]{"/by", "/for \\$"};
                     }
+                    case "BIRTHDAY", "WEDDING" -> {
+                        delimiters = new String[]{"/from", "/to", "/for \\$"};
+                    }
                     case "DEADLINE" -> {
                         delimiters = new String[]{"/by"};
                     }

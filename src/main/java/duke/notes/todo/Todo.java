@@ -96,6 +96,11 @@ public class Todo extends Note {
         return text;
     }
 
+    @Override
+    public String getObjectClass() {
+        return "Todo";
+    }
+
 
     //ABSTRACT METHODS----------------------------------
     public Budget getBudgetObject() {

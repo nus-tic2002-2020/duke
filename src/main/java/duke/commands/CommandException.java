@@ -19,7 +19,7 @@ public class CommandException extends Exception {
         return message;
     }
 
-    public void printExplanation(String input) {
+    public void printExplanation(String input) throws CommandException {
 
         DukeUI.printDivider();
         System.out.println("\tI don't understand what you mean by...\n");
