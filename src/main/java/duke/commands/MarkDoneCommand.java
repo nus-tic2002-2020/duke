@@ -8,19 +8,18 @@ import java.util.Date;
 public class MarkDoneCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
-    protected String cmdType;
+
 
     //CONSTRUCTORS--------------------------------------
     public MarkDoneCommand(ArrayList<String> inputs) {
         super(inputs);
-        this.cmdType = inputs.get(0);
     }
 
     //METHODS-------------------------------------------
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IndexOutOfBoundsException {
 
         Date doneDate = new Date();
-        if(CmdType.getKey(cmdType).toString().equals("MARKDONE")) {
+        if(CmdType.getKey(this.cmdType).toString().equals("MARKDONE")) {
             ArrayList<Integer> notes = new ArrayList<Integer>();
             for(int i=1; i<inputs.size(); i++) {
                 int toDelete = Integer.parseInt(inputs.get(i));

@@ -12,12 +12,11 @@ import java.util.Date;
 public class NewNoteCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
-    protected String noteType;
+
 
     //CONSTRUCTORS--------------------------------------
     public NewNoteCommand(ArrayList<String> inputs) {
         super(inputs);
-        this.noteType = inputs.get(0);
     }
 
     //METHODS-------------------------------------------
@@ -28,7 +27,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
             Date addDate = new Date();
             int nextSerialNum = dukeNotes.getNotes().size() + 1;
             ArrayList<Task> notes = new ArrayList<Task>();
-            switch (NoteType.getKey(noteType).toString()) {
+            switch (NoteType.getKey(this.cmdType).toString()) {
                 case "BILL" -> {
                     String description = inputs.get(1);
                     Date targetDate = INPUT_DATE.parse(inputs.get(2));

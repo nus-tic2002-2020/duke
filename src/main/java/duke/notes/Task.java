@@ -10,11 +10,13 @@ public interface Task extends DukeUI {
     //SET STATEMENTS------------------------------------
     boolean markAsDone(Date doneDate) throws CommandException;
     void setSerialNum(int serialNum);
+    void setDescription(String description);
 
     //GET STATEMENTS------------------------------------
     void printList() throws CommandException;
     void printDetails();
     Date getAddDate();
+    public boolean getIsDone();
     Date getDoneDate();
     String getDescription();
     String getStatusIcon();

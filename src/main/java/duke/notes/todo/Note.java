@@ -44,6 +44,9 @@ public abstract class Note implements Task {
         this.serialNum = serialNum;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     //GET STATEMENTS------------------------------------
     public int getSerialNum() {
@@ -58,6 +61,10 @@ public abstract class Note implements Task {
         return (this.addDate);
     }
 
+    public boolean getIsDone() {
+        return (this.isDone);
+    }
+
     public Date getDoneDate() {
         return (this.doneDate);
     }
@@ -67,7 +74,7 @@ public abstract class Note implements Task {
         System.out.print(". ");
         System.out.print(this.getTaskIcon());
         System.out.print(this.getStatusIcon() + " ");
-        DukeUI.listWrap(this.description, 28, this.addDate);
+        DukeUI.listWrap(this.description, 25, this.addDate);
         printDetails();
     }
 

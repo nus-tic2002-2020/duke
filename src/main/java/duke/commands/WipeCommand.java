@@ -9,19 +9,18 @@ import java.util.Scanner;
 public class WipeCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
-    protected String cmdType;
+
 
     //CONSTRUCTORS--------------------------------------
     public WipeCommand(ArrayList<String> inputs) {
         super(inputs);
-        this.cmdType = inputs.get(0);
     }
 
     //METHODS-------------------------------------------
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException {
 
         DukeUI.printDivider();
-        if(CmdType.getKey(cmdType).toString().equals("WIPEDUKE")) {
+        if(CmdType.getKey(this.cmdType).toString().equals("WIPEDUKE")) {
             String confirmWipe;
             Scanner wipeDuke = new Scanner(System.in);
 

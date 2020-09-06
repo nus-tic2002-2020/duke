@@ -47,14 +47,18 @@ public interface DukeUI {
                     "\t\t\tE.g. #commands\n" +
                     "\t\t#delete          >>> Delete notes, then renumber the rest.\n" +
                     "\t\t\tE.g. #delete <Note#>\n" +
-                    "\t\t\tE.g. #delete <Note#> / <Note#> / <Note#> \n" +
+                    "\t\t\tE.g. #delete <Note#> /and <Note#> /and <Note#> \n" +
+                    "\t\t#editdesc        >>> Edit the description of a note.\n" +
+                    "\t\t\tE.g. #editdesc <Note#> /to <New Description>\n" +
                     "\t\t#exitduke        >>> Exit Project Duke.\n" +
                     "\t\t\tE.g. #exitduke\n" +
+                    "\t\t#extend          >>> Extend a deadline by days, hours and minutes.\n" +
+                    "\t\t\tE.g. #extend <Note#> /by <days>d <hours>h <minutes>m\n" +
                     "\t\t#listnotes       >>> List all the notes in memory.\n" +
                     "\t\t\tE.g. #listnotes\n" +
                     "\t\t#markdone x      >>> Mark notes as done.\n" +
                     "\t\t\tE.g. #markdone <Note#>\n" +
-                    "\t\t\tE.g. #markdone <Note#> / <Note#> / <Note#>\n" +
+                    "\t\t\tE.g. #markdone <Note#> /and <Note#> /and <Note#>\n" +
                     "\t\t#transfer        >>> Mark tasks x, y and z as done.\n" +
                     "\t\t\tE.g. #transfer /from <Note#> /to <Note#> /for <Budget/Price>\n" +
                     "\t\t#wipeduke        >>> List all available Duke's commands.\n" +
@@ -136,7 +140,7 @@ public interface DukeUI {
                     System.out.println(String.format("%1$-29s%2$29s",
                             input, "Added: " + TASK_DATE.format(addDate)));
                 } else {
-                    System.out.println("\t\t\t\t " + input);
+                    System.out.println("\t\t\t\t\t" + input);
                 }
                 break;
             } else {
@@ -154,7 +158,7 @@ public interface DukeUI {
                     firstLine = false;
 
                 } else {
-                    System.out.println("\t\t\t\t " + input.substring(0, lastSpace));
+                    System.out.println("\t\t\t\t\t" + input.substring(0, lastSpace));
                     input = input.substring(lastSpace + 1);
                 }
             }
@@ -189,7 +193,7 @@ public interface DukeUI {
 
         printDivider();
         System.out.println("\tHello! I'm Duke, your all-rounded personal assistant!");
-        System.out.println("\tWhat do you need noted today?");
+        System.out.println("\tWhat do you need noted today?\n");
         showCommandList();
         printDivider();
 

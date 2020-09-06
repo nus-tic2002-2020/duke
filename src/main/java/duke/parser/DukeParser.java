@@ -37,6 +37,37 @@ public interface DukeParser {
                             return new DeleteCommand(inputs);
                         }
                     }
+                    case "EDITDESC" -> {
+                        if (inputTokens.length == 1) {
+                            throw new CommandException("There seems to be insufficient attributes behind" + cmdType + ".");
+                        } else {
+                            String[] editTokens = inputTokens[1].split("/to");
+                            for (String editToken : editTokens) {
+                                inputs.add(editToken.trim());
+                            }
+                            return new EditDescriptionCommand(inputs);
+                        }
+                    }
+                    case "EXTDLINE" -> {
+                        if (inputTokens.length == 1) {
+                            throw new CommandException("There seems to be insufficient attributes behind" + cmdType + ".");
+                        } else {
+                            String[] editTokens = inputTokens[1].split("/by",2);
+                            inputs.add(editTokens[0].trim());
+                            inputs.add(2,"0");
+                            inputs.add(3,"0");
+                            inputs.add(4,"0");
+                            for (String editToken : editTokens[1].trim().split(" ")) {
+                                switch (editToken.trim().substring(editToken.length()-1)) {
+                                    case "d" -> inputs.set(2, editToken.substring(0, editToken.length() - 1));
+                                    case "h" -> inputs.set(3, editToken.substring(0, editToken.length() - 1));
+                                    case "m" -> inputs.set(4, editToken.substring(0, editToken.length() - 1));
+                                    default -> throw new NumberFormatException();
+                                }
+                            }
+                            return new ExtendDeadlineCommand(inputs);
+                        }
+                    }
                     case "EXITDUKE" -> {
                         if (inputTokens.length == 1) {
                             return new ExitCommand(inputs);

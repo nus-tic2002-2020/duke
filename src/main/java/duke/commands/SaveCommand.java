@@ -8,13 +8,11 @@ import java.util.ArrayList;
 public class SaveCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
-    protected String cmdType;
     private boolean autoSave;
 
     //CONSTRUCTORS--------------------------------------
     public SaveCommand(ArrayList<String> inputs) {
         super(inputs);
-        this.cmdType = inputs.get(0);
     }
 
     public SaveCommand() {
@@ -26,7 +24,7 @@ public class SaveCommand extends DukeCommand implements DukeUI {
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IOException {
 
         DukeUI.printDivider();
-        if(CmdType.getKey(cmdType).toString().equals("SAVENOTES")) {
+        if(CmdType.getKey(this.cmdType).toString().equals("SAVENOTES")) {
             dukeStorage.writeToFile(dukeNotes.getNotes());
             System.out.println("\tSave operation completed!");
         } else {

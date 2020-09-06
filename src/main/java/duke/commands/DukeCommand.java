@@ -9,12 +9,13 @@ public abstract class DukeCommand {
 
     //VARIABLES-----------------------------------------
     protected ArrayList<String> inputs;
+    protected String cmdType;
     boolean confirmExit = false;
 
     //CONSTRUCTORS--------------------------------------
     public DukeCommand(ArrayList<String> inputs) {
-
         this.inputs = inputs;
+        this.cmdType = inputs.get(0);
     }
 
     public DukeCommand() {}

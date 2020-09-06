@@ -8,19 +8,18 @@ import java.util.ArrayList;
 public class InfoCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
-    protected String infoType;
+
 
     //CONSTRUCTORS--------------------------------------
     public InfoCommand(ArrayList<String> inputs) {
         super(inputs);
-        this.infoType = inputs.get(0);
     }
 
     //METHODS-------------------------------------------
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException {
 
         DukeUI.printDivider();
-        switch (CmdType.getKey(infoType).toString()) {
+        switch (CmdType.getKey(this.cmdType).toString()) {
             case "COMMANDS" -> {
                 DukeUI.showCommandList();
             }

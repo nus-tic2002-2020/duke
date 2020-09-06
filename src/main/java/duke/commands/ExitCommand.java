@@ -8,19 +8,18 @@ import java.util.Scanner;
 public class ExitCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
-    protected String cmdType;
+
 
     //CONSTRUCTORS--------------------------------------
     public ExitCommand(ArrayList<String> inputs) {
         super(inputs);
-        this.cmdType = inputs.get(0);
     }
 
     //METHODS-------------------------------------------
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException {
 
         DukeUI.printDivider();
-        if(CmdType.getKey(cmdType).toString().equals("EXITDUKE")) {
+        if(CmdType.getKey(this.cmdType).toString().equals("EXITDUKE")) {
             String confirmQuit;
             Scanner quitDuke = new Scanner(System.in);
 

@@ -67,6 +67,8 @@ public class DukeStorage implements DukeUI {
         ArrayList<Task> notes = new ArrayList<Task>();
         Task note = null;
         Scanner read = new Scanner(file);
+
+        if(!read.hasNext()) { throw new FileNotFoundException(); }
         while (read.hasNext()) {
             String[] readIndexes = read.nextLine().split("/");
             switch (readIndexes[0]) {

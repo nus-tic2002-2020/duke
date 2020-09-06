@@ -9,30 +9,28 @@ import java.util.Date;
 public class TransferCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
-    protected String cmdType;
+
 
     //CONSTRUCTORS--------------------------------------
     public TransferCommand(ArrayList<String> inputs) {
         super(inputs);
-        this.cmdType = inputs.get(0);
     }
 
     //METHODS-------------------------------------------
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IndexOutOfBoundsException {
 
         Date doneDate = new Date();
-        if(CmdType.getKey(cmdType).toString().equals("TRANSFER")) {
+        if(CmdType.getKey(this.cmdType).toString().equals("TRANSFER")) {
             int from = Integer.parseInt(this.inputs.get(1));
             int to = Integer.parseInt(this.inputs.get(2));
             double amount = Double.parseDouble(this.inputs.get(3));
-
-            System.out.println("\t" + from + "\t" + to + "\t" + amount);
 
             if (from == to){
                 throw new CommandException("Transferring from and to the same account achieves nothing, at all.");
             } else if (from > dukeNotes.getNotes().size() || to > dukeNotes.getNotes().size()) {
                 throw new IndexOutOfBoundsException();
             }
+
             for(int i=0; i<dukeNotes.getNotes().size(); i++){
                 if(dukeNotes.getNotes().get(i).getSerialNum() == from) { from = i; }
                 if(dukeNotes.getNotes().get(i).getSerialNum() == to) { to = i; }

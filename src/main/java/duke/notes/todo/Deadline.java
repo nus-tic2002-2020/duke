@@ -11,6 +11,7 @@ public class Deadline extends Todo {
     //VARIABLES-----------------------------------------
     protected Date targetDate;
     protected boolean doneAhead = false;
+    protected int timesExtended = 0;
 
 
     //CONSTRUCTORS--------------------------------------
@@ -57,8 +58,14 @@ public class Deadline extends Todo {
     //GET STATEMENTS------------------------------------
     @Override
     public void printDetails(){
-        System.out.println("\t\t\tDeadline : " +
+        System.out.print("\t\t\tDeadline : " +
                 TASK_DATE.format(this.targetDate));
+        if(this.timesExtended > 0){
+            System.out.println("(" + this.timesExtended +
+                    " extensions)");
+        } else {
+            System.out.println("");
+        }
         if (this.isDone) {
             System.out.println("\t\t\tDone     : " +
                     TASK_DATE.format(this.doneDate) + " " +

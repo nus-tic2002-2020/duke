@@ -8,19 +8,18 @@ import java.util.Scanner;
 public class DeleteCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
-    protected String cmdType;
+
 
     //CONSTRUCTORS--------------------------------------
     public DeleteCommand(ArrayList<String> inputs) {
         super(inputs);
-        this.cmdType = inputs.get(0);
     }
 
     //METHODS-------------------------------------------
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IndexOutOfBoundsException {
 
 
-        if (CmdType.getKey(cmdType).toString().equals("DELETE")) {
+        if (CmdType.getKey(this.cmdType).toString().equals("DELETE")) {
 
             ArrayList<Integer> notes = new ArrayList<Integer>();
             for(int i=1; i<inputs.size(); i++) {
@@ -65,7 +64,7 @@ public class DeleteCommand extends DukeCommand implements DukeUI {
                 System.out.println("\n\tDeletion(s) completed...");
 
                 if(dukeNotes.getNotes().size() == 0){
-                    System.out.println("\t...there are no more notes on your list.");
+                    System.out.println("\t...there are no notes on your list.");
                 } else {
                     System.out.println("\t...renumbering the remaining note(s)...");
                     for (int i = 0; i < dukeNotes.getNotes().size(); i++) {
