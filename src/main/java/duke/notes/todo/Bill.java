@@ -74,6 +74,14 @@ public class Bill extends Deadline {
     //GET STATEMENTS------------------------------------
     @Override
     public void printDetails(){
+        System.out.print("\t\t\tDeadline : " +
+                TASK_DATE.format(this.targetDate));
+        if(this.timesExtended > 0){
+            System.out.print("(" + this.timesExtended +
+                    " extensions)\n");
+        } else {
+            System.out.print("\n");
+        }
         System.out.println("\t\t\tBudget   : $" +
                 String.format("%,14.2f", this.getItemBudget()));
         if (this.itemBudget.getIsRevised()) {

@@ -11,7 +11,7 @@ public class Event extends Note {
     //VARIABLES-----------------------------------------
     protected Date startDate = null;
     protected Date endDate = null;
-    private long durationMinutes;
+    protected long durationMinutes;
     protected static int eventsOutstanding;
     protected static int eventsCompleted;
 
@@ -82,11 +82,11 @@ public class Event extends Note {
 
     public void setStartDate(Date startDate) throws DateException {
         Date now = new Date();
-        if(startDate.compareTo(now) < 0 ){
+        if(startDate.before(now)){
             throw new DateException(startDate, "StartB4Now");
         } else {
             if(this.endDate != null) {
-                if(startDate.compareTo(this.endDate) > 0 ) {
+                if(startDate.after(this.endDate)) {
                     throw new DateException(startDate, "StartAFEnd");
                 } else {
                     this.startDate = startDate;
@@ -102,7 +102,7 @@ public class Event extends Note {
         if(this.startDate == null){
             throw new DateException(endDate, "NoStartDate");
         } else {
-            if(endDate.compareTo(this.startDate) > 0 ){
+            if(endDate.before(this.startDate)){
                 throw new DateException(endDate, "EndB4Start");
             } else {
                 this.endDate = endDate;

@@ -19,7 +19,7 @@ public interface DukeParser {
                 String[] delimiters = new String[]{};
                 inputs.add(cmdType);
                 switch (CmdType.getKey(cmdType).toString()) {
-                    case "COMMANDS", "LISTNOTES" -> {
+                    case "COMMANDS", "LISTBUDGETS", "LISTDEADLINES", "LISTEVENTS", "LISTNOTES" -> {
                         if (inputTokens.length == 1) {
                             return new InfoCommand(inputs);
                         } else {

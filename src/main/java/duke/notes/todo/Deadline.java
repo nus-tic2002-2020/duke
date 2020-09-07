@@ -61,10 +61,10 @@ public class Deadline extends Todo {
         System.out.print("\t\t\tDeadline : " +
                 TASK_DATE.format(this.targetDate));
         if(this.timesExtended > 0){
-            System.out.println("(" + this.timesExtended +
-                    " extensions)");
+            System.out.print("(" + this.timesExtended +
+                    " extensions)\n");
         } else {
-            System.out.println("");
+            System.out.print("\n");
         }
         if (this.isDone) {
             System.out.println("\t\t\tDone     : " +
@@ -97,7 +97,7 @@ public class Deadline extends Todo {
                 this.description.toString() + "/" +
                 INPUT_DATE.format(this.addDate) + "/" +
                 this.isDone + "/" +
-                this.targetDate + "/" +
+                INPUT_DATE.format(this.targetDate) + "/" +
                 this.doneAhead;
 
         if(isDone) {

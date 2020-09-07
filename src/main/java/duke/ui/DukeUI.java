@@ -54,9 +54,15 @@ public interface DukeUI {
                     "\t\t\tE.g. #exitduke\n" +
                     "\t\t#extend          >>> Extend a deadline by days, hours and minutes.\n" +
                     "\t\t\tE.g. #extend <Note#> /by <days>d <hours>h <minutes>m\n" +
-                    "\t\t#listnotes       >>> List all the notes in memory.\n" +
+                    "\t\t#listdeadlines   >>> List in chronological order, all deadlines.\n" +
+                    "\t\t\tE.g. #listbudgets\n" +
+                    "\t\t#listbudgets     >>> List in quantum, all budgets set.\n" +
+                    "\t\t\tE.g. #listdeadlines\n" +
+                    "\t\t#listevents      >>> List in chronological order, all events.\n" +
+                    "\t\t\tE.g. #listevents\n" +
+                    "\t\t#listnotes       >>> List in serial number order, all notes.\n" +
                     "\t\t\tE.g. #listnotes\n" +
-                    "\t\t#markdone x      >>> Mark notes as done.\n" +
+                    "\t\t#markdone        >>> Mark notes as done.\n" +
                     "\t\t\tE.g. #markdone <Note#>\n" +
                     "\t\t\tE.g. #markdone <Note#> /and <Note#> /and <Note#>\n" +
                     "\t\t#savenotes       >>> Perform a new save while archiving the last.\n" +
@@ -201,6 +207,7 @@ public interface DukeUI {
 
         if(isLoadedFromFile){
             System.out.println("\tSaved notes were found and loaded.");
+            printCompleted();
             printOutstanding();
             suggestListNotes();
         }else {

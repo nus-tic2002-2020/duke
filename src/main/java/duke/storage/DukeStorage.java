@@ -269,11 +269,11 @@ public class DukeStorage implements DukeUI {
                     Date endDate = INPUT_DATE.parse(readIndexes[6]);
                     long durationMinutes = Long.parseLong(readIndexes[7]);
                     double budgetSet = Double.parseDouble(readIndexes[8]);
-                    double budgetRevised = Double.parseDouble(readIndexes[8]);
-                    double budgetUsed = Double.parseDouble(readIndexes[9]);
-                    double budgetBalance = Double.parseDouble(readIndexes[10]);
-                    boolean isRevised = Boolean.parseBoolean(readIndexes[11]);
-                    boolean isOverBudget = Boolean.parseBoolean(readIndexes[12]);
+                    double budgetRevised = Double.parseDouble(readIndexes[9]);
+                    double budgetUsed = Double.parseDouble(readIndexes[10]);
+                    double budgetBalance = Double.parseDouble(readIndexes[11]);
+                    boolean isRevised = Boolean.parseBoolean(readIndexes[12]);
+                    boolean isOverBudget = Boolean.parseBoolean(readIndexes[13]);
                     Budget itemBudget = new Budget(budgetSet, budgetRevised, budgetUsed,
                             budgetBalance, isRevised, isOverBudget);
 
