@@ -1,0 +1,7 @@
+Todo/1/read book/07-Sep-2020 10:09/true/07-Sep-2020 11:25
+Todo/2/get coffee/07-Sep-2020 10:09/true/07-Sep-2020 11:29
+Todo/3/test code/07-Sep-2020 10:12/true/07-Sep-2020 11:25
+Todo/4/test autosave/07-Sep-2020 10:13/true/07-Sep-2020 11:25
+Todo/5/edit path/07-Sep-2020 10:14/false
+Todo/6/test archive path/07-Sep-2020 10:16/false
+Todo/7/add newline/07-Sep-2020 10:17/true/07-Sep-2020 11:25

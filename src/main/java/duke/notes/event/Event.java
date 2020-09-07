@@ -111,6 +111,11 @@ public class Event extends Note {
         }
     }
 
+    public static void resetStaticVariables() {
+        eventsOutstanding = 0;
+        eventsCompleted = 0;
+    }
+
     //GET STATEMENTS------------------------------------
     public Date getStartDate() { return (this.startDate); }
 

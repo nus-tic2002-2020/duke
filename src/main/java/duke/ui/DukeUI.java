@@ -18,7 +18,7 @@ public interface DukeUI {
     String DUKE_DIVIDER = "\t----------------------------------------------------------------------------";
 
     //Date formats to be used by Duke
-    SimpleDateFormat TASK_DATE = new SimpleDateFormat("dd-MMM-yyyy (E), HH:mm:ss");
+    SimpleDateFormat TASK_DATE = new SimpleDateFormat("dd-MMM-yyyy (E), hh:mm a");
     SimpleDateFormat DATE_TODAY = new SimpleDateFormat("dd MMMM yyyy");
     SimpleDateFormat DAY_TODAY = new SimpleDateFormat("EEEE");
     SimpleDateFormat YEAR_TODAY = new SimpleDateFormat("yyyy");
@@ -59,6 +59,8 @@ public interface DukeUI {
                     "\t\t#markdone x      >>> Mark notes as done.\n" +
                     "\t\t\tE.g. #markdone <Note#>\n" +
                     "\t\t\tE.g. #markdone <Note#> /and <Note#> /and <Note#>\n" +
+                    "\t\t#savenotes       >>> Perform a new save while archiving the last.\n" +
+                    "\t\t\tE.g. #savenotes\n" +
                     "\t\t#transfer        >>> Mark tasks x, y and z as done.\n" +
                     "\t\t\tE.g. #transfer /from <Note#> /to <Note#> /for <Budget/Price>\n" +
                     "\t\t#wipeduke        >>> List all available Duke's commands.\n" +

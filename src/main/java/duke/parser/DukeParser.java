@@ -109,6 +109,13 @@ public interface DukeParser {
                             return new TransferCommand(inputs);
                         }
                     }
+                    case "UNDOLAST" -> {
+                        if (inputTokens.length == 1) {
+                            return new UndoLastCommand(inputs);
+                        } else {
+                            throw new CommandException("There seems to be invalid characters behind" + cmdType + ".");
+                        }
+                    }
                     case "WIPEDUKE" -> {
                         if (inputTokens.length == 1) {
                             return new WipeCommand(inputs);

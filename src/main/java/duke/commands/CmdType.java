@@ -12,6 +12,7 @@ public enum CmdType {
     MARKDONE("#markdone", "#mkd"),
     SAVENOTES("#savenotes", "#sav"),
     TRANSFER("#transfer", "#txf"),
+    UNDOLAST("#undo", "#und"),
     WIPEDUKE("#wipeduke", "#wpe");
 
     private final String command;

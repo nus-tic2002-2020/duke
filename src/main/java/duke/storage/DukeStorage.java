@@ -18,6 +18,9 @@ public class DukeStorage implements DukeUI {
 
     //VARIABLES-----------------------------------------
     private File file;
+    private File lastSave = null;
+    private File last2Save = null;
+    private File last3Save = null;
     private String path;
 
 
@@ -36,11 +39,42 @@ public class DukeStorage implements DukeUI {
 
         this.file = new File(path);
         this.path = path;
+        this.lastSave = null;
+        this.last2Save = null;
+        this.last3Save = null;
     }
 
 
     //GET STATEMENTS----------------------------------
     public String getPath() { return this.path; }
+
+    public int revertToLastSave(DukeList dukeNotes) throws IOException, ParseException {
+
+        if(this.lastSave == null) {
+            return -1;
+
+        } else if(this.last2Save == null){
+            copyFile(this.lastSave, this.file);
+            this.lastSave = null;
+            dukeNotes.replaceNotes(readFromFile());
+            return 0;
+
+        } else if(this.last3Save == null){
+            copyFile(this.lastSave, this.file);
+            this.lastSave = this.last2Save;
+            this.last2Save = null;
+            dukeNotes.replaceNotes(readFromFile());
+            return 1;
+
+        } else {
+            copyFile(this.lastSave, this.file);
+            this.lastSave = this.last2Save;
+            this.last2Save = this.last3Save;
+            this.last3Save = null;
+            dukeNotes.replaceNotes(readFromFile());
+            return 2;
+        }
+    }
 
 
     //SET STATEMENTS----------------------------------
@@ -61,14 +95,52 @@ public class DukeStorage implements DukeUI {
         return task.getSaveText();
     }
 
+    public void archiveToFile() throws IOException {
+
+        this.last3Save = this.last2Save;
+        this.last2Save = this.lastSave;
+
+        Date archiveDate = new Date();
+        int lastSlash = 0;
+        for (int i = 0; i < path.length(); i++) {
+            if (path.substring(i, i + 1).equals("/")) {
+                lastSlash = i;
+            }
+        }
+
+        String archivePath = this.path.substring(0, lastSlash) +
+                "/archive_" + archiveDate.getTime() + ".txt";
+        this.lastSave = new File(archivePath);
+
+        copyFile(this.file, this.lastSave);
+    }
+
+    public void copyFile(File fromFile, File toFile) throws IOException {
+
+        Scanner read = new Scanner(fromFile);
+        FileWriter fw = new FileWriter(toFile, false);
+
+        while(read.hasNext()) {
+            fw.write(read.nextLine() + "\n");
+        }
+        fw.close();
+    }
+
+
     //LOAD STATEMENTS-----------------------------------
     public ArrayList<Task> readFromFile() throws FileNotFoundException, ParseException {
 
         ArrayList<Task> notes = new ArrayList<Task>();
-        Task note = null;
-        Scanner read = new Scanner(file);
 
-        if(!read.hasNext()) { throw new FileNotFoundException(); }
+        Task note = null;
+        Scanner read = new Scanner(this.file);
+
+        if(!read.hasNext()) {
+            throw new FileNotFoundException();
+        } else {
+            Todo.resetStaticVariables();
+            Event.resetStaticVariables();
+        }
         while (read.hasNext()) {
             String[] readIndexes = read.nextLine().split("/");
             switch (readIndexes[0]) {

@@ -25,10 +25,11 @@ public class SaveCommand extends DukeCommand implements DukeUI {
 
         DukeUI.printDivider();
         if(CmdType.getKey(this.cmdType).toString().equals("SAVENOTES")) {
+            dukeStorage.archiveToFile();
             dukeStorage.writeToFile(dukeNotes.getNotes());
             System.out.println("\tSave operation completed!");
         } else {
-            System.out.println("\tSave operation cancelled!");
+            System.out.println("\tSave operation aborted!");
         }
         DukeUI.printDivider();
     }
@@ -37,6 +38,7 @@ public class SaveCommand extends DukeCommand implements DukeUI {
 
         try {
             if (autoSave) {
+                dukeStorage.archiveToFile();
                 dukeStorage.writeToFile(dukeNotes.getNotes());
                 return true;
             }

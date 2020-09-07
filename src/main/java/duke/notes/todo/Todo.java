@@ -67,6 +67,11 @@ public class Todo extends Note {
         }
     }
 
+    public static void resetStaticVariables() {
+        tasksOutstanding = 0;
+        tasksCompleted = 0;
+    }
+
 
     //GET STATEMENTS------------------------------------
     public static int getTasksOutstanding() {

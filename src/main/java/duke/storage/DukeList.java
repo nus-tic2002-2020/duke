@@ -19,6 +19,10 @@ public class DukeList {
         return this.notes;
     }
 
+    public void replaceNotes(ArrayList<Task> newNotes) {
+        this.notes = newNotes;
+    }
+
     public void addToList(Task task) {
         this.notes.add(task);
     }
