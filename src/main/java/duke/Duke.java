@@ -49,7 +49,7 @@ public class Duke implements DukeParser, DukeUI {
 
             } catch (NullPointerException | IndexOutOfBoundsException e) {
                 DukeUI.printDivider();
-                System.out.println("\tI don't understand what you mean by...\n");
+                System.out.println("\tI don't understand what you meant by...\n");
                 DukeUI.commandWrap(input, 66);
                 e.printStackTrace();
                 System.out.println("\tThe task(s) you mentioned cannot be found.");
@@ -60,7 +60,7 @@ public class Duke implements DukeParser, DukeUI {
 
             } catch (NumberFormatException | ParseException e) {
                 DukeUI.printDivider();
-                System.out.println("\tI don't understand what you mean by...\n");
+                System.out.println("\tI don't understand what you meant by...\n");
                 DukeUI.commandWrap(input, 66);
                 System.out.println("\tThe attribute(s) you mentioned cannot be understood.");
                 System.out.println("\tThere could be errors or omissions in the data entry, format or delimiters.");

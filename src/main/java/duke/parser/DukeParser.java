@@ -2,12 +2,13 @@ package duke.parser;
 
 import duke.commands.*;
 import duke.notes.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public interface DukeParser {
 
     //METHODS-------------------------------------------
-    static DukeCommand readCommand(String input) throws CommandException {
+    static DukeCommand readCommand(String input) throws CommandException, ParseException {
 
         ArrayList<String> inputs = new ArrayList<String>();
         try {
@@ -19,16 +20,26 @@ public interface DukeParser {
                 String[] delimiters = new String[]{};
                 inputs.add(cmdType);
                 switch (CmdType.getKey(cmdType).toString()) {
-                    case "COMMANDS", "LISTBUDGETS", "LISTDEADLINES", "LISTEVENTS", "LISTNOTES" -> {
+                    case "COMMANDS" -> {
                         if (inputTokens.length == 1) {
                             return new InfoCommand(inputs);
                         } else {
                             throw new CommandException("There seems to be invalid characters behind" + cmdType + ".");
                         }
                     }
+                    case "LISTBILLS", "LISTBIRTHDAYS", "LISTBUDGETS", "LISTDEADLINES", "LISTEVENTS",
+                            "LISTSHOPLISTS", "LISTTODOS", "LISTWEDDINGS", "LISTNOTES",
+                            "LISTNXT24", "LISTNXT48", "LISTNXT72" -> {
+                        if (inputTokens.length == 1) {
+                            throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
+                        } else {
+                            inputs.add(inputTokens[1]);
+                            return new ListCommand(inputs);
+                        }
+                    }
                     case "DELETE" -> {
                         if (inputTokens.length == 1) {
-                            throw new CommandException("There seems to be insufficient attributes behind" + cmdType + ".");
+                            throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
                         } else {
                             String[] deleteTokens = inputTokens[1].split("/and");
                             for (String deleteToken : deleteTokens) {
@@ -39,7 +50,7 @@ public interface DukeParser {
                     }
                     case "EDITDESC" -> {
                         if (inputTokens.length == 1) {
-                            throw new CommandException("There seems to be insufficient attributes behind" + cmdType + ".");
+                            throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
                         } else {
                             String[] editTokens = inputTokens[1].split("/to");
                             for (String editToken : editTokens) {
@@ -50,7 +61,7 @@ public interface DukeParser {
                     }
                     case "EXTDLINE" -> {
                         if (inputTokens.length == 1) {
-                            throw new CommandException("There seems to be insufficient attributes behind" + cmdType + ".");
+                            throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
                         } else {
                             String[] editTokens = inputTokens[1].split("/by",2);
                             inputs.add(editTokens[0].trim());
@@ -72,12 +83,12 @@ public interface DukeParser {
                         if (inputTokens.length == 1) {
                             return new ExitCommand(inputs);
                         } else {
-                            throw new CommandException("There seems to be invalid characters behind" + cmdType + ".");
+                            throw new CommandException("There seems to be invalid characters behind " + cmdType + ".");
                         }
                     }
                     case "MARKDONE" -> {
                         if (inputTokens.length == 1) {
-                            throw new CommandException("There seems to be insufficient attributes behind" + cmdType + ".");
+                            throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
                         } else {
                             String[] doneTokens = inputTokens[1].split("/and");
                             for (String doneToken : doneTokens) {
@@ -90,13 +101,13 @@ public interface DukeParser {
                         if (inputTokens.length == 1) {
                             return new SaveCommand(inputs);
                         } else {
-                            throw new CommandException("There seems to be invalid characters behind" + cmdType + ".");
+                            throw new CommandException("There seems to be invalid characters behind " + cmdType + ".");
                         }
 
                     }
                     case "TRANSFER" -> {
                         if (inputTokens.length == 1) {
-                            throw new CommandException("There seems to be insufficient attributes behind" + cmdType + ".");
+                            throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
                         } else {
                             delimiters = new String[]{"/from", "/to", "/for \\$"};
                             for (String delimiter : delimiters) {
@@ -113,14 +124,14 @@ public interface DukeParser {
                         if (inputTokens.length == 1) {
                             return new UndoLastCommand(inputs);
                         } else {
-                            throw new CommandException("There seems to be invalid characters behind" + cmdType + ".");
+                            throw new CommandException("There seems to be invalid characters behind " + cmdType + ".");
                         }
                     }
                     case "WIPEDUKE" -> {
                         if (inputTokens.length == 1) {
                             return new WipeCommand(inputs);
                         } else {
-                            throw new CommandException("There seems to be invalid characters behind" + cmdType + ".");
+                            throw new CommandException("There seems to be invalid characters behind " + cmdType + ".");
                         }
                     }
                     default -> {
@@ -172,6 +183,9 @@ public interface DukeParser {
         } catch (PrefixException e) {
             e.printExplanation(input);
 
+        } catch (ArrayIndexOutOfBoundsException e) {
+
+            throw new ParseException("Insufficient Attributes", 0);
         }
         return null;
     }

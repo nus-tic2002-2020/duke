@@ -48,12 +48,13 @@ public class Birthday extends Event {
     public String getSaveText() {
         String text = "Birthday/" +
                 this.serialNum + "/" +
-                this.description.toString() + "/" +
+                this.description + "/" +
                 INPUT_DATE.format(this.addDate) + "/" +
                 this.isDone + "/" +
                 INPUT_DATE.format(this.startDate) + "/" +
                 INPUT_DATE.format(this.endDate) + "/" +
                 this.getDurationMinutes();
+
         if(isDone) {
             text = text + "/" + INPUT_DATE.format(this.doneDate) + "\n";
         } else {

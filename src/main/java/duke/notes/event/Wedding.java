@@ -114,7 +114,7 @@ public class Wedding extends Event {
     public String getSaveText() {
         String text = "Wedding/" +
                 this.serialNum + "/" +
-                this.description.toString() + "/" +
+                this.description + "/" +
                 INPUT_DATE.format(this.addDate) + "/" +
                 this.isDone + "/" +
                 INPUT_DATE.format(this.startDate) + "/" +

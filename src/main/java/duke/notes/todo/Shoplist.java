@@ -109,7 +109,7 @@ public class Shoplist extends Todo {
     public String getSaveText() {
         String text = "Shoplist/" +
                 this.serialNum + "/" +
-                this.description.toString() + "/" +
+                this.description + "/" +
                 INPUT_DATE.format(this.addDate) + "/" +
                 this.isDone + "/" +
                 this.itemBudget.getSaveText();

@@ -1,6 +1,8 @@
 package duke.commands;
 
 import duke.storage.*;
+import duke.ui.DukeUI;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -21,7 +23,6 @@ public abstract class DukeCommand {
     public DukeCommand() {}
 
     //METHODS-------------------------------------------
-
 
 
     //GET STATEMENTS------------------------------------

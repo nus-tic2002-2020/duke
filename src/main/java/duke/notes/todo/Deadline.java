@@ -94,7 +94,7 @@ public class Deadline extends Todo {
     public String getSaveText() {
         String text = "Deadline/" +
                 this.serialNum + "/" +
-                this.description.toString() + "/" +
+                this.description + "/" +
                 INPUT_DATE.format(this.addDate) + "/" +
                 this.isDone + "/" +
                 INPUT_DATE.format(this.targetDate) + "/" +

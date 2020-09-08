@@ -26,7 +26,30 @@ public interface DukeUI {
 
     //List of commands for Duke
     String DUKE_COMMANDS =
-                    "\t\t*** New Note Commands ***\n" +
+                    "\t\t*** Generic Commands ***\n" +
+                    "\t\t#commands        >>> List all available Duke's commands.\n" +
+                    "\t\t\tE.g. #commands\n" +
+                    "\t\t#delete          >>> Delete notes, then renumber the rest.\n" +
+                    "\t\t\tE.g. #delete <Note#>\n" +
+                    "\t\t\tE.g. #delete <Note#> /and <Note#> /and <Note#> \n" +
+                    "\t\t#editdesc        >>> Edit the description of a note.\n" +
+                    "\t\t\tE.g. #editdesc <Note#> /to <New Description>\n" +
+                    "\t\t#exitduke        >>> Exit Project Duke.\n" +
+                    "\t\t\tE.g. #exitduke\n" +
+                    "\t\t#extend          >>> Extend a deadline by days, hours and minutes.\n" +
+                    "\t\t\tE.g. #extend <Note#> /by <days>d <hours>h <minutes>m\n" +
+                    "\t\t#markdone        >>> Mark notes as done.\n" +
+                    "\t\t\tE.g. #markdone <Note#>\n" +
+                    "\t\t\tE.g. #markdone <Note#> /and <Note#> /and <Note#>\n" +
+                    "\t\t#savenotes       >>> Perform a new save while archiving the last.\n" +
+                    "\t\t\tE.g. #savenotes\n" +
+                    "\t\t#transfer        >>> Transfer budgets from one note to another.\n" +
+                    "\t\t\tE.g. #transfer /from <Note#> /to <Note#> /for <Budget/Price>\n" +
+                    "\t\t#wipeduke        >>> Wipe all of Duke's memories and files.\n" +
+                    "\t\t\tE.g. #wipeduke\n" +
+                    "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
+                    "\n\n" +
+                    "\t\t*** New Note Creation ***\n" +
                     "\t\t@bill            >>> Add a new todo task with a deadline.\n" +
                     "\t\t\tE.g. @bill <Description> /by <Date-Time> /for <Budget/Price>\n" +
                     "\t\t@birthday        >>> Add a new birthday event.\n" +
@@ -42,41 +65,41 @@ public interface DukeUI {
                     "\t\t\tE.g. @todo <Description>\n" +
                     "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
                     "\n\n" +
-                    "\t\t*** Generic Commands ***\n" +
-                    "\t\t#commands        >>> List all available Duke's commands.\n" +
-                    "\t\t\tE.g. #commands\n" +
-                    "\t\t#delete          >>> Delete notes, then renumber the rest.\n" +
-                    "\t\t\tE.g. #delete <Note#>\n" +
-                    "\t\t\tE.g. #delete <Note#> /and <Note#> /and <Note#> \n" +
-                    "\t\t#editdesc        >>> Edit the description of a note.\n" +
-                    "\t\t\tE.g. #editdesc <Note#> /to <New Description>\n" +
-                    "\t\t#exitduke        >>> Exit Project Duke.\n" +
-                    "\t\t\tE.g. #exitduke\n" +
-                    "\t\t#extend          >>> Extend a deadline by days, hours and minutes.\n" +
-                    "\t\t\tE.g. #extend <Note#> /by <days>d <hours>h <minutes>m\n" +
+                    "\t\t*** Information Extraction ***\n" +
+                    "\t\t\t  --------------------------------------------------------\n" +
+                    "\t\t\t  Note-Filters:   O = Outstanding; C = Completed; A = All.\n" +
+                    "\t\t\t  --------------------------------------------------------\n" +
+                    "\t\t#listbills       >>> List in order of budget, all bill payments.\n" +
+                    "\t\t\tE.g. #listbills <Note-Filter>\n" +
+                    "\t\t#listbirthdays   >>> List in chronological order, all birthdays.\n" +
+                    "\t\t\tE.g. #listbirthdays <Note-Filter>\n" +
+                    "\t\t#listbudgets     >>> List in order of quantum, all budgets set.\n" +
+                    "\t\t\tE.g. #listbudgets <Note-Filter>\n" +
                     "\t\t#listdeadlines   >>> List in chronological order, all deadlines.\n" +
-                    "\t\t\tE.g. #listbudgets\n" +
-                    "\t\t#listbudgets     >>> List in quantum, all budgets set.\n" +
-                    "\t\t\tE.g. #listdeadlines\n" +
+                    "\t\t\tE.g. #listdeadlines <Note-Filter>\n" +
                     "\t\t#listevents      >>> List in chronological order, all events.\n" +
-                    "\t\t\tE.g. #listevents\n" +
+                    "\t\t\tE.g. #listevents <Note-Filter>\n" +
                     "\t\t#listnotes       >>> List in serial number order, all notes.\n" +
-                    "\t\t\tE.g. #listnotes\n" +
-                    "\t\t#markdone        >>> Mark notes as done.\n" +
-                    "\t\t\tE.g. #markdone <Note#>\n" +
-                    "\t\t\tE.g. #markdone <Note#> /and <Note#> /and <Note#>\n" +
-                    "\t\t#savenotes       >>> Perform a new save while archiving the last.\n" +
-                    "\t\t\tE.g. #savenotes\n" +
-                    "\t\t#transfer        >>> Mark tasks x, y and z as done.\n" +
-                    "\t\t\tE.g. #transfer /from <Note#> /to <Note#> /for <Budget/Price>\n" +
-                    "\t\t#wipeduke        >>> List all available Duke's commands.\n" +
-                    "\t\t\tE.g. #wipeduke\n" +
+                    "\t\t\tE.g. #listnotes <Note-Filter>\n" +
+                    "\t\t#listnxt24       >>> List deadlines and events in the next 24 hours.\n" +
+                    "\t\t\tE.g. #listnxt24 <Note-Filter>\n" +
+                    "\t\t#listnxt48       >>> List deadlines and events in the next 48 hours.\n" +
+                    "\t\t\tE.g. #listnxt48 <Note-Filter>\n" +
+                    "\t\t#listnxt72       >>> List deadlines and events in the next 72 hours.\n" +
+                    "\t\t\tE.g. #listnxt72 <Note-Filter>\n" +
+                    "\t\t#listshoplists   >>> List in order of budget, all shopping list items.\n" +
+                    "\t\t\tE.g. #listshoplists <Note-Filter>\n" +
+                    "\t\t#listtodos       >>> List in serial number order, all todo tasks.\n" +
+                    "\t\t\tE.g. #listtodos <Note-Filter>\n" +
+                    "\t\t#listweddings    >>> List in chronological order, all weddings.\n" +
+                    "\t\t\tE.g. #listweddings <Note-Filter>\n" +
                     "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
                     "\n\n" +
                     "\t\t*** Data Entry Formats ***\n" +
                     "\t\tBudget/Price     >>> $X.xx\n" +
                     "\t\tDate-Time        >>> dd-MMM-yyyy HH:mm\n" +
                     "\t\tNote#            >>> x\n" +
+                    "\t\tNote-Filter      >>> O, C or A\n" +
                     "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
                     "\n";
 
@@ -198,6 +221,12 @@ public interface DukeUI {
         System.out.print("\nWelcome to PROJECT >>>\n" + DUKE_LOGO);
         System.out.println(String.format("%1$-42s%2$42s", DATE_TODAY.format(now), DAY_TODAY.format(now)));
         System.out.println(String.format("%1$-42s%2$42s", ZodiacYear.getZodiacYear(now), SunSign.getSunSign(now)) + "\n");
+
+        try {
+            Thread.sleep(3 * 1000);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+        }
 
         printDivider();
         System.out.println("\tHello! I'm Duke, your all-rounded personal assistant!");

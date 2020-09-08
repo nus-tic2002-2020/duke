@@ -278,7 +278,7 @@ public class DukeStorage implements DukeUI {
                             budgetBalance, isRevised, isOverBudget);
 
                     if(isDone) {
-                        Date doneDate = INPUT_DATE.parse(readIndexes[8]);
+                        Date doneDate = INPUT_DATE.parse(readIndexes[14]);
                         note = new Wedding(serialNum, description, addDate, doneDate,
                                 isDone, startDate, endDate, durationMinutes, itemBudget);
                     } else {

@@ -22,7 +22,7 @@ public class CommandException extends Exception {
     public void printExplanation(String input) throws CommandException {
 
         DukeUI.printDivider();
-        System.out.println("\tI don't understand what you mean by...\n");
+        System.out.println("\tI don't understand what you meant by...\n");
         DukeUI.commandWrap(input, 66);
         System.out.println("\t" + this.message);
         DukeUI.suggestCommands();

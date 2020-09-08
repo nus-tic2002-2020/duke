@@ -89,7 +89,7 @@ public class Todo extends Note {
     public String getSaveText() {
         String text = "Todo/" +
                 this.serialNum + "/" +
-                this.description.toString() + "/" +
+                this.description + "/" +
                 INPUT_DATE.format(this.addDate) + "/" +
                 this.isDone;
 
