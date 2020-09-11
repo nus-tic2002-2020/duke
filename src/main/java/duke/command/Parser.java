@@ -1,3 +1,7 @@
+package duke.command;
+import duke.task.TaskList;
+import duke.task.DukeException;
+
 public class Parser {
     protected static String input;
 
