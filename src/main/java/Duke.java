@@ -37,8 +37,8 @@ public class Duke {
         System.out.println("\t____________________________________________________________");
     }
 
-    public static String itIsDone(int thatTask){
-        return taskList[thatTask].setDone();
+    public static void itIsDone(int thatTask){
+        taskList[thatTask].setDone();
     }
 
     public static void ifBye(){
@@ -55,16 +55,15 @@ public class Duke {
             } else if (input.equals("list")) {
                 getTaskList();
                 break;
-            } else if (input.split(" ") ){
-                String part1 = input[0];
-                String part2 = input[1];
-                if (part1.equals("done")){
-                    itIsDone(part2);
-                }
+            } else if (input.split(" ")[0].equals("done") ){
+                String part2 = input.split(" ")[1];
+                //itIsDone(Integer.parseInt(input.split(" ")[1])-1); //have to minus 1, because added 1 before
+                itIsDone(Integer.parseInt(part2)-1); //easier to see
+                break;
             }
             //none of the above
             setTaskList(new Task(input));
-            System.out.println("\t_________________________________f___________________________");
+            System.out.println("\t____________________________________________________________");
             System.out.print("\tadded: ");
             System.out.println(input);
             System.out.println("\t____________________________________________________________");

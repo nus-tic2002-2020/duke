@@ -11,12 +11,17 @@ public class Task {
         return (isDone ? "\u2713" : "\u2718"); //return tick or X symbols
     }
 
-    public void setDone(){
-        isDone = true;
-        System.out.println("\tDone");
-    }
-
     public String getDescription() {
         return this.description;
     }
+
+    public void setDone(){
+        isDone = true;
+        System.out.println("\t____________________________________________________________");
+        System.out.println("\tNice! I've marked this task as done: ");
+        System.out.println("\t" + "[" + "\u2713" + "] " + getDescription() ); //ticked symbols
+        System.out.println("\t____________________________________________________________");
+    }
+
+
 }
