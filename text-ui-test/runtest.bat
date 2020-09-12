@@ -17,5 +17,5 @@ REM no error here, errorlevel == 0
 REM run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
 java -classpath ..\bin Duke < input.txt > ACTUAL.TXT
 
-REM compare the output to the expected output
-FC ACTUAL.TXT EXPECTED.TXT
+REM compare the output to the expected output, specify the FC command location
+c:\windows\system32\FC ACTUAL.TXT EXPECTED.TXT

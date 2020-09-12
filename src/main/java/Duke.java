@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class Duke {
+    static Scanner getInput = new Scanner(System.in);
     public static void main(String[] args) {
         /*String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -42,7 +43,7 @@ public class Duke {
     }
 
     public static void ifBye(){
-        Scanner getInput = new Scanner(System.in);
+
         String input = getInput.nextLine();
         //next() place cursor within same line after reading input. nextLine() reads input including space between the words till\n
 
