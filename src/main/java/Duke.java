@@ -1,9 +1,40 @@
 import java.util.Scanner;
 
 public class Duke {
+    public static boolean containsIgnoreCase(String input, String match) {
+        input = input.toLowerCase();
+        if (input.contains(match)) {
+            return true;
+        }
+        return false;
+    }
+
     public static void add(Task[] store, String input, int index) {
-        store[index] = new Task(input, false);
-        System.out.println("Added: " + input);
+        if (containsIgnoreCase(input, "deadline")) {
+            String[] split = input.split("/by");
+            split[0] = split[0].substring(8).trim();
+            split[1] = split[1].trim();
+            store[index] = new Deadline(split[0], split[1]);
+            System.out.println("Got it. I've added this task:");
+            System.out.println(store[index].getSymbol() + "[✗] " + store[index].getDescription() + " (by: " + store[index].getDateAndTime() +")");
+            System.out.println("Now you have " + (index + 1) + " tasks in the list");
+        }
+        else if (containsIgnoreCase(input, "event")) {
+            String[] split = input.split("/at");
+            split[0] = split[0].substring(5).trim();
+            split[1] = split[1].trim();
+            store[index] = new Event(split[0], split[1]);
+            System.out.println("Got it. I've added this task:");
+            System.out.println(store[index].getSymbol() + "[✗] " + store[index].getDescription() + " (at: " + store[index].getDateAndTime() +")");
+            System.out.println("Now you have " + (index + 1) + " tasks in the list");
+        }
+        else {
+            input = input.substring(4).trim();
+            store[index] = new ToDo(input);
+            System.out.println("Got it. I've added this task:");
+            System.out.println(store[index].getSymbol() + "[✗] " + store[index].getDescription());
+            System.out.println("Now you have " + (index + 1) + " tasks in the list");
+        }
     }
 
     public static void list(Task[] store) {
@@ -13,8 +44,18 @@ public class Duke {
             if (i == null) {
                 return;
             }
-            System.out.println(index + ". " + i.getDone() + " " + i.getDescription());
-            index ++;
+            else if (i.getSymbol() == "[T]") {
+                System.out.println(index + ". " + i.getSymbol() + i.getDone() + " " + i.getDescription());
+                index++;
+            }
+            else if (i.getSymbol() == "[D]") {
+                System.out.println(index + ". " + i.getSymbol() + i.getDone() + " " + i.getDescription() + " (by: " + i.getDateAndTime() +")");
+                index++;
+            }
+            else if (i.getSymbol() == "[E]") {
+                System.out.println(index + ". " + i.getSymbol() + i.getDone() + " " + i.getDescription() + " (at: " + i.getDateAndTime() +")");
+                index++;
+            }
         }
     }
 
@@ -45,15 +86,18 @@ public class Duke {
             else if (input.equalsIgnoreCase("List") == true) {
                 list(store);
             }
-            else if (input.contains("done") == true) {
+            else if (containsIgnoreCase(input, "done")) {
                 int tempIndex = getIndex(input);
-                System.out.println("Nice! I've marked this task as done:");
                 store[tempIndex].setDone();
-                System.out.println(  store[tempIndex].getDone() + " " + store[tempIndex].getDescription());
             }
-            else {
+            else if (containsIgnoreCase(input, "todo")
+                    || containsIgnoreCase(input, "deadline")
+                    || containsIgnoreCase(input, "event")) {
                 add(store, input, index);
                 index ++;
+            }
+            else {
+                System.out.println("Invalid command given :( Please try again~");
             }
         }
     }
