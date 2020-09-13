@@ -14,6 +14,8 @@ public class Duke {
     public static Task[] storeList(Task[] listOfThings, String input) { //listOfThings should be array class task?
         int counter = 0;
         while (true) {
+            //System.out.println(counter);
+            System.out.println(listOfThings);
             // set it to false here
             if (listOfThings[counter] == null) {
                 listOfThings[counter] = new Task(input);
@@ -28,7 +30,10 @@ public class Duke {
             //
             // }
 
+            //System.out.println(listOfThings);
+
         }//end while loop
+
         return listOfThings;
     }
 
@@ -93,7 +98,7 @@ public class Duke {
 
 
 
-        public static void main (String[]args){
+        public static void main (String[] args){
             Task[] List = new Task[0];
 
             String logo = " ____        _        \n"
