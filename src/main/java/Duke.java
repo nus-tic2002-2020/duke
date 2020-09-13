@@ -1,28 +1,37 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-//import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Duke {
 
     public static String humanName;
-   // public static String [] listOfThings;
-    // Storing userSentence into list
+    public static int taskNumber;
 
-    public static String[] storeList(String[] listOfThings, String input){
+// Storing userSentence into list
+
+    public static Task[] storeList(Task[] listOfThings, String input){ //listOfThings should be array class task?
         int counter = 0;
         while(true){
+            // set it to false here
             if(listOfThings[counter] == null){
-                listOfThings[counter] = input;
+                listOfThings[counter] = new Task(input);
                 System.out.println("\tadded: " + input);
                 break;
             }
             counter++;
+            // make it to true here, might not have to because did it in main
+            //if counter == taskNumber{
+            //
+            // }
+            //
+            // }
+
         }//end while loop
         return listOfThings;
     }
+
 
 //print list
     public static void printListOfThings(String [] listOfThings){
@@ -30,8 +39,9 @@ public class Duke {
             System.out.println(humanName+"\tthe list is empty!");
             return;
         }
-
+        System.out.println("\tHere are the tasks in your list: ");
         for (int i = 1 ; i <= listOfThings.length ; i++){
+
             System.out.println("\t" + i + ". " + listOfThings[i-1] );
             if(listOfThings[i] == null){
                 System.out.println("\tOk that's about everything!");
@@ -41,8 +51,9 @@ public class Duke {
     }
 
 
-    public static String [] echoCommands (String[] listOfThings)
+    public static Task[] echoCommands (String[] listOfThings)
     {
+        //int taskNumber;
         String userSentence;
         Scanner input = new Scanner(System.in);
         userSentence = input.nextLine();
@@ -58,9 +69,19 @@ public class Duke {
         Pattern pattern2 = Pattern.compile((".*" + "list" + ".*"), Pattern.CASE_INSENSITIVE);
         Matcher matcher2 = pattern2.matcher(userSentence);
         if (matcher2.find()) {
-            printListOfThings(listOfThings);
+            printListOfThings(listOfThings); //
         }
-
+        // add patten matcher for done or change state in storeList
+        Pattern pattern3 = Pattern.compile((".*" + "done" + ".*"), Pattern.CASE_INSENSITIVE);
+        Matcher matcher3 = pattern3.matcher(userSentence);
+        if (matcher3.find()) {
+            //update base on user input
+            //extract the integer
+            taskNumber = Integer.parseInt( userSentence );
+            System.out.println("\tNice! I've marked this task as done: ");
+            Task listOfThings[taskNumber] = true; // not sure about this
+            System.out.println(getStatusIcon Task[taskNumber] listOfThings); //im not sure about this
+        //}
 
         else {
         listOfThings = storeList(listOfThings, userSentence);
