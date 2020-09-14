@@ -106,6 +106,10 @@ public class List{
         }
     }
     private void mark_all_complete(){
+        if(item_count == 0){
+            duke_echo("The list is empty!");
+            return;
+        }
         for(int i = 0 ; i < item_count ; i++){
             this.done[i] = true;
         }
@@ -115,9 +119,20 @@ public class List{
         String user_input;
         Scanner input = new Scanner(System.in);
         user_input = input.nextLine();
-        responses(user_input.trim());
+        try{
+            responses(user_input.trim());
+        }
+        catch(IllegalInputException e){ //unknown input
+            duke_echo(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+        }
+        catch(ArrayIndexOutOfBoundsException e){ //todo, event & deadline
+            duke_echo("☹ OOPS!!! The description of a " + user_input.trim() + " cannot be empty.");
+        }
+        catch(NumberFormatException e){ //done
+            duke_echo("☹ OOPS!!! The description of a " + user_input.trim() + " cannot be empty.");
+        }
     }
-    private void responses(String user_input){
+    private void responses(String user_input) throws IllegalInputException{
         if(user_input.equals("bye")){ //bye: end duke
             duke_echo("Bye. Hope to see you again soon!");
             System.exit(0);
@@ -125,24 +140,23 @@ public class List{
         else if(user_input.equals("list")){ //list: list items
             this.printList();
         }//end else if
-        else if(user_input.contains("done") && (user_input.equals("done") == false)){ //done: change done to true from false
-            if(item_count == 0){
+        else if(user_input.contains("done") /*&& (user_input.equals("done") == false)*/){ //done: change done to true from false
+            /*if(item_count == 0){
                 duke_echo("List is empty!");
                 return;
-            }
+            }*/
             if(user_input.equals("done all")){
                 this.mark_all_complete();
                 return;
             }
             this.mark_completion(user_input);
         }
-        else if((user_input.contains("todo") || user_input.contains("deadline") || user_input.contains("event")) &&
-                ((user_input.equals("todo") || user_input.equals("deadline") || user_input.equals("event")) == false)
-        ){ //insertion of item into list
+        else if((user_input.contains("todo") || user_input.contains("deadline") || user_input.contains("event"))){ //insertion of item into list
             this.insert_item(user_input);
         }//end else if
         else{
-            duke_help();
+            //duke_help();
+            throw new IllegalInputException();
         }//end else
     }
 }
