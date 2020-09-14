@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 public class Duke {
     public static void main(String[] args) {
-        int wordCounter = 0;
-        String[] words = new String[100];
+        int taskCounter = 0;
+        Task[] tasks = new Task[100];
 
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -20,15 +20,19 @@ public class Duke {
                 System.out.println("Bye. Hope to see you again soon!");
                 break;
             }else if(userInput.equals("list")){
-                for(int i = 0; i < wordCounter; i++){
-                    System.out.println((i + 1) + ". " + words[i]);
+                for(int i = 0; i < taskCounter; i++){
+                    System.out.println(String.format("%d.[%s] %s", i + 1, tasks[i].getStatusIcon(), tasks[i].getDescription()));
                 }
+                continue;
+            }else if(userInput.contains("done")){
+                String[] doneTask = userInput.split(" ");
+                tasks[Integer.parseInt(doneTask[1]) - 1].markAsDone();
                 continue;
             }
 
-            words[wordCounter] = userInput;
-            System.out.println("added: " + words[wordCounter]);
-            wordCounter++;
+            tasks[taskCounter] = new Task(userInput);
+            System.out.println("added: " + tasks[taskCounter].getDescription());
+            taskCounter++;
         }
     }
 }
