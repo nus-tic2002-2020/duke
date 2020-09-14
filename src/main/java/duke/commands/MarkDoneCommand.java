@@ -16,17 +16,17 @@ public class MarkDoneCommand extends DukeCommand implements DukeUI {
     }
 
     //METHODS-------------------------------------------
-    public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IndexOutOfBoundsException {
+    public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IndexOutOfBoundsException, DateException {
 
         Date doneDate = new Date();
         if(CmdType.getKey(this.cmdType).toString().equals("MARKDONE")) {
             ArrayList<Integer> notes = new ArrayList<Integer>();
             for(int i=1; i<inputs.size(); i++) {
-                int toDelete = Integer.parseInt(inputs.get(i));
-                if(toDelete > dukeNotes.getNotes().size()) {
+                int toMarkDone = Integer.parseInt(inputs.get(i));
+                if(toMarkDone > dukeNotes.getNotes().size()) {
                     throw new IndexOutOfBoundsException();
                 } else {
-                    notes.add(toDelete);
+                    notes.add(toMarkDone);
                 }
             }
 

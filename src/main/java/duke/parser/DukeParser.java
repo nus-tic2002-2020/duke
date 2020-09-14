@@ -33,7 +33,11 @@ public interface DukeParser {
                         if (inputTokens.length == 1) {
                             throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
                         } else {
-                            inputs.add(inputTokens[1]);
+                            String[] listTokens = inputTokens[1].split("/on");
+                            inputs.add(listTokens[0].trim());
+                            if(listTokens.length > 1) {
+                                inputs.add(listTokens[1].trim());
+                            }
                             return new ListCommand(inputs);
                         }
                     }

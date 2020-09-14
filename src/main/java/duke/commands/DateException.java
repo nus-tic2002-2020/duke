@@ -1,5 +1,6 @@
 package duke.commands;
 
+import duke.notes.event.Event;
 import duke.ui.*;
 import java.util.Date;
 
@@ -7,6 +8,7 @@ public class DateException extends Exception {
 
     Date date;
     String message;
+    Event event = null;
 
     public DateException(){
         super();
@@ -18,14 +20,21 @@ public class DateException extends Exception {
         this.message = message;
     }
 
+    public DateException(Date date, String message, Event event){
+        super();
+        this.date = date;
+        this.message = message;
+        this.event = event;
+    }
+
     public String getMessage(){
         return message;
     }
 
-    public void printExplanation() {
+    public void printExplanation() throws CommandException {
         DukeUI.printDivider();
         System.out.println("\tI understand what you meant by...\n");
-        DukeUI.commandWrap(DukeUI.INPUT_DATE.format(date), 66);
+        DukeUI.commandWrap(DukeUI.INPUT_TIME.format(date), 66);
 
         switch (this.message) {
             case "TargetDate" -> {
@@ -52,6 +61,16 @@ public class DateException extends Exception {
                 System.out.println("\tBut the event end you are trying to set is before the event start.");
                 System.out.println("\tI can't turn time backwards, yet.");
                 System.out.println("\tPlease enter as the event end, another date & time later than the event start.");
+            }
+            case "EventsClash" -> {
+                System.out.println("\tBut the event you are trying to set clashes with:");
+                this.event.printList();
+                System.out.println("\tPlease consider only either event to attend.");
+            }
+            case "DoneB4Start" -> {
+                System.out.println("\tBut the event you are trying to set done hasn't started.");
+                this.event.printList();
+                System.out.println("\tPlease consider deleting the event instead.");
             }
             default -> {
                 System.out.println("\t" + this.message);

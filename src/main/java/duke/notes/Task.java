@@ -8,7 +8,7 @@ import java.util.Date;
 public interface Task extends DukeUI {
 
     //SET STATEMENTS------------------------------------
-    boolean markAsDone(Date doneDate) throws CommandException;
+    boolean markAsDone(Date doneDate) throws CommandException, DateException;
     void setSerialNum(int serialNum);
     void setDescription(String description);
 

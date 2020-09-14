@@ -38,7 +38,7 @@ public class Shoplist extends Todo {
     }
 
     @Override
-    public boolean markAsDone(Date doneDate) throws CommandException {
+    public boolean markAsDone(Date doneDate) throws CommandException, DateException {
         if(!this.isDone) {
             String inputPrice;
             Scanner markDone = new Scanner(System.in);
@@ -110,12 +110,12 @@ public class Shoplist extends Todo {
         String text = "Shoplist/" +
                 this.serialNum + "/" +
                 this.description + "/" +
-                INPUT_DATE.format(this.addDate) + "/" +
+                INPUT_TIME.format(this.addDate) + "/" +
                 this.isDone + "/" +
                 this.itemBudget.getSaveText();
 
         if(isDone) {
-            text = text + "/" + INPUT_DATE.format(this.doneDate) + "\n";
+            text = text + "/" + INPUT_TIME.format(this.doneDate) + "\n";
         } else {
             text = text + "\n";
         }

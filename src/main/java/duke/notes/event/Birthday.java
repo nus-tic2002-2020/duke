@@ -49,14 +49,14 @@ public class Birthday extends Event {
         String text = "Birthday/" +
                 this.serialNum + "/" +
                 this.description + "/" +
-                INPUT_DATE.format(this.addDate) + "/" +
+                INPUT_TIME.format(this.addDate) + "/" +
                 this.isDone + "/" +
-                INPUT_DATE.format(this.startDate) + "/" +
-                INPUT_DATE.format(this.endDate) + "/" +
+                INPUT_TIME.format(this.startDate) + "/" +
+                INPUT_TIME.format(this.endDate) + "/" +
                 this.getDurationMinutes();
 
         if(isDone) {
-            text = text + "/" + INPUT_DATE.format(this.doneDate) + "\n";
+            text = text + "/" + INPUT_TIME.format(this.doneDate) + "\n";
         } else {
             text = text + "\n";
         }

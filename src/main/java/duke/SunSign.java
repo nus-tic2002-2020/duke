@@ -35,8 +35,8 @@ public enum SunSign implements DukeUI{
         for(SunSign sign: SunSign.values()){
             String from = sign.from + "-" + YEAR_TODAY.format(date) + " 00:00:00";
             String to = sign.to + "-" + YEAR_TODAY.format(date)  + " 23:59:59";
-            Date start = INPUT_DATE.parse(from);
-            Date end = INPUT_DATE.parse(to);
+            Date start = INPUT_TIME.parse(from);
+            Date end = INPUT_TIME.parse(to);
             if(date.compareTo(start)>=0 && date.compareTo(end)<=0){
                 return sign.month;
             }

@@ -44,7 +44,7 @@ public class Todo extends Note {
 
     //SET STATEMENTS------------------------------------
     @Override
-    public boolean markAsDone(Date doneDate) throws CommandException {
+    public boolean markAsDone(Date doneDate) throws CommandException, DateException {
         if(super.markAsDone(doneDate)) {
             tasksOutstanding--;
             tasksCompleted++;
@@ -90,11 +90,11 @@ public class Todo extends Note {
         String text = "Todo/" +
                 this.serialNum + "/" +
                 this.description + "/" +
-                INPUT_DATE.format(this.addDate) + "/" +
+                INPUT_TIME.format(this.addDate) + "/" +
                 this.isDone;
 
         if(isDone) {
-            text = text + "/" + INPUT_DATE.format(this.doneDate) + "\n";
+            text = text + "/" + INPUT_TIME.format(this.doneDate) + "\n";
         } else {
             text = text + "\n";
         }

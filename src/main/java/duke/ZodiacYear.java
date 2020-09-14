@@ -32,8 +32,8 @@ public enum ZodiacYear implements DukeUI{
     public static String getZodiacYear(Date date) throws ParseException {
 
         for(ZodiacYear year: ZodiacYear.values()){
-            Date start = INPUT_DATE.parse(year.from);
-            Date end = INPUT_DATE.parse(year.to);
+            Date start = INPUT_TIME.parse(year.from);
+            Date end = INPUT_TIME.parse(year.to);
             if(date.compareTo(start)>=0 && date.compareTo(end)<=0){
                 return year.year;
             }

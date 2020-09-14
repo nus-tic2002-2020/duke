@@ -22,7 +22,8 @@ public interface DukeUI {
     SimpleDateFormat DATE_TODAY = new SimpleDateFormat("dd MMMM yyyy");
     SimpleDateFormat DAY_TODAY = new SimpleDateFormat("EEEE");
     SimpleDateFormat YEAR_TODAY = new SimpleDateFormat("yyyy");
-    SimpleDateFormat INPUT_DATE = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
+    SimpleDateFormat INPUT_TIME = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
+    SimpleDateFormat INPUT_DATE = new SimpleDateFormat("dd-MMM-yyyy");
 
     //List of commands for Duke
     String DUKE_COMMANDS =
@@ -69,17 +70,21 @@ public interface DukeUI {
                     "\t\t\t  --------------------------------------------------------\n" +
                     "\t\t\t  Note-Filters:   O = Outstanding; C = Completed; A = All.\n" +
                     "\t\t\t  --------------------------------------------------------\n" +
-                    "\t\t#listbills       >>> List in order of budget, all bill payments.\n" +
+                    "\t\t#listbills       >>> List in order of budget, bill payments.\n" +
                     "\t\t\tE.g. #listbills <Note-Filter>\n" +
-                    "\t\t#listbirthdays   >>> List in chronological order, all birthdays.\n" +
+                    "\t\t\tE.g. #listbills <Note-Filter> /on <Date-Time>\n" +
+                    "\t\t#listbirthdays   >>> List in chronological order, birthdays.\n" +
                     "\t\t\tE.g. #listbirthdays <Note-Filter>\n" +
-                    "\t\t#listbudgets     >>> List in order of quantum, all budgets set.\n" +
+                    "\t\t\tE.g. #listbirthdays <Note-Filter> /on <Date-Time>\n" +
+                    "\t\t#listbudgets     >>> List in order of quantum, budgets set.\n" +
                     "\t\t\tE.g. #listbudgets <Note-Filter>\n" +
-                    "\t\t#listdeadlines   >>> List in chronological order, all deadlines.\n" +
+                    "\t\t#listdeadlines   >>> List in chronological order, deadlines.\n" +
                     "\t\t\tE.g. #listdeadlines <Note-Filter>\n" +
-                    "\t\t#listevents      >>> List in chronological order, all events.\n" +
+                    "\t\t\tE.g. #listdeadlines <Note-Filter> /on <Date-Time>\n" +
+                    "\t\t#listevents      >>> List in chronological order, events.\n" +
                     "\t\t\tE.g. #listevents <Note-Filter>\n" +
-                    "\t\t#listnotes       >>> List in serial number order, all notes.\n" +
+                    "\t\t\tE.g. #listevents <Note-Filter> /on <Date-Time>\n" +
+                    "\t\t#listnotes       >>> List in serial number order, notes.\n" +
                     "\t\t\tE.g. #listnotes <Note-Filter>\n" +
                     "\t\t#listnxt24       >>> List deadlines and events in the next 24 hours.\n" +
                     "\t\t\tE.g. #listnxt24 <Note-Filter>\n" +
@@ -87,12 +92,13 @@ public interface DukeUI {
                     "\t\t\tE.g. #listnxt48 <Note-Filter>\n" +
                     "\t\t#listnxt72       >>> List deadlines and events in the next 72 hours.\n" +
                     "\t\t\tE.g. #listnxt72 <Note-Filter>\n" +
-                    "\t\t#listshoplists   >>> List in order of budget, all shopping list items.\n" +
+                    "\t\t#listshoplists   >>> List in order of budget, shopping list items.\n" +
                     "\t\t\tE.g. #listshoplists <Note-Filter>\n" +
-                    "\t\t#listtodos       >>> List in serial number order, all todo tasks.\n" +
+                    "\t\t#listtodos       >>> List in serial number order, todo tasks.\n" +
                     "\t\t\tE.g. #listtodos <Note-Filter>\n" +
-                    "\t\t#listweddings    >>> List in chronological order, all weddings.\n" +
+                    "\t\t#listweddings    >>> List in chronological order, weddings.\n" +
                     "\t\t\tE.g. #listweddings <Note-Filter>\n" +
+                    "\t\t\tE.g. #listweddings <Note-Filter> /on <Date-Time>\n" +
                     "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
                     "\n\n" +
                     "\t\t*** Data Entry Formats ***\n" +

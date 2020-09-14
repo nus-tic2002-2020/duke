@@ -6,7 +6,6 @@ import duke.commands.DateException;
 import duke.notes.NoteType;
 
 import java.util.Date;
-import java.util.Scanner;
 
 public class Wedding extends Event {
 
@@ -43,7 +42,7 @@ public class Wedding extends Event {
     }
 
     @Override
-    public boolean markAsDone(Date doneDate) throws CommandException {
+    public boolean markAsDone(Date doneDate) throws CommandException, DateException {
         if (!this.isDone) {
             this.itemBudget.setBudgetUsed(this.itemBudget.getBudgetRevised());
         }
@@ -115,14 +114,14 @@ public class Wedding extends Event {
         String text = "Wedding/" +
                 this.serialNum + "/" +
                 this.description + "/" +
-                INPUT_DATE.format(this.addDate) + "/" +
+                INPUT_TIME.format(this.addDate) + "/" +
                 this.isDone + "/" +
-                INPUT_DATE.format(this.startDate) + "/" +
-                INPUT_DATE.format(this.endDate) + "/" +
+                INPUT_TIME.format(this.startDate) + "/" +
+                INPUT_TIME.format(this.endDate) + "/" +
                 this.getDurationMinutes() + "/" +
                 this.itemBudget.getSaveText();
         if(isDone) {
-            text = text + "/" + INPUT_DATE.format(this.doneDate) + "\n";
+            text = text + "/" + INPUT_TIME.format(this.doneDate) + "\n";
         } else {
             text = text + "\n";
         }

@@ -14,11 +14,15 @@ public class ListCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
     private String filterType;
+    private Date dateFilter = null;
 
     //CONSTRUCTORS--------------------------------------
-    public ListCommand(ArrayList<String> inputs) {
+    public ListCommand(ArrayList<String> inputs) throws ParseException {
         super(inputs);
         this.filterType = inputs.get(1);
+        if(inputs.size() > 2){
+            this.dateFilter = INPUT_DATE.parse(inputs.get(2) + " 00:00");
+        }
     }
 
     //METHODS-------------------------------------------
@@ -84,6 +88,30 @@ public class ListCommand extends DukeCommand implements DukeUI {
         }
     }
 
+    private boolean filterByStatus(Task note) {
+
+        return switch (this.filterType) {
+            case "A" -> true;
+            case "O" -> !note.getIsDone();
+            case "C" -> note.getIsDone();
+            default -> false;
+        };
+    }
+
+    private boolean filterByDate(Task note, Date start, long duration) {
+
+        Date end = new Date(start.getTime()+duration);
+        if(note instanceof Deadline) {
+            return ((Deadline) note).getTargetDate().after(start) &&
+                    ((Deadline) note).getTargetDate().before(end);
+        } else if(note instanceof Event) {
+            return ((Event)note).getStartDate().after(start) &&
+                    ((Event)note).getStartDate().before(end);
+        } else {
+            return false;
+        }
+    }
+
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, ParseException {
 
         DukeUI.printDivider();
@@ -92,22 +120,10 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 ArrayList<Task> bills = new ArrayList<Task>();
                 for(Task note: dukeNotes.getNotes()) {
                     if(note instanceof Bill){
-                        switch (this.filterType) {
-                            case "A":
-                                bills.add((Bill) note);
-                                break;
-                            case "O":
-                                if (!note.getIsDone()) {
-                                    bills.add((Bill) note);
-                                }
-                                break;
-                            case "C":
-                                if (note.getIsDone()) {
-                                    bills.add((Bill) note);
-                                }
-                                break;
-                            default:
-                                throw new ParseException("Insufficient Attributes", 0);
+                        if(filterByStatus(note)){
+                            if(this.dateFilter == null || filterByDate(note, this.dateFilter, 86400000)) {
+                                bills.add(note);
+                            }
                         }
                     }
                 }
@@ -126,22 +142,10 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 ArrayList<Event> birthdays = new ArrayList<Event>();
                 for(Task note: dukeNotes.getNotes()) {
                     if(note instanceof Birthday){
-                        switch (this.filterType) {
-                            case "A":
-                                birthdays.add((Birthday)note);
-                                break;
-                            case "O":
-                                if (!note.getIsDone()) {
-                                    birthdays.add((Birthday)note);
-                                }
-                                break;
-                            case "C":
-                                if (note.getIsDone()) {
-                                    birthdays.add((Birthday)note);
-                                }
-                                break;
-                            default:
-                                throw new ParseException("Insufficient Attributes", 0);
+                        if(filterByStatus(note)) {
+                            if(this.dateFilter == null || filterByDate(note, this.dateFilter, 86400000)) {
+                                birthdays.add((Birthday) note);
+                            }
                         }
                     }
                 }
@@ -160,22 +164,8 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 ArrayList<Task> budgets = new ArrayList<Task>();
                 for(Task note: dukeNotes.getNotes()) {
                     if(note.getBudgetObject() != null){
-                        switch (this.filterType) {
-                            case "A":
+                        if(filterByStatus(note)) {
                                 budgets.add(note);
-                                break;
-                            case "O":
-                                if (!note.getIsDone()) {
-                                    budgets.add(note);
-                                }
-                                break;
-                            case "C":
-                                if (note.getIsDone()) {
-                                    budgets.add(note);
-                                }
-                                break;
-                            default:
-                                throw new ParseException("Insufficient Attributes", 0);
                         }
                     }
                 }
@@ -194,22 +184,10 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 ArrayList<Deadline> deadlines = new ArrayList<Deadline>();
                 for(Task note: dukeNotes.getNotes()) {
                     if(note instanceof Deadline){
-                        switch (this.filterType) {
-                            case "A":
+                        if(filterByStatus(note)) {
+                            if(this.dateFilter == null || filterByDate(note, this.dateFilter, 86400000)) {
                                 deadlines.add((Deadline)note);
-                                break;
-                            case "O":
-                                if (!note.getIsDone()) {
-                                    deadlines.add((Deadline)note);
-                                }
-                                break;
-                            case "C":
-                                if (note.getIsDone()) {
-                                    deadlines.add((Deadline)note);
-                                }
-                                break;
-                            default:
-                                throw new ParseException("Insufficient Attributes", 0);
+                            }
                         }
                     }
                 }
@@ -228,22 +206,10 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 ArrayList<Event> events = new ArrayList<Event>();
                 for(Task note: dukeNotes.getNotes()) {
                     if(note instanceof Event){
-                        switch (this.filterType) {
-                            case "A":
+                        if(filterByStatus(note)) {
+                            if(this.dateFilter == null || filterByDate(note, this.dateFilter, 86400000)) {
                                 events.add((Event)note);
-                                break;
-                            case "O":
-                                if (!note.getIsDone()) {
-                                    events.add((Event)note);
-                                }
-                                break;
-                            case "C":
-                                if (note.getIsDone()) {
-                                    events.add((Event)note);
-                                }
-                                break;
-                            default:
-                                throw new ParseException("Insufficient Attributes", 0);
+                            }
                         }
                     }
                 }
@@ -262,22 +228,8 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 ArrayList<Task> shoplists = new ArrayList<Task>();
                 for(Task note: dukeNotes.getNotes()) {
                     if(note instanceof Shoplist){
-                        switch (this.filterType) {
-                            case "A":
-                                shoplists.add((Todo)note);
-                                break;
-                            case "O":
-                                if (!note.getIsDone()) {
-                                    shoplists.add((Todo)note);
-                                }
-                                break;
-                            case "C":
-                                if (note.getIsDone()) {
-                                    shoplists.add((Todo)note);
-                                }
-                                break;
-                            default:
-                                throw new ParseException("Insufficient Attributes", 0);
+                        if(filterByStatus(note)) {
+                            shoplists.add((Todo)note);
                         }
                     }
                 }
@@ -296,22 +248,8 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 ArrayList<Todo> todos = new ArrayList<Todo>();
                 for(Task note: dukeNotes.getNotes()) {
                     if(note instanceof Todo){
-                        switch (this.filterType) {
-                            case "A":
+                        if(filterByStatus(note)) {
                                 todos.add((Todo)note);
-                                break;
-                            case "O":
-                                if (!note.getIsDone()) {
-                                    todos.add((Todo)note);
-                                }
-                                break;
-                            case "C":
-                                if (note.getIsDone()) {
-                                    todos.add((Todo)note);
-                                }
-                                break;
-                            default:
-                                throw new ParseException("Insufficient Attributes", 0);
                         }
                     }
                 }
@@ -329,22 +267,10 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 ArrayList<Event> weddings = new ArrayList<Event>();
                 for(Task note: dukeNotes.getNotes()) {
                     if(note instanceof Wedding){
-                        switch (this.filterType) {
-                            case "A":
+                        if(filterByStatus(note)) {
+                            if(this.dateFilter == null || filterByDate(note, this.dateFilter, 86400000)) {
                                 weddings.add((Wedding)note);
-                                break;
-                            case "O":
-                                if (!note.getIsDone()) {
-                                    weddings.add((Wedding)note);
-                                }
-                                break;
-                            case "C":
-                                if (note.getIsDone()) {
-                                    weddings.add((Wedding)note);
-                                }
-                                break;
-                            default:
-                                throw new ParseException("Insufficient Attributes", 0);
+                            }
                         }
                     }
                 }
@@ -360,28 +286,18 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 }
             }
             case "LISTNOTES" -> {
-                if (dukeNotes.getNotes().size() == 0) {
+                ArrayList<Task> notes = new ArrayList<Task>();
+                for (Task note: dukeNotes.getNotes()) {
+                    if(filterByStatus(note)) {
+                            notes.add(note);
+                    }
+                }
+                if (notes.size() == 0) {
                     System.out.println("\tYou haven't asked me to take note of anything yet.");
                 } else {
                     System.out.println("\tHere are the things you told me to note:-");
-                    for (Task note: dukeNotes.getNotes()) {
-                        switch (this.filterType) {
-                            case "A":
-                                note.printList();
-                                break;
-                            case "O":
-                                if (!note.getIsDone()) {
-                                    note.printList();
-                                }
-                                break;
-                            case "C":
-                                if (note.getIsDone()) {
-                                    note.printList();
-                                }
-                                break;
-                            default:
-                                throw new ParseException("Insufficient Attributes", 0);
-                        }
+                    for (Task note: notes) {
+                        note.printList();
                     }
                     System.out.println("\n");
                 }
@@ -391,48 +307,13 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 ArrayList<Event> events = new ArrayList<Event>();
                 ArrayList<Task> upcomings = new ArrayList<Task>();
                 Date now = new Date();
-                Date then = new Date(now.getTime()+86400000);
                 for(Task note: dukeNotes.getNotes()) {
-                    if(note instanceof Deadline){
-                        if(((Deadline)note).getTargetDate().after(now) &&
-                                ((Deadline)note).getTargetDate().before(then)){
-                            switch (this.filterType) {
-                                case "A":
-                                    deadlines.add((Deadline)note);
-                                    break;
-                                case "O":
-                                    if (!note.getIsDone()) {
-                                        deadlines.add((Deadline)note);
-                                    }
-                                    break;
-                                case "C":
-                                    if (note.getIsDone()) {
-                                        deadlines.add((Deadline)note);
-                                    }
-                                    break;
-                                default:
-                                    throw new ParseException("Insufficient Attributes", 0);
-                            }
-                        }
-                    } else if(note instanceof Event){
-                        if(((Event)note).getStartDate().after(now) &&
-                                ((Event)note).getStartDate().before(then)){
-                            switch (this.filterType) {
-                                case "A":
-                                    events.add((Event)note);
-                                    break;
-                                case "O":
-                                    if (!note.getIsDone()) {
-                                        events.add((Event)note);
-                                    }
-                                    break;
-                                case "C":
-                                    if (note.getIsDone()) {
-                                        events.add((Event)note);
-                                    }
-                                    break;
-                                default:
-                                    throw new ParseException("Insufficient Attributes", 0);
+                    if(filterByDate(note, now, 86400000)) {
+                        if(filterByStatus(note)) {
+                            if(note instanceof Deadline){
+                                deadlines.add((Deadline)note);
+                            } else if(note instanceof Event) {
+                                events.add((Event)note);
                             }
                         }
                     }
@@ -456,48 +337,13 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 ArrayList<Event> events = new ArrayList<Event>();
                 ArrayList<Task> upcomings = new ArrayList<Task>();
                 Date now = new Date();
-                Date then = new Date(now.getTime()+172800000);
                 for(Task note: dukeNotes.getNotes()) {
-                    if(note instanceof Deadline){
-                        if(((Deadline)note).getTargetDate().after(now) &&
-                                ((Deadline)note).getTargetDate().before(then)){
-                            switch (this.filterType) {
-                                case "A":
-                                    deadlines.add((Deadline)note);
-                                    break;
-                                case "O":
-                                    if (!note.getIsDone()) {
-                                        deadlines.add((Deadline)note);
-                                    }
-                                    break;
-                                case "C":
-                                    if (note.getIsDone()) {
-                                        deadlines.add((Deadline)note);
-                                    }
-                                    break;
-                                default:
-                                    throw new ParseException("Insufficient Attributes", 0);
-                            }
-                        }
-                    } else if(note instanceof Event){
-                        if(((Event)note).getStartDate().after(now) &&
-                                ((Event)note).getStartDate().before(then)){
-                            switch (this.filterType) {
-                                case "A":
-                                    events.add((Event)note);
-                                    break;
-                                case "O":
-                                    if (!note.getIsDone()) {
-                                        events.add((Event)note);
-                                    }
-                                    break;
-                                case "C":
-                                    if (note.getIsDone()) {
-                                        events.add((Event)note);
-                                    }
-                                    break;
-                                default:
-                                    throw new ParseException("Insufficient Attributes", 0);
+                    if(filterByDate(note, now, 172800000)) {
+                        if(filterByStatus(note)) {
+                            if(note instanceof Deadline){
+                                deadlines.add((Deadline)note);
+                            } else if(note instanceof Event) {
+                                events.add((Event)note);
                             }
                         }
                     }
@@ -520,48 +366,13 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 ArrayList<Event> events = new ArrayList<Event>();
                 ArrayList<Task> upcomings = new ArrayList<Task>();
                 Date now = new Date();
-                Date then = new Date(now.getTime()+259200000);
                 for(Task note: dukeNotes.getNotes()) {
-                    if(note instanceof Deadline){
-                        if(((Deadline)note).getTargetDate().after(now) &&
-                                ((Deadline)note).getTargetDate().before(then)){
-                            switch (this.filterType) {
-                                case "A":
-                                    deadlines.add((Deadline)note);
-                                    break;
-                                case "O":
-                                    if (!note.getIsDone()) {
-                                        deadlines.add((Deadline)note);
-                                    }
-                                    break;
-                                case "C":
-                                    if (note.getIsDone()) {
-                                        deadlines.add((Deadline)note);
-                                    }
-                                    break;
-                                default:
-                                    throw new ParseException("Insufficient Attributes", 0);
-                            }
-                        }
-                    } else if(note instanceof Event){
-                        if(((Event)note).getStartDate().after(now) &&
-                                ((Event)note).getStartDate().before(then)){
-                            switch (this.filterType) {
-                                case "A":
-                                    events.add((Event)note);
-                                    break;
-                                case "O":
-                                    if (!note.getIsDone()) {
-                                        events.add((Event)note);
-                                    }
-                                    break;
-                                case "C":
-                                    if (note.getIsDone()) {
-                                        events.add((Event)note);
-                                    }
-                                    break;
-                                default:
-                                    throw new ParseException("Insufficient Attributes", 0);
+                    if(filterByDate(note, now, 259200000)) {
+                        if(filterByStatus(note)) {
+                            if(note instanceof Deadline){
+                                deadlines.add((Deadline)note);
+                            } else if(note instanceof Event) {
+                                events.add((Event)note);
                             }
                         }
                     }

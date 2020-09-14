@@ -32,6 +32,6 @@ public abstract class DukeCommand {
 
 
     //ABSTRACT METHODS----------------------------------
-    public abstract void execute(DukeList dukeList, DukeStorage dukeStorage) throws ParseException, CommandException, IOException;
+    public abstract void execute(DukeList dukeList, DukeStorage dukeStorage) throws ParseException, CommandException, IOException, DateException;
 
 }

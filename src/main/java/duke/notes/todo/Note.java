@@ -28,7 +28,7 @@ public abstract class Note implements Task {
 
 
     //SET STATEMENTS------------------------------------
-    public boolean markAsDone(Date doneDate) throws CommandException {
+    public boolean markAsDone(Date doneDate) throws CommandException, DateException {
         if(this.isDone) {
             System.out.println("\tNote #" + this.serialNum + " was already done!");
             return false;

@@ -69,6 +69,9 @@ public class Duke implements DukeParser, DukeUI {
 
             } catch (CommandException e) {
                 e.printExplanation(input);
+
+            } catch (DateException e) {
+                e.printExplanation();
             }
         }
     }

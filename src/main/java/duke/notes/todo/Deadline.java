@@ -46,7 +46,7 @@ public class Deadline extends Todo {
     }
 
     @Override
-    public boolean markAsDone(Date doneDate) throws CommandException {
+    public boolean markAsDone(Date doneDate) throws CommandException, DateException {
         super.markAsDone(doneDate);
         if(doneDate.compareTo(this.targetDate) < 0) {
             this.doneAhead = true;
@@ -95,13 +95,13 @@ public class Deadline extends Todo {
         String text = "Deadline/" +
                 this.serialNum + "/" +
                 this.description + "/" +
-                INPUT_DATE.format(this.addDate) + "/" +
+                INPUT_TIME.format(this.addDate) + "/" +
                 this.isDone + "/" +
-                INPUT_DATE.format(this.targetDate) + "/" +
+                INPUT_TIME.format(this.targetDate) + "/" +
                 this.doneAhead;
 
         if(isDone) {
-            text = text + "/" + INPUT_DATE.format(this.doneDate) + "\n";
+            text = text + "/" + INPUT_TIME.format(this.doneDate) + "\n";
         } else {
             text = text + "\n";
         }

@@ -57,8 +57,11 @@ public class Event extends Note {
 
     //SET STATEMENTS------------------------------------
     @Override
-    public boolean markAsDone(Date doneDate) throws CommandException {
-        if(super.markAsDone(doneDate)) {
+    public boolean markAsDone(Date doneDate) throws CommandException, DateException {
+
+        if(doneDate.before(this.startDate)) {
+            throw new DateException(doneDate, "DoneB4Start", this);
+        } else if(super.markAsDone(doneDate)) {
             eventsOutstanding--;
             eventsCompleted++;
             this.printList();
@@ -156,13 +159,13 @@ public class Event extends Note {
         String text = "Event/" +
                 this.serialNum + "/" +
                 this.description + "/" +
-                INPUT_DATE.format(this.addDate) + "/" +
+                INPUT_TIME.format(this.addDate) + "/" +
                 this.isDone + "/" +
-                INPUT_DATE.format(this.startDate) + "/" +
-                INPUT_DATE.format(this.endDate) + "/" +
+                INPUT_TIME.format(this.startDate) + "/" +
+                INPUT_TIME.format(this.endDate) + "/" +
                 this.durationMinutes;
         if(isDone) {
-            text = text + "/" + INPUT_DATE.format(this.doneDate) + "\n";
+            text = text + "/" + INPUT_TIME.format(this.doneDate) + "\n";
         } else {
             text = text + "\n";
         }

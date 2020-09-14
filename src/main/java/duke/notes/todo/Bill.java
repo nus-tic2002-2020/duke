@@ -127,14 +127,14 @@ public class Bill extends Deadline {
         String text = "Bill/" +
                 this.serialNum + "/" +
                 this.description + "/" +
-                INPUT_DATE.format(this.addDate) + "/" +
+                INPUT_TIME.format(this.addDate) + "/" +
                 this.isDone + "/" +
-                INPUT_DATE.format(this.targetDate) + "/" +
+                INPUT_TIME.format(this.targetDate) + "/" +
                 this.doneAhead + "/" +
                 this.itemBudget.getSaveText();
 
         if(isDone) {
-            text = text + "/" + INPUT_DATE.format(this.doneDate) + "\n";
+            text = text + "/" + INPUT_TIME.format(this.doneDate) + "\n";
         } else {
             text = text + "\n";
         }
