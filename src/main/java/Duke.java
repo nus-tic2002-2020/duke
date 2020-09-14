@@ -15,7 +15,7 @@ public class Duke {
         int counter = 0;
         while (true) {
             //System.out.println(counter);
-            System.out.println(listOfThings);
+            //System.out.println(listOfThings);
             // set it to false here
             if (listOfThings[counter] == null) {
                 listOfThings[counter] = new Task(input);
@@ -47,7 +47,7 @@ public class Duke {
         System.out.println("\tHere are the tasks in your list: ");
         for (int i = 1; i <= listOfThings.length; i++) {
 
-            System.out.println("\t" + i + ". " + listOfThings[i - 1]);
+            System.out.println("\t" + i + ". " + listOfThings[i - 1].description);
             if (listOfThings[i] == null) {
                 System.out.println("\tOk that's about everything!");
                 return;
@@ -99,7 +99,7 @@ public class Duke {
 
 
         public static void main (String[] args){
-            Task[] List = new Task[0];
+            Task[] List = new Task[100];
 
             String logo = " ____        _        \n"
                     + "|  _ \\ _   _| | _____ \n"
