@@ -47,7 +47,7 @@ public class Duke {
         System.out.println("\tHere are the tasks in your list: ");
         for (int i = 1; i <= listOfThings.length; i++) {
 
-            System.out.println("\t" + i + ". " + listOfThings[i - 1].description);
+            System.out.println("\t" + i + ". " + listOfThings[i - 1].description +  listOfThings[i-1].getStatusIcon());
             if (listOfThings[i] == null) {
                 System.out.println("\tOk that's about everything!");
                 return;
