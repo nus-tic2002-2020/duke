@@ -1,6 +1,6 @@
 package duke;
 
-import duke.ui.*;
+import duke.ui.DukeUI;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -30,7 +30,6 @@ public enum SunSign implements DukeUI{
     }
 
     public static String getSunSign(Date date) throws ParseException {
-
 
         for(SunSign sign: SunSign.values()){
             String from = sign.from + "-" + YEAR_TODAY.format(date) + " 00:00:00";

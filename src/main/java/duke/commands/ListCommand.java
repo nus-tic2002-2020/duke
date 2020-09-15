@@ -91,9 +91,9 @@ public class ListCommand extends DukeCommand implements DukeUI {
     private boolean filterByStatus(Task note) {
 
         return switch (this.filterType) {
-            case "A" -> true;
             case "O" -> !note.getIsDone();
             case "C" -> note.getIsDone();
+            case "A" -> true;
             default -> false;
         };
     }

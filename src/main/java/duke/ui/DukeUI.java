@@ -226,7 +226,8 @@ public interface DukeUI {
     static void printOnStartup(Date now, boolean isLoadedFromFile) throws ParseException, CommandException {
         System.out.print("\nWelcome to PROJECT >>>\n" + DUKE_LOGO);
         System.out.println(String.format("%1$-42s%2$42s", DATE_TODAY.format(now), DAY_TODAY.format(now)));
-        System.out.println(String.format("%1$-42s%2$42s", ZodiacYear.getZodiacYear(now), SunSign.getSunSign(now)) + "\n");
+        System.out.println(String.format("%1$-42s%2$42s", ZodiacYear.getZodiacYear(now), SunSign.getSunSign(now)));
+        System.out.println(String.format("%1$-42s%2$42s", LunarMonth.getLunarMonth(now), MercuryMovement.getMercuryMovement(now)) + "\n");
 
         try {
             Thread.sleep(3 * 1000);
