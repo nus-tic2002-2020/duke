@@ -31,9 +31,8 @@ public class ExtendDeadlineCommand extends DukeCommand implements DukeUI{
     }
 
     //METHODS-------------------------------------------
-    public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IndexOutOfBoundsException {
+    public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IndexOutOfBoundsException, DateException {
 
-        Date doneDate = new Date();
         if(CmdType.getKey(this.cmdType).toString().equals("EXTDLINE")) {
 
             int targetSerialNum = Integer.parseInt(this.targetNote);
@@ -56,9 +55,9 @@ public class ExtendDeadlineCommand extends DukeCommand implements DukeUI{
                         ((Deadline) dukeNotes.getNotes().get(i)).setTargetDate(this.newDate);
 
                         System.out.println("\textended from...");
-                        DukeUI.commandWrap(TASK_DATE.format(this.oldDate), 66);
+                        DukeUI.commandWrap(TASK_TIME.format(this.oldDate), 66);
                         System.out.println("\tto...");
-                        DukeUI.commandWrap(TASK_DATE.format(this.newDate), 66);
+                        DukeUI.commandWrap(TASK_TIME.format(this.newDate), 66);
                         DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
                         DukeUI.suggestListNotes();
                     }

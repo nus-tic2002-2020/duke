@@ -39,4 +39,4 @@ Deadline/38/test 09 1pm/08-Sep-2020 13:19/false/09-Sep-2020 13:00/false
 Deadline/39/test abcdefg/08-Sep-2020 13:21/false/09-Sep-2020 13:22/false
 Event/40/clash test/14-Sep-2020 20:10/false/17-Sep-2020 02:30/17-Sep-2020 04:00/90
 Event/41/clash test 2/14-Sep-2020 20:10/false/17-Sep-2020 02:45/17-Sep-2020 03:00/15
-Event/42/clash test/14-Sep-2020 20:17/false/19-Sep-2020 14:00/19-Sep-2020 14:15/15
+Event/42/clash test/14-Sep-2020 20:17/false/16-Sep-2020 12:00/16-Sep-2020 12:15/15

@@ -18,7 +18,8 @@ public interface DukeUI {
     String DUKE_DIVIDER = "\t----------------------------------------------------------------------------";
 
     //Date formats to be used by Duke
-    SimpleDateFormat TASK_DATE = new SimpleDateFormat("dd-MMM-yyyy (E), hh:mm a");
+    SimpleDateFormat TASK_TIME = new SimpleDateFormat("dd-MMM-yyyy (E), hh:mm a");
+    SimpleDateFormat TASK_DATE = new SimpleDateFormat("dd-MMM-yyyy (E)");
     SimpleDateFormat DATE_TODAY = new SimpleDateFormat("dd MMMM yyyy");
     SimpleDateFormat DAY_TODAY = new SimpleDateFormat("EEEE");
     SimpleDateFormat YEAR_TODAY = new SimpleDateFormat("yyyy");
@@ -33,6 +34,8 @@ public interface DukeUI {
                     "\t\t#delete          >>> Delete notes, then renumber the rest.\n" +
                     "\t\t\tE.g. #delete <Note#>\n" +
                     "\t\t\tE.g. #delete <Note#> /and <Note#> /and <Note#> \n" +
+                    "\t\t#editdate        >>> Edit the dates of a note.\n" +
+                    "\t\t\tE.g. #editdate <Note#> <Date Type> /to <New Date-Time>\n" +
                     "\t\t#editdesc        >>> Edit the description of a note.\n" +
                     "\t\t\tE.g. #editdesc <Note#> /to <New Description>\n" +
                     "\t\t#exitduke        >>> Exit Project Duke.\n" +
@@ -51,19 +54,22 @@ public interface DukeUI {
                     "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
                     "\n\n" +
                     "\t\t*** New Note Creation ***\n" +
-                    "\t\t@bill            >>> Add a new todo task with a deadline.\n" +
+                    "\t\t@bill      / @bl >>> Add a new todo task with a deadline.\n" +
                     "\t\t\tE.g. @bill <Description> /by <Date-Time> /for <Budget/Price>\n" +
-                    "\t\t@birthday        >>> Add a new birthday event.\n" +
+                    "\t\t@birthday  / @bd >>> Add a new birthday event.\n" +
                     "\t\t\tE.g. @birthday <Person> /from <Date-Time> /to <Date-Time>\n" +
                     "\t\t\t\t/for <Budget/Price>\n" +
-                    "\t\t@deadline        >>> Add a new todo task with a deadline.\n" +
+                    "\t\t@deadline  / @dl >>> Add a new todo task with a deadline.\n" +
                     "\t\t\tE.g. @deadline <Description> /by <Date-Time>\n" +
-                    "\t\t@event           >>> Add a new event.\n" +
+                    "\t\t@event     / @ev >>> Add a new event.\n" +
                     "\t\t\tE.g. @event <Description> /from <Date-Time> /to <Date-Time>\n" +
-                    "\t\t@shoplist        >>> Add a new shopping list item.\n" +
+                    "\t\t@shoplist  / @sl >>> Add a new shopping list item.\n" +
                     "\t\t\tE.g. @shoplist <Description> /for <Budget/Price>\n" +
-                    "\t\t@todo            >>> Add a new todo task without a deadline.\n" +
+                    "\t\t@todo      / @td >>> Add a new todo task without a deadline.\n" +
                     "\t\t\tE.g. @todo <Description>\n" +
+                    "\t\t@wedding   / @wd >>> Add a new todo task without a deadline.\n" +
+                    "\t\t\tE.g. @wedding <Person>/from <Date-Time> /to <Date-Time>\n" +
+                    "\t\t\t\t/for <Budget/Price>\n" +
                     "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
                     "\n\n" +
                     "\t\t*** Information Extraction ***\n" +
@@ -72,18 +78,18 @@ public interface DukeUI {
                     "\t\t\t  --------------------------------------------------------\n" +
                     "\t\t#listbills       >>> List in order of budget, bill payments.\n" +
                     "\t\t\tE.g. #listbills <Note-Filter>\n" +
-                    "\t\t\tE.g. #listbills <Note-Filter> /on <Date-Time>\n" +
+                    "\t\t\tE.g. #listbills <Note-Filter> /on <Date>\n" +
                     "\t\t#listbirthdays   >>> List in chronological order, birthdays.\n" +
                     "\t\t\tE.g. #listbirthdays <Note-Filter>\n" +
-                    "\t\t\tE.g. #listbirthdays <Note-Filter> /on <Date-Time>\n" +
+                    "\t\t\tE.g. #listbirthdays <Note-Filter> /on <Date>\n" +
                     "\t\t#listbudgets     >>> List in order of quantum, budgets set.\n" +
                     "\t\t\tE.g. #listbudgets <Note-Filter>\n" +
                     "\t\t#listdeadlines   >>> List in chronological order, deadlines.\n" +
                     "\t\t\tE.g. #listdeadlines <Note-Filter>\n" +
-                    "\t\t\tE.g. #listdeadlines <Note-Filter> /on <Date-Time>\n" +
+                    "\t\t\tE.g. #listdeadlines <Note-Filter> /on <Date>\n" +
                     "\t\t#listevents      >>> List in chronological order, events.\n" +
                     "\t\t\tE.g. #listevents <Note-Filter>\n" +
-                    "\t\t\tE.g. #listevents <Note-Filter> /on <Date-Time>\n" +
+                    "\t\t\tE.g. #listevents <Note-Filter> /on <Date>\n" +
                     "\t\t#listnotes       >>> List in serial number order, notes.\n" +
                     "\t\t\tE.g. #listnotes <Note-Filter>\n" +
                     "\t\t#listnxt24       >>> List deadlines and events in the next 24 hours.\n" +
@@ -98,11 +104,13 @@ public interface DukeUI {
                     "\t\t\tE.g. #listtodos <Note-Filter>\n" +
                     "\t\t#listweddings    >>> List in chronological order, weddings.\n" +
                     "\t\t\tE.g. #listweddings <Note-Filter>\n" +
-                    "\t\t\tE.g. #listweddings <Note-Filter> /on <Date-Time>\n" +
+                    "\t\t\tE.g. #listweddings <Note-Filter> /on <Date>\n" +
                     "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
                     "\n\n" +
                     "\t\t*** Data Entry Formats ***\n" +
                     "\t\tBudget/Price     >>> $X.xx\n" +
+                    "\t\tDate             >>> dd-MMM-yyyy\n" +
+                    "\t\tDate Type        >>> target, start or end\n" +
                     "\t\tDate-Time        >>> dd-MMM-yyyy HH:mm\n" +
                     "\t\tNote#            >>> x\n" +
                     "\t\tNote-Filter      >>> O, C or A\n" +
@@ -175,7 +183,7 @@ public interface DukeUI {
             if (input.length() < limit) {
                 if(firstLine) {
                     System.out.println(String.format("%1$-29s%2$29s",
-                            input, "Added: " + TASK_DATE.format(addDate)));
+                            input, "Added: " + TASK_TIME.format(addDate)));
                 } else {
                     System.out.println("\t\t\t\t\t" + input);
                 }
@@ -190,7 +198,7 @@ public interface DukeUI {
                 if(firstLine) {
                     System.out.println(String.format("%1$-29s%2$29s",
                             input.substring(0, lastSpace), "Added: " +
-                                    TASK_DATE.format(addDate)));
+                                    TASK_TIME.format(addDate)));
                     input = input.substring(lastSpace + 1);
                     firstLine = false;
 

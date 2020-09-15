@@ -81,7 +81,7 @@ public abstract class Note implements Task {
     public void printDetails(){
         if (this.isDone) {
             System.out.println("\t\t\tDone     : " +
-                    TASK_DATE.format(this.doneDate));
+                    TASK_TIME.format(this.doneDate));
         }
     }
 

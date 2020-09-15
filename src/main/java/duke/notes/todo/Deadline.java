@@ -41,8 +41,14 @@ public class Deadline extends Todo {
 
 
     //SET STATEMENTS------------------------------------
-    public void setTargetDate(Date targetDate) {
-        this.targetDate = targetDate;
+    public void setTargetDate(Date targetDate) throws DateException {
+
+        Date now = new Date();
+        if(targetDate.before(now)){
+            throw new DateException(targetDate, "TargetDate");
+        } else {
+            this.targetDate = targetDate;
+        }
     }
 
     @Override
@@ -59,7 +65,7 @@ public class Deadline extends Todo {
     @Override
     public void printDetails(){
         System.out.print("\t\t\tDeadline : " +
-                TASK_DATE.format(this.targetDate));
+                TASK_TIME.format(this.targetDate));
         if(this.timesExtended > 0){
             System.out.print("(" + this.timesExtended +
                     " extensions)\n");
@@ -68,7 +74,7 @@ public class Deadline extends Todo {
         }
         if (this.isDone) {
             System.out.println("\t\t\tDone     : " +
-                    TASK_DATE.format(this.doneDate) + " " +
+                    TASK_TIME.format(this.doneDate) + " " +
                     this.getDoneAhead());
         }
     }

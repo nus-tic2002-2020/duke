@@ -5,7 +5,8 @@ public enum CmdType {
 
     COMMANDS("#commands", "#cmd"),
     DELETE("#delete", "#del"),
-    EDITDESC("#editdesc", "#dsc"),
+    EDITDATE("#editdate", "#edt"),
+    EDITDESC("#editdesc", "#eds"),
     EXITDUKE("#exitduke", "#xit"),
     EXTDLINE("#extend", "#xtd"),
     LISTBILLS("#listbills", "#lbp"),

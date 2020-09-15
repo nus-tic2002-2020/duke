@@ -66,9 +66,9 @@ public class Wedding extends Event {
         System.out.println("\t\t\tDuration : " +
                 String.format("%,5d", this.durationMinutes) +  "mins");
         System.out.println("\t\t\tFrom     : " +
-                TASK_DATE.format(this.startDate));
+                TASK_TIME.format(this.startDate));
         System.out.println("\t\t\tTo       : " +
-                TASK_DATE.format(this.endDate));
+                TASK_TIME.format(this.endDate));
         System.out.println("\t\t\tBudget   : $" +
                 String.format("%,14.2f", this.getItemBudget()));
         if (this.itemBudget.getIsRevised()) {
@@ -80,7 +80,7 @@ public class Wedding extends Event {
                     String.format("%,14.2f", this.getItemPrice()) +
                     " " + this.getWithinBudget());
             System.out.println("\t\t\tDone     : " +
-                    TASK_DATE.format(this.doneDate));
+                    TASK_TIME.format(this.doneDate));
         }
     }
 

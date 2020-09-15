@@ -75,7 +75,7 @@ public class Bill extends Deadline {
     @Override
     public void printDetails(){
         System.out.print("\t\t\tDeadline : " +
-                TASK_DATE.format(this.targetDate));
+                TASK_TIME.format(this.targetDate));
         if(this.timesExtended > 0){
             System.out.print("(" + this.timesExtended +
                     " extensions)\n");
@@ -93,7 +93,7 @@ public class Bill extends Deadline {
                     String.format("%,14.2f", this.getItemPrice()) +
                     " " + this.getWithinBudget());
             System.out.println("\t\t\tDone     : " +
-                    TASK_DATE.format(this.doneDate));
+                    TASK_TIME.format(this.doneDate));
         }
     }
 

@@ -38,9 +38,9 @@ public class DateException extends Exception {
 
         switch (this.message) {
             case "TargetDate" -> {
-                System.out.println("\tBut the deadline you are trying to set has already passed.");
+                System.out.println("\tBut the target date you are trying to set has already passed.");
                 System.out.println("\tI can't send you back in time, yet.");
-                System.out.println("\tPlease enter as the deadline, another date & time in the future.");
+                System.out.println("\tPlease enter as the target date, another date & time in the future.");
             }
             case "StartB4Now" -> {
                 System.out.println("\tBut the Event Start Date-Time you are trying to set has already passed.");
@@ -48,7 +48,7 @@ public class DateException extends Exception {
                 System.out.println("\tPlease enter as the Event Start Date-Time, another date & time in the future.");
             }
             case "StartAFEnd" -> {
-                System.out.println("\tBut the event start you are trying to set is after the event end");
+                System.out.println("\tBut the event start you are trying to set is after the event end.");
                 System.out.println("\tI can't turn time backwards, yet.");
                 System.out.println("\tPlease enter as the event start, another date & time earlier than the event end.");
             }
@@ -56,6 +56,11 @@ public class DateException extends Exception {
                 System.out.println("\tBut the event start date & time hasn't been set yet.");
                 System.out.println("\tI can't predict the start of events, yet.");
                 System.out.println("\tPlease set the Event Start Date-Time first, before the Event End Date-Time.");
+            }
+            case "EndB4Now" -> {
+                System.out.println("\tBut the Event End Date-Time you are trying to set has already passed.");
+                System.out.println("\tI can't send you back in time, yet.");
+                System.out.println("\tPlease enter as the Event End Date-Time, another date & time in the future.");
             }
             case "EndB4Start" -> {
                 System.out.println("\tBut the event end you are trying to set is before the event start.");
@@ -68,9 +73,24 @@ public class DateException extends Exception {
                 System.out.println("\tPlease consider only either event to attend.");
             }
             case "DoneB4Start" -> {
-                System.out.println("\tBut the event you are trying to set done hasn't started.");
+                System.out.println("\tBut the event you are trying to set done hasn't even started.");
                 this.event.printList();
                 System.out.println("\tPlease consider deleting the event instead.");
+            }
+            case "NoStart" -> {
+                System.out.println("\tBut the note you are trying to edit does not have a start date.");
+                System.out.println("\tThere might have been an error in the command.");
+                System.out.println("\tPlease identify the correct note or correct date to edit.");
+            }
+            case "NoEnd" -> {
+                System.out.println("\tBut the note you are trying to edit does not have an end date.");
+                System.out.println("\tThere might have been an error in the command.");
+                System.out.println("\tPlease identify the correct note or correct date to edit.");
+            }
+            case "NoTarget" -> {
+                System.out.println("\tBut the note you are trying to edit does not have a target date.");
+                System.out.println("\tThere might have been an error in the command.");
+                System.out.println("\tPlease identify the correct note or correct date to edit.");
             }
             default -> {
                 System.out.println("\t" + this.message);

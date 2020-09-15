@@ -76,7 +76,7 @@ public class Shoplist extends Todo {
                     String.format("%,14.2f", this.getItemPrice()) +
                     " " + this.getWithinBudget());
             System.out.println("\t\t\tDone     : " +
-                    TASK_DATE.format(this.doneDate));
+                    TASK_TIME.format(this.doneDate));
         }
     }
 

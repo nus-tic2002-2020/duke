@@ -133,12 +133,12 @@ public class Event extends Note {
         System.out.println("\t\t\tDuration : " +
                 String.format("%,5d", this.durationMinutes) +  "mins");
         System.out.println("\t\t\tFrom     : " +
-                TASK_DATE.format(this.startDate));
+                TASK_TIME.format(this.startDate));
         System.out.println("\t\t\tTo       : " +
-                TASK_DATE.format(this.endDate));
+                TASK_TIME.format(this.endDate));
         if (this.isDone) {
             System.out.println("\t\t\tDone     : " +
-                    TASK_DATE.format(this.doneDate));
+                    TASK_TIME.format(this.doneDate));
         }
     }
 

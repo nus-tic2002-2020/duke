@@ -6,7 +6,6 @@ import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class EditDescriptionCommand extends DukeCommand {
 
@@ -25,7 +24,6 @@ public class EditDescriptionCommand extends DukeCommand {
     //METHODS-------------------------------------------
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IndexOutOfBoundsException {
 
-        Date doneDate = new Date();
         if(CmdType.getKey(this.cmdType).toString().equals("EDITDESC")) {
 
             int targetSerialNum = Integer.parseInt(this.targetNote);
@@ -41,13 +39,10 @@ public class EditDescriptionCommand extends DukeCommand {
                         }
                         System.out.println("\tThe description shouldn't be edited anymore.");
                     } else {
-                        System.out.println("\tDescription of Note #" + this.targetNote + ":");
-                        dukeNotes.getNotes().get(i).printList();
-
                         this.oldDescription = dukeNotes.getNotes().get(i).getDescription();
                         dukeNotes.getNotes().get(i).setDescription(this.newDescription);
 
-                        System.out.println("\tchanged from...");
+                        System.out.println("\tDescription of Note #" + this.targetNote + " changed from...");
                         DukeUI.commandWrap(this.oldDescription, 66);
                         System.out.println("\tto...");
                         DukeUI.commandWrap(this.newDescription, 66);

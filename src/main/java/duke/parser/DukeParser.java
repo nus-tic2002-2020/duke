@@ -56,11 +56,22 @@ public interface DukeParser {
                         if (inputTokens.length == 1) {
                             throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
                         } else {
-                            String[] editTokens = inputTokens[1].split("/to");
-                            for (String editToken : editTokens) {
-                                inputs.add(editToken.trim());
-                            }
+                            String[] editTokens = inputTokens[1].split("/to", 2);
+                            inputs.add(editTokens[0].trim());
+                            inputs.add(editTokens[1].trim());
                             return new EditDescriptionCommand(inputs);
+                        }
+                    }
+                    case "EDITDATE" -> {
+                        if (inputTokens.length == 1) {
+                            throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
+                        } else {
+                            String[] editTokens1 = inputTokens[1].split(" ", 2);
+                            inputs.add(editTokens1[0].trim());
+                            String[] editTokens2 = editTokens1[1].split("/to", 2);
+                            inputs.add(editTokens2[0].trim());
+                            inputs.add(editTokens2[1].trim());
+                            return new EditDateCommand(inputs);
                         }
                     }
                     case "EXTDLINE" -> {

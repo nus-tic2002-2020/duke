@@ -66,7 +66,8 @@ public class ListCommand extends DukeCommand implements DukeUI {
         }
     }
 
-    private void sortBetweenDeadlinesEvents(ArrayList<Deadline> deadlines, ArrayList<Event> events, ArrayList<Task> upcomings) throws CommandException {
+    private void sortBetweenDeadlinesEvents(ArrayList<Deadline> deadlines,
+                                            ArrayList<Event> events, ArrayList<Task> upcomings) {
 
         int dIdx = 0; int eIdx = 0;
         while(dIdx<deadlines.size() && eIdx<events.size()){
@@ -128,7 +129,21 @@ public class ListCommand extends DukeCommand implements DukeUI {
                     }
                 }
                 if(bills.size() == 0) {
-                    System.out.println("\tYou haven't asked me to take note of any bill payments yet.");
+                    if(this.dateFilter == null) {
+                        switch (this.filterType) {
+                            case "O" -> System.out.print("\tYou have no outstanding ");
+                            case "C" -> System.out.print("\tYou have no completed ");
+                            case "A" -> System.out.print("\tYou haven't asked me to take note of any ");
+                        }
+                        System.out.println("bill payments.");
+                    } else {
+                        switch (this.filterType) {
+                            case "O" -> System.out.print("\tYou have no outstanding ");
+                            case "C" -> System.out.print("\tYou have no completed ");
+                            case "A" -> System.out.print("\tYou have no ");
+                        }
+                        System.out.println("bill payments due on " + TASK_DATE.format(this.dateFilter) + ".");
+                    }
                 } else {
                     bubbleSortBudgets(bills);
                     System.out.println("\tHere are the bill payments you told me to note:-");
@@ -150,7 +165,21 @@ public class ListCommand extends DukeCommand implements DukeUI {
                     }
                 }
                 if(birthdays.size() == 0) {
-                    System.out.println("\tYou haven't asked me to take note of any birthdays yet.");
+                    if(this.dateFilter == null) {
+                        switch (this.filterType) {
+                            case "O" -> System.out.print("\tYou have no outstanding ");
+                            case "C" -> System.out.print("\tYou have no completed ");
+                            case "A" -> System.out.print("\tYou haven't asked me to take note of any ");
+                        }
+                        System.out.println("birthdays.");
+                    } else {
+                        switch (this.filterType) {
+                            case "O" -> System.out.print("\tThere are no outstanding ");
+                            case "C" -> System.out.print("\tThere are no completed ");
+                            case "A" -> System.out.print("\tThere are no ");
+                        }
+                        System.out.println("birthdays on " + TASK_DATE.format(this.dateFilter) + ".");
+                    }
                 } else {
                     bubbleSortEvents(birthdays);
                     System.out.println("\tHere are the birthdays you told me to note:-");
@@ -170,7 +199,12 @@ public class ListCommand extends DukeCommand implements DukeUI {
                     }
                 }
                 if(budgets.size() == 0) {
-                    System.out.println("\tYou haven't asked me to take note of any budgets yet.");
+                    switch (this.filterType) {
+                        case "O" -> System.out.print("\tYou have no outstanding ");
+                        case "C" -> System.out.print("\tYou have no completed ");
+                        case "A" -> System.out.print("\tYou haven't asked me to take note of any ");
+                    }
+                    System.out.println("budgets");
                 } else {
                     bubbleSortBudgets(budgets);
                     System.out.println("\tHere are the budgets you told me to note:-");
@@ -192,7 +226,21 @@ public class ListCommand extends DukeCommand implements DukeUI {
                     }
                 }
                 if(deadlines.size() == 0) {
-                    System.out.println("\tYou haven't asked me to take note of any deadlines yet.");
+                    if(this.dateFilter == null) {
+                        switch (this.filterType) {
+                            case "O" -> System.out.print("\tYou have no outstanding ");
+                            case "C" -> System.out.print("\tYou have no completed ");
+                            case "A" -> System.out.print("\tYou haven't asked me to take note of any ");
+                        }
+                        System.out.println("deadlines.");
+                    } else {
+                        switch (this.filterType) {
+                            case "O" -> System.out.print("\tYou have no outstanding ");
+                            case "C" -> System.out.print("\tYou have no completed ");
+                            case "A" -> System.out.print("\tYou have no ");
+                        }
+                        System.out.println("deadlines on " + TASK_DATE.format(this.dateFilter) + ".");
+                    }
                 } else {
                     bubbleSortDeadlines(deadlines);
                     System.out.println("\tHere are the deadlines you told me to note:-");
@@ -214,7 +262,21 @@ public class ListCommand extends DukeCommand implements DukeUI {
                     }
                 }
                 if(events.size() == 0) {
-                    System.out.println("\tYou haven't asked me to take note of any events yet.");
+                    if(this.dateFilter == null) {
+                        switch (this.filterType) {
+                            case "O" -> System.out.print("\tYou have no outstanding ");
+                            case "C" -> System.out.print("\tYou have no completed ");
+                            case "A" -> System.out.print("\tYou haven't asked me to take note of any ");
+                        }
+                        System.out.println("events.");
+                    } else {
+                        switch (this.filterType) {
+                            case "O" -> System.out.print("\tYou have no outstanding ");
+                            case "C" -> System.out.print("\tYou have no completed ");
+                            case "A" -> System.out.print("\tYou have no ");
+                        }
+                        System.out.println("events on " + TASK_DATE.format(this.dateFilter) + ".");
+                    }
                 } else {
                     bubbleSortEvents(events);
                     System.out.println("\tHere are the events you told me to note:-");
@@ -234,7 +296,12 @@ public class ListCommand extends DukeCommand implements DukeUI {
                     }
                 }
                 if(shoplists.size() == 0) {
-                    System.out.println("\tYou haven't asked me to take note of any shopping list items yet.");
+                    switch (this.filterType) {
+                        case "O" -> System.out.print("\tYou have no outstanding ");
+                        case "C" -> System.out.print("\tYou have no completed ");
+                        case "A" -> System.out.print("\tYou haven't asked me to take note of any ");
+                    }
+                    System.out.println("shopping list items.");
                 } else {
                     bubbleSortBudgets(shoplists);
                     System.out.println("\tHere are the shopping list items you told me to note:-");
@@ -254,7 +321,12 @@ public class ListCommand extends DukeCommand implements DukeUI {
                     }
                 }
                 if(todos.size() == 0) {
-                    System.out.println("\tYou haven't asked me to take note of any todo tasks yet.");
+                    switch (this.filterType) {
+                        case "O" -> System.out.print("\tYou have no outstanding ");
+                        case "C" -> System.out.print("\tYou have no completed ");
+                        case "A" -> System.out.print("\tYou haven't asked me to take note of any ");
+                    }
+                    System.out.println("todo tasks.");
                 } else {
                     System.out.println("\tHere are the todo tasks you told me to note:-");
                     for (Task todo: todos) {
@@ -275,7 +347,21 @@ public class ListCommand extends DukeCommand implements DukeUI {
                     }
                 }
                 if(weddings.size() == 0) {
-                    System.out.println("\tYou haven't asked me to take note of any weddings yet.");
+                    if(this.dateFilter == null) {
+                        switch (this.filterType) {
+                            case "O" -> System.out.print("\tThere are no outstanding ");
+                            case "C" -> System.out.print("\tThere are no completed ");
+                            case "A" -> System.out.print("\tYou haven't asked me to take note of any ");
+                        }
+                        System.out.println("weddings.");
+                    } else {
+                        switch (this.filterType) {
+                            case "O" -> System.out.print("\tThere are no outstanding ");
+                            case "C" -> System.out.print("\tThere are no completed ");
+                            case "A" -> System.out.print("\tThere are no ");
+                        }
+                        System.out.println("weddings on " + TASK_DATE.format(this.dateFilter) + ".");
+                    }
                 } else {
                     bubbleSortEvents(weddings);
                     System.out.println("\tHere are the weddings you told me to note:-");
@@ -293,7 +379,12 @@ public class ListCommand extends DukeCommand implements DukeUI {
                     }
                 }
                 if (notes.size() == 0) {
-                    System.out.println("\tYou haven't asked me to take note of anything yet.");
+                    switch (this.filterType) {
+                        case "O" -> System.out.print("\tThere are no outstanding ");
+                        case "C" -> System.out.print("\tThere are no completed ");
+                        case "A" -> System.out.print("\tYou haven't asked me to take note of any ");
+                    }
+                    System.out.println("notes.");
                 } else {
                     System.out.println("\tHere are the things you told me to note:-");
                     for (Task note: notes) {
@@ -320,7 +411,6 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 }
                 if(deadlines.size() == 0 && events.size() == 0) {
                     System.out.println("\tYou have no upcoming deadlines or events in the next 24 hours.");
-
                 } else {
                     bubbleSortDeadlines(deadlines);
                     bubbleSortEvents(events);
@@ -379,7 +469,6 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 }
                 if(deadlines.size() == 0 && events.size() == 0) {
                     System.out.println("\tYou have no upcoming deadlines or events in the next 72 hours.");
-
                 } else {
                     bubbleSortDeadlines(deadlines);
                     bubbleSortEvents(events);
