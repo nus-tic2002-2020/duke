@@ -6,12 +6,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
 
     protected static int count = 0;
+    protected static String Directory = "./data/";
     protected static String FileLocation = "data/duke.txt";
     protected static ArrayList<Task> list = new ArrayList<>();
 
@@ -31,20 +33,20 @@ public class Storage {
                 int m = current.indexOf("(");
                 int n = current.indexOf(")");
                 String description = current.substring(7,m-1);
-                String by = current.substring(m+5,n);
+
+                LocalDateTime localDateTime = Parser.parse(current.substring(0,n));
+                assert localDateTime != null;
                 if (current.contains("[D]")) {
-                    list.add(new Deadline(description,by));
+                    list.add(new Deadline(description,localDateTime));
                 }
                 else {
-                    list.add(new Event(description,by));
+                    list.add(new Event(description,localDateTime));
                 }
                 if (current.contains("\u2713")) {
                     list.get(count).setStatus(true);
                 }
             }
-            else {
-                throw new DukeException("Error: Task in existing data is incompatible\n");
-            }
+            else { throw new DukeException("Error: Task in existing data is incompatible\n"); }
             count++;
         }
     }
@@ -59,8 +61,6 @@ public class Storage {
     }
 
     public static void main() {
-        String FileLocation = "data/duke.txt";
-        String Directory = "./data/";
         try {
             Files.createDirectories(Paths.get(Directory));
             printFileContents(FileLocation);

@@ -21,9 +21,19 @@ public class Ui {
             System.out.println("No existing data is found");
         }
         else {
-            Parser.parse("list");
+            Parser.parse("list"); //Load initial list onto screen
         }
-        System.out.println("What would you like to do ?\n");
+        System.out.println("\nWhat would you like to do ?");
+        System.out.println("List of valid entries include the following:\n\n" +
+                "Bye\n" +
+                "List\n" +
+                "Done         'X'\n" +
+                "Delete       'X'\n" +
+                "Todo         'Y'\n" +
+                "Event        'Y' /at 'Z'\n" +
+                "Deadline     'Y' /by 'Z'\n" +
+                "Occurrence       /on 'Z'" +  "    //Specify which events / deadlines occur on a particular date\n\n" +
+                "Where 'X' refers to the task number, 'Y' refers to the task description and 'Z' refers to the date.\n");
         while (true) {
             try {
                 command();

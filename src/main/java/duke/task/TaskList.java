@@ -1,4 +1,7 @@
 package duke.task;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -83,7 +86,7 @@ public class TaskList {
         UpdateStatus();
     }
 
-    public static void Deadline(String line) throws DukeException {
+    public static void Deadline(String line, LocalDateTime localDateTime) throws DukeException {
         if (line.trim().length() < 9) {
             throw new DukeException("Error: Description of task cannot be empty.\n");
         }
@@ -93,17 +96,16 @@ public class TaskList {
         int m = line.toLowerCase().indexOf("deadline");
         int n = line.indexOf('/');
         String description = line.substring(m + 8, n).trim();
-        String by = line.substring(n + 3).trim();
         for (Task l : list) {
             if (l.description.equals(description)) {
                 throw new DukeException("Error: Task has already been added previously\n");
             }
         }
-        list.add(new Deadline(description, by));
+        list.add(new Deadline(description, localDateTime));
         UpdateStatus();
     }
 
-    public static void Event(String line) throws DukeException {
+    public static void Event(String line, LocalDateTime localDateTime) throws DukeException {
         if (line.trim().length() < 6) {
             throw new DukeException("Error: Description of task cannot be empty.\n");
         }
@@ -113,14 +115,38 @@ public class TaskList {
         int m = line.toLowerCase().indexOf("event");
         int n = line.indexOf('/');
         String description = line.substring(m + 5, n).trim();
-        String at = line.substring(n + 3).trim();
         for (Task l : list) {
             if (l.description.equals(description)) {
                 throw new DukeException("Error: Task has already been added previously\n");
             }
         }
-        list.add(new Event(description, at));
+        list.add(new Event(description, localDateTime));
         UpdateStatus();
+    }
+
+    public static void Occurrence(LocalDate localDate) {
+        boolean match = false;
+        System.out.println("Here are the tasks that fall within this date\n");
+        for (Task l : list) {
+            if (l.toString().contains("[D]")) {
+                LocalDate target = (((Deadline) l).localDateTime).toLocalDate();
+                if (target.equals(localDate)) {
+                    System.out.println(l);
+                    match = true;
+                }
+            }
+            if (l.toString().contains("[E]")) {
+                assert l instanceof Event;
+                LocalDate target = (((Event) l).localDateTime).toLocalDate();
+                if (target.equals(localDate)) {
+                    System.out.println(l);
+                    match = true;
+                }
+            }
+        }
+        if (!match) {
+            System.out.print("Sorry no tasks fall on this day\n");
+        }
     }
 
     public static void UpdateStatus() {
