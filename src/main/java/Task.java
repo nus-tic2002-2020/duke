@@ -1,10 +1,14 @@
 public class Task {
-    protected String description;
+    protected String description[];
     protected boolean isDone;
 
     public Task(String description) {
-        this.description = description;
+        this.description = description.split("\\/", 2);
         this.isDone = false;
+    }
+
+    public void markAsDone() {
+        isDone = true;
     }
 
     public String getStatusIcon() {
@@ -12,10 +16,11 @@ public class Task {
     }
 
     public String getDescription() {
-        return description;
+        return description[0].trim();
     }
 
-    public void markAsDone() {
-        isDone = true;
+    @Override
+    public String toString() {
+        return String.format("[%s] %s", this.getStatusIcon(), this.getDescription());
     }
 }

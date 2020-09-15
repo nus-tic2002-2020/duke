@@ -1,6 +1,43 @@
 import java.util.Scanner;
 
 public class Duke {
+
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_RESET = "\u001B[0m";
+
+    public static void line(){
+        System.out.print(ANSI_BLUE);
+        for(int i = 0; i < 50; i++) System.out.print("_");
+        System.out.print(ANSI_RESET);
+        System.out.print("\n");
+    }
+
+    public static void dukeInput(Task task, int taskCounter){
+        line();
+        System.out.println(ANSI_YELLOW + "   Got it. I've added this task: \n"
+                + "     " + task
+                + "\n   Now you have " + (taskCounter + 1) + " tasks in the list." + ANSI_RESET);
+        line();
+    }
+
+    public static void dukeList(Task[] tasks, int taskCounter){
+        line();
+        System.out.println(ANSI_YELLOW + "   Here are the tasks in your list:" + ANSI_RESET);
+        for(int i = 0; i < taskCounter; i++){
+            System.out.println(ANSI_YELLOW + "   " + String.valueOf(i+1) + "." + tasks[i] + ANSI_RESET);
+        }
+        line();
+    }
+
+    public static void dukeDone(Task task){
+        line();
+        task.markAsDone();
+        System.out.println(ANSI_YELLOW + "   This task's status has been updated:\n"
+                + "   " + task + ANSI_RESET);
+        line();
+    }
+
     public static void main(String[] args) {
         int taskCounter = 0;
         Task[] tasks = new Task[100];
@@ -10,29 +47,43 @@ public class Duke {
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println(logo + "Hello! I'm Duke\n" + "What can I do for you?");
+        System.out.println(ANSI_YELLOW + logo + "Hello! I'm Duke\n" + "What can I do for you?" + ANSI_RESET);
 
         while(true){
             Scanner input = new Scanner(System.in);
-            String userInput = input.nextLine();
+            String[] userInput = input.nextLine().split("\\s", 2);
 
-            if(userInput.equals("bye") || userInput.equals("Bye")){
-                System.out.println("Bye. Hope to see you again soon!");
-                break;
-            }else if(userInput.equals("list")){
-                for(int i = 0; i < taskCounter; i++){
-                    System.out.println(String.format("%d.[%s] %s", i + 1, tasks[i].getStatusIcon(), tasks[i].getDescription()));
-                }
-                continue;
-            }else if(userInput.contains("done")){
-                String[] doneTask = userInput.split(" ");
-                tasks[Integer.parseInt(doneTask[1]) - 1].markAsDone();
-                continue;
+            switch (userInput[0]){
+                case "bye":
+                    System.out.println(ANSI_YELLOW + "Bye. Hope to see you again soon!" + ANSI_RESET);
+                    return;
+                case "list":
+                    dukeList(tasks, taskCounter);
+                    break;
+                case "done":
+                    //tasks[Integer.parseInt(userInput[1]) - 1].markAsDone();
+                    dukeDone(tasks[Integer.parseInt(userInput[1]) - 1]);
+                    break;
+                case "todo":
+                    tasks[taskCounter] = new Todo(userInput[1]);
+                    dukeInput(tasks[taskCounter], taskCounter);
+                    taskCounter++;
+                    break;
+                case "deadline":
+                    tasks[taskCounter] = new Deadline(userInput[1]);
+                    dukeInput(tasks[taskCounter], taskCounter);
+                    taskCounter++;
+                    break;
+                case "event":
+                    tasks[taskCounter] = new Event(userInput[1]);
+                    dukeInput(tasks[taskCounter], taskCounter);
+                    taskCounter++;
+                    break;
+                default:
+                    System.out.println("Invalid input, please type again.");
             }
 
-            tasks[taskCounter] = new Task(userInput);
-            System.out.println("added: " + tasks[taskCounter].getDescription());
-            taskCounter++;
+
         }
     }
 }
