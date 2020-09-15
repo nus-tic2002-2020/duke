@@ -61,15 +61,20 @@ public class Duke {
                 //itIsDone(Integer.parseInt(input.split(" ")[1])-1); //have to minus 1, because added 1 before
                 itIsDone(Integer.parseInt(part2)-1); //easier to see
                 break;
+            }else if (input.split(" ")[0].equals("todo") ){
+                //do something
+                setTaskList(new Task(input));
+                System.out.println("\t____________________________________________________________");
+                System.out.println("\tGot it. I've added this task: ");
+                System.out.println("\t\t[T]" + "[" + "\u2718" + "] " + input.split(" ")[1]);
+                System.out.println("\tNow you have " + numberOfTask + " tasks in the list.");
+                System.out.println("\t____________________________________________________________");
+                input = getInput.nextLine();
             }
             //none of the above
-            setTaskList(new Task(input));
-            System.out.println("\t____________________________________________________________");
-            System.out.print("\tadded: ");
-            System.out.println(input);
-            System.out.println("\t____________________________________________________________");
 
-            input = getInput.nextLine();
+
+            //input = getInput.nextLine();
         }
     }
 }

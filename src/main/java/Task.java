@@ -12,7 +12,8 @@ public class Task {
     }
 
     public String getDescription() {
-        return this.description;
+        return this.description.split(" ")[1];
+        //return this.description;
     }
 
     public void setDone(){
