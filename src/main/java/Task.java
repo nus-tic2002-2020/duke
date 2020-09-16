@@ -12,15 +12,14 @@ public class Task {
     }
 
     public String getDescription() {
-        return this.description.split(" ")[1];
-        //return this.description;
+        return "[" + getStatusIcon() + "]" + this.description;
     }
 
     public void setDone(){
         isDone = true;
         System.out.println("\t____________________________________________________________");
         System.out.println("\tNice! I've marked this task as done: ");
-        System.out.println("\t" + "[" + "\u2713" + "] " + getDescription() ); //ticked symbols
+        System.out.println("\t" + getDescription() ); //ticked symbols
         System.out.println("\t____________________________________________________________");
     }
 
