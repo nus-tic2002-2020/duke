@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) {
         int i=0;
-        String[] list = new String[100];
+        Task task[] = new Task[100];
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -22,18 +22,29 @@ public class Duke {
             }
             else if (command.equals("list"))
             {
+                System.out.println("Here are the tasks in your list: ");
                 for(int z=0; z<i; z++)
                 {
-                    System.out.println(z+1+": "+list[z]);
+                    System.out.println(z+1+"."+"["+task[z].getStatusIcon()+"]"+task[z].description);
                 }
                 //System.out.println(command);
             }
+            else if(command.startsWith("done"))
+            {
+                String[] optionInput = command.split(" ");
+                int option = Integer.parseInt(optionInput[1]);
+                task[option-1].markAsDone();
+                System.out.println("Nice! I've marked this task as done: ");
+                System.out.println("["+task[option-1].getStatusIcon()+"]"+task[option-1].description);
+            }
             else
             {
-                list[i]=command;
-                System.out.println(command);
+                task[i]= new Task(command);
+                System.out.println(task[i].description);
                 i++;
             }
         }
+
     }
+
 }
