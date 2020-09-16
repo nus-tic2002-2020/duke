@@ -4,18 +4,47 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ * This class is used for evaluating the actions of the multiple user commands such as add / delete tasks etc.
+ * <br> It contains the following approved actions:
+ * <ol>
+ *     <li>List: Allows to list all the tasks inside TaskList</li>
+ *     <li>Bye: Exits the Task Manager</li>
+ *     <li>Done: Marks a task as completed</li>
+ *     <li>Delete: Deletes a task from the TaskList</li>
+ *     <li>Todo / Event / Deadline: Adds one of the following tasks into the TaskList</li>
+ *     <li>Occurrence: Lists which tasks fall on a specified date</li>
+ * </ol>
+ */
+
 public class TaskList {
     protected static int count;
     protected static ArrayList<Task> list;
+
+    /**
+     * This method initializes the TaskList ArrayList.
+     * @param list Provides the list of tasks
+     * @param count Provides how many tasks have been added
+     */
 
     public TaskList(ArrayList<Task> list, int count) {
         TaskList.count = count;
         TaskList.list = list;
     }
 
+    /**
+     * This method is to retrieve the updated TaskList.
+     * @return Returns the latest updated TaskList.
+     */
+
     public static ArrayList<Task> UpdatedList() {
         return list;
     }
+
+    /**
+     * This method provides a list of all the tasks currently inside the TaskList.
+     * @throws DukeException Throws an error if the list is empty.
+     */
 
     public static void List() throws DukeException {
         if (count == 0) {
@@ -29,10 +58,20 @@ public class TaskList {
         }
     }
 
+    /**
+     * This method helps to exit from the Task Manager.
+     */
+
     public static void Bye() {
         System.out.println("Bye. Hope to see you again soon!");
         System.exit(0);
     }
+
+    /**
+     * This task helps to mark a task as completed.
+     * @param line Provide details into which task is to be marked as completed.
+     * @throws DukeException Throws various exceptions if the user-input is invalid.
+     */
 
     public static void Done(String line) throws DukeException {
         int m = line.toLowerCase().indexOf("done");
@@ -53,6 +92,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * This task helps to delete a task.
+     * @param line Provide details into which task is to be deleted.
+     * @throws DukeException Throws various exceptions if the user-input is invalid.
+     */
+
     public static void Delete(String line) throws DukeException {
         int m = line.toLowerCase().indexOf("delete");
         String num = line.substring(m + 6).trim();
@@ -71,6 +116,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * This method is to add a Todo task.
+     * @param line Provides the description of the task.
+     * @throws DukeException Throws various exceptions if the user-input is invalid.
+     */
+
     public static void Todo(String line) throws DukeException {
         if (line.trim().length() < 5) {
             throw new DukeException("Error: Description of task cannot be empty.\n");
@@ -85,6 +136,13 @@ public class TaskList {
         list.add(new Todo(description));
         UpdateStatus();
     }
+
+    /**
+     * This method is to add a Deadline task.
+     * @param line Provides the description of the task.
+     * @param localDateTime Provides the scheduled Date / Time of the completion of the task.
+     * @throws DukeException Throws various exceptions if the user-input is invalid.
+     */
 
     public static void Deadline(String line, LocalDateTime localDateTime) throws DukeException {
         if (line.trim().length() < 9) {
@@ -105,6 +163,13 @@ public class TaskList {
         UpdateStatus();
     }
 
+    /**
+     * This method is to add an Event task.
+     * @param line Provides the description of the task.
+     * @param localDateTime Provides the scheduled Date / Time of the completion of the task.
+     * @throws DukeException Throws various exceptions if the user-input is invalid.
+     */
+
     public static void Event(String line, LocalDateTime localDateTime) throws DukeException {
         if (line.trim().length() < 6) {
             throw new DukeException("Error: Description of task cannot be empty.\n");
@@ -123,6 +188,11 @@ public class TaskList {
         list.add(new Event(description, localDateTime));
         UpdateStatus();
     }
+
+    /**
+     * This method is to provide a list of all the tasks that have scheduled deadlines on a particular date.
+     * @param localDate Provides the input for the tasks that are supposed to be completed on that particular date.
+     */
 
     public static void Occurrence(LocalDate localDate) {
         boolean match = false;
@@ -148,6 +218,10 @@ public class TaskList {
             System.out.print("Sorry no tasks fall on this day\n");
         }
     }
+
+    /**
+     * This method helps to list which task has been added to the TaskList and provide the count for the total number of tasks inside.
+     */
 
     public static void UpdateStatus() {
         System.out.println("Got it. I've added this task:");
