@@ -1,7 +1,7 @@
 package duke.commands;
 
-import duke.notes.event.*;
-import duke.notes.todo.*;
+import duke.notes.event.Event;
+import duke.notes.todo.Deadline;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
@@ -9,6 +9,12 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * An extension of the {@code DukeCommand} object that performs the edition of {@code Date} objects in existing notes.
+ *
+ * @author tanqiuyu
+ * @since 2020-09-16
+ */
 public class EditDateCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
@@ -18,6 +24,11 @@ public class EditDateCommand extends DukeCommand implements DukeUI {
     protected String targetNote;
 
     //CONSTRUCTORS--------------------------------------
+    /**
+     * This method constructs an {@code EditDateCommand} object.
+     *
+     * @param inputs The accompanying attributes of the command as provided by the user.
+     */
     public EditDateCommand(ArrayList<String> inputs) throws ParseException {
         super(inputs);
         this.targetNote = inputs.get(1);
@@ -25,7 +36,22 @@ public class EditDateCommand extends DukeCommand implements DukeUI {
         this.newDate = INPUT_TIME.parse(inputs.get(3));
     }
 
+    /**
+     * This method initialises a {@code EditDateCommand} object.
+     */
+    public EditDateCommand() { super(); }
+
+
     //METHODS-------------------------------------------
+    /**
+     * This method executes the function of the {@code EditDateCommand} object.
+     *
+     * @param dukeNotes The {@code DukeList} object that holds the notes managed by {@code Duke}.
+     * @param dukeStorage The {@code DukeStorage} object that holds access to the saved files of {@code Duke}.
+     * @exception CommandException If there are errors in the command input.
+     * @exception IndexOutOfBoundsException If the note specified does not exist.
+     * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
+     */
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IndexOutOfBoundsException, DateException {
 
         Date now = new Date();

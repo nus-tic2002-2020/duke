@@ -1,12 +1,18 @@
 package duke.commands;
 
-import duke.notes.event.*;
-import duke.notes.todo.*;
+import duke.notes.event.Event;
+import duke.notes.todo.Todo;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
 import java.util.ArrayList;
 
+/**
+ * An extension of the {@code DukeCommand} object that performs the edition of descriptions in existing notes.
+ *
+ * @author tanqiuyu
+ * @since 2020-09-16
+ */
 public class EditDescriptionCommand extends DukeCommand {
 
     //VARIABLES-----------------------------------------
@@ -15,13 +21,31 @@ public class EditDescriptionCommand extends DukeCommand {
     protected String targetNote;
 
     //CONSTRUCTORS--------------------------------------
+    /**
+     * This method constructs an {@code EditDescriptionCommand} object.
+     *
+     * @param inputs The accompanying attributes of the command as provided by the user.
+     */
     public EditDescriptionCommand(ArrayList<String> inputs) {
         super(inputs);
         this.targetNote = inputs.get(1);
         this.newDescription = inputs.get(2);
     }
 
+    /**
+     * This method initialises a {@code EditDescriptionCommand} object.
+     */
+    public EditDescriptionCommand() { super(); }
+
     //METHODS-------------------------------------------
+    /**
+     * This method executes the function of the {@code EditDescriptionCommand} object.
+     *
+     * @param dukeNotes The {@code DukeList} object that holds the notes managed by {@code Duke}.
+     * @param dukeStorage The {@code DukeStorage} object that holds access to the saved files of {@code Duke}.
+     * @exception CommandException If there are errors in the command input.
+     * @exception IndexOutOfBoundsException If the note specified does not exist.
+     */
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IndexOutOfBoundsException {
 
         if(CmdType.getKey(this.cmdType).toString().equals("EDITDESC")) {

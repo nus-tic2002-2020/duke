@@ -1,12 +1,18 @@
 package duke.commands;
 
-import duke.notes.todo.*;
+import duke.notes.todo.Deadline;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * An extension of the {@code DukeCommand} object that performs the edition of the {@code targetDate} attribute of a {@code Deadline} object by a measure of days, hours and/or minutes.
+ *
+ * @author tanqiuyu
+ * @since 2020-09-16
+ */
 public class ExtendDeadlineCommand extends DukeCommand implements DukeUI{
 
     //VARIABLES-----------------------------------------
@@ -19,6 +25,11 @@ public class ExtendDeadlineCommand extends DukeCommand implements DukeUI{
     protected String targetNote;
 
     //CONSTRUCTORS--------------------------------------
+    /**
+     * This method constructs a {@code ExtendDeadlineCommand} object.
+     *
+     * @param inputs The accompanying attributes of the command as provided by the user.
+     */
     public ExtendDeadlineCommand(ArrayList<String> inputs) {
         super(inputs);
         this.targetNote = inputs.get(1);
@@ -29,6 +40,11 @@ public class ExtendDeadlineCommand extends DukeCommand implements DukeUI{
                 (Integer.parseInt(this.extendByHours) * 3600000) +
                 (Integer.parseInt(this.extendByMinutes) * 60000);
     }
+
+    /**
+     * This method initialises a {@code ExtendDeadlineCommand} object.
+     */
+    public ExtendDeadlineCommand() { super(); }
 
     //METHODS-------------------------------------------
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IndexOutOfBoundsException, DateException {

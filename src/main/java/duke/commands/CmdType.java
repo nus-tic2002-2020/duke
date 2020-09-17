@@ -1,5 +1,11 @@
 package duke.commands;
 
+/**
+ * This enum lists all the generic commands available in {@code Duke}.
+ *
+ * @author tanqiuyu
+ * @since 2020-09-16
+ */
 public enum CmdType {
 
 
@@ -35,6 +41,13 @@ public enum CmdType {
         this.shortCommand = shortCommand;
     }
 
+    /**
+     * This method assesses the command text used and returns the corresponding generic command to execute.
+     *
+     * @param cmdType The command text entered by the user.
+     * @return CmdType The generic command to execute.
+     * @exception CommandException If no matching command could be found.
+     */
     public static CmdType getKey(String cmdType) throws CommandException {
 
         for(CmdType type: CmdType.values()){
@@ -45,6 +58,13 @@ public enum CmdType {
         throw new CommandException("There is no " + cmdType + " type of command in Duke, yet.");
     }
 
+    /**
+     * This method returns the corresponding standard command text for the generic command or short command text provided.
+     *
+     * @param cmdType The generic command or short command text entered by the user.
+     * @return CmdType The corresponding standard command text.
+     * @exception CommandException If no matching standard command text could be found.
+     */
     public static String getCommand(String cmdType) throws CommandException {
 
         for(CmdType type: CmdType.values()){
@@ -55,6 +75,13 @@ public enum CmdType {
         throw new CommandException("There is no " + cmdType + " type of command in Duke, yet.");
     }
 
+    /**
+     * This method returns the corresponding short command text for the generic command or standard command text provided.
+     *
+     * @param cmdType The generic command or standard command text entered by the user.
+     * @return CmdType The corresponding short command text.
+     * @exception CommandException If no matching short command text could be found.
+     */
     public static String getShortCommand(String cmdType) throws CommandException {
 
         for(CmdType type: CmdType.values()){

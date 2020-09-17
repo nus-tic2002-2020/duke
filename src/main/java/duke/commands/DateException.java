@@ -1,25 +1,40 @@
 package duke.commands;
 
 import duke.notes.event.Event;
-import duke.ui.*;
+import duke.ui.DukeUI;
 import java.util.Date;
 
+/**
+ * An extension of the {@code Exception} object that addresses exceptions in operations pertaining to {@code Date} objects.
+ *
+ * @author tanqiuyu
+ * @since 2020-09-16
+ */
 public class DateException extends Exception {
 
     Date date;
     String message;
     Event event = null;
 
-    public DateException(){
-        super();
-    }
-
+    /**
+     * This method constructs a {@code Date Exception} object.
+     *
+     * @param date The {@code Date} object that caused the exception.
+     * @param message The code indicating the reason behind the exception.
+     */
     public DateException(Date date, String message){
         super();
         this.date = date;
         this.message = message;
     }
 
+    /**
+     * This method constructs a {@code Date Exception} object.
+     *
+     * @param date The {@code Date} object that caused the exception.
+     * @param message The code indicating the reason behind the exception.
+     * @param event The {@code Event} object that is relevant to the {@code Date} object causing the exception.
+     */
     public DateException(Date date, String message, Event event){
         super();
         this.date = date;
@@ -27,10 +42,27 @@ public class DateException extends Exception {
         this.event = event;
     }
 
+    /**
+     * This method initialises a {@code Date Exception} object.
+     */
+    public DateException(){
+        super();
+    }
+
+    /**
+     * This method returns the code indicating the reason behind the exception.
+     *
+     * @return String The code indicating the reason behind the exception.
+     */
     public String getMessage(){
         return message;
     }
 
+    /**
+     * This method prints an explanation specifying the {@code Date} object in question and reason behind the exception.
+     *
+     * @exception CommandException If there are errors in the command input.
+     */
     public void printExplanation() throws CommandException {
         DukeUI.printDivider();
         System.out.println("\tI understand what you meant by...\n");
