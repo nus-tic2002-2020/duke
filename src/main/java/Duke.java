@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Duke {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DukeException {
         int i=0;
 
         Task task[] = new Task[100];
@@ -40,7 +40,14 @@ public class Duke {
             }
             else if(command.startsWith("todo"))
             {
+
                 String[] descInput = command.split(" ",2);
+                if(descInput.length<2)
+                {
+                    throw new DukeException("☹ OOPS!!! The description of a todo cannot be empty.");
+                    //System.out.println("Please ensure that input is in correct format. (e.g. deadline [description] /by [date/time]");
+                    //continue;
+                }
                 String desc = descInput[1];
                 System.out.println("Got it. I've added this task: ");
                 task[i]=new Todo(desc);
@@ -59,8 +66,9 @@ public class Duke {
             {
                 if(command.contains(" /by ")==false)
                 {
-                    System.out.println("Please ensure that input is in correct format. (e.g. deadline [description] /by [date/time]");
-                    continue;
+                    throw new DukeException("Please ensure that input is in correct format. (e.g. deadline [description] /by [date/time]");
+                    //System.out.println("Please ensure that input is in correct format. (e.g. deadline [description] /by [date/time]");
+                    //continue;
                 }
                 String[] descInput = command.split(" ",2);
                 String[] desc = descInput[1].split(" /by ");
@@ -81,8 +89,8 @@ public class Duke {
             {
                 if(command.contains(" /at ")==false)
                 {
-                    System.out.println("Please ensure that input is in correct format. (e.g. event [description] /at [date/time]");
-                    continue;
+                    throw new DukeException("Please ensure that input is in correct format. (e.g. event [description] /at [date/time]");
+                    //System.out.println("Please ensure that input is in correct format. (e.g. event [description] /at [date/time]");
                 }
                 String[] descInput = command.split(" ",2);
                 String[] desc = descInput[1].split(" /at ");
@@ -101,7 +109,7 @@ public class Duke {
             }
             else
             {
-                System.out.println("Command not recognised.");
+                throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 //task[i]= new Task(command);
                 //System.out.println(task[i].description);
                 //i++;
