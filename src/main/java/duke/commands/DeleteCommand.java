@@ -15,16 +15,18 @@ import java.util.Scanner;
 public class DeleteCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
-
+    private ArrayList<Integer> toDelete;
 
     //CONSTRUCTORS--------------------------------------
     /**
      * This method constructs a {@code DeleteCommand} object.
      *
-     * @param inputs The accompanying attributes of the command as provided by the user.
+     * @param cmdType The type of {@code DukeCommand} being constructed.
+     * @param toDelete The serial number(s) of {@code Note} objects to be deleted.
      */
-    public DeleteCommand(ArrayList<String> inputs) {
-        super(inputs);
+    public DeleteCommand(String cmdType, ArrayList<Integer> toDelete) {
+        super(cmdType);
+        this.toDelete = toDelete;
     }
 
     /**
@@ -43,80 +45,68 @@ public class DeleteCommand extends DukeCommand implements DukeUI {
      * @exception CommandException If there are errors in the command input.
      * @exception IndexOutOfBoundsException If the note specified does not exist.
      */
-    public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IndexOutOfBoundsException {
+    public void execute(DukeList dukeNotes, DukeStorage dukeStorage)
+            throws CommandException, IndexOutOfBoundsException {
 
+        String confirmDelete;
+        Scanner delete = new Scanner(System.in);
 
-        if (CmdType.getKey(this.cmdType).toString().equals("DELETE")) {
-
-            ArrayList<Integer> notes = new ArrayList<Integer>();
-            for(int i=1; i<inputs.size(); i++) {
-                int toDelete = Integer.parseInt(inputs.get(i));
-                if(toDelete > dukeNotes.getNotes().size()) {
-                    throw new IndexOutOfBoundsException();
-                } else {
-                    notes.add(toDelete);
+        DukeUI.printDivider();
+        System.out.println("\tAre you sure you want to delete the following notes?");
+        for (int note: this.toDelete) {
+            for (int i=0; i<dukeNotes.getNotes().size(); i++) {
+                if (dukeNotes.getNotes().get(i).getSerialNum() == note) {
+                    dukeNotes.getNotes().get(i).printList();
                 }
             }
+        }
+        System.out.println("\tData would be lost forever.");
+        DukeUI.askForConfirmation();
+        DukeUI.printDivider();
 
-            String confirmDelete;
-            Scanner delete = new Scanner(System.in);
+        confirmDelete = delete.nextLine();
+
+        if (confirmDelete.equals("Y")) {
 
             DukeUI.printDivider();
-            System.out.println("\tAre you sure you want to delete the following notes?");
-            for (int note : notes) {
+            for (int note: this.toDelete) {
                 for (int i = 0; i < dukeNotes.getNotes().size(); i++) {
                     if (dukeNotes.getNotes().get(i).getSerialNum() == note) {
-                        dukeNotes.getNotes().get(i).printList();
+                        dukeNotes.getNotes().get(i).deleteExistingNote();
+                        dukeNotes.getNotes().remove(i);
+                        break;
                     }
                 }
             }
-            System.out.println("\tData would be lost forever.");
-            DukeUI.askForConfirmation();
-            DukeUI.printDivider();
+            System.out.println("\n\tDeletion(s) completed...");
 
-            confirmDelete = delete.nextLine();
-
-            if (confirmDelete.equals("Y")) {
-
-                DukeUI.printDivider();
-                for (int note : notes) {
-                    for (int i = 0; i < dukeNotes.getNotes().size(); i++) {
-                        if (dukeNotes.getNotes().get(i).getSerialNum() == note) {
-                            dukeNotes.getNotes().get(i).deleteExistingNote();
-                            dukeNotes.getNotes().remove(i);
-                            break;
-                        }
-                    }
-                }
-                System.out.println("\n\tDeletion(s) completed...");
-
-                if(dukeNotes.getNotes().size() == 0){
-                    System.out.println("\t...there are no notes on your list.");
-                } else {
-                    System.out.println("\t...renumbering the remaining note(s)...");
-                    for (int i = 0; i < dukeNotes.getNotes().size(); i++) {
-                        System.out.print("\t#");
-                        System.out.print(String.format("%3d", dukeNotes.getNotes().get(i).getSerialNum()));
-                        System.out.print("\t >>> ");
-                        dukeNotes.getNotes().get(i).setSerialNum(i + 1);
-                        System.out.print("\t#");
-                        System.out.print(String.format("%3d", dukeNotes.getNotes().get(i).getSerialNum()));
-                        System.out.print("\n");
-                    }
-                    System.out.println("\tThe remaining notes have been renumbered!");
-                }
-                System.out.println("");
-
-                DukeUI.printCompleted();
-                DukeUI.printOutstanding();
-                DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
-                DukeUI.suggestListNotes();
+            if(dukeNotes.getNotes().size() == 0){
+                System.out.println("\t...there are no notes on your list.");
             } else {
-                DukeUI.printDivider();
-                System.out.println("\tDeletion aborted.");
+                System.out.println("\t...renumbering the remaining note(s)...");
+                for (int i = 0; i < dukeNotes.getNotes().size(); i++) {
+                    System.out.print("\t#");
+                    System.out.print(String.format("%3d", dukeNotes.getNotes().get(i).getSerialNum()));
+                    System.out.print("\t >>> ");
+                    dukeNotes.getNotes().get(i).setSerialNum(i + 1);
+                    System.out.print("\t#");
+                    System.out.print(String.format("%3d", dukeNotes.getNotes().get(i).getSerialNum()));
+                    System.out.print("\n");
+                }
+                System.out.println("\tThe remaining notes have been renumbered!");
             }
+            System.out.println("");
+
+            DukeUI.printCompleted();
+            DukeUI.printOutstanding();
+            DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
+            DukeUI.suggestListNotes();
+        } else {
             DukeUI.printDivider();
+            System.out.println("\tDeletion aborted.");
         }
+        DukeUI.printDivider();
     }
+
 
 }

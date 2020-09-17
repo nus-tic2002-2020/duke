@@ -63,7 +63,8 @@ public class DateException extends Exception {
      *
      * @exception CommandException If there are errors in the command input.
      */
-    public void printExplanation() throws CommandException {
+    public void printExplanation()
+            throws CommandException {
         DukeUI.printDivider();
         System.out.println("\tI understand what you meant by...\n");
         DukeUI.commandWrap(DukeUI.INPUT_TIME.format(date), 66);
@@ -123,6 +124,11 @@ public class DateException extends Exception {
                 System.out.println("\tBut the note you are trying to edit does not have a target date.");
                 System.out.println("\tThere might have been an error in the command.");
                 System.out.println("\tPlease identify the correct note or correct date to edit.");
+            }
+            case "NoDate" -> {
+                System.out.println("\tBut the note you are trying to access does not have dates.");
+                System.out.println("\tThere might have been an error in the command.");
+                System.out.println("\tPlease identify the correct note to access.");
             }
             default -> {
                 System.out.println("\t" + this.message);

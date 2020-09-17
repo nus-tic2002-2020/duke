@@ -1,9 +1,8 @@
-package duke.notes.todo;
+package duke.notes;
 
 
 import duke.budget.*;
 import duke.commands.*;
-import duke.notes.*;
 import duke.ui.*;
 import java.util.Date;
 

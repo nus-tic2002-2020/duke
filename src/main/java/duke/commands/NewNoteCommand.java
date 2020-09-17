@@ -1,26 +1,59 @@
 package duke.commands;
 
-import duke.notes.*;
-import duke.notes.event.*;
-import duke.notes.todo.*;
-import duke.storage.*;
-import duke.ui.*;
-import java.text.ParseException;
+import duke.notes.NoteType;
+import duke.notes.Task;
+import duke.notes.event.Event;
+import duke.notes.event.Birthday;
+import duke.notes.event.Wedding;
+import duke.notes.todo.Bill;
+import duke.notes.todo.Deadline;
+import duke.notes.todo.Shoplist;
+import duke.notes.todo.Todo;
+import duke.storage.DukeList;
+import duke.storage.DukeStorage;
+import duke.ui.DukeUI;
 import java.util.ArrayList;
 import java.util.Date;
+import java.text.ParseException;
 
+/**
+ * An extension of the {@code DukeCommand} object that evaluates user input to create new {@code Note} objects.
+ *
+ * @author tanqiuyu
+ * @since 2020-09-16
+ */
 public class NewNoteCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
-
+    ArrayList<String> inputs;
 
     //CONSTRUCTORS--------------------------------------
-    public NewNoteCommand(ArrayList<String> inputs) {
-        super(inputs);
+    /**
+     * This method constructs a {@code NewNoteCommand} object.
+     *
+     * @param cmdType The type of {@code DukeCommand} being constructed.
+     * @param inputs The list of user input elements to be used to create new {@code Note} objects.
+     */
+    public NewNoteCommand(String cmdType, ArrayList<String> inputs) {
+        super(cmdType);
+        this.inputs = inputs;
     }
 
+    /**
+     * This method initialises a {@code NewNoteCommand} object.
+     */
+    public NewNoteCommand() { super(); }
+
     //METHODS-------------------------------------------
-    public void checkForClashes(DukeList dukeNotes, Date start, Date end) throws DateException {
+    /**
+     * This method checks for clashes between new and existing {@code Event} objects.
+     *
+     * @param dukeNotes The {@code DukeList} object that holds the notes managed by {@code Duke}.
+     * @param start The {@code Date} object indicating the start date of the new {@code Event} object.
+     * @param end The {@code Date} object indicating the end date of the new {@code Event} object.
+     * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
+     */
+    private void checkForClashes(DukeList dukeNotes, Date start, Date end) throws DateException {
 
         for(Task note: dukeNotes.getNotes()){
             if(note instanceof Event){
@@ -39,7 +72,14 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
     }
 
 
-
+    /**
+     * This method executes the function of the {@code NewNoteCommand} object.
+     *
+     * @param dukeNotes The {@code DukeList} object that holds the notes managed by {@code Duke}.
+     * @param dukeStorage The {@code DukeStorage} object that holds access to the saved files of {@code Duke}.
+     * @exception CommandException If there are errors in the command input.
+     * @exception ParseException If there are errors reading previously saved files.
+     */
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, ParseException {
 
         try {

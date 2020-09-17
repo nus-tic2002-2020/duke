@@ -44,7 +44,8 @@ public class CommandException extends Exception {
      * @param input The command that caused the exception.
      * @exception CommandException If there are errors in the command input.
      */
-    public void printExplanation(String input) throws CommandException {
+    public void printExplanation(String input)
+            throws CommandException {
 
         DukeUI.printDivider();
         System.out.println("\tI don't understand what you meant by...\n");

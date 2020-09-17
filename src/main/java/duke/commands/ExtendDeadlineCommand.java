@@ -4,11 +4,10 @@ import duke.notes.todo.Deadline;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * An extension of the {@code DukeCommand} object that performs the edition of the {@code targetDate} attribute of a {@code Deadline} object by a measure of days, hours and/or minutes.
+ * An extension of the {@code DukeCommand} object that performs the edition of the {@code targetDate} attribute of a {@code Deadline} object by a measure of milliseconds.
  *
  * @author tanqiuyu
  * @since 2020-09-16
@@ -16,29 +15,24 @@ import java.util.Date;
 public class ExtendDeadlineCommand extends DukeCommand implements DukeUI{
 
     //VARIABLES-----------------------------------------
+    protected int targetNote;
+    protected long millisecondsToExtend;
     protected Date newDate;
     protected Date oldDate;
-    protected String extendByDays;
-    protected String extendByHours;
-    protected String extendByMinutes;
-    protected long millisecondsToExtend;
-    protected String targetNote;
+
 
     //CONSTRUCTORS--------------------------------------
     /**
      * This method constructs a {@code ExtendDeadlineCommand} object.
      *
-     * @param inputs The accompanying attributes of the command as provided by the user.
+     * @param cmdType The type of {@code DukeCommand} being constructed.
+     * @param targetNote The {@code Note} whose {@code Date} object is to be extended.
+     * @param millisecondsToExtend The number of milliseconds to extend the {@code Date} object by.
      */
-    public ExtendDeadlineCommand(ArrayList<String> inputs) {
-        super(inputs);
-        this.targetNote = inputs.get(1);
-        this.extendByDays = inputs.get(2);
-        this.extendByHours = inputs.get(3);
-        this.extendByMinutes = inputs.get(4);
-        this.millisecondsToExtend = (Integer.parseInt(this.extendByDays) * 86400000) +
-                (Integer.parseInt(this.extendByHours) * 3600000) +
-                (Integer.parseInt(this.extendByMinutes) * 60000);
+    public ExtendDeadlineCommand(String cmdType, int targetNote, long millisecondsToExtend) {
+        super(cmdType);
+        this.targetNote = targetNote;
+        this.millisecondsToExtend = millisecondsToExtend;
     }
 
     /**
@@ -47,39 +41,44 @@ public class ExtendDeadlineCommand extends DukeCommand implements DukeUI{
     public ExtendDeadlineCommand() { super(); }
 
     //METHODS-------------------------------------------
-    public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IndexOutOfBoundsException, DateException {
+    /**
+     * This method executes the function of the {@code ExtendDeadlineCommand} object.
+     *
+     * @param dukeNotes The {@code DukeList} object that holds the notes managed by {@code Duke}.
+     * @param dukeStorage The {@code DukeStorage} object that holds access to the saved files of {@code Duke}.
+     * @exception CommandException If there are errors in the command input.
+     * @exception IndexOutOfBoundsException If the note specified does not exist.
+     */
+    public void execute(DukeList dukeNotes, DukeStorage dukeStorage)
+            throws CommandException, IndexOutOfBoundsException, DateException {
 
-        if(CmdType.getKey(this.cmdType).toString().equals("EXTDLINE")) {
+        for(int i=0; i<dukeNotes.getNotes().size(); i++) {
+            if(dukeNotes.getNotes().get(i).getSerialNum() == this.targetNote) {
 
-            int targetSerialNum = Integer.parseInt(this.targetNote);
-            for(int i=0; i<dukeNotes.getNotes().size(); i++) {
-                if(dukeNotes.getNotes().get(i).getSerialNum() == targetSerialNum) {
+                DukeUI.printDivider();
+                if(!(dukeNotes.getNotes().get(i) instanceof Deadline)) {
+                    System.out.println("\tThe note selected is not a task with a deadline.");
+                    System.out.println("\tThe deadline shouldn't be edited anymore.");
+                } else if(dukeNotes.getNotes().get(i).getIsDone()) {
+                    System.out.println("\tThe task had already been completed.");
+                    System.out.println("\tThe deadline shouldn't be edited anymore.");
+                } else {
+                    System.out.println("\tDeadline of Note #" + this.targetNote + ":");
+                    dukeNotes.getNotes().get(i).printList();
 
-                    DukeUI.printDivider();
-                    if(!(dukeNotes.getNotes().get(i) instanceof Deadline)) {
-                        System.out.println("\tThe note selected is not a task with a deadline.");
-                        System.out.println("\tThe deadline shouldn't be edited anymore.");
-                    } else if(dukeNotes.getNotes().get(i).getIsDone()) {
-                        System.out.println("\tThe task had already been completed.");
-                        System.out.println("\tThe deadline shouldn't be edited anymore.");
-                    } else {
-                        System.out.println("\tDeadline of Note #" + this.targetNote + ":");
-                        dukeNotes.getNotes().get(i).printList();
+                    this.oldDate = ((Deadline) dukeNotes.getNotes().get(i)).getTargetDate();
+                    this.newDate = new Date(this.oldDate.getTime() + millisecondsToExtend);
+                    ((Deadline) dukeNotes.getNotes().get(i)).setTargetDate(this.newDate);
 
-                        this.oldDate = ((Deadline) dukeNotes.getNotes().get(i)).getTargetDate();
-                        this.newDate = new Date(this.oldDate.getTime() + millisecondsToExtend);
-                        ((Deadline) dukeNotes.getNotes().get(i)).setTargetDate(this.newDate);
-
-                        System.out.println("\textended from...");
-                        DukeUI.commandWrap(TASK_TIME.format(this.oldDate), 66);
-                        System.out.println("\tto...");
-                        DukeUI.commandWrap(TASK_TIME.format(this.newDate), 66);
-                        DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
-                        DukeUI.suggestListNotes();
-                    }
-                    DukeUI.printDivider();
-                    break;
+                    System.out.println("\textended from...");
+                    DukeUI.commandWrap(TASK_TIME.format(this.oldDate), 66);
+                    System.out.println("\tto...");
+                    DukeUI.commandWrap(TASK_TIME.format(this.newDate), 66);
+                    DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
+                    DukeUI.suggestListNotes();
                 }
+                DukeUI.printDivider();
+                break;
             }
         }
     }

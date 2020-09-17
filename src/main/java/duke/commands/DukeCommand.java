@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public abstract class DukeCommand {
 
     //VARIABLES-----------------------------------------
-    protected ArrayList<String> inputs;
     protected String cmdType;
     boolean confirmExit = false;
 
@@ -23,11 +22,10 @@ public abstract class DukeCommand {
     /**
      * This method constructs a {@code DukeCommand} object.
      *
-     * @param inputs The accompanying attributes of the command as provided by the user.
+     * @param cmdType The type of {@code DukeCommand} being constructed.
      */
-    public DukeCommand(ArrayList<String> inputs) {
-        this.inputs = inputs;
-        this.cmdType = inputs.get(0);
+    public DukeCommand(String cmdType) {
+        this.cmdType = cmdType;
     }
 
     /**
@@ -60,6 +58,7 @@ public abstract class DukeCommand {
      * @exception IOException If the command attributes specified does not exist.
      * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
      */
-    public abstract void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws ParseException, CommandException, IOException, DateException;
+    public abstract void execute(DukeList dukeNotes, DukeStorage dukeStorage)
+            throws ParseException, CommandException, IOException, DateException, ClassNotFoundException;
 
 }

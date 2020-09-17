@@ -1,56 +1,78 @@
 package duke.commands;
 
-import duke.budget.*;
-import duke.storage.*;
-import duke.ui.*;
-import java.util.ArrayList;
-import java.util.Date;
+import duke.budget.Budget;
+import duke.storage.DukeList;
+import duke.storage.DukeStorage;
+import duke.ui.DukeUI;
 
+/**
+ * An extension of the {@code DukeCommand} object that transfers budget amounts between {@code Budget} objects.
+ *
+ * @author tanqiuyu
+ * @since 2020-09-16
+ */
 public class TransferCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
-
+    private int from;
+    private int to;
+    private double amount;
 
     //CONSTRUCTORS--------------------------------------
-    public TransferCommand(ArrayList<String> inputs) {
-        super(inputs);
+    /**
+     * This method constructs a {@code TransferCommand} object.
+     *
+     * @param cmdType The type of {@code DukeCommand} being constructed.
+     * @param from The serial number of the {@code Note} object from which an amount from its attached {@code Budget} object is to be transferred.
+     * @param to The serial number of the {@code Note} object from which an amount is to be transferred to its attached {@code Budget} object.
+     * @param amount The amount to be transferred between the {@code Budget} objects.
+     */
+    public TransferCommand(String cmdType, int from, int to, double amount) {
+        super(cmdType);
+        this.from = from;
+        this.to = to;
+        this.amount = amount;
     }
 
+    /**
+     * This method initialises a {@code TransferCommand} object.
+     */
+    public TransferCommand() { super(); }
+
     //METHODS-------------------------------------------
+    /**
+     * This method executes the function of the {@code TransferCommand} object.
+     *
+     * @param dukeNotes The {@code DukeList} object that holds the notes managed by {@code Duke}.
+     * @param dukeStorage The {@code DukeStorage} object that holds access to the saved files of {@code Duke}.
+     * @exception CommandException If there are errors in the command input.
+     * @exception IndexOutOfBoundsException If the note specified does not exist.
+     */
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IndexOutOfBoundsException {
 
-        Date doneDate = new Date();
-        if(CmdType.getKey(this.cmdType).toString().equals("TRANSFER")) {
-            int from = Integer.parseInt(this.inputs.get(1));
-            int to = Integer.parseInt(this.inputs.get(2));
-            double amount = Double.parseDouble(this.inputs.get(3));
-
-            if (from == to){
-                throw new CommandException("Transferring from and to the same account achieves nothing, at all.");
-            } else if (from > dukeNotes.getNotes().size() || to > dukeNotes.getNotes().size()) {
-                throw new IndexOutOfBoundsException();
-            }
-
-            for(int i=0; i<dukeNotes.getNotes().size(); i++){
-                if(dukeNotes.getNotes().get(i).getSerialNum() == from) { from = i; }
-                if(dukeNotes.getNotes().get(i).getSerialNum() == to) { to = i; }
-            }
-
-            Budget fromBudget = dukeNotes.getNotes().get(from).getBudgetObject();
-            Budget toBudget = dukeNotes.getNotes().get(to).getBudgetObject();
-
-            DukeUI.printDivider();
-            if(fromBudget.transferBudgetOut(amount, toBudget)){
-                System.out.println("\tBudget transferred from...");
-                dukeNotes.getNotes().get(from).printList();
-                System.out.println("\tto...");
-                dukeNotes.getNotes().get(to).printList();
-                DukeUI.printCompleted();
-                DukeUI.printOutstanding();
-                DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
-                DukeUI.suggestListNotes();
-            }
-            DukeUI.printDivider();
+        if(this.from > dukeNotes.getNotes().size() || this.to > dukeNotes.getNotes().size()) {
+            throw new IndexOutOfBoundsException();
         }
+
+        for(int i=0; i<dukeNotes.getNotes().size(); i++){
+            if(dukeNotes.getNotes().get(i).getSerialNum() == this.from) { this.from = i; }
+            if(dukeNotes.getNotes().get(i).getSerialNum() == this.to) { this.to = i; }
+        }
+
+        Budget fromBudget = dukeNotes.getNotes().get(this.from).getBudgetObject();
+        Budget toBudget = dukeNotes.getNotes().get(this.to).getBudgetObject();
+
+        DukeUI.printDivider();
+        if(fromBudget.transferBudgetOut(this.amount, toBudget)){
+            System.out.println("\tBudget transferred from...");
+            dukeNotes.getNotes().get(this.from).printList();
+            System.out.println("\tto...");
+            dukeNotes.getNotes().get(this.to).printList();
+            DukeUI.printCompleted();
+            DukeUI.printOutstanding();
+            DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
+            DukeUI.suggestListNotes();
+        }
+        DukeUI.printDivider();
     }
 }

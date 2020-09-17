@@ -3,7 +3,7 @@ package duke.notes.event;
 import duke.budget.*;
 import duke.commands.*;
 import duke.notes.*;
-import duke.notes.todo.*;
+
 import java.util.Date;
 
 public class Event extends Note {
