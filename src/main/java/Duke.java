@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) {
         int i=0;
+
         Task task[] = new Task[100];
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -25,7 +26,7 @@ public class Duke {
                 System.out.println("Here are the tasks in your list: ");
                 for(int z=0; z<i; z++)
                 {
-                    System.out.println(z+1+"."+"["+task[z].getStatusIcon()+"]"+task[z].description);
+                    System.out.println(z+1+"."+task[z].toString());
                 }
                 //System.out.println(command);
             }
@@ -37,11 +38,73 @@ public class Duke {
                 System.out.println("Nice! I've marked this task as done: ");
                 System.out.println("["+task[option-1].getStatusIcon()+"]"+task[option-1].description);
             }
+            else if(command.startsWith("todo"))
+            {
+                String[] descInput = command.split(" ",2);
+                String desc = descInput[1];
+                System.out.println("Got it. I've added this task: ");
+                task[i]=new Todo(desc);
+                System.out.println(task[i].toString());
+                i++;
+                if(i==1) {
+                    System.out.println("Now you have " + i + " task in the list.");
+                }
+                else
+                {
+                    System.out.println("Now you have " + i + " tasks in the list.");
+                }
+                //System.out.println("["+task[i].getStatusIcon()+"]"+task[option-1].description);
+            }
+            else if(command.startsWith("deadline"))
+            {
+                if(command.contains(" /by ")==false)
+                {
+                    System.out.println("Please ensure that input is in correct format. (e.g. deadline [description] /by [date/time]");
+                    continue;
+                }
+                String[] descInput = command.split(" ",2);
+                String[] desc = descInput[1].split(" /by ");
+                System.out.println("Got it. I've added this task: ");
+                task[i]=new Deadline(desc[0],desc[1]);
+                System.out.println(task[i].toString());
+                i++;
+                if(i==1) {
+                    System.out.println("Now you have " + i + " task in the list.");
+                }
+                else
+                {
+                    System.out.println("Now you have " + i + " tasks in the list.");
+                }
+                //System.out.println("["+task[i].getStatusIcon()+"]"+task[option-1].description);
+            }
+            else if(command.startsWith("event"))
+            {
+                if(command.contains(" /at ")==false)
+                {
+                    System.out.println("Please ensure that input is in correct format. (e.g. event [description] /at [date/time]");
+                    continue;
+                }
+                String[] descInput = command.split(" ",2);
+                String[] desc = descInput[1].split(" /at ");
+                System.out.println("Got it. I've added this task: ");
+                task[i]=new Event(desc[0],desc[1]);
+                System.out.println(task[i].toString());
+                i++;
+                if(i==1) {
+                    System.out.println("Now you have " + i + " task in the list.");
+                }
+                else
+                {
+                    System.out.println("Now you have " + i + " tasks in the list.");
+                }
+                //System.out.println("["+task[i].getStatusIcon()+"]"+task[option-1].description);
+            }
             else
             {
-                task[i]= new Task(command);
-                System.out.println(task[i].description);
-                i++;
+                System.out.println("Command not recognised.");
+                //task[i]= new Task(command);
+                //System.out.println(task[i].description);
+                //i++;
             }
         }
 
