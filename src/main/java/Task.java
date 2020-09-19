@@ -19,5 +19,9 @@ public class Task {
 	public String icon() {
 		 return (isDone ? "¡Ì" : "X");
 	}
+    @Override
+    public String toString() {
+        return "[T]"+"["+icon()+"] " + getTitle();
+    }
 
 }
