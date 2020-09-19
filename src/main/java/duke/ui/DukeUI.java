@@ -150,7 +150,7 @@ public interface DukeUI {
     }
 
     static void autoSaveConfirmation(boolean isSuccessful) {
-        System.out.print(String.format("%78s", "Auto-Save "));
+        System.out.printf("%78s", "Auto-Save ");
         if(isSuccessful){
             System.out.println("\u2615");
         } else {
@@ -169,7 +169,7 @@ public interface DukeUI {
             } else {
                 int lastSpace = 0;
                 for (int i = 0; i < limit; i++) {
-                    if (input.substring(i, i + 1).equals(" ")) {
+                    if (input.charAt(i) == ' ') {
                         lastSpace = i;
                     }
                 }
@@ -186,8 +186,8 @@ public interface DukeUI {
 
             if (input.length() < limit) {
                 if(firstLine) {
-                    System.out.println(String.format("%1$-29s%2$29s",
-                            input, "Added: " + TASK_TIME.format(addDate)));
+                    System.out.printf("%1$-29s%2$29s%n",
+                            input, "Added: " + TASK_TIME.format(addDate));
                 } else {
                     System.out.println("\t\t\t\t\t" + input);
                 }
@@ -195,14 +195,14 @@ public interface DukeUI {
             } else {
                 int lastSpace = 0;
                 for (int i = 0; i < limit; i++) {
-                    if (input.substring(i, i + 1).equals(" ")) {
+                    if (input.charAt(i) == ' ') {
                         lastSpace = i;
                     }
                 }
                 if(firstLine) {
-                    System.out.println(String.format("%1$-29s%2$29s",
+                    System.out.printf("%1$-29s%2$29s%n",
                             input.substring(0, lastSpace), "Added: " +
-                                    TASK_TIME.format(addDate)));
+                                    TASK_TIME.format(addDate));
                     input = input.substring(lastSpace + 1);
                     firstLine = false;
 
@@ -226,10 +226,10 @@ public interface DukeUI {
     static void printOutstanding() {
         System.out.println("\tYou have...");
         System.out.print("\t\t");
-        System.out.print(String.format("%3d", Todo.getTasksOutstanding()));
+        System.out.printf("%3d", Todo.getTasksOutstanding());
         System.out.print(" outstanding task(s),\n");
         System.out.print("\t\t");
-        System.out.print(String.format("%3d", Event.getEventsOutstanding()));
+        System.out.printf("%3d", Event.getEventsOutstanding());
         System.out.print(" outstanding events(s), and\n");
         Budget.printBudgetReport();
         System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t...on your list.");
@@ -237,8 +237,8 @@ public interface DukeUI {
 
     static void printOnStartup(Date now, boolean isLoadedFromFile) throws ParseException, CommandException {
         System.out.print("\nWelcome to PROJECT >>>\n" + DUKE_LOGO);
-        System.out.println(String.format("%1$-42s%2$42s", DATE_TODAY.format(now), DAY_TODAY.format(now)));
-        System.out.println(String.format("%1$-42s%2$42s", ZodiacYear.getZodiacYear(now), SunSign.getSunSign(now)));
+        System.out.printf("%1$-42s%2$42s%n", DATE_TODAY.format(now), DAY_TODAY.format(now));
+        System.out.printf("%1$-42s%2$42s%n", ZodiacYear.getZodiacYear(now), SunSign.getSunSign(now));
         System.out.println(String.format("%1$-42s%2$42s", LunarMonth.getLunarMonth(now), MercuryMovement.getMercuryMovement(now)) + "\n");
 
         try {

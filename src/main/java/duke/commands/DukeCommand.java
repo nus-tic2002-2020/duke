@@ -4,7 +4,6 @@ import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
 
 /**
  * An abstract class that forms the basis of command objects in {@code Duke}.
@@ -59,6 +58,6 @@ public abstract class DukeCommand {
      * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
      */
     public abstract void execute(DukeList dukeNotes, DukeStorage dukeStorage)
-            throws ParseException, CommandException, IOException, DateException, ClassNotFoundException;
+            throws ParseException, CommandException, IOException, DateException;
 
 }

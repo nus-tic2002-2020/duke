@@ -1,11 +1,21 @@
 package duke.notes.todo;
 
 
-import duke.budget.*;
-import duke.commands.*;
-import duke.notes.*;
+import duke.budget.Budget;
+import duke.commands.CommandException;
+import duke.commands.DateException;
 import java.util.Date;
 
+/**
+ * An extension of the {@code Todo} object that includes a target date for which the (@code Deadline}
+ * object is to be completed. The (@code Deadline} object also includes performance measurements.
+ *
+ * To create a {@code Deadline} object, a target date and time is required on top of
+ * the requirements of the {@code Todo} object.
+ *
+ * @author tanqiuyu
+ * @since 2020-09-16
+ */
 public class Deadline extends Todo {
 
     //VARIABLES-----------------------------------------
@@ -15,16 +25,39 @@ public class Deadline extends Todo {
 
 
     //CONSTRUCTORS--------------------------------------
+    /**
+     * This method is used to construct a {@code Deadline} object.
+     *
+     * @param serialNum The serial number automatically assigned for identification purposes.
+     * @param description The description of the {@code Deadline}.
+     * @param targetDate The target date and time of the {@code Deadline}.
+     * @param addDate The date and time the note was added.
+     */
     public Deadline(int serialNum, String description, Date targetDate,
                     Date addDate) {
         super(serialNum, description, addDate);
         this.targetDate = targetDate;
     }
 
+    /**
+     * This method is used to initialise a {@code Deadline} object.
+     *
+     */
     public Deadline() {
         super();
     }
 
+    /**
+     * This method is used to construct a concluded {@code Deadline} object from saved files.
+     *
+     * @param serialNum The serial number automatically assigned for identification purposes.
+     * @param description The description of the {@code Deadline}.
+     * @param addDate The date and time the note was added.
+     * @param doneDate The date and time the {@code Deadline} had concluded.
+     * @param isDone True if the {@code Deadline} had concluded.
+     * @param targetDate The target date and time of the {@code Deadline}.
+     * @param doneAhead True if the {@code Deadline} had concluded ahead of the target date.
+     */
     public Deadline(int serialNum, String description, Date addDate, Date doneDate,
                 boolean isDone, Date targetDate, boolean doneAhead) {
         super(serialNum, description, addDate, doneDate, isDone);
@@ -32,6 +65,16 @@ public class Deadline extends Todo {
         this.doneAhead = doneAhead;
     }
 
+    /**
+     * This method is used to construct a concluded {@code Deadline} object from saved files.
+     *
+     * @param serialNum The serial number automatically assigned for identification purposes.
+     * @param description The description of the {@code Deadline}.
+     * @param addDate The date and time the note was added.
+     * @param isDone True if the {@code Deadline} had concluded.
+     * @param targetDate The target date and time of the {@code Deadline}.
+     * @param doneAhead True if the {@code Deadline} had concluded ahead of the target date.
+     */
     public Deadline(int serialNum, String description, Date addDate,
                     boolean isDone, Date targetDate, boolean doneAhead) {
         super(serialNum, description, addDate, isDone);
@@ -41,6 +84,12 @@ public class Deadline extends Todo {
 
 
     //SET STATEMENTS------------------------------------
+    /**
+     * This method is used to set or edit the target date assigned to the {@code Deadline} object.
+     *
+     * @param targetDate The target date and time of the {@code Deadline}.
+     * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
+     */
     public void setTargetDate(Date targetDate) throws DateException {
 
         Date now = new Date();
@@ -51,6 +100,15 @@ public class Deadline extends Todo {
         }
     }
 
+    /**
+     * This method is used to mark an outstanding {@code Deadline} object as completed.
+     * Class-level members will be updated to reflect the change in completion status.
+     *
+     * @param doneDate The date and time the {@code Deadline} had concluded.
+     * @return boolean True if the operation is successful.
+     * @exception CommandException If there are errors in the command input.
+     * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
+     */
     @Override
     public boolean markAsDone(Date doneDate) throws CommandException, DateException {
         super.markAsDone(doneDate);
@@ -62,6 +120,9 @@ public class Deadline extends Todo {
 
 
     //GET STATEMENTS------------------------------------
+    /**
+     * This method is used to print details of the {@code Deadline} object.
+     */
     @Override
     public void printDetails(){
         System.out.print("\t\t\tDeadline : " +
@@ -79,10 +140,21 @@ public class Deadline extends Todo {
         }
     }
 
+    /**
+     * This method is used to retrieve the {@code Date} object reflecting
+     * the target date of the {@code Deadline} object.
+     *
+     * @return Date The {@code Date} object reflecting the target date of the {@code Deadline} object.
+     */
     public Date getTargetDate() {
         return (this.targetDate);
     }
 
+    /**
+     * This method is used to retrieve the performance status of the {@code Deadline} object.
+     *
+     * @return boolean True if the {@code Deadline} had concluded ahead of the target date.
+     */
     public String getDoneAhead() {
         if(this.doneAhead){
             return("\u2611");
@@ -91,11 +163,13 @@ public class Deadline extends Todo {
         }
     }
 
-    @Override
-    public String getTaskIcon() throws CommandException {
-        return NoteType.getTaskIcon("Deadline");
-    }
-
+    /**
+     * This method exports the {@code Deadline} object as a string in a format that is
+     * readable and re-constructable as a {@code Deadline} object.
+     *
+     * @return String The {@code Deadline} object as a string in a format
+     * readable and re-constructable as a {@code Deadline} object.
+     */
     @Override
     public String getSaveText() {
         String text = "Deadline/" +
@@ -114,12 +188,22 @@ public class Deadline extends Todo {
         return text;
     }
 
+    /**
+     * This method returns the class name of the {@code Deadline} object as a {@code String}.
+     *
+     * @return String The class name of the {@code Deadline} object.
+     */
     @Override
     public String getObjectClass() {
         return "Deadline";
     }
 
     //ABSTRACT METHODS----------------------------------
+    /**
+     * This method returns the {@code Budget} object attached to the {@code Deadline} object, if any.
+     *
+     * @return Budget The {@code Budget} object attached to the {@code Deadline} object, if any.
+     */
     public Budget getBudgetObject() {
         return null;
     }

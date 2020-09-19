@@ -10,7 +10,6 @@ import duke.notes.NoteType;
  */
 public enum CmdType {
 
-
     COMMANDS("#commands", "#cmd", null, 0),
     DELETE("#delete", "#del", null, 0),
     EDITDATE("#editdate", "#edt", null, 0),
@@ -40,6 +39,14 @@ public enum CmdType {
     private final NoteType relevantNoteType;
     private final int timelineDays;
 
+    /**
+     * This method constructs the various {@code CmdType} enum items.
+     *
+     * @param command The standard text required to activate the command.
+     * @param shortCommand The short text required to activate the command.
+     * @param relevantNoteType The {@code NoteType} associated with the command.
+     * @param timelineDays The timeline associated with the {@code ListCommand} objects.
+     */
     CmdType(String command, String shortCommand, NoteType relevantNoteType, int timelineDays) {
         this.command = command;
         this.shortCommand = shortCommand;
@@ -48,7 +55,8 @@ public enum CmdType {
     }
 
     /**
-     * This method assesses the command text used and returns the corresponding generic command to execute.
+     * This method returns the associated {@code CmdType}
+     * for the generic command or short command text provided.
      *
      * @param cmdType The command text entered by the user.
      * @return CmdType The generic command to execute.
@@ -65,7 +73,8 @@ public enum CmdType {
     }
 
     /**
-     * This method returns the corresponding standard command text for the generic command or short command text provided.
+     * This method returns the corresponding standard command text
+     * for the generic command or short command text provided.
      *
      * @param cmdType The generic command or short command text entered by the user.
      * @return String The corresponding standard command text.
@@ -82,7 +91,8 @@ public enum CmdType {
     }
 
     /**
-     * This method returns the corresponding short command text for the generic command or standard command text provided.
+     * This method returns the corresponding short command text
+     * for the generic command or short command text provided.
      *
      * @param cmdType The generic command or standard command text entered by the user.
      * @return String The corresponding short command text.
@@ -99,7 +109,8 @@ public enum CmdType {
     }
 
     /**
-     * This method returns the relevant {@code NoteType} for the generic command provided.
+     * This method returns the relevant {@code NoteType}
+     * for the generic command or short command text provided.
      *
      * @param cmdType The generic command or standard command text entered by the user.
      * @return NoteType The corresponding relevant NoteType.
@@ -116,7 +127,8 @@ public enum CmdType {
     }
 
     /**
-     * This method returns the relevant timeline element applicable for the generic command provided.
+     * This method returns the relevant timeline element applicable to {@code ListCommand} objects
+     * for the generic command or short command text provided.
      *
      * @param cmdType The generic command or standard command text entered by the user.
      * @return int The corresponding relevant timeline element applicable, returns {@code 0} if not applicable.

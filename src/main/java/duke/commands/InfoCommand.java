@@ -42,6 +42,5 @@ public class InfoCommand extends DukeCommand implements DukeUI {
         DukeUI.printDivider();
         DukeUI.showCommandList();
         DukeUI.printDivider();
-
     }
 }

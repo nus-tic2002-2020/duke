@@ -5,7 +5,8 @@ package duke.budget;
  *
  * To create a {@code Budget} object, a budget amount must minimally be set.
  * The {@code Budget} object can thereafter record revisions, utilisation and the residual balance.
- * Class-level members are available to aggregate the total budget set, used and remaining across all Budget objects created.
+ * Class-level members are available to aggregate the total budget set, used and remaining across
+ * all Budget objects created.
  *
  * @author tanqiuyu
  * @since 2020-09-16
@@ -96,8 +97,10 @@ public class Budget {
     }
 
     /**
-     * This method is used to effect an inward transfer of a budget amount, thereby revising and increasing the budget available.
-     * This method can only be called by a successful {@code transferBudgetOut} method, ensuring that an existing budget amount is available to effect the transfer.
+     * This method is used to effect an inward transfer of a budget amount,
+     * thereby revising and increasing the budget available.
+     * This method can only be called by a successful {@code transferBudgetOut} method,
+     * ensuring that an existing budget amount is available to effect the transfer.
      *
      * @param balanceIn The budget amount to be transferred in.
      */
@@ -113,8 +116,10 @@ public class Budget {
     }
 
     /**
-     * This method is used to effect an outward transfer of a budget amount to another {@code Budget} object, thereby revising and decreasing the budget available.
-     * The transfer might fail if there is an insufficient budget amount or budget balance in the {@code Budget} object to effect the transfer.
+     * This method is used to effect an outward transfer of a budget amount to another {@code Budget} object,
+     * thereby revising and decreasing the budget available.
+     * The transfer might fail if there is an insufficient budget amount or budget balance in the
+     * {@code Budget} object to effect the transfer.
      *
      * @param balanceOut The budget amount to be transferred out.
      * @param target The {@code Budget} object to which the budget amount is to be transferred to.
@@ -192,7 +197,8 @@ public class Budget {
     }
 
     /**
-     * This method is to retrieve the revision status of the {@code Budget} object (i.e. whether the initial budget amount has been revised).
+     * This method is to retrieve the revision status of the {@code Budget} object
+     * (i.e. whether the initial budget amount has been revised).
      *
      * @return boolean True if budget set has been revised.
      */
@@ -201,7 +207,8 @@ public class Budget {
     }
 
     /**
-     * This method is to retrieve the utilisation status of the {@code Budget} object (i.e. whether the amount budget used has exceeded the budget amount set or revised).
+     * This method is to retrieve the utilisation status of the {@code Budget} object
+     * (i.e. whether the amount budget used has exceeded the budget amount set or revised).
      *
      * @return boolean True if the budget set or revised has been exceeded.
      */
@@ -210,9 +217,11 @@ public class Budget {
     }
 
     /**
-     * This method exports the {@code Budget} object as a string in a format that is readable and re-constructable as a {@code Budget} object.
+     * This method exports the {@code Budget} object as a string in a format
+     * that is readable and re-constructable as a {@code Budget} object.
      *
-     * @return String The {@code Budget} object as a string in a format readable and re-constructable as a Budget object.
+     * @return String The {@code Budget} object as a string in a format
+     * readable and re-constructable as a {@code Budget} object.
      */
     public String getSaveText() {
         String text = this.budgetSet + "/" +
@@ -242,16 +251,17 @@ public class Budget {
     }
 
     /**
-     * This method prints a report of the overall budget utilisation status and budget balance across all {@code Budget} objects.
+     * This method prints a report of the overall budget utilisation status and budget balance
+     * across all {@code Budget} objects.
      */
     public static void printBudgetReport(){
         String budgetReport = "$" + String.format("%,14.2f", Math.abs(totalBudgetBalance));
         if(isTotalOverBudget){
-            System.out.println(String.format("%1$s%2$22s", "\t\t  a budget overrun of", budgetReport.toString()));
+            System.out.printf("%1$s%2$22s%n", "\t\t  a budget overrun of", budgetReport);
         } else if(totalBudgetBalance == 0) {
-            System.out.println(String.format("%1$s%2$22s", "\t\t  a balanced budget balance of", budgetReport.toString()));
+            System.out.printf("%1$s%2$22s%n", "\t\t  a balanced budget balance of", budgetReport);
         } else {
-            System.out.println(String.format("%1$s%2$22s", "\t\t  a healthy budget balance of", budgetReport.toString()));
+            System.out.printf("%1$s%2$22s%n", "\t\t  a healthy budget balance of", budgetReport);
         }
     }
 }

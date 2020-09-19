@@ -7,7 +7,8 @@ import duke.ui.DukeUI;
 import java.util.Date;
 
 /**
- * An extension of the {@code DukeCommand} object that performs the edition of the {@code targetDate} attribute of a {@code Deadline} object by a measure of milliseconds.
+ * An extension of the {@code DukeCommand} object that performs the edition of the {@code targetDate}
+ * attribute of a {@code Deadline} object by a measure of milliseconds.
  *
  * @author tanqiuyu
  * @since 2020-09-16

@@ -52,7 +52,7 @@ public class SaveCommand extends DukeCommand implements DukeUI {
         try {
             if (autoSave) {
                 dukeStorage.archiveToFile();
-                dukeStorage.writeToFile(dukeNotes.getNotes());
+                dukeStorage.writeToFile(dukeNotes);
                 return true;
             } else {
                 return false;
@@ -73,7 +73,7 @@ public class SaveCommand extends DukeCommand implements DukeUI {
 
         DukeUI.printDivider();
         dukeStorage.archiveToFile();
-        dukeStorage.writeToFile(dukeNotes.getNotes());
+        dukeStorage.writeToFile(dukeNotes);
         System.out.println("\tSave operation completed!");
         DukeUI.printDivider();
     }

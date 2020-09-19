@@ -4,6 +4,12 @@ import duke.ui.DukeUI;
 import java.text.ParseException;
 import java.util.Date;
 
+/**
+ * This enum lists the Sun Signs for the Gregorian date periods of each year.
+ *
+ * @author tanqiuyu
+ * @since 2020-09-16
+ */
 public enum SunSign implements DukeUI{
 
     ARIES("21-MAR", "19-APR", "Sun in Aries"),
@@ -21,14 +27,29 @@ public enum SunSign implements DukeUI{
 
     private final String from;
     private final String to;
-    private final String month;
+    private final String sunSign;
 
-    SunSign(String from, String to, String month) {
+    /**
+     * This method constructs the various {@code SunSign} enum items.
+     *
+     * @param from The starting date of the Gregorian date period.
+     * @param to The ending date of the Gregorian date period.
+     * @param sunSign The corresponding Sun Sign for the Gregorian date period.
+     */
+    SunSign(String from, String to, String sunSign) {
         this.from = from;
         this.to = to;
-        this.month = month;
+        this.sunSign = sunSign;
     }
 
+    /**
+     * This method returns corresponding Sun Sign
+     * for the Gregorian date provided.
+     *
+     * @param date The {@code Date} object reflecting the Gregorian date provided.
+     * @return String The corresponding Sun Sign for the Gregorian date.
+     * @exception ParseException If there are errors converting the String input into a {@code Date} object.
+     */
     public static String getSunSign(Date date) throws ParseException {
 
         for(SunSign sign: SunSign.values()){
@@ -37,7 +58,7 @@ public enum SunSign implements DukeUI{
             Date start = INPUT_TIME.parse(from);
             Date end = INPUT_TIME.parse(to);
             if(date.compareTo(start)>=0 && date.compareTo(end)<=0){
-                return sign.month;
+                return sign.sunSign;
             }
         }
         return "ERROR";

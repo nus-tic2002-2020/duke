@@ -105,10 +105,13 @@ public class EditDateCommand extends DukeCommand implements DukeUI {
                                 }
 
                                 DukeUI.printDivider();
-                                System.out.println("\tStart and End Date of Note #" + this.targetNote + " changed from...");
-                                DukeUI.commandWrap(TASK_TIME.format(this.oldDate) + " ...and... " + TASK_TIME.format(oldEnd), 66);
+                                System.out.println("\tStart and End Date of Note #" + this.targetNote +
+                                        " changed from...");
+                                DukeUI.commandWrap(TASK_TIME.format(this.oldDate) + " ...and... " +
+                                        TASK_TIME.format(oldEnd), 66);
                                 System.out.println("\tto...");
-                                DukeUI.commandWrap(TASK_TIME.format(this.newDate) + " ...and... " + TASK_TIME.format(newEnd), 66);
+                                DukeUI.commandWrap(TASK_TIME.format(this.newDate) + " ...and... " +
+                                        TASK_TIME.format(newEnd), 66);
                                 DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
                                 DukeUI.suggestListNotes();
                             }

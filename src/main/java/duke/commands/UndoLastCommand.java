@@ -42,7 +42,8 @@ public class UndoLastCommand extends DukeCommand implements DukeUI {
      * @exception IOException If previously saved files cannot be found.
      * @exception ParseException If there are errors reading previously saved files.
      */
-    public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws IOException, ParseException {
+    public void execute(DukeList dukeNotes, DukeStorage dukeStorage)
+            throws IOException, ParseException {
 
         DukeUI.printDivider();
 
@@ -78,11 +79,9 @@ public class UndoLastCommand extends DukeCommand implements DukeUI {
                     System.out.println("\tYou have 2 more opportunities to undo.\n");
                 }
             }
-
         } else {
             System.out.println("\tUndo last save aborted!");
         }
-
         DukeUI.printCompleted();
         DukeUI.printOutstanding();
         DukeUI.printDivider();

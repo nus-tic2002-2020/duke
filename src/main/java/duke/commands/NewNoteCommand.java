@@ -53,7 +53,8 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
      * @param end The {@code Date} object indicating the end date of the new {@code Event} object.
      * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
      */
-    private void checkForClashes(DukeList dukeNotes, Date start, Date end) throws DateException {
+    private void checkForClashes(DukeList dukeNotes, Date start, Date end)
+            throws DateException {
 
         for(Task note: dukeNotes.getNotes()){
             if(note instanceof Event){
@@ -80,7 +81,8 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
      * @exception CommandException If there are errors in the command input.
      * @exception ParseException If there are errors reading previously saved files.
      */
-    public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, ParseException {
+    public void execute(DukeList dukeNotes, DukeStorage dukeStorage)
+            throws CommandException, ParseException {
 
         try {
             DukeUI.printDivider();
@@ -184,13 +186,4 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
             e.printExplanation();
         }
     }
-
-
-    //GET STATEMENTS------------------------------------
-
-
-
-    //ABSTRACT METHODS----------------------------------
-
-
 }

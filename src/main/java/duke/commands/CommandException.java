@@ -13,7 +13,7 @@ public class CommandException extends Exception {
     String message;
 
     /**
-     * This method constructs a {@code Command Exception} object.
+     * This method constructs a {@code CommandException} object.
      *
      * @param message The message explaining the reason behind the exception.
      */
@@ -23,7 +23,7 @@ public class CommandException extends Exception {
     }
 
     /**
-     * This method initialises a {@code Command Exception} object.
+     * This method initialises a {@code CommandException} object.
      */
     public CommandException(){
         super();

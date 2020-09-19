@@ -5,7 +5,8 @@ import duke.ui.DukeUI;
 import java.util.Date;
 
 /**
- * An extension of the {@code Exception} object that addresses exceptions in operations pertaining to {@code Date} objects.
+ * An extension of the {@code Exception} object that addresses exceptions in operations
+ * pertaining to {@code Date} objects.
  *
  * @author tanqiuyu
  * @since 2020-09-16
@@ -17,7 +18,7 @@ public class DateException extends Exception {
     Event event = null;
 
     /**
-     * This method constructs a {@code Date Exception} object.
+     * This method constructs a {@code DateException} object.
      *
      * @param date The {@code Date} object that caused the exception.
      * @param message The code indicating the reason behind the exception.
@@ -29,7 +30,7 @@ public class DateException extends Exception {
     }
 
     /**
-     * This method constructs a {@code Date Exception} object.
+     * This method constructs a {@code DateException} object.
      *
      * @param date The {@code Date} object that caused the exception.
      * @param message The code indicating the reason behind the exception.
@@ -43,7 +44,7 @@ public class DateException extends Exception {
     }
 
     /**
-     * This method initialises a {@code Date Exception} object.
+     * This method initialises a {@code DateException} object.
      */
     public DateException(){
         super();
@@ -59,7 +60,8 @@ public class DateException extends Exception {
     }
 
     /**
-     * This method prints an explanation specifying the {@code Date} object in question and reason behind the exception.
+     * This method prints an explanation specifying the {@code Date} object in question and
+     * reason behind the exception.
      *
      * @exception CommandException If there are errors in the command input.
      */
@@ -73,17 +75,17 @@ public class DateException extends Exception {
             case "TargetDate" -> {
                 System.out.println("\tBut the target date you are trying to set has already passed.");
                 System.out.println("\tI can't send you back in time, yet.");
-                System.out.println("\tPlease enter as the target date, another date & time in the future.");
+                System.out.println("\tPlease enter another date & time in the future.");
             }
             case "StartB4Now" -> {
                 System.out.println("\tBut the Event Start Date-Time you are trying to set has already passed.");
                 System.out.println("\tI can't send you back in time, yet.");
-                System.out.println("\tPlease enter as the Event Start Date-Time, another date & time in the future.");
+                System.out.println("\tPlease enter another date & time in the future.");
             }
             case "StartAFEnd" -> {
                 System.out.println("\tBut the event start you are trying to set is after the event end.");
                 System.out.println("\tI can't turn time backwards, yet.");
-                System.out.println("\tPlease enter as the event start, another date & time earlier than the event end.");
+                System.out.println("\tPlease enter another date & time earlier than the event end.");
             }
             case "NoStartDate" -> {
                 System.out.println("\tBut the event start date & time hasn't been set yet.");
@@ -93,12 +95,12 @@ public class DateException extends Exception {
             case "EndB4Now" -> {
                 System.out.println("\tBut the Event End Date-Time you are trying to set has already passed.");
                 System.out.println("\tI can't send you back in time, yet.");
-                System.out.println("\tPlease enter as the Event End Date-Time, another date & time in the future.");
+                System.out.println("\tPlease enter another date & time in the future.");
             }
             case "EndB4Start" -> {
                 System.out.println("\tBut the event end you are trying to set is before the event start.");
                 System.out.println("\tI can't turn time backwards, yet.");
-                System.out.println("\tPlease enter as the event end, another date & time later than the event start.");
+                System.out.println("\tPlease enter another date & time later than the event start.");
             }
             case "EventsClash" -> {
                 System.out.println("\tBut the event you are trying to set clashes with:");
@@ -130,9 +132,7 @@ public class DateException extends Exception {
                 System.out.println("\tThere might have been an error in the command.");
                 System.out.println("\tPlease identify the correct note to access.");
             }
-            default -> {
-                System.out.println("\t" + this.message);
-            }
+            default -> System.out.println("\t" + this.message);
         }
         DukeUI.printDivider();
     }

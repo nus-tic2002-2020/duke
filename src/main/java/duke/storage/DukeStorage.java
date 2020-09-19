@@ -1,10 +1,15 @@
 package duke.storage;
 
-import duke.budget.*;
-import duke.notes.*;
-import duke.notes.event.*;
-import duke.notes.todo.*;
-import duke.ui.*;
+import duke.budget.Budget;
+import duke.notes.Task;
+import duke.notes.event.Birthday;
+import duke.notes.event.Event;
+import duke.notes.event.Wedding;
+import duke.notes.todo.Bill;
+import duke.notes.todo.Deadline;
+import duke.notes.todo.Shoplist;
+import duke.notes.todo.Todo;
+import duke.ui.DukeUI;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -14,6 +19,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * An object that manages the storage of the {@code DukeList} object in saved files.
+ *
+ * @author tanqiuyu
+ * @since 2020-09-16
+ */
 public class DukeStorage implements DukeUI {
 
     //VARIABLES-----------------------------------------
@@ -25,11 +36,16 @@ public class DukeStorage implements DukeUI {
 
 
     //CONSTRUCTORS--------------------------------------
+    /**
+     * This method is used to construct a {@code DukeStorage} object.
+     *
+     * @param path The path to the saved files in the hard drive.
+     */
     public DukeStorage(String path){
 
         int lastSlash = 0;
         for (int i = 0; i < path.length(); i++) {
-            if (path.substring(i, i + 1).equals("/")) {
+            if (path.charAt(i) == '/') {
                 lastSlash = i;
             }
         }
@@ -46,8 +62,21 @@ public class DukeStorage implements DukeUI {
 
 
     //GET STATEMENTS----------------------------------
+    /**
+     * This method is used to retrieve the path to the saved files in the hard drive.
+     *
+     * @return String The path to the saved files in the hard drive.
+     */
     public String getPath() { return this.path; }
 
+    /**
+     * This method is used to undo previous save operations by reloading the last version
+     * of the {@code DukeList} object in the hard drive.
+     *
+     * @return int The number of archived {@code DukeList} objects that could be reloaded.
+     * @throws IOException If the saved file could not be found via the file path.
+     * @throws ParseException If the saved file could not be read and understood.
+     */
     public int revertToLastSave(DukeList dukeNotes) throws IOException, ParseException {
 
         if(this.lastSave == null) {
@@ -78,23 +107,36 @@ public class DukeStorage implements DukeUI {
 
 
     //SET STATEMENTS----------------------------------
+    /**
+     * This method is used to replace the primary file for the saving of the {@code DukeList} object.
+     *
+     * @param file The new file to be used to save the {@code DukeList} object.
+     */
     public void setFile(File file) { this.file = file; }
 
 
     //WRITE STATEMENTS----------------------------------
-    public void writeToFile(ArrayList<Task> tasks) throws IOException {
+    /**
+     * This method is used to write to file, the ArrayList of {@code Task} objects held by the {@code DukeList} object.
+     *
+     * @param dukeNotes The {@code DukeList} object to be written to file.
+     * @throws IOException If the saved file could not be found via the file path.
+     */
+    public void writeToFile(DukeList dukeNotes) throws IOException {
         FileWriter fw = new FileWriter(this.path, false);
-        for(Task task: tasks){
-            String text = noteToText(task);
+        for(Task task: dukeNotes.getNotes()){
+            String text = task.getSaveText();
             fw.write(text);
         }
         fw.close();
     }
 
-    public String noteToText(Task task) {
-        return task.getSaveText();
-    }
-
+    /**
+     * This method is used to archive the current version the {@code DukeList} object
+     * before it is overwritten by a new save.
+     *
+     * @throws IOException If the saved file could not be found via the file path.
+     */
     public void archiveToFile() throws IOException {
 
         this.last3Save = this.last2Save;
@@ -103,7 +145,7 @@ public class DukeStorage implements DukeUI {
         Date archiveDate = new Date();
         int lastSlash = 0;
         for (int i = 0; i < path.length(); i++) {
-            if (path.substring(i, i + 1).equals("/")) {
+            if (path.charAt(i) == '/') {
                 lastSlash = i;
             }
         }
@@ -115,6 +157,14 @@ public class DukeStorage implements DukeUI {
         copyFile(this.file, this.lastSave);
     }
 
+    /**
+     * This method is used to copy data from the file holding a previous version the {@code DukeList} object
+     * to the primary file holding the {@code DukeList} object in memory.
+     *
+     * @param fromFile The file holding a previous version the {@code DukeList} object.
+     * @param toFile The primary file holding the {@code DukeList} object in memory.
+     * @throws IOException If the saved file could not be found via the file path.
+     */
     public void copyFile(File fromFile, File toFile) throws IOException {
 
         Scanner read = new Scanner(fromFile);
@@ -128,6 +178,14 @@ public class DukeStorage implements DukeUI {
 
 
     //LOAD STATEMENTS-----------------------------------
+    /**
+     * This method is used to read data from saved files and reconstruct the {@code Note} objects,
+     * thereafter holding them in an ArrayList.
+     *
+     * @return ArrayList<Task> The ArrayList of reconstructed {@code Note} objects from the saved file.
+     * @throws FileNotFoundException If the saved file could not be found via the file path.
+     * @throws ParseException If there are errors reading from saved files.
+     */
     public ArrayList<Task> readFromFile() throws FileNotFoundException, ParseException {
 
         ArrayList<Task> notes = new ArrayList<Task>();

@@ -23,8 +23,10 @@ public class TransferCommand extends DukeCommand implements DukeUI {
      * This method constructs a {@code TransferCommand} object.
      *
      * @param cmdType The type of {@code DukeCommand} being constructed.
-     * @param from The serial number of the {@code Note} object from which an amount from its attached {@code Budget} object is to be transferred.
-     * @param to The serial number of the {@code Note} object from which an amount is to be transferred to its attached {@code Budget} object.
+     * @param from The serial number of the {@code Note} object from which an amount from its
+     *             attached {@code Budget} object is to be transferred.
+     * @param to The serial number of the {@code Note} object from which an amount is to be
+     *           transferred to its attached {@code Budget} object.
      * @param amount The amount to be transferred between the {@code Budget} objects.
      */
     public TransferCommand(String cmdType, int from, int to, double amount) {
@@ -48,7 +50,8 @@ public class TransferCommand extends DukeCommand implements DukeUI {
      * @exception CommandException If there are errors in the command input.
      * @exception IndexOutOfBoundsException If the note specified does not exist.
      */
-    public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException, IndexOutOfBoundsException {
+    public void execute(DukeList dukeNotes, DukeStorage dukeStorage)
+            throws CommandException, IndexOutOfBoundsException {
 
         if(this.from > dukeNotes.getNotes().size() || this.to > dukeNotes.getNotes().size()) {
             throw new IndexOutOfBoundsException();

@@ -86,11 +86,11 @@ public class DeleteCommand extends DukeCommand implements DukeUI {
                 System.out.println("\t...renumbering the remaining note(s)...");
                 for (int i = 0; i < dukeNotes.getNotes().size(); i++) {
                     System.out.print("\t#");
-                    System.out.print(String.format("%3d", dukeNotes.getNotes().get(i).getSerialNum()));
+                    System.out.printf("%3d", dukeNotes.getNotes().get(i).getSerialNum());
                     System.out.print("\t >>> ");
                     dukeNotes.getNotes().get(i).setSerialNum(i + 1);
                     System.out.print("\t#");
-                    System.out.print(String.format("%3d", dukeNotes.getNotes().get(i).getSerialNum()));
+                    System.out.printf("%3d", dukeNotes.getNotes().get(i).getSerialNum());
                     System.out.print("\n");
                 }
                 System.out.println("\tThe remaining notes have been renumbered!");
@@ -107,6 +107,4 @@ public class DeleteCommand extends DukeCommand implements DukeUI {
         }
         DukeUI.printDivider();
     }
-
-
 }

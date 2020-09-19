@@ -1,9 +1,15 @@
 package duke;
 
-import duke.ui.*;
+import duke.ui.DukeUI;
 import java.text.ParseException;
 import java.util.Date;
 
+/**
+ * This enum lists the Zodiac Year for the Gregorian date periods from Year 2020 to Year 2032.
+ *
+ * @author tanqiuyu
+ * @since 2020-09-16
+ */
 public enum ZodiacYear implements DukeUI{
 
     YEAR_20_21("25-JAN-2020 00:00:00", "11-FEB-2021 23:59:59", "Year of the Rat"),
@@ -21,21 +27,36 @@ public enum ZodiacYear implements DukeUI{
 
     private final String from;
     private final String to;
-    private final String year;
+    private final String zodiacYear;
 
-    ZodiacYear(String from, String to, String year) {
+    /**
+     * This method constructs the various {@code ZodiacYear} enum items.
+     *
+     * @param from The starting date of the Gregorian date period.
+     * @param to The ending date of the Gregorian date period.
+     * @param zodiacYear The corresponding Zodiac Year for the Gregorian date period.
+     */
+    ZodiacYear(String from, String to, String zodiacYear) {
         this.from = from;
         this.to = to;
-        this.year = year;
+        this.zodiacYear = zodiacYear;
     }
 
+    /**
+     * This method returns corresponding Zodiac Year
+     * for the Gregorian date provided.
+     *
+     * @param date The {@code Date} object reflecting the Gregorian date provided.
+     * @return String The corresponding Zodiac Year for the Gregorian date.
+     * @exception ParseException If there are errors converting the String input into a {@code Date} object.
+     */
     public static String getZodiacYear(Date date) throws ParseException {
 
         for(ZodiacYear year: ZodiacYear.values()){
             Date start = INPUT_TIME.parse(year.from);
             Date end = INPUT_TIME.parse(year.to);
             if(date.compareTo(start)>=0 && date.compareTo(end)<=0){
-                return year.year;
+                return year.zodiacYear;
             }
         }
         return "ERROR";

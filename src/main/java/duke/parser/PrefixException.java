@@ -12,7 +12,7 @@ import duke.ui.DukeUI;
 public class PrefixException extends Exception {
 
     /**
-     * This method constructs a Command Exception object.
+     * This method constructs a {@code PrefixException} object.
      */
     public PrefixException(){
         super();

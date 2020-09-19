@@ -42,7 +42,8 @@ public class WipeCommand extends DukeCommand implements DukeUI {
      * @param dukeStorage The {@code DukeStorage} object that holds access to the saved files of {@code Duke}.
      * @exception CommandException If there are errors in the command input.
      */
-    public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws CommandException {
+    public void execute(DukeList dukeNotes, DukeStorage dukeStorage)
+            throws CommandException {
 
         DukeUI.printDivider();
 
@@ -78,10 +79,7 @@ public class WipeCommand extends DukeCommand implements DukeUI {
 
         } else {
             System.out.println("\tYay! Thank you for keeping me!");
-
         }
-
         DukeUI.printDivider();
     }
-
 }

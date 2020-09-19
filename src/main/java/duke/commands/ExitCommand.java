@@ -65,6 +65,5 @@ public class ExitCommand extends DukeCommand implements DukeUI {
         }
         DukeUI.printDivider();
     }
-
 }
 

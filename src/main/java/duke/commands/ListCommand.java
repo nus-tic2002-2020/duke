@@ -62,7 +62,8 @@ public class ListCommand extends DukeCommand implements DukeUI {
     /**
      * This method sorts {@code Note} object based on their attached {@code Budget} object amounts.
      *
-     * @param budgets The {@code ArrayList} of {@code Note} objects with {@code Budget} objects attached that is to be sorted.
+     * @param budgets The {@code ArrayList} of {@code Note} objects with {@code Budget}
+     *                objects attached that is to be sorted.
      */
     private void selectionSortBudgets(ArrayList<Task> budgets) {
 
@@ -184,7 +185,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
                     case "C" -> System.out.print("\tYou have no completed ");
                     case "A" -> System.out.print("\tYou have no ");
                 }
-                System.out.println(noteName + noteVerb + TASK_DATE.format(this.dateFilter) + ".");
+                System.out.println(noteName + " " + noteVerb + " " + TASK_DATE.format(this.dateFilter) + ".");
             }
         } else {
             System.out.println("\tHere are the " + noteName + " you told me to note:-");
@@ -270,6 +271,4 @@ public class ListCommand extends DukeCommand implements DukeUI {
         DukeUI.printOutstanding();
         DukeUI.printDivider();
     }
-
-
 }
