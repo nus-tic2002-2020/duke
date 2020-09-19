@@ -47,6 +47,7 @@ public class Duke {
 
     public static int call(String input) {
         String[] args = input.split(" ");
+        String text = "";
         if (args.length > 0 && !args[0].isBlank()) {
             String command = args[0];
             switch (command) {
@@ -56,14 +57,62 @@ public class Duke {
                 case "done":
                     doneTasks(args);
                     break;
+                case "todo":
+                    text = readInputParameter(args, null);
+                    addTask(new Todo(text));
+                    break;
+                case "deadline":
+                    text = readInputParameter(args, "/by");
+                    String by = readSlashParameter(args, "/by");
+                    addTask(new Deadline(text, by));
+                    break;
+                case "event":
+                    text = readInputParameter(args, "/at");
+                    String at = readSlashParameter(args, "/at");
+                    addTask(new Event(text, at));
+                    break;
                 case "bye":
                     bye();
                     return 1;
                 default:
-                    addTask(input);
+                    // Do nothing
             }
         }
         return 0;
+    }
+
+    private static String readInputParameter(String[] args, String until) {
+        String value = "";
+        int index = args.length;
+        if (until != null && until.isBlank()) {
+            index = indexOf(args, until);
+        }
+        for(int i = 1; i < args.length && i < index; i++) { // add strings between command to until
+            value +=  args[i] + " ";
+        }
+        return value.trim();
+    }
+
+    private static String readSlashParameter(String[] args, String param) {
+        String value = "";
+        int index = indexOf(args, param);
+        for(int i = index+1; i < args.length; i++) { // add strings between slash to end of args
+            value +=  args[i] + " ";
+        }
+        return value.trim();
+    }
+
+    private static int indexOf(Object[] arr, Object o) {
+        int index = -1;
+        if(arr != null)  {
+            for(int i = 0; i < arr.length; i++) {
+                if(arr[i] == o) {
+                    index = i;
+                    break;
+                }
+            }
+        }
+        return index;
     }
 
     public static void echo(String message) {
@@ -76,36 +125,48 @@ public class Duke {
         System.out.println("    ____________________________________________________________");
         System.out.println("    Power la! I've marked this task(s) as done:");
         for (int i = 1; i < args.length; i++) { // Skip first: command
-            int intTask = Integer.parseInt(args[i]); //TODO: Exception handling
 
-            if (intTask < MAX_TASKS && tasks[intTask] != null) { // Has task at list index
-                Task t = tasks[intTask];
+            try {
 
-                t.markAsDone();
+                int intTask = Integer.parseInt(args[i]);
 
-                // Print done task
-                System.out.printf("       %s %s\n", t.getStatusIcon(), t);
+                if (intTask < MAX_TASKS && tasks[intTask] != null) { // Has task at list index
+                    Task t = tasks[intTask];
+
+                    t.markAsDone();
+
+                    // Print done task
+                    System.out.printf("       %s %s\n", t.getStatusIcon(), t);
+                }
+
+            } catch (NumberFormatException ex) {
+                // Do nothing
             }
 
         }
         System.out.println("    ____________________________________________________________");
     }
 
-    public static void addTask(String description) {
+    public static void addTask(Task t) {
+        System.out.println("    ____________________________________________________________");
+        System.out.println("    Got it. I've added this task:");
         if (countTasks < MAX_TASKS) {
-            Task t = new Task(description);
+            //Task t = new Task(description);
             tasks[countTasks++] = t;
-            echo("added: " + t);
+            //echo("added: " + t);
+            System.out.printf("      %s\n", t);
         } else {
             errorTaskFull();
         }
+        System.out.printf("    Now you have %d tasks in the list.\n", countTasks);
+        System.out.println("    ____________________________________________________________");
     }
     public static void printTasks() {
         System.out.println("    ____________________________________________________________");
         System.out.println("    Here are the tasks in your list:");
         for(int i = 0; i < countTasks; i++) {
             Task t = tasks[i];
-            System.out.printf("     %d.%s %s\n", i+1, t.getStatusIcon(), t);
+            System.out.printf("     %d.%s\n", i+1, t);
         }
         System.out.println("    ____________________________________________________________");
     }
