@@ -59,21 +59,55 @@ public class Duke {
             } else if (input.equals("list")) {
                 getTaskList();
                 input = getInput.nextLine();
-            } else if (input.split(" ")[0].equals("done") ){
+            } else if (input.split(" ")[0].equals("done") ) {
                 String part2 = input.split(" ")[1];
                 //itIsDone(Integer.parseInt(input.split(" ")[1])-1); //have to minus 1, because added 1 before
-                itIsDone(Integer.parseInt(part2)-1); //easier to see
+                itIsDone(Integer.parseInt(part2) - 1); //easier to see
                 input = getInput.nextLine();
             }else if (input.split(" ")[0].equals("todo") ){
-                setTaskList(new Todo(input.substring(4)));
-                input = getInput.nextLine();
+                try {
+                    if (input.substring(4).equals("")){
+                        throw new DukeException();
+                    }
+                    setTaskList(new Todo(input.substring(5)));
+                    input = getInput.nextLine();
+                }catch (DukeException e){
+                    System.out.println("\t____________________________________________________________");
+                    System.out.println("\t☹ OOPS!!! The description of a todo cannot be empty.");
+                    System.out.println("\t____________________________________________________________");
+                    input = getInput.nextLine();
+                }
             }else if (input.split(" ")[0].equals("deadline") ){
-                setTaskList(new Deadline(input.substring(8, input.indexOf("by")-2), input.substring(input.indexOf("by")+3)));
-                input = getInput.nextLine();
+                try{
+                    if (input.substring(8).equals("")){
+                        throw new DukeException();
+                    }
+                    setTaskList(new Deadline(input.substring(9, input.indexOf("by")-2), input.substring(input.indexOf("by")+3)));
+                    input = getInput.nextLine();
+                }catch(DukeException e){
+                    System.out.println("\t____________________________________________________________");
+                    System.out.println("\t☹ OOPS!!! The description of a todo cannot be empty.");
+                    System.out.println("\t____________________________________________________________");
+                    input = getInput.nextLine();
+                }
             }else if (input.split(" ")[0].equals("event") ){
-                setTaskList(new Event(input.substring(5, input.indexOf("at")-2), input.substring(input.indexOf("at")+3)));
-                input = getInput.nextLine();
+                try{
+                    if (input.substring(5).equals("")){
+                        throw new DukeException();
+                    }
+                    setTaskList(new Event(input.substring(6, input.indexOf("at")-2), input.substring(input.indexOf("at")+3)));
+                    input = getInput.nextLine();
+                }catch(DukeException e){
+                    System.out.println("\t____________________________________________________________");
+                    System.out.println("\t☹ OOPS!!! The description of a todo cannot be empty.");
+                    System.out.println("\t____________________________________________________________");
+                    input = getInput.nextLine();
+                }
             }
+            System.out.println("\t____________________________________________________________");
+            System.out.println("\t☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            System.out.println("\t____________________________________________________________");
+            input = getInput.nextLine();
         }
     }
 }
