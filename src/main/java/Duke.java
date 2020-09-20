@@ -84,7 +84,7 @@ public class Duke {
     private static String readInputParameter(String[] args, String until) {
         String value = "";
         int index = args.length;
-        if (until != null && until.isBlank()) {
+        if (until != null && !until.isBlank()) {
             index = indexOf(args, until);
         }
         for(int i = 1; i < args.length && i < index; i++) { // add strings between command to until
@@ -106,7 +106,7 @@ public class Duke {
         int index = -1;
         if(arr != null)  {
             for(int i = 0; i < arr.length; i++) {
-                if(arr[i] == o) {
+                if(arr[i].equals(o)) {
                     index = i;
                     break;
                 }
@@ -128,7 +128,7 @@ public class Duke {
 
             try {
 
-                int intTask = Integer.parseInt(args[i]);
+                int intTask = Integer.parseInt(args[i])-1;
 
                 if (intTask < MAX_TASKS && tasks[intTask] != null) { // Has task at list index
                     Task t = tasks[intTask];
@@ -136,7 +136,7 @@ public class Duke {
                     t.markAsDone();
 
                     // Print done task
-                    System.out.printf("       %s %s\n", t.getStatusIcon(), t);
+                    System.out.printf("       %s\n", t.toString());
                 }
 
             } catch (NumberFormatException ex) {
