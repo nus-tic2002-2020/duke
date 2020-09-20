@@ -86,7 +86,7 @@ public class Duke {
                     input = getInput.nextLine();
                 }catch(DukeException e){
                     System.out.println("\t____________________________________________________________");
-                    System.out.println("\t☹ OOPS!!! The description of a todo cannot be empty.");
+                    System.out.println("\t☹ OOPS!!! The description of a deadline cannot be empty.");
                     System.out.println("\t____________________________________________________________");
                     input = getInput.nextLine();
                 }
@@ -99,7 +99,7 @@ public class Duke {
                     input = getInput.nextLine();
                 }catch(DukeException e){
                     System.out.println("\t____________________________________________________________");
-                    System.out.println("\t☹ OOPS!!! The description of a todo cannot be empty.");
+                    System.out.println("\t☹ OOPS!!! The description of a event cannot be empty.");
                     System.out.println("\t____________________________________________________________");
                     input = getInput.nextLine();
                 }
