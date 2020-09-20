@@ -9,8 +9,8 @@ public class Duke {
     private static int countTasks = 0;
 
     public static void main(String[] args) {
-        String logo = "  ___    *   *    ____        *        \n"
-                        + "|  _  | | | | |  |  _ \\ _   _| | _____ \n"
+        String logo = "  ___    *   *    ____        *\n"
+                        + "|  _  | | | | |  |  _ \\ _   _| | _____\n"
                         + "| |_| | | |_| |  | | | | | | | |/ / _ \\\n"
                         + "|  _  | |  _  |  | |_| | |_| |   <  __/\n"
                         + "| | | | | | | |  |____/ \\__,_|_|\\_\\___|\n";
@@ -21,7 +21,7 @@ public class Duke {
 
         greet();
 
-        while(exit <= 0) { // If exit code is 0, continue
+        while(exit <= 0 && in.hasNextLine()) { // If exit code is 0, continue
             String input = in.nextLine();
             exit = call(input.trim());
         }
