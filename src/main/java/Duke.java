@@ -47,8 +47,13 @@ public class Duke {
 
     public static void main(String[] args) throws DukeException {
         int taskCounter = 0;
-        
-        ArrayList<Task> tasks = new ArrayList<Task>();
+        ArrayList<String> validInput = new ArrayList<>();
+        ArrayList<Task> tasks = new ArrayList<>();
+        validInput.add("bye");
+        validInput.add("list");
+        validInput.add("todo");
+        validInput.add("deadline");
+        validInput.add("event");
 
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -63,12 +68,12 @@ public class Duke {
             userInput[0].toLowerCase();
 
             try {
-                if (validInput.) {
+                if (!validInput.contains(userInput[0])) {
                     line();
                     System.out.println("   Invalid Input.");
                     line();
                     throw new DukeException();
-                } else if (userInput.length < 2) {
+                } else if (userInput.length < 2 && !userInput[0].equals("bye") && !userInput[0].equals("list")) {
                     line();
                     System.out.println("   Description cannot be empty.");
                     line();
