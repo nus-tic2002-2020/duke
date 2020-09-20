@@ -34,6 +34,7 @@ public class Ui {
         System.out.println("List of valid entries include the following:\n\n" +
                 "Bye\n"     +
                 "List\n"    +
+                "Find\n"    +
                 "Undo\n"    +
                 "History\n" +
                 "Done         'X'\n" +

@@ -44,6 +44,7 @@ public class Parser {
         boolean change = false;
         if (input.trim().equalsIgnoreCase("bye"))         { TaskList.Bye();}
         else if (input.trim().equalsIgnoreCase("list"))   { TaskList.List();}
+        else if (input.toLowerCase().contains("find"))               { TaskList.Find(input.substring(5));}
         else if (input.toLowerCase().contains("done"))               { TaskList.Done(input); change = true;}
         else if (input.toLowerCase().contains("delete"))             { TaskList.Delete(input); change = true;}
         else if (input.toLowerCase().contains("todo"))               { TaskList.Todo(input); change = true;}

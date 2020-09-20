@@ -229,4 +229,19 @@ public class TaskList {
             seq++;
         }
     }
+
+    /**
+     * This method helps to take a find keyword and displays any tasks in the TaskList that contain that task description.
+     * @param line Contains the user-input for the tasks description that he wants to find.
+     */
+
+    public static void Find(String line) {
+        int seq = 1;
+        for (Task l : list) {
+            if(l.description.toLowerCase().contains(line.toLowerCase())) {
+                System.out.println(seq + "." + l);
+                seq++;
+            }
+        }
+    }
 }
