@@ -1,6 +1,8 @@
 package duke.command;
 import duke.task.DukeException;
 
+import java.io.IOException;
+
 /**
  * <h2> Duke, your personalized task manager </h2>
  * <br>This task manager shall assist to add / remove various kinds of tasks that might include their estimated completion dates.
@@ -27,7 +29,7 @@ public class Duke {
      * @see DukeException
      */
 
-    public static void main(String[] args) throws DukeException {
+    public static void main(String[] args) throws DukeException, IOException {
         DateTimeList.main(); //Initialize DateTimeFormats
         Storage.main(); //Initialize Stored Data into TaskList
         Ui.main(); //Start interaction with User
