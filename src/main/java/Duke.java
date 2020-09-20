@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
 
@@ -22,11 +23,11 @@ public class Duke {
         line();
     }
 
-    public static void dukeList(Task[] tasks, int taskCounter){
+    public static void dukeList(ArrayList<Task> tasks, int taskCounter){
         line();
         System.out.println(ANSI_YELLOW + "   Here are the tasks in your list:" + ANSI_RESET);
         for(int i = 0; i < taskCounter; i++){
-            System.out.println(ANSI_YELLOW + "   " + String.valueOf(i+1) + "." + tasks[i] + ANSI_RESET);
+            System.out.println(ANSI_YELLOW + "   " + String.valueOf(i+1) + "." + tasks.get(i) + ANSI_RESET);
         }
         line();
     }
@@ -39,27 +40,15 @@ public class Duke {
         line();
     }
 
-    public static void dukeInvalid(String s){
+    public static void dukeValidate(String[] s) throws DukeException{
 
-        line();
 
-        switch (s){
-            case "deadline":
-                System.out.println(ANSI_RED + "   Invalid input, please provide /by schedule." + ANSI_RESET);
-                break;
-            case "event":
-                System.out.println(ANSI_RED + "   Invalid input, please provide /at schedule." + ANSI_RESET);
-                break;
-            default:
-                System.out.println(ANSI_RED + "   Invalid input, please type again." + ANSI_RESET);
-        }
-
-        line();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DukeException {
         int taskCounter = 0;
-        Task[] tasks = new Task[100];
+        
+        ArrayList<Task> tasks = new ArrayList<Task>();
 
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -71,8 +60,36 @@ public class Duke {
         while(true){
             Scanner input = new Scanner(System.in);
             String[] userInput = input.nextLine().split("\\s", 2);
+            userInput[0].toLowerCase();
 
-            switch (userInput[0].toLowerCase()){
+            try {
+                if (validInput.) {
+                    line();
+                    System.out.println("   Invalid Input.");
+                    line();
+                    throw new DukeException();
+                } else if (userInput.length < 2) {
+                    line();
+                    System.out.println("   Description cannot be empty.");
+                    line();
+                    throw new DukeException();
+                } else if (userInput[0].equals("deadline") && !userInput[1].contains("/by")) {
+                    line();
+                    System.out.println("   Missing /by schedule.");
+                    line();
+                    throw new DukeException();
+                } else if (userInput[0].equals("event") && !userInput[1].contains("/at")) {
+                    line();
+                    System.out.println("   Missing /at schedule.");
+                    line();
+                    throw new DukeException();
+                }
+            }
+            catch (DukeException d){
+                continue;
+            }
+
+            switch (userInput[0]){
                 case "bye":
                     line();
                     System.out.println(ANSI_YELLOW + "   Bye. Hope to see you again soon!" + ANSI_RESET);
@@ -82,33 +99,24 @@ public class Duke {
                     dukeList(tasks, taskCounter);
                     break;
                 case "done":
-                    dukeDone(tasks[Integer.parseInt(userInput[1]) - 1]);
+                    dukeDone(tasks.get(Integer.parseInt(userInput[1]) - 1));
                     break;
                 case "todo":
-                    tasks[taskCounter] = new Todo(userInput[1]);
-                    dukeInput(tasks[taskCounter], taskCounter);
+                    tasks.add(new Todo(userInput[1]));
+                    dukeInput(tasks.get(tasks.size() - 1), tasks.size() - 1);
                     taskCounter++;
                     break;
                 case "deadline":
-                    if(!userInput[1].contains("/by")){
-                        dukeInvalid("deadline");
-                        break;
-                    }
-                    tasks[taskCounter] = new Deadline(userInput[1]);
-                    dukeInput(tasks[taskCounter], taskCounter);
+                    tasks.add(new Deadline(userInput[1]));
+                    dukeInput(tasks.get(tasks.size() - 1), tasks.size() - 1);
                     taskCounter++;
                     break;
                 case "event":
-                    if(!userInput[1].contains("/at")){
-                        dukeInvalid("event");
-                        break;
-                    }
-                    tasks[taskCounter] = new Event(userInput[1]);
-                    dukeInput(tasks[taskCounter], taskCounter);
+                    tasks.add(new Event(userInput[1]));
+                    dukeInput(tasks.get(tasks.size() - 1), tasks.size() - 1);
                     taskCounter++;
                     break;
-                default:
-                    dukeInvalid("exit");
+
             }
 
         }
