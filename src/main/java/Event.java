@@ -12,6 +12,12 @@ public class Event extends Task {
         System.out.println("[D][✓] " + this.description + " (at: " + getDateAndTime() + ")");
     }
 
+    public void print(int index) {
+        System.out.println("Got it. I've added this task:");
+        System.out.println(getSymbol() + "[✗] " + getDescription() + " (at: " + getDateAndTime() +")");
+        System.out.println("Now you have " + (index + 1) + " tasks in the list");
+    }
+
     public void setSymbol() {
         symbol = "[E]";
     }
