@@ -1,20 +1,33 @@
 package duke;
 
-
-import duke.commands.*;
-import duke.parser.*;
-import duke.storage.*;
-import duke.ui.*;
+import duke.commands.CommandException;
+import duke.commands.DateException;
+import duke.commands.DukeCommand;
+import duke.parser.DukeParser;
+import duke.storage.DukeList;
+import duke.storage.DukeStorage;
+import duke.ui.DukeUI;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 
+/**
+ * {@code Duke} is a note-keeper, task manager, budget assistant, and more...!
+ *
+ * @author tanqiuyu
+ * @since 2020-09-16
+ */
 public class Duke implements DukeParser, DukeUI {
 
     private static DukeStorage dukeStorage;
     private static DukeList dukeNotes;
     boolean isLoadedFromFile = false;
 
+    /**
+     * This method constructs a {@code Duke} object.
+     *
+     * @param path The path to the saved files in the hard drive..
+     */
     public Duke(String path){
 
         dukeStorage = new DukeStorage(path);
@@ -29,6 +42,13 @@ public class Duke implements DukeParser, DukeUI {
         }
     }
 
+    /**
+     * This method run a {@code Duke} object.
+     *
+     * @exception ParseException If there is an error in reading and understanding inputs.
+     * @exception IOException If (@code Note} or {@code File} objects specified could not be found.
+     * @exception CommandException If there are errors in the command input.
+     */
     public void run() throws ParseException, IOException, CommandException {
 
         boolean confirmExit = false;

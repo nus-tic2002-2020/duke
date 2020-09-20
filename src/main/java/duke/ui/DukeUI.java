@@ -15,6 +15,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * An interface that sets out all the formats pertaining to textual user interface.
+ *
+ * @author tanqiuyu
+ * @since 2020-09-16
+ */
 public interface DukeUI {
 
     //VARIABLES-----------------------------------------
@@ -140,15 +146,31 @@ public interface DukeUI {
 
 
     //METHODS-------------------------------------------
+    /**
+     * This method is used to print a confirmation statement when a new {@code Note} object
+     * has been successfully created.
+     *
+     * @param typeAdded The textual input provided by the user in verbatim.
+     * @return DukeCommand The appropriate {@code DukeCommand} object created based on the user input.
+     * @exception CommandException If there are errors in the command input.
+     */
     static void addConfirm(String typeAdded) throws CommandException {
         System.out.println("\tNoted! I've added a new "
                 + NoteType.getLowercaseName(typeAdded) + " to the list.");
     }
 
+    /**
+     * This method is used to print a statement seeking confirmation for a major operation.
+     */
     static void askForConfirmation() {
         System.out.println("\tReply \"Y\" to confirm or any other character(s) to abort.");
     }
 
+    /**
+     * This method is used to print a icon indicating the success status of an auto-save operation.
+     *
+     * @param isSuccessful True if the auto-save operation has been successful.
+     */
     static void autoSaveConfirmation(boolean isSuccessful) {
         System.out.printf("%78s", "Auto-Save ");
         if(isSuccessful){
@@ -158,6 +180,12 @@ public interface DukeUI {
         }
     }
 
+    /**
+     * This method is used to print a {@code String} object wrapped within the specified character width.
+     *
+     * @param input The (@code String} object to be printed.
+     * @param limit The character width for which the input is to be wrapped in.
+     */
     static void commandWrap(String input, int limit) {
         System.out.print("\t\t\"");
         while(true) {
@@ -179,6 +207,15 @@ public interface DukeUI {
         }
     }
 
+    /**
+     * This method is used to print, as part of a listing of {@code Note} objects,
+     * a {@code String} object wrapped within the specified character width.
+     *
+     * @param input The (@code String} object to be printed.
+     * @param limit The character width for which the input is to be wrapped in.
+     * @param addDate The (@code Date} object to be printed, reflecting the date and time
+     *                the {@code Note} object was added,
+     */
     static void listWrap(String input, int limit, Date addDate) {
 
         boolean firstLine = true;
@@ -214,15 +251,24 @@ public interface DukeUI {
         }
     }
 
+    /**
+     * This method is used to print a report on the number of completed {@code Note} objects.
+     */
     static void printCompleted() {
         System.out.println("\tYou have completed " + Todo.getTasksCompleted() +
                 " task(s) and " + Event.getEventsCompleted() + " event(s)!");
     }
 
+    /**
+     * This method is used to print a divider to encase and organize textual user interfaces.
+     */
     static void printDivider() {
         System.out.println(DUKE_DIVIDER);
     }
 
+    /**
+     * This method is used to print a report on the number of outstanding {@code Note} objects.
+     */
     static void printOutstanding() {
         System.out.println("\tYou have...");
         System.out.print("\t\t");
@@ -235,11 +281,20 @@ public interface DukeUI {
         System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t...on your list.");
     }
 
+    /**
+     * This method is used to print the welcome message upon the startup of {@code Duke}.
+     *
+     * @param now The {@code Date} object reflecting the date and time {@code Duke} was started up.
+     * @param isLoadedFromFile True if {@code Note} objects were successfully read and reconstructed from saved files.
+     * @exception CommandException If there are errors reading from the set {@code DukeCommand} enums.
+     * @exception ParseException If there are errors reading from the set {@code Duke} enums.
+     */
     static void printOnStartup(Date now, boolean isLoadedFromFile) throws ParseException, CommandException {
         System.out.print("\nWelcome to PROJECT >>>\n" + DUKE_LOGO);
         System.out.printf("%1$-42s%2$42s%n", DATE_TODAY.format(now), DAY_TODAY.format(now));
         System.out.printf("%1$-42s%2$42s%n", ZodiacYear.getZodiacYear(now), SunSign.getSunSign(now));
-        System.out.println(String.format("%1$-42s%2$42s", LunarMonth.getLunarMonth(now), MercuryMovement.getMercuryMovement(now)) + "\n");
+        System.out.println(String.format("%1$-42s%2$42s", LunarMonth.getLunarMonth(now),
+                MercuryMovement.getMercuryMovement(now)) + "\n");
 
         try {
             Thread.sleep(3 * 1000);
@@ -264,25 +319,53 @@ public interface DukeUI {
         printDivider();
     }
 
+    /**
+     * This method is used to read and pass as a {@code String} object,
+     * the textual input provided by the user in verbatim.
+     *
+     * @return String The textual input provided by the user in verbatim.
+     */
     static String receiveCommand() {
         Scanner in = new Scanner(System.in);
         return in.nextLine();
     }
 
+    /**
+     * This method is used to print the full list of available (@code DukeCommand} object types,
+     * as well as the required formats to call these commands.
+     */
     static void showCommandList() {
         System.out.println(DUKE_COMMANDS);
     }
 
+    /**
+     * This method is used to print a statement suggesting the user to consult the command list
+     * for a full list of available (@code DukeCommand} object types.
+     *
+     * @exception CommandException If there are errors reading from the set {@code DukeCommand} enums.
+     */
     static void suggestCommands() throws CommandException {
         System.out.println("\tUse command " + CmdType.getCommand("COMMANDS").toString() +
                 " to see a list of things I can do for you.");
     }
 
+    /**
+     * This method is used to print a statement suggesting the user to consult the command list
+     * for a full list of the required formats to call on commands.
+     *
+     * @exception CommandException If there are errors reading from the set {@code DukeCommand} enums.
+     */
     static void suggestFormat() throws CommandException {
         System.out.println("\tUse command " + CmdType.getCommand("COMMANDS").toString() +
                 " to see the correct format for command attributes.");
     }
 
+    /**
+     * This method is used to print a statement suggesting the user to consult the notes list
+     * for a full list of the existing {@code Note} objects in memory.
+     *
+     * @exception CommandException If there are errors reading from the set {@code DukeCommand} enums.
+     */
     static void suggestListNotes() throws CommandException {
         System.out.println("\tEnter command " + CmdType.getCommand("LISTNOTES").toString() +
                 " to see them all.");

@@ -1,18 +1,48 @@
 package duke.parser;
 
-import duke.commands.*;
-import duke.notes.*;
+import duke.commands.CmdType;
+import duke.commands.CommandException;
+import duke.commands.DeleteCommand;
+import duke.commands.DukeCommand;
+import duke.commands.EditDateCommand;
+import duke.commands.EditDescriptionCommand;
+import duke.commands.ExitCommand;
+import duke.commands.ExtendDeadlineCommand;
+import duke.commands.InfoCommand;
+import duke.commands.ListCommand;
+import duke.commands.MarkDoneCommand;
+import duke.commands.NewNoteCommand;
+import duke.commands.SaveCommand;
+import duke.commands.TransferCommand;
+import duke.commands.UndoLastCommand;
+import duke.commands.WipeCommand;
+import duke.notes.NoteType;
 import duke.ui.DukeUI;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * An interface that extends the (@code DukeUI} interface.
+ * (@code DukeParser} makes sense of user inputs and creates the appropriate {@code DukeCommand} objects.
+ *
+ * @author tanqiuyu
+ * @since 2020-09-16
+ */
 public interface DukeParser extends DukeUI {
 
     //METHODS-------------------------------------------
+    /**
+     * This method is used to retrieve serial numbers of the {@code Task} object.
+     *
+     * @param input The textual input provided by the user in verbatim.
+     * @return DukeCommand The appropriate {@code DukeCommand} object created based on the user input.
+     * @exception CommandException If there are errors in the command input.
+     * @exception ParseException If there are errors reading from the user input.
+     */
     static DukeCommand readCommand(String input) throws CommandException, ParseException {
 
-        ArrayList<String> inputs = new ArrayList<String>();
+        ArrayList<String> inputs = new ArrayList<>();
         try {
 
             if (input.startsWith("#")) {
@@ -25,7 +55,8 @@ public interface DukeParser extends DukeUI {
                         if (inputTokens.length == 1) {
                             return new InfoCommand(cmdType);
                         } else {
-                            throw new CommandException("There seems to be invalid characters behind" + cmdType + ".");
+                            throw new CommandException("There seems to be invalid characters behind" +
+                                    cmdType + ".");
                         }
                     }
                     case "LISTBILLS", "LISTBIRTHDAYS", "LISTBUDGETS", "LISTDEADLINES", "LISTEVENTS",
@@ -33,19 +64,22 @@ public interface DukeParser extends DukeUI {
                         String noteFilter;
                         Date dateFilter;
                         if (inputTokens.length == 1) {
-                            throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
+                            throw new CommandException("There seems to be insufficient attributes behind " +
+                                    cmdType + ".");
                         } else {
                             String[] listTokens = inputTokens[1].split("/on");
                             noteFilter = listTokens[0].trim();
                             if(noteFilter.equals("O") || noteFilter.equals("C") || noteFilter.equals("A")){
                                 if(listTokens.length > 1) {
                                     dateFilter = INPUT_TIME.parse(listTokens[1].trim() + " 00:00");
-                                    return new ListCommand(cmdType, noteFilter, dateFilter, CmdType.getTimelineDays(cmdType));
+                                    return new ListCommand(cmdType, noteFilter, dateFilter,
+                                            CmdType.getTimelineDays(cmdType));
                                 } else {
                                     return new ListCommand(cmdType, noteFilter);
                                 }
                             } else {
-                                throw new CommandException("There seems to be an error with the Note Filter specified");
+                                throw new CommandException("There seems to be an error with the " +
+                                        "Note Filter specified");
                             }
                         }
                     }
@@ -53,20 +87,24 @@ public interface DukeParser extends DukeUI {
                         String noteFilter;
                         Date dateFilter = new Date();
                         if (inputTokens.length == 1) {
-                            throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
+                            throw new CommandException("There seems to be insufficient attributes behind " +
+                                    cmdType + ".");
                         } else {
                             noteFilter = inputTokens[1].trim();
                             if(noteFilter.equals("O") || noteFilter.equals("C") || noteFilter.equals("A")) {
-                                return new ListCommand(cmdType, noteFilter, dateFilter, CmdType.getTimelineDays(cmdType));
+                                return new ListCommand(cmdType, noteFilter, dateFilter,
+                                        CmdType.getTimelineDays(cmdType));
                             }else {
-                                throw new CommandException("There seems to be an error with the Note Filter specified");
+                                throw new CommandException("There seems to be an error with the " +
+                                        "Note Filter specified");
                             }
                         }
                     }
                     case "DELETE" -> {
-                        ArrayList<Integer> toDelete = new ArrayList<Integer>();
+                        ArrayList<Integer> toDelete = new ArrayList<>();
                         if (inputTokens.length == 1) {
-                            throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
+                            throw new CommandException("There seems to be insufficient attributes behind " +
+                                    cmdType + ".");
                         } else {
                             String[] deleteTokens = inputTokens[1].split("/and");
                             for (String deleteToken : deleteTokens) {
@@ -79,9 +117,10 @@ public interface DukeParser extends DukeUI {
                         int targetNote;
                         String dateToChange;
                         Date newDate;
-                        ArrayList<String> editDateInputs = new ArrayList<String>();
+                        ArrayList<String> editDateInputs = new ArrayList<>();
                         if (inputTokens.length == 1) {
-                            throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
+                            throw new CommandException("There seems to be insufficient attributes behind " +
+                                    cmdType + ".");
                         } else {
                             delimiters = new String[]{" ", "/to"};
                             for (String delimiter : delimiters) {
@@ -101,7 +140,8 @@ public interface DukeParser extends DukeUI {
                         int targetNote;
                         String newDescription;
                         if (inputTokens.length == 1) {
-                            throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
+                            throw new CommandException("There seems to be insufficient attributes behind " +
+                                    cmdType + ".");
                         } else {
                             String[] editTokens = inputTokens[1].split("/to", 2);
                             targetNote = Integer.parseInt(editTokens[0].trim());
@@ -113,19 +153,19 @@ public interface DukeParser extends DukeUI {
                         int targetNote;
                         long millisecondsToExtend = 0;
                         if (inputTokens.length == 1) {
-                            throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
+                            throw new CommandException("There seems to be insufficient attributes behind " +
+                                    cmdType + ".");
                         } else {
                             String[] editTokens = inputTokens[1].split("/by",2);
                             targetNote = Integer.parseInt(editTokens[0].trim());
                             for (String editToken : editTokens[1].trim().split(" ")) {
                                 int x = Integer.parseInt(editToken.substring(0, editToken.length() - 1));
                                 switch (editToken.trim().substring(editToken.length()-1)) {
-                                    case "d" -> { millisecondsToExtend = millisecondsToExtend + (x * 86400000); }
-                                    case "h" -> { millisecondsToExtend = millisecondsToExtend + (x * 3600000); }
-                                    case "m" -> { millisecondsToExtend = millisecondsToExtend + (x * 60000); }
-                                    default -> {
-                                        throw new CommandException("There seems to be invalid characters behind " + cmdType + ".");
-                                    }
+                                    case "d" -> millisecondsToExtend = millisecondsToExtend + (x * 86400000);
+                                    case "h" -> millisecondsToExtend = millisecondsToExtend + (x * 3600000);
+                                    case "m" -> millisecondsToExtend = millisecondsToExtend + (x * 60000);
+                                    default -> throw new CommandException("There seems to be invalid characters behind " +
+                                            cmdType + ".");
                                 }
                             }
                             return new ExtendDeadlineCommand(cmdType, targetNote, millisecondsToExtend);
@@ -135,13 +175,15 @@ public interface DukeParser extends DukeUI {
                         if (inputTokens.length == 1) {
                             return new ExitCommand(cmdType);
                         } else {
-                            throw new CommandException("There seems to be invalid characters behind " + cmdType + ".");
+                            throw new CommandException("There seems to be invalid characters behind " +
+                                    cmdType + ".");
                         }
                     }
                     case "MARKDONE" -> {
-                        ArrayList<Integer> toMarkDone = new ArrayList<Integer>();
+                        ArrayList<Integer> toMarkDone = new ArrayList<>();
                         if (inputTokens.length == 1) {
-                            throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
+                            throw new CommandException("There seems to be insufficient attributes behind " +
+                                    cmdType + ".");
                         } else {
                             String[] doneTokens = inputTokens[1].split("/and");
                             for (String doneToken : doneTokens) {
@@ -154,7 +196,8 @@ public interface DukeParser extends DukeUI {
                         if (inputTokens.length == 1) {
                             return new SaveCommand(cmdType);
                         } else {
-                            throw new CommandException("There seems to be invalid characters behind " + cmdType + ".");
+                            throw new CommandException("There seems to be invalid characters behind " +
+                                    cmdType + ".");
                         }
 
                     }
@@ -164,7 +207,8 @@ public interface DukeParser extends DukeUI {
                         double amount;
                         ArrayList<String> transferInputs = new ArrayList<>();
                         if (inputTokens.length == 1) {
-                            throw new CommandException("There seems to be insufficient attributes behind " + cmdType + ".");
+                            throw new CommandException("There seems to be insufficient attributes behind " +
+                                    cmdType + ".");
                         } else {
                             delimiters = new String[]{"/from", "/to", "/for \\$"};
                             for (String delimiter : delimiters) {
@@ -178,7 +222,8 @@ public interface DukeParser extends DukeUI {
                             to = Integer.parseInt(transferInputs.get(2));
                             amount = Double.parseDouble(transferInputs.get(3));
                             if (from == to){
-                                throw new CommandException("Transferring from and to the same account achieves nothing, at all.");
+                                throw new CommandException("Transferring from and to the same account " +
+                                        "achieves nothing, at all.");
                             }
                             return new TransferCommand(cmdType, from, to, amount);
                         }
@@ -187,49 +232,35 @@ public interface DukeParser extends DukeUI {
                         if (inputTokens.length == 1) {
                             return new UndoLastCommand(cmdType);
                         } else {
-                            throw new CommandException("There seems to be invalid characters behind " + cmdType + ".");
+                            throw new CommandException("There seems to be invalid characters behind " +
+                                    cmdType + ".");
                         }
                     }
                     case "WIPEDUKE" -> {
                         if (inputTokens.length == 1) {
                             return new WipeCommand(cmdType);
                         } else {
-                            throw new CommandException("There seems to be invalid characters behind " + cmdType + ".");
+                            throw new CommandException("There seems to be invalid characters behind " +
+                                    cmdType + ".");
                         }
                     }
-                    default -> {
-                        throw new CommandException("It seems to be an invalid Generic Command.");
-                    }
+                    default -> throw new CommandException("It seems to be an invalid Generic Command.");
                 }
 
             } else if (input.startsWith("@")) {
 
-                String[] delimiters = new String[]{};
+                String[] delimiters;
                 String[] inputTokens = input.split(" ", 2);
                 String noteType = inputTokens[0];
                 inputs.add(noteType);
                 switch (NoteType.getKey(noteType).toString()) {
-                    case "BILL" -> {
-                        delimiters = new String[]{"/by", "/for \\$"};
-                    }
-                    case "BIRTHDAY", "WEDDING" -> {
-                        delimiters = new String[]{"/from", "/to", "/for \\$"};
-                    }
-                    case "DEADLINE" -> {
-                        delimiters = new String[]{"/by"};
-                    }
-                    case "EVENT" -> {
-                        delimiters = new String[]{"/from", "/to"};
-                    }
-                    case "SHOPLIST" -> {
-                        delimiters = new String[]{"/for \\$"};
-                    }
-                    case "TODO" -> {
-                        delimiters = new String[]{};
-                    }
-                    default -> {
-                        throw new CommandException("It seems to be an invalid New Note Command.");
-                    }
+                    case "BILL" -> delimiters = new String[]{"/by", "/for \\$"};
+                    case "BIRTHDAY", "WEDDING" -> delimiters = new String[]{"/from", "/to", "/for \\$"};
+                    case "DEADLINE" -> delimiters = new String[]{"/by"};
+                    case "EVENT" -> delimiters = new String[]{"/from", "/to"};
+                    case "SHOPLIST" -> delimiters = new String[]{"/for \\$"};
+                    case "TODO" -> delimiters = new String[]{};
+                    default -> throw new CommandException("It seems to be an invalid New Note Command.");
                 }
                 for (String delimiter : delimiters) {
                     input = inputTokens[1];
