@@ -16,6 +16,7 @@ import java.util.List;
  * <ol>
  *     <li>List: Allows to list all the tasks inside TaskList</li>
  *     <li>Bye: Exits the Task Manager</li>
+ *     <li>Find: Find existing tasks from the TaskList through matching of the description</li>
  *     <li>Undo: Undo the last action including erase from History</li>
  *     <li>History: Prints out the history of actions taken</li>
  *     <li>Done: Marks a task as completed</li>
@@ -44,7 +45,7 @@ public class Parser {
         boolean change = false;
         if (input.trim().equalsIgnoreCase("bye"))         { TaskList.Bye();}
         else if (input.trim().equalsIgnoreCase("list"))   { TaskList.List();}
-        else if (input.toLowerCase().contains("find"))               { TaskList.Find(input.substring(5));}
+        else if (input.toLowerCase().contains("find"))               { TaskList.Find(input.trim().substring(5));}
         else if (input.toLowerCase().contains("done"))               { TaskList.Done(input); change = true;}
         else if (input.toLowerCase().contains("delete"))             { TaskList.Delete(input); change = true;}
         else if (input.toLowerCase().contains("todo"))               { TaskList.Todo(input); change = true;}

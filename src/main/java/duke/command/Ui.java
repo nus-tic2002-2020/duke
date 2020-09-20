@@ -23,7 +23,9 @@ public class Ui {
      */
 
     public static void main() throws DukeException, IOException {
-        System.out.println("Hello! I'm Duke\n" + "Let me load the existing data for you (if any)\n");
+        System.out.println("Hello! I'm Duke\n");
+        FilePath.main(); //Confirm current directory / file or choose a different directory / file.
+
         if (TaskList.UpdatedList().size() == 0) {
             System.out.println("No existing data is found");
         }
