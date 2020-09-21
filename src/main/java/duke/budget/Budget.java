@@ -156,6 +156,7 @@ public class Budget {
         totalBudgetSet = totalBudgetSet - this.budgetSet;
         totalBudgetUsed = totalBudgetUsed - this.budgetUsed;
         totalBudgetBalance = totalBudgetBalance - this.budgetBalance;
+        isTotalOverBudget = totalBudgetBalance < 0;
     }
 
 
@@ -263,5 +264,45 @@ public class Budget {
         } else {
             System.out.printf("%1$s%2$22s%n", "\t\t  a healthy budget balance of", budgetReport);
         }
+    }
+
+    /**
+     * This method returns the overall budget set
+     * across all {@code Budget} objects.
+     *
+     * @return double The overall budget set across all {@code Budget} objects.
+     */
+    public static double getTotalBudgetSet() {
+        return totalBudgetSet;
+    }
+
+    /**
+     * This method returns the overall budget utilised
+     * across all {@code Budget} objects.
+     *
+     * @return double The overall budget utilised across all {@code Budget} objects.
+     */
+    public static double getTotalBudgetUsed() {
+        return totalBudgetUsed;
+    }
+
+    /**
+     * This method returns the overall budget balance
+     * across all {@code Budget} objects.
+     *
+     * @return double The overall budget balance across all {@code Budget} objects.
+     */
+    public static double getTotalBudgetBalance() {
+        return totalBudgetBalance;
+    }
+
+    /**
+     * This method returns the budget utilisation status
+     * across all {@code Budget} objects.
+     *
+     * @return boolean True if the budget utilisation status is over-budget.
+     */
+    public static boolean isIsTotalOverBudget() {
+        return isTotalOverBudget;
     }
 }

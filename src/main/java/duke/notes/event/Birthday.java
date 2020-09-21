@@ -1,8 +1,6 @@
 package duke.notes.event;
 
-import duke.commands.CommandException;
 import duke.commands.DateException;
-import duke.notes.NoteType;
 import java.util.Date;
 
 /**

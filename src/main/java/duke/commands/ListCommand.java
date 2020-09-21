@@ -192,7 +192,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
             for (Task note: notes) {
                 note.printList();
             }
-            System.out.println("\n");
+            System.out.print("\n");
         }
     }
 
