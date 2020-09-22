@@ -17,13 +17,17 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
 
         Scanner in = new Scanner(System.in);
-        int exit = 0;
+        boolean exit = false;
 
         greet();
 
-        while(exit <= 0 && in.hasNextLine()) { // If exit code is 0, continue
+        while(!exit && in.hasNextLine()) { // If no error, continue
             String input = in.nextLine();
-            exit = call(input.trim());
+            try {
+                exit = call(input.trim());
+            } catch (DukeException e) {
+                // Do nothing
+            }
         }
     }
 
@@ -45,7 +49,7 @@ public class Duke {
         System.out.println("    ____________________________________________________________");
     }
 
-    public static int call(String input) {
+    public static boolean call(String input) throws DukeException {
         String[] args = input.split(" ");
         String text = "";
         if (args.length > 0 && !args[0].isBlank()) {
@@ -59,33 +63,55 @@ public class Duke {
                     break;
                 case "todo":
                     text = readInputParameter(args, null);
+                    if (text.isBlank()) {
+                        throw new DukeException("The description of a todo cannot be empty.",
+                                DukeException.DukeError.MISSING_ARGUMENT);
+                    }
                     addTask(new Todo(text));
                     break;
                 case "deadline":
                     text = readInputParameter(args, "/by");
+                    if (text.isBlank()) {
+                        throw new DukeException("The description of a todo cannot be empty.",
+                                DukeException.DukeError.MISSING_ARGUMENT);
+                    }
                     String by = readSlashParameter(args, "/by");
+                    if (by.isBlank()) {
+                        throw new DukeException("The argument for /by cannot be empty.",
+                                DukeException.DukeError.MISSING_ARGUMENT);
+                    }
                     addTask(new Deadline(text, by));
                     break;
                 case "event":
                     text = readInputParameter(args, "/at");
+                    if (text.isBlank()) {
+                        throw new DukeException("The description of an event cannot be empty.",
+                                DukeException.DukeError.MISSING_ARGUMENT);
+                    }
                     String at = readSlashParameter(args, "/at");
+                    if (at.isBlank()) {
+                        throw new DukeException("The argument for /by cannot be empty.",
+                                DukeException.DukeError.MISSING_ARGUMENT);
+                    }
                     addTask(new Event(text, at));
                     break;
                 case "bye":
                     bye();
-                    return 1;
+                    return true;
                 default:
-                    // Do nothing
+                    throw new DukeException("Sorli, but I dunno what that means :-(",
+                            DukeException.DukeError.UNKNOWN_COMMAND);
             }
         }
-        return 0;
+        return false;
     }
 
     private static String readInputParameter(String[] args, String until) {
         String value = "";
         int index = args.length;
         if (until != null && !until.isBlank()) {
-            index = indexOf(args, until);
+            int new_index = indexOf(args, until);
+            index = new_index >= 0 ? new_index : index; // If new_index is negative, revert to use args length
         }
         for(int i = 1; i < args.length && i < index; i++) { // add strings between command to until
             value +=  args[i] + " ";
@@ -93,9 +119,13 @@ public class Duke {
         return value.trim();
     }
 
-    private static String readSlashParameter(String[] args, String param) {
+    private static String readSlashParameter(String[] args, String param) throws DukeException {
         String value = "";
         int index = indexOf(args, param);
+        if (index < 0) {
+            throw new DukeException(String.format("Cannot find required %s in args. (index = %d)!", param, index),
+                    DukeException.DukeError.MISSING_ARGUMENT);
+        }
         for(int i = index+1; i < args.length; i++) { // add strings between slash to end of args
             value +=  args[i] + " ";
         }
@@ -140,14 +170,15 @@ public class Duke {
                 }
 
             } catch (NumberFormatException ex) {
-                // Do nothing
+                // Do nothing, skip number
             }
 
         }
         System.out.println("    ____________________________________________________________");
     }
 
-    public static void addTask(Task t) {
+    public static void addTask(Task t) throws DukeException {
+        boolean ok = true;
         System.out.println("    ____________________________________________________________");
         System.out.println("    Got it. I've added this task:");
         if (countTasks < MAX_TASKS) {
@@ -156,10 +187,15 @@ public class Duke {
             //echo("added: " + t);
             System.out.printf("      %s\n", t);
         } else {
-            errorTaskFull();
+            //errorTaskFull();
+            ok = false;
         }
         System.out.printf("    Now you have %d tasks in the list.\n", countTasks);
         System.out.println("    ____________________________________________________________");
+
+        if (!ok) {
+            throw new DukeException("Peiseh, my task list is full!", DukeException.DukeError.MEMORY_FULL);
+        }
     }
     public static void printTasks() {
         System.out.println("    ____________________________________________________________");
