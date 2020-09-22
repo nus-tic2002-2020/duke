@@ -1,5 +1,6 @@
 package duke.budget;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,13 @@ public class BudgetTest {
         budgetX = new Budget(1500.50);
         budgetY = new Budget(7500.25);
         budgetZ = new Budget(3725.75);
+    }
+
+    @AfterEach
+    void clear() {
+        if(budgetX !=null){ budgetX.deleteExistingBudget();}
+        if(budgetY !=null){ budgetY.deleteExistingBudget();}
+        if(budgetZ !=null){ budgetZ.deleteExistingBudget();}
     }
 
     @Test

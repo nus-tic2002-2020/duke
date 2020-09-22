@@ -58,6 +58,13 @@ public class ListCommand extends DukeCommand implements DukeUI {
         this.timelineDays = timelineDays;
     }
 
+    /**
+     * This method initialises a {@code ListCommand} object.
+     */
+    public ListCommand() {
+        super();
+    }
+
     //METHODS-------------------------------------------
     /**
      * This method sorts {@code Note} object based on their attached {@code Budget} object amounts.
@@ -65,12 +72,16 @@ public class ListCommand extends DukeCommand implements DukeUI {
      * @param budgets The {@code ArrayList} of {@code Note} objects with {@code Budget}
      *                objects attached that is to be sorted.
      */
-    private void selectionSortBudgets(ArrayList<Task> budgets) {
+    void selectionSortBudgets(ArrayList<Task> budgets) {
+
+        double budgetI;
+        double budgetJ;
 
         if(budgets.size()>1){
+            budgetI = budgets.get(budgets.size()-1).getBudgetObject().getBudgetRevised();
             for (int i=budgets.size()-1; i>0; i--) {
-                if (budgets.get(i).getBudgetObject().getBudgetRevised() <
-                        budgets.get(i-1).getBudgetObject().getBudgetRevised()) {
+                budgetJ = budgets.get(i-1).getBudgetObject().getBudgetRevised();
+                if (budgetI < budgetJ) {
                     Task temp = budgets.get(i);
                     budgets.set(i, budgets.get(i-1));
                     budgets.set(i-1, temp);
@@ -84,7 +95,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
      *
      * @param notes The {@code ArrayList} of {@code Note} objects with that is to be sorted.
      */
-    private void selectionSortDates(ArrayList<Task> notes)
+    void selectionSortDates(ArrayList<Task> notes)
             throws DateException {
 
         Date dateI = new Date();
@@ -103,15 +114,15 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 if(notes.get(i-1) instanceof Deadline) {
                     dateJ = ((Deadline) notes.get(i-1)).getTargetDate();
                 } else if (notes.get(i) instanceof Event) {
-                    dateJ = ((Event) notes.get(i)).getStartDate();
+                    dateJ = ((Event) notes.get(i-1)).getStartDate();
                 } else {
                     throw new DateException(dateJ, "NoDate");
                 }
 
                 if (dateI.before(dateJ)) {
                     Task temp = notes.get(i);
-                    notes.set(i, notes.get(i - 1));
-                    notes.set(i - 1, temp);
+                    notes.set(i, notes.get(i-1));
+                    notes.set(i-1, temp);
                 } else {
                     break;
                 }
