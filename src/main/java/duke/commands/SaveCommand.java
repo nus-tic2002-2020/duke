@@ -14,7 +14,7 @@ import java.io.IOException;
 public class SaveCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
-    private boolean autoSave = true;
+    private static boolean autoSave = true;
 
     //CONSTRUCTORS--------------------------------------
     /**
@@ -35,9 +35,19 @@ public class SaveCommand extends DukeCommand implements DukeUI {
     /**
      * This method toggles the auto-save feature in {@code Duke} between on and off.
      */
-    public void toggleAutoSave() {
+    public static void toggleAutoSave() {
 
-        this.autoSave = !this.autoSave;
+        autoSave = !autoSave;
+    }
+
+    /**
+     * This method returns the on-off status of the auto-save feature in {@code Duke}.
+     *
+     * @return boolean True if the on-off status of the auto-save feature in {@code Duke} is on.
+     */
+    public static boolean getAutoSave() {
+
+        return autoSave;
     }
 
     /**

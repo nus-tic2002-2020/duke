@@ -41,5 +41,3 @@ Event/40/clash test/14-Sep-2020 20:10/false/17-Sep-2020 02:30/17-Sep-2020 04:00/
 Event/41/clash test 2/14-Sep-2020 20:10/false/17-Sep-2020 02:45/17-Sep-2020 03:00/15
 Event/42/clash test/14-Sep-2020 20:17/false/19-Sep-2020 14:00/19-Sep-2020 14:55/55
 Shoplist/43/candies/19-Sep-2020 19:08/false/563.33/300.00000000000006/0.0/0.0/true/false
-Todo/44/read book/23-Sep-2020 03:57/false
-Todo/45/read report/23-Sep-2020 03:57/false

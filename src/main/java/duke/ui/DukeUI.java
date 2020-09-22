@@ -38,92 +38,143 @@ public interface DukeUI {
 
     //List of commands for Duke
     String DUKE_COMMANDS =
+                    "\n" +
                     "\t\t*** Generic Commands ***\n" +
-                    "\t\t#commands        >>> List all available Duke's commands.\n" +
-                    "\t\t\tE.g. #commands\n" +
-                    "\t\t#delete          >>> Delete notes, then renumber the rest.\n" +
-                    "\t\t\tE.g. #delete <Note#>\n" +
-                    "\t\t\tE.g. #delete <Note#> /and <Note#> /and <Note#> \n" +
-                    "\t\t#editdate        >>> Edit the dates of a note.\n" +
-                    "\t\t\tE.g. #editdate <Note#> <Date Type> /to <New Date-Time>\n" +
-                    "\t\t#editdesc        >>> Edit the description of a note.\n" +
-                    "\t\t\tE.g. #editdesc <Note#> /to <New Description>\n" +
-                    "\t\t#exitduke        >>> Exit Project Duke.\n" +
-                    "\t\t\tE.g. #exitduke\n" +
-                    "\t\t#extend          >>> Extend a deadline by days, hours and minutes.\n" +
-                    "\t\t\tE.g. #extend <Note#> /by <days>d <hours>h <minutes>m\n" +
-                    "\t\t#markdone        >>> Mark notes as done.\n" +
-                    "\t\t\tE.g. #markdone <Note#>\n" +
-                    "\t\t\tE.g. #markdone <Note#> /and <Note#> /and <Note#>\n" +
-                    "\t\t#savenotes       >>> Perform a new save while archiving the last.\n" +
-                    "\t\t\tE.g. #savenotes\n" +
-                    "\t\t#transfer        >>> Transfer budgets from one note to another.\n" +
-                    "\t\t\tE.g. #transfer /from <Note#> /to <Note#> /for <Budget/Price>\n" +
-                    "\t\t#wipeduke        >>> Wipe all of Duke's memories and files.\n" +
-                    "\t\t\tE.g. #wipeduke\n" +
+                    "\n" +
+                    "\t\t#autosave      / #ats >>> Toggle auto-save on or off.\n" +
+                    "\t\t#commands      / #cmd >>> List all available Duke's commands.\n" +
+                    "\t\t#exitduke      / #xit >>> Exit Project Duke.\n" +
+                    "\t\t#saveduke      / #sav >>> Save Notes to file and archive the last.\n" +
+                    "\t\t#undo          / #und >>> Undo the last save operation.\n" +
+                    "\t\t#wipeduke      / #wpe >>> Wipe all of Duke's memories and files.\n" +
                     "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
-                    "\n\n" +
+                    "\n\n\n" +
                     "\t\t*** New Note Creation ***\n" +
-                    "\t\t@bill      / @bl >>> Add a new todo task with a deadline.\n" +
-                    "\t\t\tE.g. @bill <Description> /by <Date-Time> /for <Budget/Price>\n" +
-                    "\t\t@birthday  / @bd >>> Add a new birthday event.\n" +
-                    "\t\t\tE.g. @birthday <Person> /from <Date-Time> /to <Date-Time>\n" +
-                    "\t\t\t\t/for <Budget/Price>\n" +
-                    "\t\t@deadline  / @dl >>> Add a new todo task with a deadline.\n" +
-                    "\t\t\tE.g. @deadline <Description> /by <Date-Time>\n" +
-                    "\t\t@event     / @ev >>> Add a new event.\n" +
-                    "\t\t\tE.g. @event <Description> /from <Date-Time> /to <Date-Time>\n" +
-                    "\t\t@shoplist  / @sl >>> Add a new shopping list item.\n" +
-                    "\t\t\tE.g. @shoplist <Description> /for <Budget/Price>\n" +
-                    "\t\t@todo      / @td >>> Add a new todo task without a deadline.\n" +
-                    "\t\t\tE.g. @todo <Description>\n" +
-                    "\t\t@wedding   / @wd >>> Add a new todo task without a deadline.\n" +
-                    "\t\t\tE.g. @wedding <Person>/from <Date-Time> /to <Date-Time>\n" +
-                    "\t\t\t\t/for <Budget/Price>\n" +
+                    "\n" +
+                    "\t\t\t  --------------------------------------------------------\n" +
+                    "\t\t\t  Attributes Available:\n" +
+                    "\t\t\t   Budget            \t-->\t/for $   <$X.xx>\n" +
+                    "\t\t\t   Description       \t-->\t         <Description>\n" +
+                    "\t\t\t   End Date-Time     \t-->\t/to      <dd-MMM-yyyy HH:mm>\n" +
+                    "\t\t\t   Start Date-Time   \t-->\t/from    <dd-MMM-yyyy HH:mm>\n" +
+                    "\t\t\t   Target Date-Time  \t-->\t/by      <dd-MMM-yyyy HH:mm>\n" +
+                    "\t\t\t  --------------------------------------------------------\n" +
+                    "\n" +
+                    "\t\t@bill          / @bl  >>> Add a new bill payment.\n" +
+                            "\t\t\t[\u2714] Required Attributes in Order of:\n" +
+                            "\t\t\t Description  \u23E9  Target Date-Time  \u23E9  Budget\n" +
+                    "\t\t@birthday      / @bd  >>> Add a new birthday event.\n" +
+                            "\t\t\t[\u2714] Required Attributes in Order of:\n" +
+                            "\t\t\t Description  \u23E9  Start Date-Time  \u23E9  End Date-Time  \u23E9  Budget\n" +
+                    "\t\t@deadline      / @dl  >>> Add a new todo task with a deadline.\n" +
+                            "\t\t\t[\u2714] Required Attributes in Order of:\n" +
+                            "\t\t\t Description  \u23E9  Target Date-Time\n" +
+                    "\t\t@event         / @ev  >>> Add a new event.\n" +
+                            "\t\t\t[\u2714] Required Attributes in Order of:\n" +
+                            "\t\t\t Description  \u23E9  Start Date-Time  \u23E9  End Date-Time\n" +
+                    "\t\t@shoplist      / @sl  >>> Add a new shopping list item.\n" +
+                            "\t\t\t[\u2714] Required Attributes in Order of:\n" +
+                            "\t\t\t Description  \u23E9  Budget\n" +
+                    "\t\t@todo          / @td  >>> Add a new todo task without a deadline.\n" +
+                            "\t\t\t[\u2714] Required Attributes in Order of:\n" +
+                            "\t\t\t Description\n" +
+                    "\t\t@wedding       / @wd  >>> Add a new wedding event.\n" +
+                            "\t\t\t[\u2714] Required Attributes in Order of:\n" +
+                            "\t\t\t Description  \u23E9  Start Date-Time  \u23E9  End Date-Time  \u23E9  Budget\n" +
                     "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
-                    "\n\n" +
+                    "\n\n\n" +
                     "\t\t*** Information Extraction ***\n" +
+                    "\n" +
                     "\t\t\t  --------------------------------------------------------\n" +
-                    "\t\t\t  Note-Filters:   O = Outstanding; C = Completed; A = All.\n" +
+                    "\t\t\t  Filters Available:\n" +
+                    "\t\t\t   Completion Status \t-->\t/nf      <O> or <C>\n" +
+                    "\t\t\t                     \t   \t          O for Outstanding\n" +
+                    "\t\t\t                     \t   \t          C for Completed\n" +
+                    "\t\t\t   Date              \t-->\t/on      <dd-MMM-yyyy>\n" +
+                    "\t\t\t   Description Text  \t-->\t/with    <Search Text>\n" +
                     "\t\t\t  --------------------------------------------------------\n" +
-                    "\t\t#listbills       >>> List in order of budget, bill payments.\n" +
-                    "\t\t\tE.g. #listbills <Note-Filter>\n" +
-                    "\t\t\tE.g. #listbills <Note-Filter> /on <Date>\n" +
-                    "\t\t#listbirthdays   >>> List in chronological order, birthdays.\n" +
-                    "\t\t\tE.g. #listbirthdays <Note-Filter>\n" +
-                    "\t\t\tE.g. #listbirthdays <Note-Filter> /on <Date>\n" +
-                    "\t\t#listbudgets     >>> List in order of quantum, budgets set.\n" +
-                    "\t\t\tE.g. #listbudgets <Note-Filter>\n" +
-                    "\t\t#listdeadlines   >>> List in chronological order, deadlines.\n" +
-                    "\t\t\tE.g. #listdeadlines <Note-Filter>\n" +
-                    "\t\t\tE.g. #listdeadlines <Note-Filter> /on <Date>\n" +
-                    "\t\t#listevents      >>> List in chronological order, events.\n" +
-                    "\t\t\tE.g. #listevents <Note-Filter>\n" +
-                    "\t\t\tE.g. #listevents <Note-Filter> /on <Date>\n" +
-                    "\t\t#listnotes       >>> List in serial number order, notes.\n" +
-                    "\t\t\tE.g. #listnotes <Note-Filter>\n" +
-                    "\t\t#listnxt24       >>> List deadlines and events in the next 24 hours.\n" +
-                    "\t\t\tE.g. #listnxt24 <Note-Filter>\n" +
-                    "\t\t#listnxt48       >>> List deadlines and events in the next 48 hours.\n" +
-                    "\t\t\tE.g. #listnxt48 <Note-Filter>\n" +
-                    "\t\t#listnxt72       >>> List deadlines and events in the next 72 hours.\n" +
-                    "\t\t\tE.g. #listnxt72 <Note-Filter>\n" +
-                    "\t\t#listshoplists   >>> List in order of budget, shopping list items.\n" +
-                    "\t\t\tE.g. #listshoplists <Note-Filter>\n" +
-                    "\t\t#listtodos       >>> List in serial number order, todo tasks.\n" +
-                    "\t\t\tE.g. #listtodos <Note-Filter>\n" +
-                    "\t\t#listweddings    >>> List in chronological order, weddings.\n" +
-                    "\t\t\tE.g. #listweddings <Note-Filter>\n" +
-                    "\t\t\tE.g. #listweddings <Note-Filter> /on <Date>\n" +
+                    "\t\t\t\t   \u2714 Required     \u271C Optional     \u2718 Not Available\n" +
+                    "\t\t\t  --------------------------------------------------------\n" +
+                    "\n" +
+                    "\t\t#listbills     / #lbp >>> List bill payments.\n" +
+                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
+                            "\t\t\t[\u271C] Description Text\n" +
+                    "\t\t#listbirthdays / #lbd >>> List birthdays.\n" +
+                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
+                            "\t\t\t[\u271C] Description Text\n" +
+                    "\t\t#listbudgets   / #lbg >>> List budgets set.\n" +
+                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
+                            "\t\t\t[\u271C] Description Text\n" +
+                    "\t\t#listdeadlines / #ldl >>> List deadlines.\n" +
+                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
+                            "\t\t\t[\u271C] Description Text\n" +
+                    "\t\t#listevents    / #lev >>> List events.\n" +
+                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
+                            "\t\t\t[\u271C] Description Text\n" +
+                    "\t\t#listnotes     / #lnt >>> List notes.\n" +
+                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
+                            "\t\t\t[\u271C] Description Text\n" +
+                    "\t\t#listnxt24     / #n24 >>> List deadlines & events in 24 hours.\n" +
+                            "\t\t\t[\u271C] Completion Status [\u2718] Date\n" +
+                            "\t\t\t[\u271C] Description Text\n" +
+                    "\t\t#listnxt48     / #n48 >>> List deadlines & events in 48 hours.\n" +
+                            "\t\t\t[\u271C] Completion Status [\u2718] Date\n" +
+                            "\t\t\t[\u271C] Description Text\n" +
+                    "\t\t#listnxt72     / #n72 >>> List deadlines & events in 72 hours.\n" +
+                            "\t\t\t[\u271C] Completion Status [\u2718] Date\n" +
+                            "\t\t\t[\u271C] Description Text\n" +
+                    "\t\t#listshoplists / #lsl >>> List shopping list items.\n" +
+                            "\t\t\t[\u271C] Completion Status [\u2718] Date\n" +
+                            "\t\t\t[\u271C] Description Text\n" +
+                    "\t\t#listtodos     / #ltd >>> List todo tasks.\n" +
+                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
+                            "\t\t\t[\u271C] Description Text\n" +
+                    "\t\t#listweddings  / #lwd >>> List weddings.\n" +
+                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
+                            "\t\t\t[\u271C] Description Text\n" +
                     "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
-                    "\n\n" +
-                    "\t\t*** Data Entry Formats ***\n" +
-                    "\t\tBudget/Price     >>> $X.xx\n" +
-                    "\t\tDate             >>> dd-MMM-yyyy\n" +
-                    "\t\tDate Type        >>> target, start or end\n" +
-                    "\t\tDate-Time        >>> dd-MMM-yyyy HH:mm\n" +
-                    "\t\tNote#            >>> x\n" +
-                    "\t\tNote-Filter      >>> O, C or A\n" +
+                    "\n\n\n" +
+                    "\t\t*** Existing Note Management ***\n" +
+                    "\n" +
+                    "\t\t#delete        / #del >>> Delete notes, then renumber the rest.\n" +
+                            "\t\t\t[\u2714] Required Attributes\n" +
+                            "\t\t\t Serial Number of Note        \t-->\t/n      <Note#>\n" +
+                            "\t\t\t[\u271C] Optional Attributes\n" +
+                            "\t\t\t Serial Number of Notes       \t-->\t/n      <Note#> & <Note#>\n" +
+                    "\t\t#editdesc      / #edd >>> Edit the description of a note.\n" +
+                            "\t\t\t[\u2714] Required Attributes\n" +
+                            "\t\t\t Serial Number of Note        \t-->\t/n      <Note#>\n" +
+                            "\t\t\t New Description              \t-->\t/to     <New Description>\n" +
+                    "\t\t#editend       / #ede >>> Edit the end date-time of an Event.\n" +
+                            "\t\t\t[\u2714] Required Attributes\n" +
+                            "\t\t\t Serial Number of Note        \t-->\t/n      <Note#>\n" +
+                            "\t\t\t New Event End Date-Time      \t-->\t/to     <dd-MMM-yyyy HH:mm>\n" +
+                    "\t\t#editstart     / #eds >>> Edit the start date-time of an Event.\n" +
+                            "\t\t\t[\u2714] Required Attributes\n" +
+                            "\t\t\t Serial Number of Note        \t-->\t/n      <Note#>\n" +
+                            "\t\t\t New Event Start Date-Time    \t-->\t/to     <dd-MMM-yyyy HH:mm>\n" +
+                    "\t\t#edittarget    / #edt >>> Edit the target date-time of a Deadline.\n" +
+                            "\t\t\t[\u2714] Required Attributes\n" +
+                            "\t\t\t Serial Number of Note        \t-->\t/n      <Note#>\n" +
+                            "\t\t\t New Deadline Target Date-Time\t-->\t/to     <dd-MMM-yyyy HH:mm>\n" +
+                    "\t\t#extend        / #xtd >>> Extend a deadline.\n" +
+                            "\t\t\t[\u2714] Required Attributes\n" +
+                            "\t\t\t Serial Number of Note        \t-->\t/n      <Note#>\n" +
+                            "\t\t\t Extend by at least one of the following:\n" +
+                            "\t\t\t   by Days                    \t-->\t/d      <Number of Days>\n" +
+                            "\t\t\t   by Hours                   \t-->\t/h      <Number of Hours>\n" +
+                            "\t\t\t   by Minutes                 \t-->\t/m      <Number of Minutes>\n" +
+                    "\t\t#markdone      / #mkd >>> Mark notes as done.\n" +
+                            "\t\t\t[\u2714] Required Attributes\n" +
+                            "\t\t\t Single Serial Number         \t-->\t/n      <Note#>\n" +
+                            "\t\t\t[\u271C] Optional Attributes\n" +
+                            "\t\t\t Multiple Serial Numbers      \t-->\t/n      <Note#> & <Note#>\n" +
+                    "\t\t#transfer      / #txf >>> Transfer budgets from one note to another.\n" +
+                            "\t\t\t[\u2714] Required Attributes\n" +
+                            "\t\t\t Serial Number of Note\n" +
+                            "\t\t\t   to Transfer Budget Out     \t-->\t/from   <Note#>\n" +
+                            "\t\t\t   to Transfer Budget In      \t-->\t/to     <Note#>\n" +
+                            "\t\t\t Budget Amount to Transfer    \t-->\t/for $  <X.xx>\n" +
                     "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
                     "\n";
 
@@ -247,6 +298,34 @@ public interface DukeUI {
                     System.out.println("\t\t\t\t\t" + input.substring(0, lastSpace));
                     input = input.substring(lastSpace + 1);
                 }
+            }
+        }
+    }
+
+    /**
+     * This method is used to print a {@code String} object wrapped within the standard width for {@code Duke}.
+     *
+     * @param input The (@code String} object to be printed.
+     */
+    static void standardWrap(String input) {
+
+        int limit = 76;
+        System.out.print("\t");
+        while(true) {
+
+            if (input.length() < limit) {
+                System.out.print(input);
+                System.out.print("\n");
+                break;
+            } else {
+                int lastSpace = 0;
+                for (int i = 0; i < limit; i++) {
+                    if (input.charAt(i) == ' ') {
+                        lastSpace = i;
+                    }
+                }
+                System.out.print(input.substring(0, lastSpace) + "\n\t");
+                input = input.substring(lastSpace+1);
             }
         }
     }

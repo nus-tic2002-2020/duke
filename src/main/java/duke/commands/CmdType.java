@@ -1,5 +1,6 @@
 package duke.commands;
 
+import duke.notes.Note;
 import duke.notes.NoteType;
 
 /**
@@ -10,26 +11,29 @@ import duke.notes.NoteType;
  */
 public enum CmdType {
 
+    AUTOSAVE("#autosave", "#ats", null, 0),
     COMMANDS("#commands", "#cmd", null, 0),
     DELETE("#delete", "#del", null, 0),
-    EDITDATE("#editdate", "#edt", null, 0),
-    EDITDESC("#editdesc", "#eds", null, 0),
+    EDITEND("#editend", "#ede", NoteType.EVENT, 0),
+    EDITSTART("#editstart", "#eds", NoteType.EVENT, 0),
+    EDITTARGET("#edittarget", "#edt", NoteType.DEADLINE, 0),
+    EDITDESC("#editdesc", "#edd", null, 0),
     EXITDUKE("#exitduke", "#xit", null, 0),
     EXTDLINE("#extend", "#xtd", null, 0),
     LISTBILLS("#listbills", "#lbp", NoteType.BILL, 1),
-    LISTBUDGETS("#listbudgets", "#lbg", NoteType.TASK, 1),
     LISTBIRTHDAYS("#listbirthdays", "#lbd", NoteType.BIRTHDAY, 1),
+    LISTBUDGETS("#listbudgets", "#lbg", NoteType.TASK, 1),
     LISTDEADLINES("#listdeadlines", "#ldl", NoteType.DEADLINE, 1),
     LISTEVENTS("#listevents", "#lev", NoteType.EVENT, 1),
     LISTSHOPLISTS("#listshoplists", "#lsl", NoteType.SHOPLIST, 0),
     LISTTODOS("#listtodos", "#ltd", NoteType.TODO, 1),
     LISTWEDDINGS("#listweddings", "#lwd", NoteType.WEDDING, 1),
-    LISTNOTES("#listnotes", "#lnt", NoteType.TASK, 0),
+    LISTNOTES("#listnotes", "#lnt", NoteType.TASK, 1),
     LISTNXT24("#listnxt24", "#n24", NoteType.TASK, 1),
     LISTNXT48("#listnxt48", "#n48", NoteType.TASK, 2),
     LISTNXT72("#listnxt72", "#n72", NoteType.TASK, 3),
     MARKDONE("#markdone", "#mkd", null, 0),
-    SAVENOTES("#savenotes", "#sav", null, 0),
+    SAVEDUKE("#saveduke", "#sav", null, 0),
     TRANSFER("#transfer", "#txf", null, 0),
     UNDOLAST("#undo", "#und", null, 0),
     WIPEDUKE("#wipeduke", "#wpe", null, 0);

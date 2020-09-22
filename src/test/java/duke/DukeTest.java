@@ -188,7 +188,7 @@ public class DukeTest {
 
     @Test
     void printNotesTest() throws CommandException, ParseException, DateException, IOException {
-        DukeCommand testPrint = new ListCommand("LISTNOTES", "A");
+        DukeCommand testPrint = new ListCommand("LISTNOTES");
         testPrint.execute(testNotes, testStorage);
     }
 

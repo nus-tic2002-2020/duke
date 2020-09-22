@@ -25,7 +25,7 @@ public enum NoteType {
     WEDDING("Wedding", "@wedding", "@wd","[WD]",
             "wedding", "weddings", "happening on"),
     TASK("Task", "N.A.", "N.A.", "N.A.",
-            "task", "tasks", "N.A.");
+            "task", "tasks", "on");
 
     private final String constructor;
     private final String command;

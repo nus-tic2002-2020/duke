@@ -1,21 +1,6 @@
 package duke.parser;
 
-import duke.commands.CmdType;
-import duke.commands.CommandException;
-import duke.commands.DeleteCommand;
-import duke.commands.DukeCommand;
-import duke.commands.EditDateCommand;
-import duke.commands.EditDescriptionCommand;
-import duke.commands.ExitCommand;
-import duke.commands.ExtendDeadlineCommand;
-import duke.commands.InfoCommand;
-import duke.commands.ListCommand;
-import duke.commands.MarkDoneCommand;
-import duke.commands.NewNoteCommand;
-import duke.commands.SaveCommand;
-import duke.commands.TransferCommand;
-import duke.commands.UndoLastCommand;
-import duke.commands.WipeCommand;
+import duke.commands.*;
 import duke.notes.NoteType;
 import duke.ui.DukeUI;
 import java.text.ParseException;
@@ -51,6 +36,14 @@ public interface DukeParser extends DukeUI {
                 String cmdType = inputTokens[0];
                 String[] delimiters;
                 switch (CmdType.getKey(cmdType).toString()) {
+                    case "AUTOSAVE" -> {
+                        if (inputTokens.length == 1) {
+                            return new AutoSaveToggleCommand(cmdType);
+                        } else {
+                            throw new CommandException("There seems to be invalid characters behind" +
+                                    cmdType + ".");
+                        }
+                    }
                     case "COMMANDS" -> {
                         if (inputTokens.length == 1) {
                             return new InfoCommand(cmdType);
@@ -61,43 +54,82 @@ public interface DukeParser extends DukeUI {
                     }
                     case "LISTBILLS", "LISTBIRTHDAYS", "LISTBUDGETS", "LISTDEADLINES", "LISTEVENTS",
                             "LISTSHOPLISTS", "LISTTODOS", "LISTWEDDINGS", "LISTNOTES" -> {
-                        String noteFilter;
-                        Date dateFilter;
+                        String noteFilter = null;
+                        String textFilter = null;
+                        Date dateFilter = null;
                         if (inputTokens.length == 1) {
-                            throw new CommandException("There seems to be insufficient attributes behind " +
-                                    cmdType + ".");
+                            return new ListCommand(cmdType);
                         } else {
-                            String[] listTokens = inputTokens[1].split("/on");
-                            noteFilter = listTokens[0].trim();
-                            if(noteFilter.equals("O") || noteFilter.equals("C") || noteFilter.equals("A")){
-                                if(listTokens.length > 1) {
-                                    dateFilter = INPUT_TIME.parse(listTokens[1].trim() + " 00:00");
-                                    return new ListCommand(cmdType, noteFilter, dateFilter,
-                                            CmdType.getTimelineDays(cmdType));
-                                } else {
-                                    return new ListCommand(cmdType, noteFilter);
+                            if(input.contains("/nf")){
+                                String[] listTokens = input.split("/nf", 2);
+                                listTokens = listTokens[1].trim().split("/", 2);
+                                noteFilter = listTokens[0].trim().toUpperCase();
+                                if(!noteFilter.equals("O") && !noteFilter.equals("C")){
+                                    throw new CommandException("There seems to be an error with the " +
+                                            "Note Filter specified.");
                                 }
-                            } else {
-                                throw new CommandException("There seems to be an error with the " +
-                                        "Note Filter specified");
                             }
+
+                            if(input.contains("/with")) {
+                                String[] listTokens = input.split("/with", 2);
+                                listTokens = listTokens[1].trim().split("/", 2);
+                                textFilter = (listTokens[0].trim());
+                            }
+
+                            if(input.contains("/on")) {
+                                if(CmdType.getCommand(cmdType).equals("#shoplist")) {
+                                    throw new CommandException("Date filters are incompatible with " +
+                                            cmdType + ".");
+                                }
+                                String[] listTokens = input.split("/on", 2);
+                                listTokens = listTokens[1].trim().split("/", 2);
+                                dateFilter = INPUT_TIME.parse(listTokens[0].trim() + " 00:00");
+                            }
+
+                            if(dateFilter == null && textFilter == null && noteFilter == null) {
+                                throw new CommandException("There seems to be invalid characters behind" +
+                                        cmdType + ".");
+                            }
+
+                            return new ListCommand(cmdType, noteFilter, textFilter, dateFilter,
+                                    CmdType.getTimelineDays(cmdType));
                         }
                     }
                     case "LISTNXT24", "LISTNXT48", "LISTNXT72" -> {
-                        String noteFilter;
+                        String noteFilter = null;;
+                        String textFilter = null;
                         Date dateFilter = new Date();
                         if (inputTokens.length == 1) {
-                            throw new CommandException("There seems to be insufficient attributes behind " +
-                                    cmdType + ".");
+                            return new ListCommand(cmdType, dateFilter, CmdType.getTimelineDays(cmdType));
                         } else {
-                            noteFilter = inputTokens[1].trim();
-                            if(noteFilter.equals("O") || noteFilter.equals("C") || noteFilter.equals("A")) {
-                                return new ListCommand(cmdType, noteFilter, dateFilter,
-                                        CmdType.getTimelineDays(cmdType));
-                            }else {
-                                throw new CommandException("There seems to be an error with the " +
-                                        "Note Filter specified");
+                            if(input.contains("/nf")){
+                                String[] listTokens = input.split("/nf", 2);
+                                listTokens = listTokens[1].trim().split("/", 2);
+                                noteFilter = listTokens[0].trim().toUpperCase();
+                                if(!noteFilter.equals("O") && !noteFilter.equals("C")){
+                                    throw new CommandException("There seems to be an error with the " +
+                                            "Note Filter specified.");
+                                }
                             }
+
+                            if(input.contains("/with")) {
+                                String[] listTokens = input.split("/with", 2);
+                                listTokens = listTokens[1].trim().split("/", 2);
+                                textFilter = (listTokens[0].trim());
+                            }
+
+                            if(input.contains("/on")) {
+                                throw new CommandException("Date filters are incompatible with " +
+                                        cmdType + ".");
+                            }
+
+                            if(textFilter == null && noteFilter == null) {
+                                throw new CommandException("There seems to be invalid characters behind" +
+                                        cmdType + ".");
+                            }
+
+                            return new ListCommand(cmdType, noteFilter, textFilter, dateFilter,
+                                    CmdType.getTimelineDays(cmdType));
                         }
                     }
                     case "DELETE" -> {
@@ -106,33 +138,98 @@ public interface DukeParser extends DukeUI {
                             throw new CommandException("There seems to be insufficient attributes behind " +
                                     cmdType + ".");
                         } else {
-                            String[] deleteTokens = inputTokens[1].split("/and");
-                            for (String deleteToken : deleteTokens) {
-                                toDelete.add(Integer.parseInt(deleteToken.trim()));
+                            if (input.contains("/n")) {
+                                String[] deleteTokens = input.split("/n", 2);
+                                deleteTokens = deleteTokens[1].trim().split("/", 2);
+                                deleteTokens = deleteTokens[0].trim().split("&");
+                                for (String deleteToken : deleteTokens) {
+                                    toDelete.add(Integer.parseInt(deleteToken.trim()));
+                                }
+                            } else {
+                                throw new CommandException("The Note to delete was not specified.");
                             }
+
                             return new DeleteCommand(cmdType, toDelete);
                         }
                     }
-                    case "EDITDATE" -> {
+                    case "EDITEND" -> {
                         int targetNote;
-                        String dateToChange;
+                        String dateToChange = "end";
                         Date newDate;
-                        ArrayList<String> editDateInputs = new ArrayList<>();
                         if (inputTokens.length == 1) {
                             throw new CommandException("There seems to be insufficient attributes behind " +
                                     cmdType + ".");
                         } else {
-                            delimiters = new String[]{" ", "/to"};
-                            for (String delimiter : delimiters) {
-                                input = inputTokens[1];
-                                inputTokens = input.split(delimiter, 2);
-                                editDateInputs.add(inputTokens[0].trim());
+                            if (input.contains("/n")) {
+                                String[] editTokens = input.split("/n", 2);
+                                editTokens = editTokens[1].trim().split("/", 2);
+                                targetNote = Integer.parseInt(editTokens[0].trim());
+                            } else {
+                                throw new CommandException("The Note to edit was not specified.");
                             }
-                            editDateInputs.add(inputTokens[1].trim());
 
-                            targetNote = Integer.parseInt(editDateInputs.get(0));
-                            dateToChange = editDateInputs.get(1);
-                            newDate = INPUT_TIME.parse(editDateInputs.get(2));
+                            if (input.contains("/to")) {
+                                String[] listTokens = input.split("/to", 2);
+                                listTokens = listTokens[1].trim().split("/", 2);
+                                newDate = INPUT_TIME.parse(listTokens[0].trim());
+                            } else {
+                                throw new CommandException("The new Event end date-time was not specified.");
+                            }
+
+                            return new EditDateCommand(cmdType, targetNote, dateToChange, newDate);
+                        }
+                    }
+                    case "EDITSTART" -> {
+                        int targetNote;
+                        String dateToChange = "start";
+                        Date newDate;
+                        if (inputTokens.length == 1) {
+                            throw new CommandException("There seems to be insufficient attributes behind " +
+                                    cmdType + ".");
+                        } else {
+                            if (input.contains("/n")) {
+                                String[] editTokens = input.split("/n", 2);
+                                editTokens = editTokens[1].trim().split("/", 2);
+                                targetNote = Integer.parseInt(editTokens[0].trim());
+                            } else {
+                                throw new CommandException("The Note to edit was not specified.");
+                            }
+
+                            if (input.contains("/to")) {
+                                String[] listTokens = input.split("/to", 2);
+                                listTokens = listTokens[1].trim().split("/", 2);
+                                newDate = INPUT_TIME.parse(listTokens[0].trim());
+                            } else {
+                                throw new CommandException("The new Event start date-time was not specified.");
+                            }
+
+                            return new EditDateCommand(cmdType, targetNote, dateToChange, newDate);
+                        }
+                    }
+                    case "EDITTARGET" -> {
+                        int targetNote;
+                        String dateToChange = "target";
+                        Date newDate;
+                        if (inputTokens.length == 1) {
+                            throw new CommandException("There seems to be insufficient attributes behind " +
+                                    cmdType + ".");
+                        } else {
+                            if (input.contains("/n")) {
+                                String[] editTokens = input.split("/n", 2);
+                                editTokens = editTokens[1].trim().split("/", 2);
+                                targetNote = Integer.parseInt(editTokens[0].trim());
+                            } else {
+                                throw new CommandException("The Note to edit was not specified.");
+                            }
+
+                            if (input.contains("/to")) {
+                                String[] listTokens = input.split("/to", 2);
+                                listTokens = listTokens[1].trim().split("/", 2);
+                                newDate = INPUT_TIME.parse(listTokens[0].trim());
+                            } else {
+                                throw new CommandException("The new Deadline target date-time was not specified.");
+                            }
+
                             return new EditDateCommand(cmdType, targetNote, dateToChange, newDate);
                         }
                     }
@@ -143,32 +240,63 @@ public interface DukeParser extends DukeUI {
                             throw new CommandException("There seems to be insufficient attributes behind " +
                                     cmdType + ".");
                         } else {
-                            String[] editTokens = inputTokens[1].split("/to", 2);
-                            targetNote = Integer.parseInt(editTokens[0].trim());
-                            newDescription = editTokens[1].trim();
+                            if (input.contains("/n")) {
+                                String[] editTokens = input.split("/n", 2);
+                                editTokens = editTokens[1].trim().split("/", 2);
+                                targetNote = Integer.parseInt(editTokens[0].trim());
+                            } else {
+                                throw new CommandException("The Note to edit was not specified.");
+                            }
+
+                            if (input.contains("/to")) {
+                                String[] editTokens = input.split("/to", 2);
+                                editTokens = editTokens[1].trim().split("/", 2);
+                                newDescription = editTokens[0].trim();
+                            } else {
+                                throw new CommandException("The new description was not specified.");
+                            }
+
                             return new EditDescriptionCommand(cmdType, targetNote, newDescription);
                         }
                     }
                     case "EXTDLINE" -> {
                         int targetNote;
-                        long millisecondsToExtend = 0;
+                        long milliSecToExtend = 0;
                         if (inputTokens.length == 1) {
                             throw new CommandException("There seems to be insufficient attributes behind " +
                                     cmdType + ".");
                         } else {
-                            String[] editTokens = inputTokens[1].split("/by",2);
-                            targetNote = Integer.parseInt(editTokens[0].trim());
-                            for (String editToken : editTokens[1].trim().split(" ")) {
-                                int x = Integer.parseInt(editToken.substring(0, editToken.length() - 1));
-                                switch (editToken.trim().substring(editToken.length()-1)) {
-                                    case "d" -> millisecondsToExtend = millisecondsToExtend + (x * 86400000);
-                                    case "h" -> millisecondsToExtend = millisecondsToExtend + (x * 3600000);
-                                    case "m" -> millisecondsToExtend = millisecondsToExtend + (x * 60000);
-                                    default -> throw new CommandException("There seems to be invalid characters behind " +
-                                            cmdType + ".");
-                                }
+                            if (input.contains("/n")) {
+                                String[] editTokens = input.split("/n", 2);
+                                editTokens = editTokens[1].trim().split("/", 2);
+                                targetNote = Integer.parseInt(editTokens[0].trim());
+                            } else {
+                                throw new CommandException("The Deadline to extend was not specified.");
                             }
-                            return new ExtendDeadlineCommand(cmdType, targetNote, millisecondsToExtend);
+
+                            if (input.contains("/d")) {
+                                String[] editTokens = input.split("/d", 2);
+                                editTokens = editTokens[1].trim().split("/", 2);
+                                milliSecToExtend = milliSecToExtend + (Integer.parseInt(editTokens[0].trim())*86400000);
+                            }
+
+                            if (input.contains("/h")) {
+                                String[] editTokens = input.split("/h", 2);
+                                editTokens = editTokens[1].trim().split("/", 2);
+                                milliSecToExtend = milliSecToExtend + (Integer.parseInt(editTokens[0].trim())*3600000);
+                            }
+
+                            if (input.contains("/m")) {
+                                String[] editTokens = input.split("/m", 2);
+                                editTokens = editTokens[1].trim().split("/", 2);
+                                milliSecToExtend = milliSecToExtend + (Integer.parseInt(editTokens[0].trim())*60000);
+                            }
+
+                            if(milliSecToExtend == 0) {
+                                throw new CommandException("The duration to extend the Deadline was not specified.");
+                            }
+
+                            return new ExtendDeadlineCommand(cmdType, targetNote, milliSecToExtend);
                         }
                     }
                     case "EXITDUKE" -> {
@@ -192,7 +320,7 @@ public interface DukeParser extends DukeUI {
                             return new MarkDoneCommand(cmdType, toMarkDone);
                         }
                     }
-                    case "SAVENOTES" -> {
+                    case "SAVEDUKE" -> {
                         if (inputTokens.length == 1) {
                             return new SaveCommand(cmdType);
                         } else {
@@ -210,21 +338,30 @@ public interface DukeParser extends DukeUI {
                             throw new CommandException("There seems to be insufficient attributes behind " +
                                     cmdType + ".");
                         } else {
-                            delimiters = new String[]{"/from", "/to", "/for \\$"};
-                            for (String delimiter : delimiters) {
-                                input = inputTokens[1];
-                                inputTokens = input.split(delimiter, 2);
-                                transferInputs.add(inputTokens[0].trim());
+                            if (input.contains("/from")) {
+                                String[] transferTokens = input.split("/from", 2);
+                                transferTokens = transferTokens[1].trim().split("/", 2);
+                                from = Integer.parseInt(transferTokens[0].trim());
+                            } else {
+                                throw new CommandException("The Note whose Budget to transfer from was not specified.");
                             }
-                            transferInputs.add(inputTokens[1].trim());
 
-                            from = Integer.parseInt(transferInputs.get(1));
-                            to = Integer.parseInt(transferInputs.get(2));
-                            amount = Double.parseDouble(transferInputs.get(3));
-                            if (from == to){
-                                throw new CommandException("Transferring from and to the same account " +
-                                        "achieves nothing, at all.");
+                            if (input.contains("/to")) {
+                                String[] transferTokens = input.split("/to", 2);
+                                transferTokens = transferTokens[1].trim().split("/", 2);
+                                to = Integer.parseInt(transferTokens[0].trim());
+                            } else {
+                                throw new CommandException("The Note whose Budget to transfer to was not specified.");
                             }
+
+                            if (input.contains("/for $")) {
+                                String[] transferTokens = input.split("/for \\$", 2);
+                                transferTokens = transferTokens[1].trim().split("/", 2);
+                                amount = Double.parseDouble(transferTokens[0].trim());
+                            } else {
+                                throw new CommandException("The Budget amount to transfer was not specified.");
+                            }
+
                             return new TransferCommand(cmdType, from, to, amount);
                         }
                     }

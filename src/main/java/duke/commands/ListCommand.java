@@ -25,7 +25,8 @@ public class ListCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
     private NoteType noteType;
-    private String noteFilter;
+    private String noteFilter = null;
+    private String textFilter = null;
     private Date dateFilter = null;
     private int timelineDays = 0;
 
@@ -34,12 +35,27 @@ public class ListCommand extends DukeCommand implements DukeUI {
      * This method constructs a {@code ListCommand} object.
      *
      * @param cmdType The type of {@code DukeCommand} being constructed.
-     * @param noteFilter The selection to filter {@code Note} objects based on their completion statuses.
+     * @exception CommandException If there are errors in the command input.
      */
-    public ListCommand(String cmdType, String noteFilter) throws CommandException {
+    public ListCommand(String cmdType) throws CommandException {
         super(cmdType);
         this.noteType = CmdType.getNoteType(cmdType);
-        this.noteFilter = noteFilter;
+    }
+
+    /**
+     * This method constructs a {@code ListCommand} object.
+     *
+     * @param cmdType The type of {@code DukeCommand} being constructed.
+     * @param dateFilter The date specified for {@code Note} objects to be displayed.
+     * @param timelineDays The window based on number of days for {@code Note} objects to be displayed.
+     * @exception CommandException If there are errors in the command input.
+     */
+    public ListCommand(String cmdType, Date dateFilter, int timelineDays)
+            throws CommandException {
+        super(cmdType);
+        this.noteType = CmdType.getNoteType(cmdType);
+        this.dateFilter = dateFilter;
+        this.timelineDays = timelineDays;
     }
 
     /**
@@ -47,13 +63,17 @@ public class ListCommand extends DukeCommand implements DukeUI {
      *
      * @param cmdType The type of {@code DukeCommand} being constructed.
      * @param noteFilter The selection to filter {@code Note} objects based on their completion statuses.
+     * @param textFilter The description text specified for {@code Note} objects to be displayed.
      * @param dateFilter The date specified for {@code Note} objects to be displayed.
      * @param timelineDays The window based on number of days for {@code Note} objects to be displayed.
+     * @exception CommandException If there are errors in the command input.
      */
-    public ListCommand(String cmdType, String noteFilter, Date dateFilter, int timelineDays) throws CommandException {
+    public ListCommand(String cmdType, String noteFilter, String textFilter, Date dateFilter, int timelineDays)
+            throws CommandException {
         super(cmdType);
         this.noteType = CmdType.getNoteType(cmdType);
         this.noteFilter = noteFilter;
+        this.textFilter = textFilter;
         this.dateFilter = dateFilter;
         this.timelineDays = timelineDays;
     }
@@ -164,12 +184,30 @@ public class ListCommand extends DukeCommand implements DukeUI {
      */
     private boolean filterByStatus(Task note) {
 
-        return switch (this.noteFilter) {
-            case "O" -> !note.getIsDone();
-            case "C" -> note.getIsDone();
-            case "A" -> true;
-            default -> false;
-        };
+        if(this.noteFilter == null) {
+            return true;
+        } else {
+            return switch (this.noteFilter) {
+                case "O" -> !note.getIsDone();
+                case "C" -> note.getIsDone();
+                default -> false;
+            };
+        }
+    }
+
+    /**
+     * This method assesses and filters {@code Note} objects based on their text descriptions.
+     *
+     * @param note The {@code Note} object that is to be assessed.
+     * @return boolean True if the {@code Note} object fulfils the criteria and is to be included.
+     */
+    private boolean filterByText(Task note) {
+
+        if(this.textFilter == null) {
+            return true;
+        } else {
+            return note.getDescription().contains(textFilter);
+        }
     }
 
     /**
@@ -182,22 +220,35 @@ public class ListCommand extends DukeCommand implements DukeUI {
 
         String noteName = NoteType.getLowercaseNamePlural(this.noteType.toString());
         String noteVerb = NoteType.getVerb(this.noteType.toString());
+
         if(notes.size() == 0) {
-            if(this.dateFilter == null) {
-                switch (this.noteFilter) {
-                    case "O" -> System.out.print("\tYou have no outstanding ");
-                    case "C" -> System.out.print("\tYou have no completed ");
-                    case "A" -> System.out.print("\tYou haven't asked me to take note of any ");
-                }
-                System.out.println(noteName + ".");
-            } else {
-                switch (this.noteFilter) {
-                    case "O" -> System.out.print("\tYou have no outstanding ");
-                    case "C" -> System.out.print("\tYou have no completed ");
-                    case "A" -> System.out.print("\tYou have no ");
-                }
-                System.out.println(noteName + " " + noteVerb + " " + TASK_DATE.format(this.dateFilter) + ".");
+
+            String noteReport = "";
+            if(this.noteFilter == null) {
+                noteReport = "You haven't asked me to take note of any " + noteName;
+            } else if(this.noteFilter.equals("O")) {
+                noteReport = "You have no outstanding " + noteName;
+            } else if(this.noteFilter.equals("C")) {
+                noteReport = "You have no completed " + noteName;
             }
+
+            String textReport = "";
+            if(this.textFilter != null) {
+                textReport = " with the words \"" + this.textFilter + "\" in its description";
+            }
+
+            String dateReport = "";
+            if(this.dateFilter != null) {
+                dateReport = switch (CmdType.getKey(cmdType).toString()) {
+                    case "LISTNXT24" -> " in the next 24 hours";
+                    case "LISTNXT48" -> " in the next 48 hours";
+                    case "LISTNXT72" -> " in the next 72 hours";
+                    default -> " " + noteVerb + " " + TASK_DATE.format(this.dateFilter);
+                };
+            }
+
+            DukeUI.standardWrap(noteReport + textReport + dateReport + ".");
+
         } else {
             System.out.println("\tHere are the " + noteName + " you told me to note:-");
             for (Task note: notes) {
@@ -221,56 +272,60 @@ public class ListCommand extends DukeCommand implements DukeUI {
 
         for(Task note : dukeNotes.getNotes()) {
             if(filterByStatus(note)) {
-                if(filterByDate(note)) {
-                    if(CmdType.getKey(this.cmdType).toString().equals("LISTBUDGETS")) {
-                        if(note.getBudgetObject() != null){
-                            notes.add(note);
-                            selectionSortBudgets(notes);
-                        }
-                    } else {
-                        switch (NoteType.getConstructor(this.noteType.toString())) {
-                            case "Bill" -> {
-                                if (note instanceof Bill) {
+                if(filterByText(note)) {
+                    if (filterByDate(note)) {
+                        if (CmdType.getKey(this.cmdType).toString().equals("LISTBUDGETS")) {
+                            if (note.getBudgetObject() != null) {
+                                notes.add(note);
+                                selectionSortBudgets(notes);
+                            }
+                        } else {
+                            switch (NoteType.getConstructor(this.noteType.toString())) {
+                                case "Bill" -> {
+                                    if (note instanceof Bill) {
+                                        notes.add(note);
+                                        selectionSortDates(notes);
+                                    }
+                                }
+                                case "Birthday" -> {
+                                    if (note instanceof Birthday) {
+                                        notes.add(note);
+                                        selectionSortDates(notes);
+                                    }
+                                }
+                                case "Deadline" -> {
+                                    if (note instanceof Deadline) {
+                                        notes.add(note);
+                                        selectionSortDates(notes);
+                                    }
+                                }
+                                case "Event" -> {
+                                    if (note instanceof Event) {
+                                        notes.add(note);
+                                        selectionSortDates(notes);
+                                    }
+                                }
+                                case "Shoplist" -> {
+                                    if (note instanceof Shoplist) {
+                                        notes.add(note);
+                                        selectionSortBudgets(notes);
+                                    }
+                                }
+                                case "Todo" -> {
+                                    if (note instanceof Todo) {
+                                        notes.add(note);
+                                    }
+                                }
+                                case "Wedding" -> {
+                                    if (note instanceof Wedding) {
+                                        notes.add(note);
+                                        selectionSortDates(notes);
+                                    }
+                                }
+                                case "Task" -> {
                                     notes.add(note);
-                                    selectionSortDates(notes);
                                 }
                             }
-                            case "Birthday" -> {
-                                if (note instanceof Birthday) {
-                                    notes.add(note);
-                                    selectionSortDates(notes);
-                                }
-                            }
-                            case "Deadline" -> {
-                                if (note instanceof Deadline) {
-                                    notes.add(note);
-                                    selectionSortDates(notes);
-                                }
-                            }
-                            case "Event" -> {
-                                if (note instanceof Event) {
-                                    notes.add(note);
-                                    selectionSortDates(notes);
-                                }
-                            }
-                            case "Shoplist" -> {
-                                if (note instanceof Shoplist) {
-                                    notes.add(note);
-                                    selectionSortBudgets(notes);
-                                }
-                            }
-                            case "Todo" -> {
-                                if (note instanceof Todo) {
-                                    notes.add(note);
-                                }
-                            }
-                            case "Wedding" -> {
-                                if (note instanceof Wedding) {
-                                    notes.add(note);
-                                    selectionSortDates(notes);
-                                }
-                            }
-                            default -> notes.add(note);
                         }
                     }
                 }

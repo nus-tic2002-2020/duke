@@ -173,11 +173,14 @@ public class Event extends Note {
      * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
      */
     public void setEndDate(Date endDate) throws DateException {
+        Date now = new Date();
         if(this.startDate == null){
             throw new DateException(endDate, "NoStartDate");
         } else {
             if(endDate.before(this.startDate)){
                 throw new DateException(endDate, "EndB4Start");
+            } else if(endDate.before(now)) {
+                throw new DateException(endDate, "EndB4Now");
             } else {
                 this.endDate = endDate;
                 this.durationMinutes = (endDate.getTime() - this.startDate.getTime()) / 60000;

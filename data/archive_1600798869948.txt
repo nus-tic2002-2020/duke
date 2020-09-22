@@ -11,7 +11,7 @@ Deadline/10/watch show/08-Sep-2020 02:45/false/25-Sep-2020 12:00/false
 Deadline/11/watch mivue/08-Sep-2020 02:46/false/10-Sep-2020 23:00/false
 Deadline/12/christmas party/08-Sep-2020 02:46/false/25-Dec-2020 02:00/false
 Event/13/big party/08-Sep-2020 03:11/true/16-Sep-2020 12:00/16-Sep-2020 18:00/360/08-Sep-2020 16:54
-Shoplist/14/Birthday gift for john's 30th/08-Sep-2020 03:11/true/456.88/720.21/536.23/183.98000000000002/true/false/08-Sep-2020 03:34
+Shoplist/14/Birthday gift for john's 30th/08-Sep-2020 03:11/true/456.88/456.88/536.23/-79.35/false/true/08-Sep-2020 03:34
 Birthday/15/john's 30th/08-Sep-2020 03:12/true/26-Sep-2020 12:00/26-Sep-2020 21:30/570/08-Sep-2020 03:34
 Wedding/16/James & Jamie/08-Sep-2020 03:12/true/29-Sep-2020 18:30/29-Sep-2020 23:30/300/567.23/567.23/567.23/0.0/false/false/08-Sep-2020 03:45
 Event/17/big party/08-Sep-2020 03:13/false/17-Sep-2020 12:00/17-Sep-2020 13:00/60
@@ -32,14 +32,12 @@ Event/31/event test/08-Sep-2020 13:10/false/08-Sep-2020 16:07/08-Sep-2020 16:25/
 Deadline/32/test test/08-Sep-2020 13:15/false/08-Sep-2020 14:00/false
 Event/33/test tes ttesttt/08-Sep-2020 13:15/false/08-Sep-2020 14:02/08-Sep-2020 14:59/57
 Deadline/34/test time/08-Sep-2020 13:16/true/08-Sep-2020 17:00/true/08-Sep-2020 16:54
-Deadline/35/12pm test/08-Sep-2020 13:17/false/24-Sep-2020 16:00/false
+Deadline/35/12pm test/08-Sep-2020 13:17/false/18-Sep-2020 12:00/false
 Deadline/36/7pm test/08-Sep-2020 13:17/false/08-Sep-2020 19:00/false
 Deadline/37/lunch/08-Sep-2020 13:18/false/09-Sep-2020 13:17/false
 Deadline/38/test 09 1pm/08-Sep-2020 13:19/false/09-Sep-2020 13:00/false
 Deadline/39/test abcdefg/08-Sep-2020 13:21/false/09-Sep-2020 13:22/false
 Event/40/clash test/14-Sep-2020 20:10/false/17-Sep-2020 02:30/17-Sep-2020 04:00/90
 Event/41/clash test 2/14-Sep-2020 20:10/false/17-Sep-2020 02:45/17-Sep-2020 03:00/15
-Event/42/clash test/14-Sep-2020 20:17/false/19-Sep-2020 14:00/19-Sep-2020 14:55/55
-Shoplist/43/candies/19-Sep-2020 19:08/false/563.33/300.00000000000006/0.0/0.0/true/false
-Todo/44/read book/23-Sep-2020 03:57/false
-Todo/45/read report/23-Sep-2020 03:57/false
+Event/42/clash test/14-Sep-2020 20:17/false/19-Sep-2020 14:00/19-Sep-2020 14:15/15
+Shoplist/43/candies/19-Sep-2020 19:08/false/563.33/563.33/0.0/0.0/false/false

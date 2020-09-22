@@ -167,7 +167,7 @@ public abstract class Note implements Task {
      */
     public String getStatusIcon() {
         if(this.isDone){
-            return ("[\u2713]");
+            return ("[\u2714]");
         } else {
             return ("[\u2718]");
         }
