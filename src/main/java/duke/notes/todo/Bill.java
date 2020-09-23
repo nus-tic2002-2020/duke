@@ -213,9 +213,7 @@ public class Bill extends Deadline {
                 this.itemBudget.getSaveText();
 
         if(isDone) {
-            text = text + "/" + INPUT_TIME.format(this.doneDate) + "\n";
-        } else {
-            text = text + "\n";
+            text = text + "/" + INPUT_TIME.format(this.doneDate);
         }
         return text;
     }

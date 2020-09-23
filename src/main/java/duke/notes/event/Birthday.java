@@ -94,9 +94,7 @@ public class Birthday extends Event {
                 this.getDurationMinutes();
 
         if(isDone) {
-            text = text + "/" + INPUT_TIME.format(this.doneDate) + "\n";
-        } else {
-            text = text + "\n";
+            text = text + "/" + INPUT_TIME.format(this.doneDate);
         }
         return text;
     }

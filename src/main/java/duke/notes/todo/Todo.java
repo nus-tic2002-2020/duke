@@ -162,9 +162,7 @@ public class Todo extends Note {
                 this.isDone;
 
         if(isDone) {
-            text = text + "/" + INPUT_TIME.format(this.doneDate) + "\n";
-        } else {
-            text = text + "\n";
+            text = text + "/" + INPUT_TIME.format(this.doneDate);
         }
         return text;
     }

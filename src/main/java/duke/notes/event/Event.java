@@ -268,9 +268,7 @@ public class Event extends Note {
                 INPUT_TIME.format(this.endDate) + "/" +
                 this.durationMinutes;
         if(isDone) {
-            text = text + "/" + INPUT_TIME.format(this.doneDate) + "\n";
-        } else {
-            text = text + "\n";
+            text = text + "/" + INPUT_TIME.format(this.doneDate);
         }
         return text;
     }

@@ -181,9 +181,7 @@ public class Deadline extends Todo {
                 this.doneAhead;
 
         if(isDone) {
-            text = text + "/" + INPUT_TIME.format(this.doneDate) + "\n";
-        } else {
-            text = text + "\n";
+            text = text + "/" + INPUT_TIME.format(this.doneDate);
         }
         return text;
     }

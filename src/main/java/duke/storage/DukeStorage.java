@@ -14,8 +14,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -60,6 +62,11 @@ public class DukeStorage implements DukeUI {
         this.last3Save = null;
     }
 
+    /**
+     * This method is used to initialise a {@code DukeStorage} object.
+     *
+     */
+    public DukeStorage(){}
 
     //GET STATEMENTS----------------------------------
     /**
@@ -115,7 +122,34 @@ public class DukeStorage implements DukeUI {
     public void setFile(File file) { this.file = file; }
 
 
-    //WRITE STATEMENTS----------------------------------
+    //ENCODE & DECODE METHODS---------------------------
+    /**
+     * This method is used to encode a {@code String} of text using Base64.
+     *
+     * @param text The text to be encoded using Base64.
+     * @return String The {@code String} representing the Base64 encoded text.
+     */
+    String encodeText(String text) {
+
+        Base64.Encoder encoder = Base64.getEncoder();
+        byte[] byteArray = text.getBytes(StandardCharsets.UTF_8);
+        return encoder.encodeToString(byteArray);
+    }
+
+    /**
+     * This method is used to decode a {@code String} of Base64 encoded text.
+     *
+     * @param text The Base64 encoded text to be decoded.
+     * @return String The {@code String} of text decoded from the Base64 encoded text.
+     */
+    String decodeText(String text) {
+
+        Base64.Decoder decoder = Base64.getDecoder();
+        byte[] byteArray = decoder.decode(text);
+        return new String(byteArray, StandardCharsets.UTF_8);
+    }
+
+    //WRITE METHODS-------------------------------------
     /**
      * This method is used to write to file, the ArrayList of {@code Task} objects held by the {@code DukeList} object.
      *
@@ -126,6 +160,7 @@ public class DukeStorage implements DukeUI {
         FileWriter fw = new FileWriter(this.path, false);
         for(Task task: dukeNotes.getNotes()){
             String text = task.getSaveText();
+            text = encodeText(text) + "\n";
             fw.write(text);
         }
         fw.close();
@@ -177,7 +212,7 @@ public class DukeStorage implements DukeUI {
     }
 
 
-    //LOAD STATEMENTS-----------------------------------
+    //LOAD METHODS--------------------------------------
     /**
      * This method is used to read data from saved files and reconstruct the {@code Note} objects,
      * thereafter holding them in an ArrayList.
@@ -188,7 +223,7 @@ public class DukeStorage implements DukeUI {
      */
     public ArrayList<Task> readFromFile() throws FileNotFoundException, ParseException {
 
-        ArrayList<Task> notes = new ArrayList<Task>();
+        ArrayList<Task> notes = new ArrayList<>();
 
         Task note = null;
         Scanner read = new Scanner(this.file);
@@ -200,7 +235,9 @@ public class DukeStorage implements DukeUI {
             Event.resetStaticVariables();
         }
         while (read.hasNext()) {
-            String[] readIndexes = read.nextLine().split("/");
+            String nextLine = read.nextLine();
+            nextLine = decodeText(nextLine);
+            String[] readIndexes = nextLine.split("/");
             switch (readIndexes[0]) {
                 case "Bill" -> {
                     int serialNum = Integer.parseInt(readIndexes[1]);
@@ -221,10 +258,10 @@ public class DukeStorage implements DukeUI {
                     if(isDone) {
                         Date doneDate = INPUT_TIME.parse(readIndexes[13]);
                         note = new Bill(serialNum, description, addDate, doneDate,
-                                isDone, targetDate, doneAhead, itemBudget);
+                                true, targetDate, doneAhead, itemBudget);
                     } else {
                         note = new Bill(serialNum, description, addDate,
-                                isDone, targetDate, doneAhead, itemBudget);
+                                false, targetDate, doneAhead, itemBudget);
                     }
                 }
                 case "Birthday" -> {
@@ -239,10 +276,10 @@ public class DukeStorage implements DukeUI {
                     if(isDone) {
                         Date doneDate = INPUT_TIME.parse(readIndexes[8]);
                         note = new Birthday(serialNum, description, addDate, doneDate,
-                                isDone, startDate, endDate, durationMinutes);
+                                true, startDate, endDate, durationMinutes);
                     } else {
                         note = new Birthday(serialNum, description, addDate,
-                                isDone, startDate, endDate, durationMinutes);
+                                false, startDate, endDate, durationMinutes);
                     }
                 }
                 case "Deadline" -> {
@@ -256,10 +293,10 @@ public class DukeStorage implements DukeUI {
                     if(isDone) {
                         Date doneDate = INPUT_TIME.parse(readIndexes[7]);
                         note = new Deadline(serialNum, description, addDate, doneDate,
-                                isDone, targetDate, doneAhead);
+                                true, targetDate, doneAhead);
                     } else {
                         note = new Deadline(serialNum, description, addDate,
-                                isDone, targetDate, doneAhead);
+                                false, targetDate, doneAhead);
                     }
                 }
                 case "Event" -> {
@@ -274,10 +311,10 @@ public class DukeStorage implements DukeUI {
                     if(isDone) {
                         Date doneDate = INPUT_TIME.parse(readIndexes[8]);
                         note = new Event(serialNum, description, addDate, doneDate,
-                                isDone, startDate, endDate, durationMinutes);
+                                true, startDate, endDate, durationMinutes);
                     } else {
                         note = new Event(serialNum, description, addDate,
-                                isDone, startDate, endDate, durationMinutes);
+                                false, startDate, endDate, durationMinutes);
                     }
                 }
                 case "Shoplist" -> {
@@ -297,10 +334,10 @@ public class DukeStorage implements DukeUI {
                     if(isDone) {
                         Date doneDate = INPUT_TIME.parse(readIndexes[11]);
                         note = new Shoplist(serialNum, description, addDate, doneDate,
-                                isDone, itemBudget);
+                                true, itemBudget);
                     } else {
                         note = new Shoplist(serialNum, description, addDate,
-                                isDone, itemBudget);
+                                false, itemBudget);
                     }
                 }
                 case "Todo" -> {
@@ -312,10 +349,10 @@ public class DukeStorage implements DukeUI {
                     if(isDone) {
                         Date doneDate = INPUT_TIME.parse(readIndexes[5]);
                         note = new Todo(serialNum, description, addDate, doneDate,
-                                isDone);
+                                true);
                     } else {
                         note = new Todo(serialNum, description, addDate,
-                                isDone);
+                                false);
                     }
                 }
                 case "Wedding" -> {
@@ -338,10 +375,10 @@ public class DukeStorage implements DukeUI {
                     if(isDone) {
                         Date doneDate = INPUT_TIME.parse(readIndexes[14]);
                         note = new Wedding(serialNum, description, addDate, doneDate,
-                                isDone, startDate, endDate, durationMinutes, itemBudget);
+                                true, startDate, endDate, durationMinutes, itemBudget);
                     } else {
                         note = new Wedding(serialNum, description, addDate,
-                                isDone, startDate, endDate, durationMinutes, itemBudget);
+                                false, startDate, endDate, durationMinutes, itemBudget);
                     }
                 }
             }
