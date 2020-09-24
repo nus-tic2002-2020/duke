@@ -5,41 +5,51 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import java.io.IOException;
+import java.util.Collections;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+
+
 public class DukeDialogueBox extends HBox {
 
-    private Label text;
-    private ImageView displayPicture;
+    @FXML
+    private Label text = new Label();
+    @FXML
+    private ImageView displayPicture = new ImageView();
 
-    public DukeDialogueBox(Label l, ImageView iv) {
+    private DukeDialogueBox(String text, Image img) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogueBox.fxml"));
+            fxmlLoader.setController(this);
+            fxmlLoader.setRoot(this);
+            fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        text = l;
-        displayPicture = iv;
-
-        text.setWrapText(true);
-        displayPicture.setFitWidth(100.0);
-        displayPicture.setFitHeight(100.0);
-
-        this.setAlignment(Pos.TOP_RIGHT);
-        this.getChildren().addAll(text, displayPicture);
+        this.text.setText(text);
+        this.displayPicture.setImage(img);
     }
 
-    public DukeDialogueBox(){}
 
     private void flip() {
-        this.setAlignment(Pos.TOP_LEFT);
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
-        FXCollections.reverse(tmp);
-        this.getChildren().setAll(tmp);
+        Collections.reverse(tmp);
+        getChildren().setAll(tmp);
+        setAlignment(Pos.TOP_LEFT);
     }
 
-    public static DukeDialogueBox getDukeDialogue(Label l, ImageView iv) {
-        return new DukeDialogueBox(l, iv);
+    public static DukeDialogueBox getDukeDialogue(String text, Image img) {
+        return new DukeDialogueBox(text, img);
     }
 
-    public static DukeDialogueBox getUserDialogue(Label l, ImageView iv) {
-        var db = new DukeDialogueBox(l, iv);
+    public static DukeDialogueBox getUserDialogue(String text, Image img) {
+        var db = new DukeDialogueBox(text, img);
         db.flip();
         return db;
     }

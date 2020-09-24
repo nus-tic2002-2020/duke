@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<fx:root alignment="TOP_RIGHT" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #FFFFFF;" width="100.0" />
+        <Label fx:id="text" alignment="TOP_LEFT" maxWidth="-Infinity" minHeight="100.0" minWidth="-Infinity" prefWidth="520.0" style="-fx-border-color: #e4b363; -fx-border-radius: 6px; -fx-background-color: #e9ecf5; -fx-border-width: 2px;" text="Label">
+         <HBox.margin>
+            <Insets left="20.0" right="20.0" />
+         </HBox.margin>
+         <font>
+            <Font name="Consolas" size="16.0" />
+         </font>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></Label>
+        <ImageView fx:id="displayPicture" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin></ImageView>
+    </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</fx:root>
