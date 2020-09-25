@@ -47,7 +47,7 @@ public class Duke {
         System.out.println("\tHere are the tasks in your list: ");
         for (int i = 1; i <= listOfThings.length; i++) {
 
-            System.out.println("\t" + i + ". " + listOfThings[i - 1].description +  listOfThings[i-1].getStatusIcon());
+            System.out.println("\t" + i + ". " + "[" + listOfThings[i-1].getStatusIcon() + "] " + listOfThings[i - 1].description );
             if (listOfThings[i] == null) {
                 System.out.println("\tOk that's about everything!");
                 return;
@@ -71,12 +71,17 @@ public class Duke {
             System.exit(0);
         }
 
-
         Pattern pattern2 = Pattern.compile((".*" + "list" + ".*"), Pattern.CASE_INSENSITIVE);
         Matcher matcher2 = pattern2.matcher(userSentence);
         if (matcher2.find()) {
             printListOfThings(listOfThings); //
         }
+
+        else{
+            listOfThings = storeList(listOfThings, userSentence);
+            // System.out.println("\tAdded: "+ userSentence);
+        }
+
         // add patten matcher for done or change state in storeList
         Pattern pattern3 = Pattern.compile((".*" + "done" + ".*"), Pattern.CASE_INSENSITIVE);
         Matcher matcher3 = pattern3.matcher(userSentence);
@@ -89,10 +94,7 @@ public class Duke {
             System.out.println(listOfThings[taskNumber].getStatusIcon()); //im not sure about this
             }
 
-        else{
-                listOfThings = storeList(listOfThings, userSentence);
-                // System.out.println("\tAdded: "+ userSentence);
-            }
+
             return listOfThings;
         }
 
