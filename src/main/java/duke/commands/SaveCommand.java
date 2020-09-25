@@ -84,7 +84,7 @@ public class SaveCommand extends DukeCommand implements DukeUI {
         DukeUI.printDivider();
         dukeStorage.archiveToFile();
         dukeStorage.writeToFile(dukeNotes);
-        System.out.println("\tSave operation completed!");
+        System.out.println("    Save operation completed!");
         DukeUI.printDivider();
     }
 }

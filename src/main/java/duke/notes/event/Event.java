@@ -113,7 +113,7 @@ public class Event extends Note {
      * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
      */
     @Override
-    public boolean markAsDone(Date doneDate) throws CommandException, DateException {
+    public boolean markAsDone(Date doneDate) throws CommandException, DateException, InterruptedException {
         if(doneDate.before(this.startDate)) {
             throw new DateException(doneDate, "DoneB4Start", this);
         } else if(super.markAsDone(doneDate)) {
@@ -133,11 +133,11 @@ public class Event extends Note {
      */
     public void deleteExistingNote() {
         if(isDone){
-            System.out.print("\tEvent #" + this.serialNum + " was already done!");
+            System.out.print("    Event #" + this.serialNum + " was already done!");
             System.out.println("\t...deleting the event anyway.");
             eventsCompleted--;
         } else {
-            System.out.println("\tNoted! I've deleted Event #" + this.serialNum + ".");
+            System.out.println("    Noted! I've deleted Event #" + this.serialNum + ".");
             eventsOutstanding--;
         }
     }
@@ -221,14 +221,14 @@ public class Event extends Note {
      */
     @Override
     public void printDetails(){
-        System.out.println("\t\t\tDuration : " +
+        System.out.println("            Duration : " +
                 String.format("%,5d", this.durationMinutes) +  "mins");
-        System.out.println("\t\t\tFrom     : " +
+        System.out.println("            From     : " +
                 TASK_TIME.format(this.startDate));
-        System.out.println("\t\t\tTo       : " +
+        System.out.println("            To       : " +
                 TASK_TIME.format(this.endDate));
         if (this.isDone) {
-            System.out.println("\t\t\tDone     : " +
+            System.out.println("            Done     : " +
                     TASK_TIME.format(this.doneDate));
         }
     }

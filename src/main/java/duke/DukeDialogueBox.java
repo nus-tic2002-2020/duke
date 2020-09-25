@@ -18,9 +18,9 @@ import javafx.fxml.FXMLLoader;
 public class DukeDialogueBox extends HBox {
 
     @FXML
-    private Label text = new Label();
+    private Label text;
     @FXML
-    private ImageView displayPicture = new ImageView();
+    private ImageView displayPicture;
 
     private DukeDialogueBox(String text, Image img) {
         try {

@@ -89,17 +89,9 @@ public class Bill extends Deadline {
      * @exception CommandException If there are errors in the command input.
      */
     @Override
-    public boolean markAsDone(Date doneDate) throws CommandException, DateException {
-        if(this.isDone) {
-            System.out.println("\tTask #" + this.serialNum + " was already done!");
-        } else {
-            String inputPrice;
-            Scanner markDone = new Scanner(System.in);
-            System.out.println("\tWhat is the amount you paid for " +
-                    this.description + "?");
-            inputPrice = markDone.nextLine();
-            double itemPrice = Double.parseDouble(inputPrice.substring(1));
-            itemBudget.setBudgetUsed(itemPrice);
+    public boolean markAsDone(Date doneDate) throws CommandException, DateException, InterruptedException {
+        if(!this.isDone) {
+            itemBudget.setBudgetUsed(itemBudget.getBudgetRevised());
         }
         return super.markAsDone(doneDate);
     }
@@ -121,7 +113,7 @@ public class Bill extends Deadline {
      */
     @Override
     public void printDetails(){
-        System.out.print("\t\t\tDeadline : " +
+        System.out.print("            Deadline : " +
                 TASK_TIME.format(this.targetDate));
         if(this.timesExtended > 0){
             System.out.print("(" + this.timesExtended +
@@ -129,17 +121,17 @@ public class Bill extends Deadline {
         } else {
             System.out.print("\n");
         }
-        System.out.println("\t\t\tBudget   : $" +
+        System.out.println("            Budget   : $" +
                 String.format("%,14.2f", this.getItemBudget()));
         if (this.itemBudget.getIsRevised()) {
-            System.out.println("\t\t\tRevised  : $" +
+            System.out.println("            Revised  : $" +
                     String.format("%,14.2f", this.getItemBudgetRevised()));
         }
         if (this.isDone) {
-            System.out.println("\t\t\tActual   : $" +
+            System.out.println("            Actual   : $" +
                     String.format("%,14.2f", this.getItemPrice()) +
                     " " + this.getWithinBudget());
-            System.out.println("\t\t\tDone     : " +
+            System.out.println("            Done     : " +
                     TASK_TIME.format(this.doneDate));
         }
     }

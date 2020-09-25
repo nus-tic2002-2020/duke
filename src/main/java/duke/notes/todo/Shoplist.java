@@ -1,8 +1,14 @@
 package duke.notes.todo;
 
+import duke.Duke;
+import duke.Main;
+import duke.MainWindow;
+import duke.budget.AskPrice;
 import duke.budget.Budget;
 import duke.commands.CommandException;
 import duke.commands.DateException;
+import javafx.stage.Stage;
+
 import java.util.Date;
 import java.util.Scanner;
 
@@ -83,15 +89,27 @@ public class Shoplist extends Todo {
      * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
      */
     @Override
-    public boolean markAsDone(Date doneDate) throws CommandException, DateException {
+    public boolean markAsDone(Date doneDate) throws CommandException, DateException, InterruptedException {
+
+        double itemPrice;
         if(!this.isDone) {
-            String inputPrice;
-            Scanner markDone = new Scanner(System.in);
-            System.out.println("\tWhat is the price you paid for " +
-                    this.description + "?");
-            inputPrice = markDone.nextLine();
-            double itemPrice = Double.parseDouble(inputPrice.substring(1));
-            itemBudget.setBudgetUsed(itemPrice);
+            if(Duke.isGUIMode) {
+                AskPrice askPrice = new AskPrice(this.description);
+                Stage popup = new Stage();
+                askPrice.start(popup);
+                try {
+                    itemPrice = Double.parseDouble(askPrice.returnPrice());
+                } catch (Exception e) {
+                    System.out.println("    Aborted!");
+                    return false;
+                }
+            } else {
+                System.out.println("    What is the price you paid for " +
+                        this.description + "?");
+                Scanner markDone = new Scanner(System.in);
+                itemPrice = Double.parseDouble(markDone.nextLine().substring(1));
+            }
+            this.itemBudget.setBudgetUsed(itemPrice);
         }
         return super.markAsDone(doneDate);
     }
@@ -113,17 +131,17 @@ public class Shoplist extends Todo {
      */
     @Override
     public void printDetails(){
-        System.out.println("\t\t\tBudget   : $" +
+        System.out.println("            Budget   : $" +
                 String.format("%,14.2f", this.getItemBudget()));
         if (this.itemBudget.getIsRevised()) {
-            System.out.println("\t\t\tRevised  : $" +
+            System.out.println("            Revised  : $" +
                     String.format("%,14.2f", this.getItemBudgetRevised()));
         }
         if (this.isDone) {
-            System.out.println("\t\t\tActual   : $" +
+            System.out.println("            Actual   : $" +
                     String.format("%,14.2f", this.getItemPrice()) +
                     " " + this.getWithinBudget());
-            System.out.println("\t\t\tDone     : " +
+            System.out.println("            Done     : " +
                     TASK_TIME.format(this.doneDate));
         }
     }

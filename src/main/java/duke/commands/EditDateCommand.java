@@ -66,16 +66,16 @@ public class EditDateCommand extends DukeCommand implements DukeUI {
                         if(dukeNotes.getNotes().get(i) instanceof Deadline) {
                             if (dukeNotes.getNotes().get(i).getIsDone()) {
                                 DukeUI.printDivider();
-                                System.out.println("\tThe task had already been completed.");
-                                System.out.println("\tThe date shouldn't be edited anymore.");
+                                System.out.println("    The task had already been completed.");
+                                System.out.println("    The date shouldn't be edited anymore.");
                             } else {
                                 this.oldDate = ((Deadline) dukeNotes.getNotes().get(i)).getTargetDate();
                                 ((Deadline) dukeNotes.getNotes().get(i)).setTargetDate(this.newDate);
 
                                 DukeUI.printDivider();
-                                System.out.println("\tTarget Date of Note #" + this.targetNote + " changed from...");
+                                System.out.println("    Target Date of Note #" + this.targetNote + " changed from...");
                                 DukeUI.commandWrap(TASK_TIME.format(this.oldDate), 66);
-                                System.out.println("\tto...");
+                                System.out.println("    to...");
                                 DukeUI.commandWrap(TASK_TIME.format(this.newDate), 66);
                                 DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
                                 DukeUI.suggestListNotes();
@@ -88,8 +88,8 @@ public class EditDateCommand extends DukeCommand implements DukeUI {
                         if(dukeNotes.getNotes().get(i) instanceof Event) {
                             if (dukeNotes.getNotes().get(i).getIsDone()) {
                                 DukeUI.printDivider();
-                                System.out.println("\tThe event had already concluded.");
-                                System.out.println("\tThe date shouldn't be edited anymore.");
+                                System.out.println("    The event had already concluded.");
+                                System.out.println("    The date shouldn't be edited anymore.");
                             } else {
                                 this.oldDate = ((Event) dukeNotes.getNotes().get(i)).getStartDate();
                                 Date oldEnd = ((Event) dukeNotes.getNotes().get(i)).getEndDate();
@@ -105,11 +105,11 @@ public class EditDateCommand extends DukeCommand implements DukeUI {
                                 }
 
                                 DukeUI.printDivider();
-                                System.out.println("\tStart and End Date of Note #" + this.targetNote +
+                                System.out.println("    Start and End Date of Note #" + this.targetNote +
                                         " changed from...");
                                 DukeUI.commandWrap(TASK_TIME.format(this.oldDate) + " ...and... " +
                                         TASK_TIME.format(oldEnd), 66);
-                                System.out.println("\tto...");
+                                System.out.println("    to...");
                                 DukeUI.commandWrap(TASK_TIME.format(this.newDate) + " ...and... " +
                                         TASK_TIME.format(newEnd), 66);
                                 DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
@@ -123,16 +123,16 @@ public class EditDateCommand extends DukeCommand implements DukeUI {
                         if(dukeNotes.getNotes().get(i) instanceof Event) {
                             if (dukeNotes.getNotes().get(i).getIsDone()) {
                                 DukeUI.printDivider();
-                                System.out.println("\tThe event had already concluded.");
-                                System.out.println("\tThe date shouldn't be edited anymore.");
+                                System.out.println("    The event had already concluded.");
+                                System.out.println("    The date shouldn't be edited anymore.");
                             } else {
                                 this.oldDate = ((Event) dukeNotes.getNotes().get(i)).getEndDate();
                                 ((Event) dukeNotes.getNotes().get(i)).setEndDate(this.newDate);
 
                                 DukeUI.printDivider();
-                                System.out.println("\tStart Date of Note #" + this.targetNote + " changed from...");
+                                System.out.println("    Start Date of Note #" + this.targetNote + " changed from...");
                                 DukeUI.commandWrap(TASK_TIME.format(this.oldDate), 66);
-                                System.out.println("\tto...");
+                                System.out.println("    to...");
                                 DukeUI.commandWrap(TASK_TIME.format(this.newDate), 66);
                                 DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
                                 DukeUI.suggestListNotes();

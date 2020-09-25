@@ -13,6 +13,7 @@ import duke.ui.DukeUI;
 public class InfoCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
+    private String infoType;
 
     //CONSTRUCTORS--------------------------------------
     /**
@@ -20,8 +21,11 @@ public class InfoCommand extends DukeCommand implements DukeUI {
      *
      * @param cmdType The type of {@code DukeCommand} being constructed.
      */
-    public InfoCommand(String cmdType) {
+    public InfoCommand(String cmdType, String infoType) {
+
         super(cmdType);
+        this.infoType = infoType;
+        ;
     }
 
     /**
@@ -40,7 +44,7 @@ public class InfoCommand extends DukeCommand implements DukeUI {
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) {
 
         DukeUI.printDivider();
-        DukeUI.showCommandList();
+        DukeUI.showCommandList(infoType);
         DukeUI.printDivider();
     }
 }

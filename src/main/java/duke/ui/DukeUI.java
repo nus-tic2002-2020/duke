@@ -25,7 +25,7 @@ public interface DukeUI {
 
     //VARIABLES-----------------------------------------
     //Characters to encase Duke's dialogue
-    String DUKE_DIVIDER = "\t----------------------------------------------------------------------------";
+    String DUKE_DIVIDER = "    ----------------------------------------------------------------------------";
 
     //Date formats to be used by Duke
     SimpleDateFormat TASK_TIME = new SimpleDateFormat("dd-MMM-yyyy (E), hh:mm a");
@@ -36,151 +36,10 @@ public interface DukeUI {
     SimpleDateFormat INPUT_TIME = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
     SimpleDateFormat INPUT_DATE = new SimpleDateFormat("dd-MMM-yyyy");
 
-    //List of commands for Duke
-    String DUKE_COMMANDS =
-                    "\n" +
-                    "\t\t*** Generic Commands ***\n" +
-                    "\n" +
-                    "\t\t#autosave      / #ats >>> Toggle auto-save on or off.\n" +
-                    "\t\t#commands      / #cmd >>> List all available Duke's commands.\n" +
-                    "\t\t#exitduke      / #xit >>> Exit Project Duke.\n" +
-                    "\t\t#saveduke      / #sav >>> Save Notes to file and archive the last.\n" +
-                    "\t\t#undo          / #und >>> Undo the last save operation.\n" +
-                    "\t\t#wipeduke      / #wpe >>> Wipe all of Duke's memories and files.\n" +
-                    "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
-                    "\n\n\n" +
-                    "\t\t*** New Note Creation ***\n" +
-                    "\n" +
-                    "\t\t\t  --------------------------------------------------------\n" +
-                    "\t\t\t  Attributes Available:\n" +
-                    "\t\t\t   Budget            \t-->\t/for $   <$X.xx>\n" +
-                    "\t\t\t   Description       \t-->\t         <Description>\n" +
-                    "\t\t\t   End Date-Time     \t-->\t/to      <dd-MMM-yyyy HH:mm>\n" +
-                    "\t\t\t   Start Date-Time   \t-->\t/from    <dd-MMM-yyyy HH:mm>\n" +
-                    "\t\t\t   Target Date-Time  \t-->\t/by      <dd-MMM-yyyy HH:mm>\n" +
-                    "\t\t\t  --------------------------------------------------------\n" +
-                    "\n" +
-                    "\t\t@bill          / @bl  >>> Add a new bill payment.\n" +
-                            "\t\t\t[\u2714] Required Attributes in Order of:\n" +
-                            "\t\t\t Description  \u23E9  Target Date-Time  \u23E9  Budget\n" +
-                    "\t\t@birthday      / @bd  >>> Add a new birthday event.\n" +
-                            "\t\t\t[\u2714] Required Attributes in Order of:\n" +
-                            "\t\t\t Description  \u23E9  Start Date-Time  \u23E9  End Date-Time  \u23E9  Budget\n" +
-                    "\t\t@deadline      / @dl  >>> Add a new todo task with a deadline.\n" +
-                            "\t\t\t[\u2714] Required Attributes in Order of:\n" +
-                            "\t\t\t Description  \u23E9  Target Date-Time\n" +
-                    "\t\t@event         / @ev  >>> Add a new event.\n" +
-                            "\t\t\t[\u2714] Required Attributes in Order of:\n" +
-                            "\t\t\t Description  \u23E9  Start Date-Time  \u23E9  End Date-Time\n" +
-                    "\t\t@shoplist      / @sl  >>> Add a new shopping list item.\n" +
-                            "\t\t\t[\u2714] Required Attributes in Order of:\n" +
-                            "\t\t\t Description  \u23E9  Budget\n" +
-                    "\t\t@todo          / @td  >>> Add a new todo task without a deadline.\n" +
-                            "\t\t\t[\u2714] Required Attributes in Order of:\n" +
-                            "\t\t\t Description\n" +
-                    "\t\t@wedding       / @wd  >>> Add a new wedding event.\n" +
-                            "\t\t\t[\u2714] Required Attributes in Order of:\n" +
-                            "\t\t\t Description  \u23E9  Start Date-Time  \u23E9  End Date-Time  \u23E9  Budget\n" +
-                    "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
-                    "\n\n\n" +
-                    "\t\t*** Information Extraction ***\n" +
-                    "\n" +
-                    "\t\t\t  --------------------------------------------------------\n" +
-                    "\t\t\t  Filters Available:\n" +
-                    "\t\t\t   Completion Status \t-->\t/nf      <O> or <C>\n" +
-                    "\t\t\t                     \t   \t          O for Outstanding\n" +
-                    "\t\t\t                     \t   \t          C for Completed\n" +
-                    "\t\t\t   Date              \t-->\t/on      <dd-MMM-yyyy>\n" +
-                    "\t\t\t   Description Text  \t-->\t/with    <Search Text>\n" +
-                    "\t\t\t  --------------------------------------------------------\n" +
-                    "\t\t\t\t   \u2714 Required     \u271C Optional     \u2718 Not Available\n" +
-                    "\t\t\t  --------------------------------------------------------\n" +
-                    "\n" +
-                    "\t\t#listbills     / #lbp >>> List bill payments.\n" +
-                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
-                            "\t\t\t[\u271C] Description Text\n" +
-                    "\t\t#listbirthdays / #lbd >>> List birthdays.\n" +
-                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
-                            "\t\t\t[\u271C] Description Text\n" +
-                    "\t\t#listbudgets   / #lbg >>> List budgets set.\n" +
-                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
-                            "\t\t\t[\u271C] Description Text\n" +
-                    "\t\t#listdeadlines / #ldl >>> List deadlines.\n" +
-                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
-                            "\t\t\t[\u271C] Description Text\n" +
-                    "\t\t#listevents    / #lev >>> List events.\n" +
-                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
-                            "\t\t\t[\u271C] Description Text\n" +
-                    "\t\t#listnotes     / #lnt >>> List notes.\n" +
-                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
-                            "\t\t\t[\u271C] Description Text\n" +
-                    "\t\t#listnxt24     / #n24 >>> List deadlines & events in 24 hours.\n" +
-                            "\t\t\t[\u271C] Completion Status [\u2718] Date\n" +
-                            "\t\t\t[\u271C] Description Text\n" +
-                    "\t\t#listnxt48     / #n48 >>> List deadlines & events in 48 hours.\n" +
-                            "\t\t\t[\u271C] Completion Status [\u2718] Date\n" +
-                            "\t\t\t[\u271C] Description Text\n" +
-                    "\t\t#listnxt72     / #n72 >>> List deadlines & events in 72 hours.\n" +
-                            "\t\t\t[\u271C] Completion Status [\u2718] Date\n" +
-                            "\t\t\t[\u271C] Description Text\n" +
-                    "\t\t#listshoplists / #lsl >>> List shopping list items.\n" +
-                            "\t\t\t[\u271C] Completion Status [\u2718] Date\n" +
-                            "\t\t\t[\u271C] Description Text\n" +
-                    "\t\t#listtodos     / #ltd >>> List todo tasks.\n" +
-                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
-                            "\t\t\t[\u271C] Description Text\n" +
-                    "\t\t#listweddings  / #lwd >>> List weddings.\n" +
-                            "\t\t\t[\u271C] Completion Status [\u271C] Date\n" +
-                            "\t\t\t[\u271C] Description Text\n" +
-                    "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
-                    "\n\n\n" +
-                    "\t\t*** Existing Note Management ***\n" +
-                    "\n" +
-                    "\t\t#delete        / #del >>> Delete notes, then renumber the rest.\n" +
-                            "\t\t\t[\u2714] Required Attributes\n" +
-                            "\t\t\t Serial Number of Note        \t-->\t/n      <Note#>\n" +
-                            "\t\t\t[\u271C] Optional Attributes\n" +
-                            "\t\t\t Serial Number of Notes       \t-->\t/n      <Note#> & <Note#>\n" +
-                    "\t\t#editdesc      / #edd >>> Edit the description of a note.\n" +
-                            "\t\t\t[\u2714] Required Attributes\n" +
-                            "\t\t\t Serial Number of Note        \t-->\t/n      <Note#>\n" +
-                            "\t\t\t New Description              \t-->\t/to     <New Description>\n" +
-                    "\t\t#editend       / #ede >>> Edit the end date-time of an Event.\n" +
-                            "\t\t\t[\u2714] Required Attributes\n" +
-                            "\t\t\t Serial Number of Note        \t-->\t/n      <Note#>\n" +
-                            "\t\t\t New Event End Date-Time      \t-->\t/to     <dd-MMM-yyyy HH:mm>\n" +
-                    "\t\t#editstart     / #eds >>> Edit the start date-time of an Event.\n" +
-                            "\t\t\t[\u2714] Required Attributes\n" +
-                            "\t\t\t Serial Number of Note        \t-->\t/n      <Note#>\n" +
-                            "\t\t\t New Event Start Date-Time    \t-->\t/to     <dd-MMM-yyyy HH:mm>\n" +
-                    "\t\t#edittarget    / #edt >>> Edit the target date-time of a Deadline.\n" +
-                            "\t\t\t[\u2714] Required Attributes\n" +
-                            "\t\t\t Serial Number of Note        \t-->\t/n      <Note#>\n" +
-                            "\t\t\t New Deadline Target Date-Time\t-->\t/to     <dd-MMM-yyyy HH:mm>\n" +
-                    "\t\t#extend        / #xtd >>> Extend a deadline.\n" +
-                            "\t\t\t[\u2714] Required Attributes\n" +
-                            "\t\t\t Serial Number of Note        \t-->\t/n      <Note#>\n" +
-                            "\t\t\t Extend by at least one of the following:\n" +
-                            "\t\t\t   by Days                    \t-->\t/d      <Number of Days>\n" +
-                            "\t\t\t   by Hours                   \t-->\t/h      <Number of Hours>\n" +
-                            "\t\t\t   by Minutes                 \t-->\t/m      <Number of Minutes>\n" +
-                    "\t\t#markdone      / #mkd >>> Mark notes as done.\n" +
-                            "\t\t\t[\u2714] Required Attributes\n" +
-                            "\t\t\t Single Serial Number         \t-->\t/n      <Note#>\n" +
-                            "\t\t\t[\u271C] Optional Attributes\n" +
-                            "\t\t\t Multiple Serial Numbers      \t-->\t/n      <Note#> & <Note#>\n" +
-                    "\t\t#transfer      / #txf >>> Transfer budgets from one note to another.\n" +
-                            "\t\t\t[\u2714] Required Attributes\n" +
-                            "\t\t\t Serial Number of Note\n" +
-                            "\t\t\t   to Transfer Budget Out     \t-->\t/from   <Note#>\n" +
-                            "\t\t\t   to Transfer Budget In      \t-->\t/to     <Note#>\n" +
-                            "\t\t\t Budget Amount to Transfer    \t-->\t/for $  <X.xx>\n" +
-                    "\t\t++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" +
-                    "\n";
 
     //Project Duke's opening logo
     String DUKE_LOGO =
-                    "====================================================================================\n" +
+            "====================================================================================\n" +
                     "====================================================================================\n" +
                     "===  DDDDDDDDD     UUU      UUU  KKK      KKK  EEEEEEEEEEEE            A0177803Y ===\n" +
                     "===  DDDDDDDDDD    UUU      UUU  KKK     KKK   EEEEEEEEEEE                       ===\n" +
@@ -196,17 +55,167 @@ public interface DukeUI {
                     "====================================================================================\n";
 
 
+    //List of commands for Duke
+    String DUKE_COMMANDS =
+                    "        \u27A4 Perform Generic Operations    \u279C Enter #commands gen\n" +
+                    "        \u27A4 Create New Notes              \u279C Enter #commands new\n" +
+                    "        \u27A4 Extract Information           \u279C Enter #commands info\n" +
+                    "        \u27A4 Manage Existing Notes         \u279C Enter #commands mgmt\n" +
+                    "\n";
+
+    String DUKE_GENERIC =
+                    "        *** Perform Generic Operations ***\n" +
+                    "\n" +
+                    "        #autosave      / #ats >>> Toggle auto-save on or off.\n" +
+                    "        #commands      / #cmd >>> List all available Duke's commands.\n" +
+                    "        #exitduke      / #xit >>> Exit Project Duke.\n" +
+                    "        #saveduke      / #sav >>> Save Notes to file and archive the last.\n" +
+                    "        #undo          / #und >>> Undo the last save operation.\n" +
+                    "        #wipeduke      / #wpe >>> Wipe all of Duke's memories and files.\n" +
+                    "\n";
+
+    String DUKE_NEW =
+                    "        *** Create New Notes ***\n" +
+                    "\n" +
+                    "              --------------------------------------------------------\n" +
+                    "              Attributes Available:\n" +
+                    "               Budget           -->    /for $   <$X.xx>\n" +
+                    "               Description      -->             <Description>\n" +
+                    "               End Date-Time    -->    /to      <dd-MMM-yyyy HH:mm>\n" +
+                    "               Start Date-Time  -->    /from    <dd-MMM-yyyy HH:mm>\n" +
+                    "               Target Date-Time -->    /by      <dd-MMM-yyyy HH:mm>\n" +
+                    "              --------------------------------------------------------\n" +
+                    "\n" +
+                    "        @bill          / @bl  >>> Add a new bill payment.\n" +
+                    "          [\u2714] Required Attributes in Order of:\n" +
+                    "            Description  \u23E9  Target Date-Time  \u23E9  Budget\n" +
+                    "        @birthday      / @bd  >>> Add a new birthday event.\n" +
+                    "          [\u2714] Required Attributes in Order of:\n" +
+                    "            Description  \u23E9  Start Date-Time  \u23E9  End Date-Time  \u23E9  Budget\n" +
+                    "        @deadline      / @dl  >>> Add a new todo task with a deadline.\n" +
+                    "          [\u2714] Required Attributes in Order of:\n" +
+                    "            Description  \u23E9  Target Date-Time\n" +
+                    "        @event         / @ev  >>> Add a new event.\n" +
+                    "          [\u2714] Required Attributes in Order of:\n" +
+                    "            Description  \u23E9  Start Date-Time  \u23E9  End Date-Time\n" +
+                    "        @shoplist      / @sl  >>> Add a new shopping list item.\n" +
+                    "          [\u2714] Required Attributes in Order of:\n" +
+                    "            Description  \u23E9  Budget\n" +
+                    "        @todo          / @td  >>> Add a new todo task without a deadline.\n" +
+                    "          [\u2714] Required Attributes in Order of:\n" +
+                    "            Description\n" +
+                    "        @wedding       / @wd  >>> Add a new wedding event.\n" +
+                    "          [\u2714] Required Attributes in Order of:\n" +
+                    "            Description  \u23E9  Start Date-Time  \u23E9  End Date-Time  \u23E9  Budget\n" +
+                    "\n";
+
+    String DUKE_INFO =
+                    "        *** Extract Information ***\n" +
+                    "\n" +
+                    "              --------------------------------------------------------\n" +
+                    "              Filters Available:\n" +
+                    "               Completion Status    -->    /nf      <O> or <C>\n" +
+                    "                                                     O for Outstanding\n" +
+                    "                                                     C for Completed\n" +
+                    "               Date                 -->    /on      <dd-MMM-yyyy>\n" +
+                    "               Description Text     -->    /with    <Search Text>\n" +
+                    "              --------------------------------------------------------\n" +
+                    "                   \u2714 Required     \u271C Optional     \u2718 Not Available\n" +
+                    "              --------------------------------------------------------\n" +
+                    "\n" +
+                    "        #listbills     / #lbp >>> List bill payments.\n" +
+                    "          [\u271C] Completion Status   [\u271C] Date\n" +
+                    "          [\u271C] Description Text\n" +
+                    "        #listbirthdays / #lbd >>> List birthdays.\n" +
+                    "          [\u271C] Completion Status   [\u271C] Date\n" +
+                    "          [\u271C] Description Text\n" +
+                    "        #listbudgets   / #lbg >>> List budgets set.\n" +
+                    "          [\u271C] Completion Status   [\u271C] Date\n" +
+                    "          [\u271C] Description Text\n" +
+                    "        #listdeadlines / #ldl >>> List deadlines.\n" +
+                    "          [\u271C] Completion Status   [\u271C] Date\n" +
+                    "          [\u271C] Description Text\n" +
+                    "        #listevents    / #lev >>> List events.\n" +
+                    "          [\u271C] Completion Status   [\u271C] Date\n" +
+                    "          [\u271C] Description Text\n" +
+                    "        #listnotes     / #lnt >>> List notes.\n" +
+                    "          [\u271C] Completion Status   [\u271C] Date\n" +
+                    "          [\u271C] Description Text\n" +
+                    "        #listnxt24     / #n24 >>> List deadlines & events in 24 hours.\n" +
+                    "          [\u271C] Completion Status   [\u2718] Date\n" +
+                    "          [\u271C] Description Text\n" +
+                    "        #listnxt48     / #n48 >>> List deadlines & events in 48 hours.\n" +
+                    "          [\u271C] Completion Status   [\u2718] Date\n" +
+                    "          [\u271C] Description Text\n" +
+                    "        #listnxt72     / #n72 >>> List deadlines & events in 72 hours.\n" +
+                    "          [\u271C] Completion Status   [\u2718] Date\n" +
+                    "          [\u271C] Description Text\n" +
+                    "        #listshoplists / #lsl >>> List shopping list items.\n" +
+                    "          [\u271C] Completion Status   [\u2718] Date\n" +
+                    "          [\u271C] Description Text\n" +
+                    "        #listtodos     / #ltd >>> List todo tasks.\n" +
+                    "          [\u271C] Completion Status   [\u271C] Date\n" +
+                    "          [\u271C] Description Text\n" +
+                    "        #listweddings  / #lwd >>> List weddings.\n" +
+                    "          [\u271C] Completion Status   [\u271C] Date\n" +
+                    "          [\u271C] Description Text\n" +
+                    "\n";
+
+    String DUKE_MGMT =
+                    "        *** Manage Existing Notes ***\n" +
+                    "\n" +
+                    "        #delete        / #del >>> Delete notes, then renumber the rest.\n" +
+                    "          [\u2714] Required Attributes\n" +
+                    "            Serial Number of Note         -->  /n      <Note#>\n" +
+                    "          [\u271C] Optional Attributes\n" +
+                    "            Serial Number of Notes        -->  /n      <Note#> & <Note#>\n" +
+                    "        #editdesc      / #edd >>> Edit the description of a note.\n" +
+                    "          [\u2714] Required Attributes\n" +
+                    "            Serial Number of Note         -->  /n      <Note#>\n" +
+                    "            New Description               -->  /to     <New Description>\n" +
+                    "        #editend       / #ede >>> Edit the end date-time of an Event.\n" +
+                    "          [\u2714] Required Attributes\n" +
+                    "            Serial Number of Note         -->  /n      <Note#>\n" +
+                    "            New Event End Date-Time       -->  /to     <dd-MMM-yyyy HH:mm>\n" +
+                    "        #editstart     / #eds >>> Edit the start date-time of an Event.\n" +
+                    "          [\u2714] Required Attributes\n" +
+                    "            Serial Number of Note         -->  /n      <Note#>\n" +
+                    "            New Event Start Date-Time     -->  /to     <dd-MMM-yyyy HH:mm>\n" +
+                    "        #edittarget    / #edt >>> Edit the target date-time of a Deadline.\n" +
+                    "          [\u2714] Required Attributes\n" +
+                    "            Serial Number of Note         -->  /n      <Note#>\n" +
+                    "            New Deadline Target Date-Time -->  /to     <dd-MMM-yyyy HH:mm>\n" +
+                    "        #extend        / #xtd >>> Extend a deadline.\n" +
+                    "          [\u2714] Required Attributes\n" +
+                    "            Serial Number of Note         -->  /n      <Note#>\n" +
+                    "            Extend by at least one of the following:\n" +
+                    "              by Days                     -->  /d      <Number of Days>\n" +
+                    "              by Hours                    -->  /h      <Number of Hours>\n" +
+                    "              by Minutes                  -->  /m      <Number of Minutes>\n" +
+                    "        #markdone      / #mkd >>> Mark notes as done.\n" +
+                    "          [\u2714] Required Attributes\n" +
+                    "            Single Serial Number          -->  /n      <Note#>\n" +
+                    "          [\u271C] Optional Attributes\n" +
+                    "            Multiple Serial Numbers       -->  /n      <Note#> & <Note#>\n" +
+                    "        #transfer      / #txf >>> Transfer budgets from one note to another.\n" +
+                    "          [\u2714] Required Attributes\n" +
+                    "            Serial Number of Note\n" +
+                    "              to Transfer Budget Out      -->  /from   <Note#>\n" +
+                    "              to Transfer Budget In       -->  /to     <Note#>\n" +
+                    "            Budget Amount to Transfer     -->  /for $  <X.xx>\n" +
+                    "\n";
+
+
     //METHODS-------------------------------------------
     /**
      * This method is used to print a confirmation statement when a new {@code Note} object
      * has been successfully created.
      *
      * @param typeAdded The textual input provided by the user in verbatim.
-     * @return DukeCommand The appropriate {@code DukeCommand} object created based on the user input.
      * @exception CommandException If there are errors in the command input.
      */
     static void addConfirm(String typeAdded) throws CommandException {
-        System.out.println("\tNoted! I've added a new "
+        System.out.println("    Noted! I've added a new "
                 + NoteType.getLowercaseName(typeAdded) + " to the list.");
     }
 
@@ -214,7 +223,7 @@ public interface DukeUI {
      * This method is used to print a statement seeking confirmation for a major operation.
      */
     static void askForConfirmation() {
-        System.out.println("\tReply \"Y\" to confirm or any other character(s) to abort.");
+        System.out.println("    Reply \"Y\" to confirm or any other character(s) to abort.");
     }
 
     /**
@@ -238,7 +247,7 @@ public interface DukeUI {
      * @param limit The character width for which the input is to be wrapped in.
      */
     static void commandWrap(String input, int limit) {
-        System.out.print("\t\t\"");
+        System.out.print("        \"");
         while(true) {
 
             if (input.length() < limit) {
@@ -252,7 +261,7 @@ public interface DukeUI {
                         lastSpace = i;
                     }
                 }
-                System.out.print(input.substring(0, lastSpace) + "\n\t\t ");
+                System.out.print(input.substring(0, lastSpace) + "\n         ");
                 input = input.substring(lastSpace+1);
             }
         }
@@ -274,10 +283,10 @@ public interface DukeUI {
 
             if (input.length() < limit) {
                 if(firstLine) {
-                    System.out.printf("%1$-29s%2$29s%n",
+                    System.out.printf("%1$-28s%2$28s%n",
                             input, "Added: " + TASK_TIME.format(addDate));
                 } else {
-                    System.out.println("\t\t\t\t\t" + input);
+                    System.out.println("                    " + input);
                 }
                 break;
             } else {
@@ -288,14 +297,14 @@ public interface DukeUI {
                     }
                 }
                 if(firstLine) {
-                    System.out.printf("%1$-29s%2$29s%n",
+                    System.out.printf("%1$-28s%2$28s%n",
                             input.substring(0, lastSpace), "Added: " +
                                     TASK_TIME.format(addDate));
                     input = input.substring(lastSpace + 1);
                     firstLine = false;
 
                 } else {
-                    System.out.println("\t\t\t\t\t" + input.substring(0, lastSpace));
+                    System.out.println("                    " + input.substring(0, lastSpace));
                     input = input.substring(lastSpace + 1);
                 }
             }
@@ -310,7 +319,7 @@ public interface DukeUI {
     static void standardWrap(String input) {
 
         int limit = 76;
-        System.out.print("\t");
+        System.out.print("    ");
         while(true) {
 
             if (input.length() < limit) {
@@ -324,7 +333,7 @@ public interface DukeUI {
                         lastSpace = i;
                     }
                 }
-                System.out.print(input.substring(0, lastSpace) + "\n\t");
+                System.out.print(input.substring(0, lastSpace) + "\n    ");
                 input = input.substring(lastSpace+1);
             }
         }
@@ -334,7 +343,7 @@ public interface DukeUI {
      * This method is used to print a report on the number of completed {@code Note} objects.
      */
     static void printCompleted() {
-        System.out.println("\tYou have completed " + Todo.getTasksCompleted() +
+        System.out.println("    You have completed " + Todo.getTasksCompleted() +
                 " task(s) and " + Event.getEventsCompleted() + " event(s)!");
     }
 
@@ -349,15 +358,15 @@ public interface DukeUI {
      * This method is used to print a report on the number of outstanding {@code Note} objects.
      */
     static void printOutstanding() {
-        System.out.println("\tYou have...");
-        System.out.print("\t\t");
+        System.out.println("    You have...");
+        System.out.print("        ");
         System.out.printf("%3d", Todo.getTasksOutstanding());
         System.out.print(" outstanding task(s),\n");
-        System.out.print("\t\t");
+        System.out.print("        ");
         System.out.printf("%3d", Event.getEventsOutstanding());
         System.out.print(" outstanding events(s), and\n");
         Budget.printBudgetReport();
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t...on your list.");
+        System.out.println("                                                    ...on your list.");
     }
 
     /**
@@ -382,18 +391,17 @@ public interface DukeUI {
         }
 
         printDivider();
-        System.out.println("\tHello! I'm Duke, your all-rounded personal assistant!");
-        System.out.println("\tWhat do you need noted today?\n");
-        showCommandList();
+        System.out.println("    Hello! I'm Duke, your all-rounded personal assistant!");
+        showCommandList("all");
         printDivider();
 
         if(isLoadedFromFile){
-            System.out.println("\tSaved notes were found and loaded.");
+            System.out.println("    Saved notes were found and loaded.");
             printCompleted();
             printOutstanding();
             suggestListNotes();
         }else {
-            System.out.println("\tNo saved notes were found.");
+            System.out.println("    No saved notes were found.");
         }
         printDivider();
     }
@@ -413,8 +421,16 @@ public interface DukeUI {
      * This method is used to print the full list of available (@code DukeCommand} object types,
      * as well as the required formats to call these commands.
      */
-    static void showCommandList() {
-        System.out.println(DUKE_COMMANDS);
+    static void showCommandList(String infoType) {
+        System.out.println("    What do you need done today?\n");
+        switch (infoType) {
+            case "gen" -> System.out.println(DUKE_GENERIC);
+            case "new" -> System.out.println(DUKE_NEW);
+            case "info" -> System.out.println(DUKE_INFO);
+            case "mgmt" -> System.out.println(DUKE_MGMT);
+            case "all" -> System.out.println(DUKE_COMMANDS);
+        }
+
     }
 
     /**
@@ -424,7 +440,7 @@ public interface DukeUI {
      * @exception CommandException If there are errors reading from the set {@code DukeCommand} enums.
      */
     static void suggestCommands() throws CommandException {
-        System.out.println("\tUse command " + CmdType.getCommand("COMMANDS").toString() +
+        System.out.println("    Use command " + CmdType.getCommand("COMMANDS") +
                 " to see a list of things I can do for you.");
     }
 
@@ -435,7 +451,7 @@ public interface DukeUI {
      * @exception CommandException If there are errors reading from the set {@code DukeCommand} enums.
      */
     static void suggestFormat() throws CommandException {
-        System.out.println("\tUse command " + CmdType.getCommand("COMMANDS").toString() +
+        System.out.println("    Use command " + CmdType.getCommand("COMMANDS") +
                 " to see the correct format for command attributes.");
     }
 
@@ -446,7 +462,7 @@ public interface DukeUI {
      * @exception CommandException If there are errors reading from the set {@code DukeCommand} enums.
      */
     static void suggestListNotes() throws CommandException {
-        System.out.println("\tEnter command " + CmdType.getCommand("LISTNOTES").toString() +
+        System.out.println("    Enter command " + CmdType.getCommand("LISTNOTES") +
                 " to see them all.");
     }
 }

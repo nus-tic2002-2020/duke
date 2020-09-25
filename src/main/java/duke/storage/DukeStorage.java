@@ -121,6 +121,13 @@ public class DukeStorage implements DukeUI {
      */
     public void setFile(File file) { this.file = file; }
 
+    public void deleteFiles() {
+        if(this.file != null) { this.file.delete(); }
+        if(this.lastSave != null) { this.lastSave.delete(); }
+        if(this.last2Save != null) { this.last2Save.delete(); }
+        if(this.last3Save != null) { this.last3Save.delete(); }
+    }
+
 
     //ENCODE & DECODE METHODS---------------------------
     /**

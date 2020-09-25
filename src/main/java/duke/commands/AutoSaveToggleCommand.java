@@ -43,9 +43,9 @@ public class AutoSaveToggleCommand extends DukeCommand {
         DukeUI.printDivider();
         SaveCommand.toggleAutoSave();
         if(SaveCommand.getAutoSave()){
-            System.out.println("\t\t\u2615 Auto-Save has been toggled on.");
+            System.out.println("        \u2615 Auto-Save has been toggled on.");
         } else {
-            System.out.println("\t\t\u26D4 Auto-Save has been toggled off.");
+            System.out.println("        \u26D4 Auto-Save has been toggled off.");
         }
         DukeUI.printDivider();
     }

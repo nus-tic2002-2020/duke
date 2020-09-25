@@ -56,14 +56,14 @@ public abstract class Note implements Task {
      * @exception CommandException If there are errors in the command input.
      * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
      */
-    public boolean markAsDone(Date doneDate) throws CommandException, DateException {
+    public boolean markAsDone(Date doneDate) throws CommandException, DateException, InterruptedException {
         if(this.isDone) {
-            System.out.println("\tNote #" + this.serialNum + " was already done!");
+            System.out.println("    Note #" + this.serialNum + " was already done!");
             return false;
         } else {
             this.isDone = true;
             this.doneDate = doneDate;
-            System.out.println("\tNoted! I've marked Note #" + this.serialNum + " as done.");
+            System.out.println("    Noted! I've marked Note #" + this.serialNum + " as done.");
             return true;
         }
     }
@@ -142,7 +142,7 @@ public abstract class Note implements Task {
      * @exception CommandException If there are errors in the command input.
      */
     public void printList() throws CommandException {
-        System.out.print("\t" + String.format("%3d", this.serialNum));
+        System.out.print("    " + String.format("%3d", this.serialNum));
         System.out.print(". ");
         System.out.print(this.getTaskIcon());
         System.out.print(this.getStatusIcon() + " ");
@@ -155,7 +155,7 @@ public abstract class Note implements Task {
      */
     public void printDetails(){
         if (this.isDone) {
-            System.out.println("\t\t\tDone     : " +
+            System.out.println("            Done     : " +
                     TASK_TIME.format(this.doneDate));
         }
     }

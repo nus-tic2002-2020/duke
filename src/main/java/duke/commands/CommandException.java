@@ -48,9 +48,9 @@ public class CommandException extends Exception {
             throws CommandException {
 
         DukeUI.printDivider();
-        System.out.println("\tI don't understand what you meant by...\n");
+        System.out.println("    I don't understand what you meant by...\n");
         DukeUI.commandWrap(input, 66);
-        System.out.println("\t" + this.message);
+        System.out.println("    " + this.message);
         DukeUI.suggestCommands();
         DukeUI.printDivider();
     }

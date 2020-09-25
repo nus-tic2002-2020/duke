@@ -58,6 +58,6 @@ public abstract class DukeCommand {
      * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
      */
     public abstract void execute(DukeList dukeNotes, DukeStorage dukeStorage)
-            throws ParseException, CommandException, IOException, DateException;
+            throws ParseException, CommandException, IOException, DateException, InterruptedException;
 
 }

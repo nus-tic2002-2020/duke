@@ -91,7 +91,7 @@ public class Todo extends Note {
      * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
      */
     @Override
-    public boolean markAsDone(Date doneDate) throws CommandException, DateException {
+    public boolean markAsDone(Date doneDate) throws CommandException, DateException, InterruptedException {
         if(super.markAsDone(doneDate)) {
             tasksOutstanding--;
             tasksCompleted++;
@@ -109,11 +109,11 @@ public class Todo extends Note {
      */
     public void deleteExistingNote() {
         if(isDone){
-            System.out.print("\tTask #" + this.serialNum + " was already done!");
+            System.out.print("    Task #" + this.serialNum + " was already done!");
             System.out.println("\t...deleting the task anyway.");
             tasksCompleted--;
         } else {
-            System.out.println("\tNoted! I've deleted Task #" + this.serialNum + ".");
+            System.out.println("    Noted! I've deleted Task #" + this.serialNum + ".");
             tasksOutstanding--;
         }
     }

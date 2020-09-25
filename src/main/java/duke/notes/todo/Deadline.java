@@ -110,7 +110,7 @@ public class Deadline extends Todo {
      * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
      */
     @Override
-    public boolean markAsDone(Date doneDate) throws CommandException, DateException {
+    public boolean markAsDone(Date doneDate) throws CommandException, DateException, InterruptedException {
         super.markAsDone(doneDate);
         if(doneDate.compareTo(this.targetDate) < 0) {
             this.doneAhead = true;
@@ -125,7 +125,7 @@ public class Deadline extends Todo {
      */
     @Override
     public void printDetails(){
-        System.out.print("\t\t\tDeadline : " +
+        System.out.print("            Deadline : " +
                 TASK_TIME.format(this.targetDate));
         if(this.timesExtended > 0){
             System.out.print("(" + this.timesExtended +
@@ -134,7 +134,7 @@ public class Deadline extends Todo {
             System.out.print("\n");
         }
         if (this.isDone) {
-            System.out.println("\t\t\tDone     : " +
+            System.out.println("            Done     : " +
                     TASK_TIME.format(this.doneDate) + " " +
                     this.getDoneAhead());
         }

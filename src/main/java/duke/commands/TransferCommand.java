@@ -67,9 +67,9 @@ public class TransferCommand extends DukeCommand implements DukeUI {
 
         DukeUI.printDivider();
         if(fromBudget.transferBudgetOut(this.amount, toBudget)){
-            System.out.println("\tBudget transferred from...");
+            System.out.println("    Budget transferred from...");
             dukeNotes.getNotes().get(this.from).printList();
-            System.out.println("\tto...");
+            System.out.println("    to...");
             dukeNotes.getNotes().get(this.to).printList();
             DukeUI.printCompleted();
             DukeUI.printOutstanding();

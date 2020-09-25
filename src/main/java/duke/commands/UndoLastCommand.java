@@ -52,8 +52,8 @@ public class UndoLastCommand extends DukeCommand implements DukeUI {
 
         DukeUI.printCompleted();
         DukeUI.printOutstanding();
-        System.out.println("\tAre you sure you want to undo the last save?");
-        System.out.println("\tAll unsaved data would be lost.");
+        System.out.println("    Are you sure you want to undo the last save?");
+        System.out.println("    All unsaved data would be lost.");
         DukeUI.askForConfirmation();
         DukeUI.printDivider();
 
@@ -64,23 +64,23 @@ public class UndoLastCommand extends DukeCommand implements DukeUI {
 
             switch (dukeStorage.revertToLastSave(dukeNotes)) {
                 case -1 -> {
-                    System.out.println("\tI have undone the maximum number of times.\n");
+                    System.out.println("    I have undone the maximum number of times.\n");
                 }
                 case 0 -> {
-                    System.out.println("\tI have undone the last save operation.");
-                    System.out.println("\tYou have no more opportunities to undo.\n");
+                    System.out.println("    I have undone the last save operation.");
+                    System.out.println("    You have no more opportunities to undo.\n");
                 }
                 case 1 -> {
-                    System.out.println("\tI have undone the last save operation.");
-                    System.out.println("\tYou have 1 last opportunity to undo.\n");
+                    System.out.println("    I have undone the last save operation.");
+                    System.out.println("    You have 1 last opportunity to undo.\n");
                 }
                 case 2 -> {
-                    System.out.println("\tI have undone the last save operation.");
-                    System.out.println("\tYou have 2 more opportunities to undo.\n");
+                    System.out.println("    I have undone the last save operation.");
+                    System.out.println("    You have 2 more opportunities to undo.\n");
                 }
             }
         } else {
-            System.out.println("\tUndo last save aborted!");
+            System.out.println("    Undo last save aborted!");
         }
         DukeUI.printCompleted();
         DukeUI.printOutstanding();

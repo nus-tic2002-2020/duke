@@ -93,7 +93,7 @@ public class Wedding extends Event {
      * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
      */
     @Override
-    public boolean markAsDone(Date doneDate) throws CommandException, DateException {
+    public boolean markAsDone(Date doneDate) throws CommandException, DateException, InterruptedException {
         if (!this.isDone) {
             this.itemBudget.setBudgetUsed(this.itemBudget.getBudgetRevised());
         }
@@ -117,23 +117,23 @@ public class Wedding extends Event {
      */
     @Override
     public void printDetails() {
-        System.out.println("\t\t\tDuration : " +
+        System.out.println("            Duration : " +
                 String.format("%,5d", this.durationMinutes) +  "mins");
-        System.out.println("\t\t\tFrom     : " +
+        System.out.println("            From     : " +
                 TASK_TIME.format(this.startDate));
-        System.out.println("\t\t\tTo       : " +
+        System.out.println("            To       : " +
                 TASK_TIME.format(this.endDate));
-        System.out.println("\t\t\tBudget   : $" +
+        System.out.println("            Budget   : $" +
                 String.format("%,14.2f", this.getItemBudget()));
         if (this.itemBudget.getIsRevised()) {
-            System.out.println("\t\t\tRevised  : $" +
+            System.out.println("            Revised  : $" +
                     String.format("%,14.2f", this.getItemBudgetRevised()));
         }
         if (this.isDone) {
-            System.out.println("\t\t\tActual   : $" +
+            System.out.println("            Actual   : $" +
                     String.format("%,14.2f", this.getItemPrice()) +
                     " " + this.getWithinBudget());
-            System.out.println("\t\t\tDone     : " +
+            System.out.println("            Done     : " +
                     TASK_TIME.format(this.doneDate));
         }
     }

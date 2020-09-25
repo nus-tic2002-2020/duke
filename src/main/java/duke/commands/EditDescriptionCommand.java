@@ -56,18 +56,18 @@ public class EditDescriptionCommand extends DukeCommand {
                 DukeUI.printDivider();
                 if(dukeNotes.getNotes().get(i).getIsDone()) {
                     if(dukeNotes.getNotes().get(i) instanceof Todo) {
-                        System.out.println("\tThe task had already been completed.");
+                        System.out.println("    The task had already been completed.");
                     } else if(dukeNotes.getNotes().get(i) instanceof Event) {
-                        System.out.println("\tThe event had already concluded.");
+                        System.out.println("    The event had already concluded.");
                     }
-                    System.out.println("\tThe description shouldn't be edited anymore.");
+                    System.out.println("    The description shouldn't be edited anymore.");
                 } else {
                     this.oldDescription = dukeNotes.getNotes().get(i).getDescription();
                     dukeNotes.getNotes().get(i).setDescription(this.newDescription);
 
-                    System.out.println("\tDescription of Note #" + this.targetNote + " changed from...");
+                    System.out.println("    Description of Note #" + this.targetNote + " changed from...");
                     DukeUI.commandWrap(this.oldDescription, 66);
-                    System.out.println("\tto...");
+                    System.out.println("    to...");
                     DukeUI.commandWrap(this.newDescription, 66);
                     DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
                     DukeUI.suggestListNotes();

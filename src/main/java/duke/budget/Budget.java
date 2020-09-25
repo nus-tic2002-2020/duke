@@ -127,12 +127,12 @@ public class Budget {
      */
     public boolean transferBudgetOut(double balanceOut, Budget target) {
         if(this.budgetUsed == 0 && this.budgetRevised < balanceOut) {
-                System.out.println("\tThere is insufficient budget set in the originating budget\n" +
-                        "\tto effect the transfer.");
+                System.out.println("    There is insufficient budget set in the originating budget\n" +
+                        "    to effect the transfer.");
                 return false;
         } else if (this.budgetUsed > 0 && this.budgetBalance < balanceOut) {
-                System.out.println("\tThere is insufficient budget balance in the originating budget\n" +
-                        "\tto effect the transfer.");
+                System.out.println("    There is insufficient budget balance in the originating budget\n" +
+                        "    to effect the transfer.");
                 return false;
         }
 
@@ -144,7 +144,7 @@ public class Budget {
         }
         this.isRevised = true;
         target.transferBudgetIn(balanceOut);
-        System.out.println("\tThe budget transfer is successful.");
+        System.out.println("    The budget transfer is successful.");
         return true;
     }
 
@@ -157,6 +157,17 @@ public class Budget {
         totalBudgetUsed = totalBudgetUsed - this.budgetUsed;
         totalBudgetBalance = totalBudgetBalance - this.budgetBalance;
         isTotalOverBudget = totalBudgetBalance < 0;
+    }
+
+    /**
+     * This method is used to reset the static variables of the {@code Budget}
+     * class in the event of a program reset.
+     */
+    public static void resetStaticVariables() {
+        totalBudgetSet = 0;
+        totalBudgetUsed = 0;
+        totalBudgetBalance = 0;
+        isTotalOverBudget = false;
     }
 
 
@@ -241,12 +252,12 @@ public class Budget {
      */
     public String getWithinBudget() {
         if(this.isOverBudget){
-            return "\u26A0\t$" + String.format("%,14.2f",
+            return "\u26A0    $" + String.format("%,14.2f",
                     Math.abs(this.budgetBalance)) + " over budget.";
         } else if(this.budgetBalance == 0) {
-            return "\u26A1\t$" + String.format("%,14.2f", 0.00) + " right on budget!";
+            return "\u26A1    $" + String.format("%,14.2f", 0.00) + " right on budget!";
         } else {
-            return "\u263A\t$" + String.format("%,14.2f",
+            return "\u263A    $" + String.format("%,14.2f",
                     Math.abs(this.budgetBalance)) + " under budget.";
         }
     }
@@ -258,11 +269,11 @@ public class Budget {
     public static void printBudgetReport(){
         String budgetReport = "$" + String.format("%,14.2f", Math.abs(totalBudgetBalance));
         if(isTotalOverBudget){
-            System.out.printf("%1$s%2$22s%n", "\t\t  a budget overrun of", budgetReport);
+            System.out.printf("%1$s%2$22s%n", "          a budget overrun of", budgetReport);
         } else if(totalBudgetBalance == 0) {
-            System.out.printf("%1$s%2$22s%n", "\t\t  a balanced budget balance of", budgetReport);
+            System.out.printf("%1$s%2$22s%n", "          a balanced budget balance of", budgetReport);
         } else {
-            System.out.printf("%1$s%2$22s%n", "\t\t  a healthy budget balance of", budgetReport);
+            System.out.printf("%1$s%2$22s%n", "          a healthy budget balance of", budgetReport);
         }
     }
 

@@ -250,7 +250,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
             DukeUI.standardWrap(noteReport + textReport + dateReport + ".");
 
         } else {
-            System.out.println("\tHere are the " + noteName + " you told me to note:-");
+            System.out.println("    Here are the " + noteName + " you told me to note:-");
             for (Task note: notes) {
                 note.printList();
             }

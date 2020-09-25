@@ -1,8 +1,12 @@
 package duke.commands;
 
+import duke.Duke;
+import duke.budget.AskPrice;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
+import javafx.stage.Stage;
+
 import java.util.Scanner;
 
 /**
@@ -42,26 +46,30 @@ public class ExitCommand extends DukeCommand implements DukeUI {
      */
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage) {
 
-        DukeUI.printDivider();
-        String confirmQuit;
-        Scanner quitDuke = new Scanner(System.in);
-
-        DukeUI.printOutstanding();
-        System.out.println("\tAre you sure you want to exit Duke?");
-        System.out.println("\tAll unsaved data would be lost.");
-        DukeUI.askForConfirmation();
-        DukeUI.printDivider();
-
-        confirmQuit = quitDuke.nextLine();
-
-        DukeUI.printDivider();
-        if(confirmQuit.equals("Y")) {
-            System.out.println("\tGood Bye! Hope to see you again soon!");
-            this.confirmExit = true;
+        if(Duke.isGUIMode) {
+            ExitConfirm exitConfirm = new ExitConfirm();
+            Stage popup = new Stage();
+            exitConfirm.start(popup);
+            this.confirmExit = exitConfirm.getConfirmation();
 
         } else {
-            System.out.println("\tYay! Thanks for staying!");
-            this.confirmExit = false;
+            Scanner quitDuke = new Scanner(System.in);
+
+            DukeUI.printDivider();
+            DukeUI.printOutstanding();
+            System.out.println("    Are you sure you want to exit Duke?");
+            System.out.println("    All unsaved data would be lost.");
+            DukeUI.askForConfirmation();
+            DukeUI.printDivider();
+
+            this.confirmExit = quitDuke.nextLine().toUpperCase().equals("Y");
+        }
+
+        DukeUI.printDivider();
+        if(this.confirmExit) {
+            System.out.println("    Good Bye! Hope to see you again soon!");
+        } else {
+            System.out.println("    Yay! Thanks for staying!");
         }
         DukeUI.printDivider();
     }

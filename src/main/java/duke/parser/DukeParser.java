@@ -46,8 +46,13 @@ public interface DukeParser extends DukeUI {
                     }
                     case "COMMANDS" -> {
                         if (inputTokens.length == 1) {
-                            return new InfoCommand(cmdType);
+                            return new InfoCommand(cmdType, "all");
                         } else {
+                            String infoType = inputTokens[1];
+                            if(infoType.equals("gen") || infoType.equals("new") || infoType.equals("info") ||
+                                    infoType.equals("mgmt")) {
+                                return new InfoCommand(cmdType, infoType);
+                            }
                             throw new CommandException("There seems to be invalid characters behind" +
                                     cmdType + ".");
                         }
@@ -145,11 +150,12 @@ public interface DukeParser extends DukeUI {
                                 for (String deleteToken : deleteTokens) {
                                     toDelete.add(Integer.parseInt(deleteToken.trim()));
                                 }
+                                return new DeleteCommand(cmdType, toDelete);
                             } else {
                                 throw new CommandException("The Note to delete was not specified.");
                             }
 
-                            return new DeleteCommand(cmdType, toDelete);
+
                         }
                     }
                     case "EDITEND" -> {
@@ -313,11 +319,18 @@ public interface DukeParser extends DukeUI {
                             throw new CommandException("There seems to be insufficient attributes behind " +
                                     cmdType + ".");
                         } else {
-                            String[] doneTokens = inputTokens[1].split("/and");
-                            for (String doneToken : doneTokens) {
-                                toMarkDone.add(Integer.parseInt(doneToken.trim()));
+                            if (input.contains("/n")) {
+                                String[] doneTokens = input.split("/n", 2);
+                                doneTokens = doneTokens[1].trim().split("/", 2);
+                                doneTokens = doneTokens[1].trim().split("&");
+                                for (String doneToken : doneTokens) {
+                                    toMarkDone.add(Integer.parseInt(doneToken.trim()));
+                                }
+                                return new MarkDoneCommand(cmdType, toMarkDone);
+                            } else {
+                                throw new CommandException("There seems to be invalid characters behind " +
+                                        cmdType + ".");
                             }
-                            return new MarkDoneCommand(cmdType, toMarkDone);
                         }
                     }
                     case "SAVEDUKE" -> {

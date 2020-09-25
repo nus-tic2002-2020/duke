@@ -45,7 +45,7 @@ public class MarkDoneCommand extends DukeCommand implements DukeUI {
      * @exception IndexOutOfBoundsException If the note specified does not exist.
      */
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage)
-            throws CommandException, IndexOutOfBoundsException, DateException {
+            throws CommandException, IndexOutOfBoundsException, DateException, InterruptedException {
 
         Date doneDate = new Date();
 

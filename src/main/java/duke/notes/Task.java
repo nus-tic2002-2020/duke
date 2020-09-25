@@ -23,7 +23,7 @@ public interface Task extends DukeUI {
      * @exception CommandException If there are errors in the command input.
      * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
      */
-    boolean markAsDone(Date doneDate) throws CommandException, DateException;
+    boolean markAsDone(Date doneDate) throws CommandException, DateException, InterruptedException;
 
     /**
      * This method is used to assign or reassign serial numbers to {@code Task} objects.

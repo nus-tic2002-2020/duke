@@ -7,8 +7,11 @@ import duke.parser.DukeParser;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
+import javafx.stage.Stage;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -23,7 +26,9 @@ public class Duke implements DukeParser, DukeUI {
     //DUKE VARIABLES------------------------------------
     private static DukeStorage dukeStorage;
     private static DukeList dukeNotes;
-    boolean isLoadedFromFile;
+    private static boolean isLoadedFromFile;
+    public static boolean isGUIMode;
+    private static boolean confirmExit = false;
 
 
     //RUN DUKE------------------------------------------
@@ -61,7 +66,8 @@ public class Duke implements DukeParser, DukeUI {
      */
     public void run() throws ParseException, IOException, CommandException {
 
-        boolean confirmExit = false;
+
+        isGUIMode = false;
 
         //Get Date & Time on startup
         Date now = new Date();
@@ -79,21 +85,21 @@ public class Duke implements DukeParser, DukeUI {
 
             } catch (NullPointerException | IndexOutOfBoundsException e) {
                 DukeUI.printDivider();
-                System.out.println("\tI don't understand what you meant by...\n");
+                System.out.println("    I don't understand what you meant by...\n");
                 DukeUI.commandWrap(input, 66);
                 e.printStackTrace();
-                System.out.println("\tThe task(s) you mentioned cannot be found.");
-                System.out.println("\tThere could be errors or omissions in the data entry, format or delimiters.");
+                System.out.println("    The task(s) you mentioned cannot be found.");
+                System.out.println("    There could be errors or omissions in the data entry, format or delimiters.");
                 DukeUI.suggestFormat();
                 DukeUI.suggestListNotes();
                 DukeUI.printDivider();
 
             } catch (NumberFormatException | ParseException e) {
                 DukeUI.printDivider();
-                System.out.println("\tI don't understand what you meant by...\n");
+                System.out.println("    I don't understand what you meant by...\n");
                 DukeUI.commandWrap(input, 66);
-                System.out.println("\tThe attribute(s) you mentioned cannot be understood.");
-                System.out.println("\tThere could be errors or omissions in the data entry, format or delimiters.");
+                System.out.println("    The attribute(s) you mentioned cannot be understood.");
+                System.out.println("    There could be errors or omissions in the data entry, format or delimiters.");
                 DukeUI.suggestFormat();
                 DukeUI.printDivider();
 
@@ -102,10 +108,78 @@ public class Duke implements DukeParser, DukeUI {
 
             } catch (DateException e) {
                 e.printExplanation();
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
 
+    public static String startUp() throws ParseException, CommandException {
+
+        isGUIMode = true;
+        ByteArrayOutputStream outputGUI = new ByteArrayOutputStream();
+        final PrintStream psConsole = System.out;
+        System.setOut(new PrintStream(outputGUI));
+
+        //Get Date & Time on startup
+        Date now = new Date();
+
+        //Run startup sequence
+        DukeUI.printOnStartup(now, isLoadedFromFile);
+        System.setOut(psConsole);
+        return outputGUI.toString();
+    }
+
+    public static String getResponse(String input) throws IOException, CommandException {
+
+        ByteArrayOutputStream outputGUI = new ByteArrayOutputStream();
+        final PrintStream psConsole = System.out;
+        System.setOut(new PrintStream(outputGUI));
+
+        try {
+            DukeCommand dukeCommand = DukeParser.readCommand(input);
+            assert dukeCommand != null;
+            dukeCommand.execute(dukeNotes, dukeStorage);
+            confirmExit = dukeCommand.getConfirmExit();
+
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
+            DukeUI.printDivider();
+            System.out.println("    I don't understand what you meant by...\n");
+            DukeUI.commandWrap(input, 66);
+            e.printStackTrace();
+            System.out.println("    The task(s) you mentioned cannot be found.");
+            System.out.println("    There could be errors or omissions in the data entry, format or delimiters.");
+            DukeUI.suggestFormat();
+            DukeUI.suggestListNotes();
+            DukeUI.printDivider();
+
+        } catch (NumberFormatException | ParseException e) {
+            DukeUI.printDivider();
+            System.out.println("    I don't understand what you meant by...\n");
+            DukeUI.commandWrap(input, 66);
+            System.out.println("    The attribute(s) you mentioned cannot be understood.");
+            System.out.println("    There could be errors or omissions in the data entry, format or delimiters.");
+            DukeUI.suggestFormat();
+            DukeUI.printDivider();
+
+        } catch (CommandException e) {
+            e.printExplanation(input);
+
+        } catch (DateException e) {
+            e.printExplanation();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.setOut(psConsole);
+        return outputGUI.toString();
+    }
+
+    public static boolean getConfirmExit() {
+        return confirmExit;
+    }
 
     //DUKE MAIN-----------------------------------------
     public static void main(String[] args) throws Exception {
