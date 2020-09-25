@@ -13,16 +13,21 @@ public class Duke {
 
     public static Task[] storeList(Task[] listOfThings, String input) { //listOfThings should be array class task?
         int counter = 0;
+        int numbering = 1;
         while (true) {
             //System.out.println(counter);
             //System.out.println(listOfThings);
             // set it to false here
             if (listOfThings[counter] == null) {
+
                 listOfThings[counter] = new Task(input);
-                System.out.println("\tadded: " + input);
+                System.out.println("\tGot it. I've added this task: ");
+                System.out.println("\t" + listOfThings[counter].getTag() +  "[" + listOfThings[counter].getStatusIcon() + "] " + listOfThings[counter].description );
+                System.out.println("\tNow you have " + numbering +" task in the list ");
                 break;
             }
             counter++;
+            numbering++;
             // make it to true here, might not have to because did it in main
             //if counter == taskNumber{
             //
@@ -47,7 +52,7 @@ public class Duke {
         System.out.println("\tHere are the tasks in your list: ");
         for (int i = 1; i <= listOfThings.length; i++) {
 
-            System.out.println("\t" + i + ". " + "[" + listOfThings[i-1].getStatusIcon() + "] " + listOfThings[i - 1].description );
+            System.out.println("\t" + i + ". " + listOfThings[i-1].getTag() +  "[" + listOfThings[i-1].getStatusIcon() + "] " + listOfThings[i - 1].description );
             if (listOfThings[i] == null) {
                 System.out.println("\tOk that's about everything!");
                 return;
@@ -73,27 +78,23 @@ public class Duke {
 
         Pattern pattern2 = Pattern.compile((".*" + "list" + ".*"), Pattern.CASE_INSENSITIVE);
         Matcher matcher2 = pattern2.matcher(userSentence);
+        Pattern pattern3 = Pattern.compile((".*" + "done" + ".*"), Pattern.CASE_INSENSITIVE);
+        Matcher matcher3 = pattern3.matcher(userSentence);
         if (matcher2.find()) {
             printListOfThings(listOfThings); //
         }
-
+        else if (matcher3.find()){
+            Pattern pattern = Pattern.compile("[^0-9]");
+            String numberOnly = pattern.matcher(userSentence).replaceAll("");
+            taskNumber = Integer.parseInt(numberOnly);
+            System.out.println("\tNice! I've marked this task as done: ");
+            listOfThings[taskNumber-1].isDone = true; // not sure about this
+            System.out.println(listOfThings[taskNumber-1].getTag()+" ["+listOfThings[taskNumber-1].getStatusIcon()+"] "+ listOfThings[taskNumber - 1].description );
+        }
         else{
             listOfThings = storeList(listOfThings, userSentence);
-            // System.out.println("\tAdded: "+ userSentence);
+
         }
-
-        // add patten matcher for done or change state in storeList
-        Pattern pattern3 = Pattern.compile((".*" + "done" + ".*"), Pattern.CASE_INSENSITIVE);
-        Matcher matcher3 = pattern3.matcher(userSentence);
-        if (matcher3.find()) {
-            //update base on user input
-            //extract the integer
-            taskNumber = Integer.parseInt(userSentence);
-            System.out.println("\tNice! I've marked this task as done: ");
-            listOfThings[taskNumber].isDone = true; // not sure about this
-            System.out.println(listOfThings[taskNumber].getStatusIcon()); //im not sure about this
-            }
-
 
             return listOfThings;
         }
