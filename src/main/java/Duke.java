@@ -12,6 +12,7 @@ public class Duke {
 // Storing userSentence into list
 
     public static Task[] storeList(Task[] listOfThings, String input) { //listOfThings should be array class task?
+
         int counter = 0;
         int numbering = 1;
         while (true) {
@@ -22,21 +23,13 @@ public class Duke {
 
                 listOfThings[counter] = new Task(input);
                 System.out.println("\tGot it. I've added this task: ");
-                System.out.println("\t" + listOfThings[counter].getTag() +  "[" + listOfThings[counter].getStatusIcon() + "] " + listOfThings[counter].description );
+                System.out.println("\t" + listOfThings[counter].getTag() +  "[" + listOfThings[counter].getStatusIcon() + "] " + listOfThings[counter].description +  listOfThings[counter].timeDate);
                 System.out.println("\tNow you have " + numbering +" task in the list ");
                 break;
             }
             counter++;
             numbering++;
-            // make it to true here, might not have to because did it in main
-            //if counter == taskNumber{
-            //
-            // }
-            //
-            // }
-
-            //System.out.println(listOfThings);
-
+            
         }//end while loop
 
         return listOfThings;
