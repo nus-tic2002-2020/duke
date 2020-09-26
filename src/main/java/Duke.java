@@ -21,18 +21,25 @@ public class Duke {
 
         String input;
         Scanner in = new Scanner(System.in);
-
-        String[] tasks = new String[100];
+        Task[] tasks = new Task[100];       //set a Task array
+      
         int numberOfTask = 0;
-
         input = in.nextLine();
 
         while(!input.equals("bye")) {
-            System.out.println(input);
+            String[] inputs = input.split(" ");
+
             if (input.equals("list")){
                 printList(tasks,numberOfTask);
+            }else if (input.contains("done")){
+                int finishedTask = Integer.valueOf(inputs[1]);
+                tasks[finishedTask - 1].markAsDone();
+
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println(" " + tasks[finishedTask - 1].getTaskListInfo());
+
             }else{
-                tasks[numberOfTask] = input;
+                tasks[numberOfTask] = new Task(input);
                 numberOfTask++;
 
                 System.out.println("added: " + input);
@@ -45,9 +52,14 @@ public class Duke {
 
 
     /*print out the user input from the list*/
-    public static void printList(String[] tasks, int numberOfTask) {
+    public static void printList(Task[] tasks, int numberOfTask) {
+        System.out.println("Here are the tasks in your list:");
+        if(numberOfTask == 0){
+            System.out.println("Currently your list is empty.");
+        }
+
         for (int i = 0; i < numberOfTask; i++ ) {
-            System.out.println((i + 1) + ". " + tasks[i]);
+            System.out.println((i + 1) + ". " + tasks[i].getTaskListInfo());
         }
     }
 
