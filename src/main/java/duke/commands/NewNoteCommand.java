@@ -46,7 +46,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
 
     //METHODS-------------------------------------------
     /**
-     * This method checks for clashes between new and existing {@code Event} objects.
+     * This method checks for clashes between new and existing {@code Event} objects, as well as the current date-time.
      *
      * @param dukeNotes The {@code DukeList} object that holds the notes managed by {@code Duke}.
      * @param start The {@code Date} object indicating the start date of the new {@code Event} object.
@@ -55,6 +55,14 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
      */
     private void checkForClashes(DukeList dukeNotes, Date start, Date end)
             throws DateException {
+
+        Date now = new Date();
+        if(start.before(now)){
+            throw new DateException(start, "StartB4Now");
+        }
+        if(end.before(start)){
+            throw new DateException(end, "EndB4Start");
+        }
 
         for(Task note: dukeNotes.getNotes()){
             if(note instanceof Event){
@@ -72,6 +80,44 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
         }
     }
 
+    /**
+     * This method checks for the validity of dollar amounts used in the {@code Budget} class of objects.
+     *
+     * @param amount The dollar amount to be checked for validity.
+     * @exception CommandException If the dollar amount is less than or equals to zero.
+     */
+    static void checkValidAmount(double amount) throws CommandException {
+        if(amount <= 0) {
+            throw new CommandException("The dollar amount specified must be more than zero.");
+        }
+    }
+
+    /**
+     * This method checks for the validity of {@code Date} objects used in the {@code Todo} class of objects.
+     *
+     * @param description The description to be checked for validity.
+     * @exception CommandException If the description is blank or empty.
+     */
+    static void checkValidDescription(String description) throws CommandException {
+
+        if(description.isBlank() || description.isEmpty()) {
+            throw new CommandException("The description provided cannot be blank or empty.");
+        }
+    }
+
+    /**
+     * This method checks for the validity of {@code Date} objects used in the {@code Todo} class of objects.
+     *
+     * @param date The {@code Date} object to be checked for validity.
+     * @exception DateException If the {@code Date} object is before the present date-time.
+     */
+    static void checkValidTargetDate(Date date) throws DateException {
+
+        Date now = new Date();
+        if(date.before(now)) {
+            throw new DateException(date, "TargetDate");
+        };
+    }
 
     /**
      * This method executes the function of the {@code NewNoteCommand} object.
@@ -93,10 +139,12 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
                 case "BILL" -> {
                     String description = inputs.get(1);
                     Date targetDate = INPUT_TIME.parse(inputs.get(2));
-                    if(targetDate.before(addDate)){
-                        throw new DateException(targetDate, "TargetDate");
-                    }
                     double itemBudget = Double.parseDouble(inputs.get(3));
+
+                    checkValidDescription(description);
+                    checkValidTargetDate(targetDate);
+                    checkValidAmount(itemBudget);
+
                     Task note1 = new Bill(nextSerialNum, description, targetDate, itemBudget, addDate);
                     notes.add(note1);
 
@@ -105,16 +153,13 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
                     String description = inputs.get(1);
                     String giftDescription = "Birthday gift for " + description;
                     Date startDate = INPUT_TIME.parse(inputs.get(2));
-                    if(startDate.before(addDate)){
-                        throw new DateException(startDate, "StartB4Now");
-                    }
                     Date endDate = INPUT_TIME.parse(inputs.get(3));
-                    if(endDate.before(startDate)){
-                        throw new DateException(endDate, "EndB4Start");
-                    }
                     double itemBudget = Double.parseDouble(inputs.get(4));
 
+                    checkValidDescription(description);
                     checkForClashes(dukeNotes, startDate, endDate);
+                    checkValidAmount(itemBudget);
+
                     Task note1 = new Shoplist(nextSerialNum, giftDescription, itemBudget, addDate);
                     notes.add(note1);
                     Task note2 = new Birthday(nextSerialNum+1, description, startDate, endDate, addDate);
@@ -123,51 +168,52 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
                 case "DEADLINE" -> {
                     String description = inputs.get(1);
                     Date targetDate = INPUT_TIME.parse(inputs.get(2));
-                    if(targetDate.compareTo(addDate) < 0 ){
-                        throw new DateException(targetDate, "TargetDate");
-                    }
+
+                    checkValidDescription(description);
+                    checkValidTargetDate(targetDate);
+
                     Task note1 = new Deadline(nextSerialNum, description, targetDate, addDate);
                     notes.add(note1);
                 }
                 case "EVENT" -> {
                     String description = inputs.get(1);
                     Date startDate = INPUT_TIME.parse(inputs.get(2));
-                    if(startDate.before(addDate)){
-                        throw new DateException(startDate, "StartB4Now");
-                    }
                     Date endDate = INPUT_TIME.parse(inputs.get(3));
-                    if(endDate.before(startDate)){
-                        throw new DateException(endDate, "EndB4Start");
-                    }
 
+                    checkValidDescription(description);
                     checkForClashes(dukeNotes, startDate, endDate);
+
                     Task note1 = new Event(nextSerialNum, description, startDate, endDate, addDate);
                     notes.add(note1);
                 }
                 case "SHOPLIST" -> {
                     String description = inputs.get(1);
                     double itemBudget = Double.parseDouble(inputs.get(2));
+
+                    checkValidDescription(description);
+                    checkValidAmount(itemBudget);
+
                     Task note1 = new Shoplist(nextSerialNum, description, itemBudget, addDate);
                     notes.add(note1);
                 }
                 case "TODO" -> {
                     String description = inputs.get(1);
+
+                    checkValidDescription(description);
+
                     Task note1 = new Todo(nextSerialNum, description, addDate);
                     notes.add(note1);
                 }
                 case "WEDDING" -> {
                     String description = inputs.get(1);
                     Date startDate = INPUT_TIME.parse(inputs.get(2));
-                    if(startDate.before(addDate)){
-                        throw new DateException(startDate, "StartB4Now");
-                    }
                     Date endDate = INPUT_TIME.parse(inputs.get(3));
-                    if(endDate.before(startDate)){
-                        throw new DateException(endDate, "EndB4Start");
-                    }
                     double itemBudget = Double.parseDouble(inputs.get(4));
 
+                    checkValidDescription(description);
                     checkForClashes(dukeNotes, startDate, endDate);
+                    checkValidAmount(itemBudget);
+
                     Task note1 = new Wedding(nextSerialNum, description, startDate, endDate, itemBudget, addDate);
                     notes.add(note1);
                 }

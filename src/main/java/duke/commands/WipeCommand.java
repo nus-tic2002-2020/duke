@@ -40,15 +40,6 @@ public class WipeCommand extends DukeCommand implements DukeUI {
      */
     public WipeCommand( ) { super(); }
 
-    /**
-     * This method is used to reset all static variables of in {@code Duke}
-     * in the event of a program reset.
-     */
-    public static void resetStaticVariables() {
-        Event.resetStaticVariables();
-        Todo.resetStaticVariables();
-        Budget.resetStaticVariables();
-    }
 
     /**
      * This method is used to reset the file path for the {@code DukeStorage} object in {@code Duke}
@@ -103,7 +94,7 @@ public class WipeCommand extends DukeCommand implements DukeUI {
 
             DukeUI.printDivider();
             if(dukeNotes.getNotes().size() == 0) {
-                resetStaticVariables();
+                Duke.resetStaticVariables();
                 dukeStorage.deleteFiles();
                 resetFilePath(dukeStorage);
 

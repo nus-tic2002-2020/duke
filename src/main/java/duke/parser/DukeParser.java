@@ -27,6 +27,7 @@ public interface DukeParser extends DukeUI {
      */
     static DukeCommand readCommand(String input) throws CommandException, ParseException {
 
+        assert !input.isEmpty() && !input.isBlank() : "User Input cannot be empty or blank.";
         ArrayList<String> inputs = new ArrayList<>();
         try {
 
@@ -371,6 +372,9 @@ public interface DukeParser extends DukeUI {
                                 String[] transferTokens = input.split("/for \\$", 2);
                                 transferTokens = transferTokens[1].trim().split("/", 2);
                                 amount = Double.parseDouble(transferTokens[0].trim());
+                                if(amount <= 0) {
+                                    throw new CommandException("The dollar amount specified must be more than zero.");
+                                }
                             } else {
                                 throw new CommandException("The Budget amount to transfer was not specified.");
                             }
@@ -378,9 +382,9 @@ public interface DukeParser extends DukeUI {
                             return new TransferCommand(cmdType, from, to, amount);
                         }
                     }
-                    case "UNDOLAST" -> {
+                    case "UNDO" -> {
                         if (inputTokens.length == 1) {
-                            return new UndoLastCommand(cmdType);
+                            return new UndoCommand(cmdType);
                         } else {
                             throw new CommandException("There seems to be invalid characters behind " +
                                     cmdType + ".");
@@ -428,7 +432,6 @@ public interface DukeParser extends DukeUI {
             e.printExplanation(input);
 
         } catch (ArrayIndexOutOfBoundsException e) {
-
             throw new ParseException("Insufficient Attributes", 0);
         }
         return null;

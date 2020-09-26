@@ -26,7 +26,7 @@ public class WipeConfirm extends Application {
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Wipe Confirmation");
-            stage.getIcons().add(new Image("/images/DPDuke.png"));
+            stage.getIcons().add(new Image("/icons/Duke.png"));
             stage.setResizable(false);
             stage.showAndWait();
 

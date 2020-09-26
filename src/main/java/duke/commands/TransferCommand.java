@@ -31,6 +31,7 @@ public class TransferCommand extends DukeCommand implements DukeUI {
      */
     public TransferCommand(String cmdType, int from, int to, double amount) {
         super(cmdType);
+        assert amount > 0 : "Transfer amount cannot be less than or equals to zero.";
         this.from = from;
         this.to = to;
         this.amount = amount;

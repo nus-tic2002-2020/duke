@@ -1,5 +1,6 @@
 package duke.storage;
 
+import duke.Duke;
 import duke.budget.Budget;
 import duke.notes.Task;
 import duke.notes.event.Birthday;
@@ -238,9 +239,9 @@ public class DukeStorage implements DukeUI {
         if(!read.hasNext()) {
             throw new FileNotFoundException();
         } else {
-            Todo.resetStaticVariables();
-            Event.resetStaticVariables();
+            Duke.resetStaticVariables();
         }
+
         while (read.hasNext()) {
             String nextLine = read.nextLine();
             nextLine = decodeText(nextLine);

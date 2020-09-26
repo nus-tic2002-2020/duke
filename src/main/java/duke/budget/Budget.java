@@ -1,5 +1,7 @@
 package duke.budget;
 
+import duke.commands.CommandException;
+
 /**
  * An object that records and measures the budget performance of a task.
  *
@@ -33,6 +35,7 @@ public class Budget {
      * @param budgetSet The initial budget amount set.
      */
     public Budget(double budgetSet) {
+        assert budgetSet > 0 : "Budget set cannot be less than or equals to zero.";
         this.budgetSet = budgetSet;
         this.budgetRevised = this.budgetSet;
         totalBudgetSet = totalBudgetSet + budgetSet;
@@ -316,4 +319,5 @@ public class Budget {
     public static boolean isIsTotalOverBudget() {
         return isTotalOverBudget;
     }
+
 }

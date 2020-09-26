@@ -25,7 +25,7 @@ public class Main extends Application {
             fxmlLoader.<MainWindow>getController().setDuke(duke);
             stage.show();
             stage.setTitle("Project Duke");
-            stage.getIcons().add(new Image("/images/DPDuke.png"));
+            stage.getIcons().add(new Image("/icons/Duke.png"));
             stage.setResizable(false);
 
         } catch (Exception e) {

@@ -1,8 +1,11 @@
 package duke;
 
+import duke.budget.Budget;
 import duke.commands.CommandException;
 import duke.commands.DateException;
 import duke.commands.DukeCommand;
+import duke.notes.event.Event;
+import duke.notes.todo.Todo;
 import duke.parser.DukeParser;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
@@ -58,7 +61,7 @@ public class Duke implements DukeParser, DukeUI {
     public Duke(){}
 
     /**
-     * This method run a {@code Duke} object.
+     * This method run {@code Duke} when using the {@code Duke Console}.
      *
      * @exception ParseException If there is an error in reading and understanding inputs.
      * @exception IOException If (@code Note} or {@code File} objects specified could not be found.
@@ -79,7 +82,7 @@ public class Duke implements DukeParser, DukeUI {
             String input = DukeUI.receiveCommand();
             try {
                 DukeCommand dukeCommand = DukeParser.readCommand(input);
-                assert dukeCommand != null;
+                assert dukeCommand != null : "Command cannot be null.";
                 dukeCommand.execute(dukeNotes, dukeStorage);
                 confirmExit = dukeCommand.getConfirmExit();
 
@@ -115,6 +118,12 @@ public class Duke implements DukeParser, DukeUI {
         }
     }
 
+    /**
+     * This method is used to print the start up sequence when
+     * running {@code Duke} when using the {@code Duke GUI Launcher}.
+     *
+     * @return String The text to be presented on the {@code Duke GUI Launcher}.
+     */
     public static String startUp() throws ParseException, CommandException {
 
         isGUIMode = true;
@@ -131,15 +140,21 @@ public class Duke implements DukeParser, DukeUI {
         return outputGUI.toString();
     }
 
+    /**
+     * This method is used to run {@code Duke} when using the {@code Duke GUI Launcher}.
+     *
+     * @return String The text to be presented on the {@code Duke GUI Launcher}.
+     */
     public static String getResponse(String input) throws IOException, CommandException {
 
+        assert input != null;
         ByteArrayOutputStream outputGUI = new ByteArrayOutputStream();
         final PrintStream psConsole = System.out;
         System.setOut(new PrintStream(outputGUI));
 
         try {
             DukeCommand dukeCommand = DukeParser.readCommand(input);
-            assert dukeCommand != null;
+            assert dukeCommand != null : "Command cannot be null.";
             dukeCommand.execute(dukeNotes, dukeStorage);
             confirmExit = dukeCommand.getConfirmExit();
 
@@ -177,8 +192,23 @@ public class Duke implements DukeParser, DukeUI {
         return outputGUI.toString();
     }
 
+    /**
+     * This method is used to retrieve the confirmation status on whether an exit command is received.
+     *
+     * @return boolean True if an exit command is received and confirmed.
+     */
     public static boolean getConfirmExit() {
         return confirmExit;
+    }
+
+    /**
+     * This method is used to reset all static variables of in {@code Duke}
+     * in the event of a program reset or reading from a new file without restarting.
+     */
+    public static void resetStaticVariables() {
+        Event.resetStaticVariables();
+        Todo.resetStaticVariables();
+        Budget.resetStaticVariables();
     }
 
     //DUKE MAIN-----------------------------------------

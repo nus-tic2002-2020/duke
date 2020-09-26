@@ -56,8 +56,6 @@ public class EditDateCommand extends DukeCommand implements DukeUI {
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage)
             throws CommandException, IndexOutOfBoundsException, DateException {
 
-        Date now = new Date();
-
         for(int i=0; i<dukeNotes.getNotes().size(); i++) {
             if(dukeNotes.getNotes().get(i).getSerialNum() == this.targetNote) {
 

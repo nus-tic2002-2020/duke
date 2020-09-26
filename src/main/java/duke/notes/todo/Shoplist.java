@@ -1,8 +1,6 @@
 package duke.notes.todo;
 
 import duke.Duke;
-import duke.Main;
-import duke.MainWindow;
 import duke.budget.AskPrice;
 import duke.budget.Budget;
 import duke.commands.CommandException;

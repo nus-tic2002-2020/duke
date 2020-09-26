@@ -1,8 +1,11 @@
 package duke.commands;
 
+import duke.Duke;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;
@@ -13,10 +16,11 @@ import java.util.Scanner;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class UndoLastCommand extends DukeCommand implements DukeUI {
+public class UndoCommand extends DukeCommand implements DukeUI {
 
     //VARIABLES-----------------------------------------
 
+    private boolean confirmUndo;
 
     //CONSTRUCTORS--------------------------------------
     /**
@@ -24,14 +28,14 @@ public class UndoLastCommand extends DukeCommand implements DukeUI {
      *
      * @param cmdType The type of {@code DukeCommand} being constructed.
      */
-    public UndoLastCommand(String cmdType) {
+    public UndoCommand(String cmdType) {
         super(cmdType);
     }
 
     /**
      * This method initialises a {@code UndoLastCommand} object.
      */
-    public UndoLastCommand() { super(); }
+    public UndoCommand() { super(); }
 
     //METHODS-------------------------------------------
     /**
@@ -45,22 +49,28 @@ public class UndoLastCommand extends DukeCommand implements DukeUI {
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage)
             throws IOException, ParseException {
 
+        if(Duke.isGUIMode) {
+            UndoConfirm undoConfirm = new UndoConfirm();
+            Stage popup = new Stage();
+            undoConfirm.start(popup);
+            this.confirmUndo = undoConfirm.getConfirmation();
+
+        } else {
+            Scanner undoDuke = new Scanner(System.in);
+
+            DukeUI.printDivider();
+            DukeUI.printCompleted();
+            DukeUI.printOutstanding();
+            System.out.println("    Are you sure you want to undo the last save?");
+            System.out.println("    All unsaved data would be lost.");
+            DukeUI.askForConfirmation();
+            DukeUI.printDivider();
+
+            this.confirmUndo = undoDuke.nextLine().toUpperCase().equals("Y");
+        }
+
         DukeUI.printDivider();
-
-        String confirmUndo;
-        Scanner undoDuke = new Scanner(System.in);
-
-        DukeUI.printCompleted();
-        DukeUI.printOutstanding();
-        System.out.println("    Are you sure you want to undo the last save?");
-        System.out.println("    All unsaved data would be lost.");
-        DukeUI.askForConfirmation();
-        DukeUI.printDivider();
-
-        confirmUndo = undoDuke.nextLine();
-
-        DukeUI.printDivider();
-        if(confirmUndo.equals("Y")) {
+        if(this.confirmUndo) {
 
             switch (dukeStorage.revertToLastSave(dukeNotes)) {
                 case -1 -> {

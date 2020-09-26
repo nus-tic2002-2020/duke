@@ -35,6 +35,8 @@ public abstract class Note implements Task {
      * @param addDate The date and time the note was added.
      */
     public Note(int serialNum, String description, Date addDate) {
+
+        assert !description.isEmpty() && !description.isBlank() : "Note description cannot be empty or blank.";
         this.serialNum = serialNum;
         this.description = description;
         this.addDate = addDate;

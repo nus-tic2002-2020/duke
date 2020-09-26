@@ -9,23 +9,23 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * A GUI for {@code Duke} to ask for confirmation to exit {@code Duke} using FXML.
+ * A GUI for {@code Duke} to ask for confirmation to undo {@code Duke} using FXML.
  */
-public class ExitConfirm extends Application {
+public class UndoConfirm extends Application {
 
     FXMLLoader fxmlLoader;
 
-    public ExitConfirm(){}
+    public UndoConfirm(){}
 
     @Override
     public void start(Stage stage) {
         try {
-            fxmlLoader = new FXMLLoader(this.getClass().getResource("/view/ExitConfirmWindow.fxml"));
+            fxmlLoader = new FXMLLoader(this.getClass().getResource("/view/UndoConfirmWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Exit Confirmation");
+            stage.setTitle("Undo Confirmation");
             stage.getIcons().add(new Image("/icons/Duke.png"));
             stage.setResizable(false);
             stage.showAndWait();
@@ -36,7 +36,7 @@ public class ExitConfirm extends Application {
     }
 
     public boolean getConfirmation(){
-        return fxmlLoader.<ExitConfirmWindow>getController().getConfirmation();
+        return fxmlLoader.<UndoConfirmWindow>getController().getConfirmation();
     }
 
 }

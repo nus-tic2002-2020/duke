@@ -35,7 +35,7 @@ public enum CmdType {
     MARKDONE("#markdone", "#mkd", null, 0),
     SAVEDUKE("#saveduke", "#sav", null, 0),
     TRANSFER("#transfer", "#txf", null, 0),
-    UNDOLAST("#undo", "#und", null, 0),
+    UNDO("#undo", "#und", null, 0),
     WIPEDUKE("#wipeduke", "#wpe", null, 0);
 
     private final String command;
