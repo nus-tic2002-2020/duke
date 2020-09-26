@@ -11,7 +11,7 @@ public class Duke {
 
 // Storing userSentence into list
 
-    public static Task[] storeList(Task[] listOfThings, String input) { //listOfThings should be array class task?
+    public static Task[] storeList(Task[] listOfThings, String input) throws IllegalInputException { //listOfThings should be array class task?
 
         int counter = 0;
         int numbering = 1;
@@ -29,7 +29,7 @@ public class Duke {
             }
             counter++;
             numbering++;
-            
+
         }//end while loop
 
         return listOfThings;
@@ -54,7 +54,7 @@ public class Duke {
     }
 
 
-    public static Task[] echoCommands(Task[] listOfThings) {
+    public static Task[] echoCommands(Task[] listOfThings) throws IllegalInputException {
 
         //int taskNumber;
 
@@ -94,7 +94,7 @@ public class Duke {
 
 
 
-        public static void main (String[] args){
+        public static void main (String[] args) throws IllegalInputException {
             Task[] List = new Task[100];
 
             String logo = " ____        _        \n"
