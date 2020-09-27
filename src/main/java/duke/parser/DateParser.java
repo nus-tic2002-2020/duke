@@ -266,7 +266,6 @@ public interface DateParser extends DukeUI {
         for(int i=0; i<inputs.size(); i++) {
             String input = inputs.get(i);
             if (checkForDayW(input, dateHash)) {
-                System.out.println("DAYW: " + input);
                 inputs.remove(i);
                 break;
             }
@@ -275,7 +274,6 @@ public interface DateParser extends DukeUI {
         for(int i=0; i<inputs.size(); i++) {
             String input = inputs.get(i);
             if (checkForTime(input, dateHash)) {
-                System.out.println("TIME: " + input);
                 inputs.remove(i);
                 break;
             }
@@ -285,7 +283,6 @@ public interface DateParser extends DukeUI {
             for(int i=0; i<inputs.size(); i++) {
                 String input = inputs.get(i);
                 if(checkForFullDate(input, dateHash)) {
-                    System.out.println("FULLDATE: " + input);
                     inputs.remove(i);
                     break;
                 }
@@ -296,7 +293,6 @@ public interface DateParser extends DukeUI {
             for(int i=0; i<inputs.size(); i++) {
                 String input = inputs.get(i);
                 if(checkForDayMonth(input, dateHash)) {
-                    System.out.println("DAYMTH: " + input);
                     inputs.remove(i);
                     break;
                 }
@@ -307,7 +303,6 @@ public interface DateParser extends DukeUI {
             for(int i=0; i<inputs.size(); i++) {
                 String input = inputs.get(i);
                 if(checkForMonthYear(input, dateHash)) {
-                    System.out.println("MTHYR: " + input);
                     inputs.remove(i);
                     break;
                 }
@@ -318,7 +313,6 @@ public interface DateParser extends DukeUI {
             for(int i=0; i<inputs.size(); i++) {
                 String input = inputs.get(i);
                 if(checkForDayM(input, dateHash)) {
-                    System.out.println("DAY: " + input);
                     inputs.remove(i);
                     break;
                 }
@@ -329,7 +323,6 @@ public interface DateParser extends DukeUI {
             for(int i=0; i<inputs.size(); i++) {
                 String input = inputs.get(i);
                 if(checkForMonth(input, dateHash)) {
-                    System.out.println("MTH: " + input);
                     inputs.remove(i);
                     break;
                 }
@@ -340,7 +333,6 @@ public interface DateParser extends DukeUI {
             for(int i=0; i<inputs.size(); i++) {
                 String input = inputs.get(i);
                 if(checkForYear(input, dateHash)) {
-                    System.out.println("YR: " + input);
                     inputs.remove(i);
                     break;
                 }
@@ -349,7 +341,6 @@ public interface DateParser extends DukeUI {
 
         if(dateHash.get("year") == null) {
             dateHash.replace("year", UNDERSTOOD_YEAR.format(now));
-            System.out.println("SET YR");
 
             Date cutOffMin = new Date(now.getTime() - ((long)90*86400000));
             Date cutOffMax = new Date(now.getTime() - ((long)276*86400000));
