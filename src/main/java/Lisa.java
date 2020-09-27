@@ -1,8 +1,13 @@
+import exceptions.*;
+import classes.*;
+import enumerations.*;
+import exceptions.Exception;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Lisa {
-    public static int getIndex(String input) throws Exception {
+    public static int getIndex(String input)  {
         String[] temp = input.split(" ");
         return (Integer.parseInt(temp[1]) - 1);
     }
