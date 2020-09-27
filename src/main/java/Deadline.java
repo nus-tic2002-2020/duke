@@ -12,10 +12,16 @@ public class Deadline extends Task {
         System.out.println("[D][✓] " + this.description + " (by: " + getDateAndTime() + ")");
     }
 
-    public void print(int index) {
+    public void printAdd(int storeSize) {
         System.out.println("Got it. I've added this task:");
         System.out.println(getSymbol() + "[✗] " + getDescription() + " (by: " + getDateAndTime() +")");
-        System.out.println("Now you have " + (index + 1) + " tasks in the list");
+        System.out.println("Now you have " + (storeSize) + " tasks in the list");
+    }
+
+    public void printDelete(int storeSize) {
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(getSymbol() + getDone() + " " + getDescription() + " (by: " + getDateAndTime() +")");
+        System.out.println("Now you have " + (storeSize) + " tasks in the list");
     }
 
     public void setSymbol() {

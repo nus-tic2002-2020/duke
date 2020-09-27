@@ -32,7 +32,8 @@ public abstract class Task {
         return null;
     };
 
-    public abstract void print(int index);
+    public abstract void printAdd(int storeSize);
+    public abstract void printDelete(int storeSize);
     public abstract void setDone();
     public abstract String getSymbol();
     public abstract void setSymbol();
