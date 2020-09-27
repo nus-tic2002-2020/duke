@@ -68,6 +68,9 @@ public class EditDateCommand extends DukeCommand implements DukeUI {
                                 System.out.println("    The date shouldn't be edited anymore.");
                             } else {
                                 this.oldDate = ((Deadline) dukeNotes.getNotes().get(i)).getTargetDate();
+
+                                NewNoteCommand.checkValidTargetDate(newDate);
+
                                 ((Deadline) dukeNotes.getNotes().get(i)).setTargetDate(this.newDate);
 
                                 DukeUI.printDivider();
@@ -93,6 +96,8 @@ public class EditDateCommand extends DukeCommand implements DukeUI {
                                 Date oldEnd = ((Event) dukeNotes.getNotes().get(i)).getEndDate();
                                 long durationInMS = ((Event) dukeNotes.getNotes().get(i)).getDurationMinutes() * 60000;
                                 Date newEnd = new Date(this.newDate.getTime() + durationInMS);
+
+                                NewNoteCommand.checkForClashes(dukeNotes, newDate, newEnd);
 
                                 if(this.newDate.after(this.oldDate)) {
                                     ((Event) dukeNotes.getNotes().get(i)).setEndDate(newEnd);
@@ -125,10 +130,14 @@ public class EditDateCommand extends DukeCommand implements DukeUI {
                                 System.out.println("    The date shouldn't be edited anymore.");
                             } else {
                                 this.oldDate = ((Event) dukeNotes.getNotes().get(i)).getEndDate();
+                                Date oldStart = ((Event) dukeNotes.getNotes().get(i)).getStartDate();
+
+                                NewNoteCommand.checkForClashes(dukeNotes, oldStart, newDate);
+
                                 ((Event) dukeNotes.getNotes().get(i)).setEndDate(this.newDate);
 
                                 DukeUI.printDivider();
-                                System.out.println("    Start Date of Note #" + this.targetNote + " changed from...");
+                                System.out.println("    End Date of Note #" + this.targetNote + " changed from...");
                                 DukeUI.commandWrap(TASK_TIME.format(this.oldDate), 66);
                                 System.out.println("    to...");
                                 DukeUI.commandWrap(TASK_TIME.format(this.newDate), 66);

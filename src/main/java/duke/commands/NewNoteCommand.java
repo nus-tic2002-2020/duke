@@ -9,6 +9,7 @@ import duke.notes.todo.Bill;
 import duke.notes.todo.Deadline;
 import duke.notes.todo.Shoplist;
 import duke.notes.todo.Todo;
+import duke.parser.DateParser;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
@@ -53,7 +54,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
      * @param end The {@code Date} object indicating the end date of the new {@code Event} object.
      * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
      */
-    private void checkForClashes(DukeList dukeNotes, Date start, Date end)
+    static void checkForClashes(DukeList dukeNotes, Date start, Date end)
             throws DateException {
 
         Date now = new Date();
@@ -66,14 +67,17 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
 
         for(Task note: dukeNotes.getNotes()){
             if(note instanceof Event){
-                if(start.after(((Event) note).getStartDate()) &&
-                        start.before(((Event) note).getEndDate())){
+                Date noteStart = ((Event) note).getStartDate();
+                Date noteEnd = ((Event) note).getEndDate();
+
+                if((start.after(noteStart) || start.equals(noteStart)) &&
+                        (start.before(noteEnd) || start.equals(noteEnd))) {
                     throw new DateException(start, "EventsClash", (Event) note);
-                } else if(end.after(((Event) note).getStartDate()) &&
-                        end.before(((Event) note).getEndDate())){
+                } else if((end.after(noteStart) || end.equals(noteStart)) &&
+                        (end.before(noteEnd) || end.equals(noteEnd))) {
                     throw new DateException(end, "EventsClash", (Event) note);
-                } else if(start.before(((Event) note).getStartDate()) &&
-                        end.after(((Event) note).getEndDate())){
+                } else if((start.before(noteStart) || start.equals(noteStart)) &&
+                        (end.after(noteEnd) || end.equals(noteEnd))) {
                     throw new DateException(end, "EventsClash", (Event) note);
                 }
             }
@@ -138,7 +142,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
             switch (NoteType.getKey(this.cmdType).toString()) {
                 case "BILL" -> {
                     String description = inputs.get(1);
-                    Date targetDate = INPUT_TIME.parse(inputs.get(2));
+                    Date targetDate = DateParser.understandDateInput(inputs.get(2));
                     double itemBudget = Double.parseDouble(inputs.get(3));
 
                     checkValidDescription(description);
@@ -152,8 +156,8 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
                 case "BIRTHDAY" -> {
                     String description = inputs.get(1);
                     String giftDescription = "Birthday gift for " + description;
-                    Date startDate = INPUT_TIME.parse(inputs.get(2));
-                    Date endDate = INPUT_TIME.parse(inputs.get(3));
+                    Date startDate = DateParser.understandDateInput(inputs.get(2));
+                    Date endDate = DateParser.understandDateInput(inputs.get(3));
                     double itemBudget = Double.parseDouble(inputs.get(4));
 
                     checkValidDescription(description);
@@ -167,7 +171,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
                 }
                 case "DEADLINE" -> {
                     String description = inputs.get(1);
-                    Date targetDate = INPUT_TIME.parse(inputs.get(2));
+                    Date targetDate = DateParser.understandDateInput(inputs.get(2));
 
                     checkValidDescription(description);
                     checkValidTargetDate(targetDate);
@@ -177,8 +181,8 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
                 }
                 case "EVENT" -> {
                     String description = inputs.get(1);
-                    Date startDate = INPUT_TIME.parse(inputs.get(2));
-                    Date endDate = INPUT_TIME.parse(inputs.get(3));
+                    Date startDate = DateParser.understandDateInput(inputs.get(2));
+                    Date endDate = DateParser.understandDateInput(inputs.get(3));
 
                     checkValidDescription(description);
                     checkForClashes(dukeNotes, startDate, endDate);
@@ -206,8 +210,8 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
                 }
                 case "WEDDING" -> {
                     String description = inputs.get(1);
-                    Date startDate = INPUT_TIME.parse(inputs.get(2));
-                    Date endDate = INPUT_TIME.parse(inputs.get(3));
+                    Date startDate = DateParser.understandDateInput(inputs.get(2));
+                    Date endDate = DateParser.understandDateInput(inputs.get(3));
                     double itemBudget = Double.parseDouble(inputs.get(4));
 
                     checkValidDescription(description);

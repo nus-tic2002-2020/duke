@@ -14,7 +14,7 @@ import java.util.Date;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public interface DukeParser extends DukeUI {
+public interface DukeParser extends DukeUI, DateParser {
 
     //METHODS-------------------------------------------
     /**
@@ -89,7 +89,7 @@ public interface DukeParser extends DukeUI {
                                 }
                                 String[] listTokens = input.split("/on", 2);
                                 listTokens = listTokens[1].trim().split("/", 2);
-                                dateFilter = INPUT_TIME.parse(listTokens[0].trim() + " 00:00");
+                                dateFilter = DateParser.understandDateInput(listTokens[0].trim() + " 00:00");
                             }
 
                             if(dateFilter == null && textFilter == null && noteFilter == null) {
@@ -178,7 +178,7 @@ public interface DukeParser extends DukeUI {
                             if (input.contains("/to")) {
                                 String[] listTokens = input.split("/to", 2);
                                 listTokens = listTokens[1].trim().split("/", 2);
-                                newDate = INPUT_TIME.parse(listTokens[0].trim());
+                                newDate = DateParser.understandDateInput(listTokens[0].trim());
                             } else {
                                 throw new CommandException("The new Event end date-time was not specified.");
                             }
@@ -205,7 +205,7 @@ public interface DukeParser extends DukeUI {
                             if (input.contains("/to")) {
                                 String[] listTokens = input.split("/to", 2);
                                 listTokens = listTokens[1].trim().split("/", 2);
-                                newDate = INPUT_TIME.parse(listTokens[0].trim());
+                                newDate = DateParser.understandDateInput(listTokens[0].trim());
                             } else {
                                 throw new CommandException("The new Event start date-time was not specified.");
                             }
@@ -232,7 +232,7 @@ public interface DukeParser extends DukeUI {
                             if (input.contains("/to")) {
                                 String[] listTokens = input.split("/to", 2);
                                 listTokens = listTokens[1].trim().split("/", 2);
-                                newDate = INPUT_TIME.parse(listTokens[0].trim());
+                                newDate = DateParser.understandDateInput(listTokens[0].trim());
                             } else {
                                 throw new CommandException("The new Deadline target date-time was not specified.");
                             }
