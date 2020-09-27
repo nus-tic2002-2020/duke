@@ -1,0 +1,12 @@
+list
+buy book
+borrow book
+read book
+list
+done 1
+list
+do math
+list
+done 4
+list
+bye
