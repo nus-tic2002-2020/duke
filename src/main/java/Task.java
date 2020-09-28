@@ -28,5 +28,4 @@ public class Task {
         System.out.println("\tNoted. I've removed this task:");
         System.out.println("\t" + getDescription() ); //ticked symbols
     }
-
 }

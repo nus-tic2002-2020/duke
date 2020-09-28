@@ -67,12 +67,26 @@ public class Duke {
             } else if (input.equals("list")) {
                 getTaskList();
                 input = getInput.nextLine();
-            } else if (input.split(" ")[0].equals("done") ) {
-                String part2 = input.split(" ")[1];
-                //itIsDone(Integer.parseInt(input.split(" ")[1])-1); //have to minus 1, because added 1 before
-                itIsDone(Integer.parseInt(part2) - 1); //easier to see
-                input = getInput.nextLine();
-            }else if (input.split(" ")[0].equals("todo") ){
+            } else if (input.split(" ")[0].equals("done")) {
+                try{
+                    if (input.substring(4).equals("")){
+                        throw new DukeException();
+                    }
+                    String part2 = input.split(" ")[1];
+                    itIsDone(Integer.parseInt(part2) - 1); //easier to see
+                    input = getInput.nextLine();
+                }catch(DukeException e){
+                    System.out.println("\t____________________________________________________________");
+                    System.out.println("\t☹ OOPS!!! The description of number cannot be empty.");
+                    System.out.println("\t____________________________________________________________");
+                    input = getInput.nextLine();
+                }catch(NumberFormatException e){
+                    System.out.println("\t____________________________________________________________");
+                    System.out.println("\t☹ OOPS!!! The description of number must be numeric.");
+                    System.out.println("\t____________________________________________________________");
+                    input = getInput.nextLine();
+                }
+            }else if (input.split(" ")[0].equals("todo")){
                 try {
                     if (input.substring(4).equals("")){
                         throw new DukeException();
@@ -85,7 +99,7 @@ public class Duke {
                     System.out.println("\t____________________________________________________________");
                     input = getInput.nextLine();
                 }
-            }else if (input.split(" ")[0].equals("deadline") ){
+            }else if (input.split(" ")[0].equals("deadline")){
                 try{
                     if (input.substring(8).equals("")){
                         throw new DukeException();
@@ -98,7 +112,7 @@ public class Duke {
                     System.out.println("\t____________________________________________________________");
                     input = getInput.nextLine();
                 }
-            }else if (input.split(" ")[0].equals("event") ){
+            }else if (input.split(" ")[0].equals("event")){
                 try{
                     if (input.substring(5).equals("")){
                         throw new DukeException();
@@ -111,7 +125,7 @@ public class Duke {
                     System.out.println("\t____________________________________________________________");
                     input = getInput.nextLine();
                 }
-            }else if (input.split(" ")[0].equals("delete") ){
+            }else if (input.split(" ")[0].equals("delete")){
                 try{
                     if (input.substring(7).equals("")){
                         throw new DukeException();
@@ -121,6 +135,11 @@ public class Duke {
                 }catch(DukeException e){
                     System.out.println("\t____________________________________________________________");
                     System.out.println("\t☹ OOPS!!! The description of number cannot be empty.");
+                    System.out.println("\t____________________________________________________________");
+                    input = getInput.nextLine();
+                }catch(NumberFormatException e){
+                    System.out.println("\t____________________________________________________________");
+                    System.out.println("\t☹ OOPS!!! The description of number must be numeric.");
                     System.out.println("\t____________________________________________________________");
                     input = getInput.nextLine();
                 }
