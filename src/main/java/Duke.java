@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
     static Scanner getInput = new Scanner(System.in);
@@ -20,15 +21,15 @@ public class Duke {
         System.out.println("\t____________________________________________________________");
     }
 
-    private static Task[] taskList = new Task[100]; //use Task file
+    private static ArrayList<Task> taskList = new ArrayList<Task>(100); //use Task file
     private static int numberOfTask = 0;
 
     //add
     public static void setTaskList(Task description){
-        taskList[numberOfTask] = description;
+        taskList.add(description);
         System.out.println("\t____________________________________________________________");
         System.out.println("\tGot it. I've added this task: ");
-        System.out.println("\t\t" + taskList[numberOfTask].getDescription() );
+        System.out.println("\t\t" + taskList.get(numberOfTask).getDescription() );
         numberOfTask++;
         System.out.println("\tNow you have " + numberOfTask + " tasks in the list.");
         System.out.println("\t____________________________________________________________");
@@ -39,14 +40,21 @@ public class Duke {
         System.out.println("\t____________________________________________________________");
         System.out.println("\tHere are the tasks in your list: ");
         for (int i = 0; i< numberOfTask; i++){
-            System.out.println("\t" + (i+1) + ". " +taskList[i].getDescription());
+            System.out.println("\t" + (i+1) + ". " +taskList.get(i).getDescription());
         }
         System.out.println("\t____________________________________________________________");
     }
 
     public static void itIsDone(int thatTask){
-        taskList[thatTask].setDone();
+        taskList.get(thatTask).setDone();
     }
+
+    public static void toDelete(int thatTask){
+        taskList.remove(thatTask).setDelete();
+        System.out.println("\tNow you have " + --numberOfTask + " tasks in the list.");
+        System.out.println("\t____________________________________________________________");
+    }
+
     public static void ifBye(){
         String input = getInput.nextLine();
 
@@ -103,11 +111,25 @@ public class Duke {
                     System.out.println("\t____________________________________________________________");
                     input = getInput.nextLine();
                 }
+            }else if (input.split(" ")[0].equals("delete") ){
+                try{
+                    if (input.substring(7).equals("")){
+                        throw new DukeException();
+                    }
+                    toDelete(Integer.parseInt(input.substring(7))-1);
+                    input = getInput.nextLine();
+                }catch(DukeException e){
+                    System.out.println("\t____________________________________________________________");
+                    System.out.println("\t☹ OOPS!!! The description of number cannot be empty.");
+                    System.out.println("\t____________________________________________________________");
+                    input = getInput.nextLine();
+                }
+            }else{
+                System.out.println("\t____________________________________________________________");
+                System.out.println("\t☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                System.out.println("\t____________________________________________________________");
+                input = getInput.nextLine();
             }
-            System.out.println("\t____________________________________________________________");
-            System.out.println("\t☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-            System.out.println("\t____________________________________________________________");
-            input = getInput.nextLine();
         }
     }
 }

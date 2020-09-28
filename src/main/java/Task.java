@@ -23,5 +23,10 @@ public class Task {
         System.out.println("\t____________________________________________________________");
     }
 
+    public void setDelete(){
+        System.out.println("\t____________________________________________________________");
+        System.out.println("\tNoted. I've removed this task:");
+        System.out.println("\t" + getDescription() ); //ticked symbols
+    }
 
 }
