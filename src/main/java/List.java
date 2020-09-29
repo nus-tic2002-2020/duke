@@ -1,56 +1,43 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class List{
     //variable
-    private String[] list;
-    private boolean[] done;
-    private char[] task_cat;
+    private ArrayList<String> list;
+    private ArrayList<Boolean> done;
+    private ArrayList<Character> task_cat;
     private static int item_count = 0;
 
     //constructor
     public List(){
-        this.list = new String[100];
-        this.done = new boolean[100];
-        this.task_cat = new char[100];
+        this.list = new ArrayList<String>();
+        this.done = new ArrayList<Boolean>();
+        this.task_cat = new ArrayList<Character>();
     }
 
     //getters
-    public void duke_help(){
-        System.out.println("\t____________________________________________________________");
-        System.out.println("\t" + "You have enter an invalid command!");
-        System.out.println("\t" + "Following are valid commands: ");
-        System.out.println(
-                "\t\tlist - Display tasks in list\n" +
-                        "\t\tdone <task number> - Mark task as completed\n" +
-                        "\t\ttodo <task description> - Add to do task without any date/time \n" +
-                        "\t\tdeadline <task description>/by <date/time> - Add task that need to be done before a specific date/time\n" +
-                        "\t\tevent <task description>/at <date/time> - Add tasks that start at a specific time and ends at a specific time\n"+
-                        "\t\tbye - End duke"
-        );
-        System.out.println("\t____________________________________________________________");
-    }
     private void duke_echo(String message){
         System.out.println("\t____________________________________________________________");
         System.out.println("\t" + message);
         System.out.println("\t____________________________________________________________");
     }
     private void printList(){
-        if(list[0] == null){
+        if(this.list.size() == 0){
             duke_echo("List is empty");
             return;
         }//if end
         System.out.println("\t____________________________________________________________");
         System.out.println("\tHere are the tasks in your list:");
         for(int i = 1 ; i <= item_count ; i++){
-            String tick = (this.done[i - 1] == true) ? "✓" : "✗";
-            String to_print = "[" + this.task_cat[i - 1] + "]" + "[" + tick + "] " + this.list[i - 1];
+            String tick = (this.done.get(i - 1) == true) ? "✓" : "✗";
+            String to_print = "[" + this.task_cat.get(i - 1) + "]" + "[" + tick + "] " + this.list.get(i - 1);
             System.out.println("\t" + i + ". " + to_print);
         }
         System.out.println("\t____________________________________________________________");
     }
     private void print_task(int index){
-        String tick = (this.done[index] == true) ? "✓" : "✗";
-        String to_print = "\t[" + this.task_cat[index] + "]" + "[" + tick + "] " + this.list[index];
+        String tick = (this.done.get(index) == true) ? "✓" : "✗";
+        String to_print = "\t[" + this.task_cat.get(index) + "]" + "[" + tick + "] " + this.list.get(index);
         System.out.println(to_print);
     }
 
@@ -59,21 +46,22 @@ public class List{
         String[] task_split = input.split(" ", 2);
         switch(task_split[0]){
             case "todo":
-                this.task_cat[item_count] = 'T';
-                this.list[item_count] = task_split[1];
+                this.task_cat.add('T');
+                this.list.add(task_split[1]);
                 break;
             case "deadline":
-                this.task_cat[item_count] = 'D';
+                this.task_cat.add('D');
                 task_split = task_split[1].split("/", 2);
-                this.list[item_count] = task_split[0] + "(" + task_split[1] + ")";
+                this.list.add(task_split[0] + "(" + task_split[1] + ")");
                 break;
             case "event":
-                this.task_cat[item_count] = 'E';
+                this.task_cat.add('E');
                 task_split = task_split[1].split("/", 2);
-                this.list[item_count] = task_split[0] + "(" + task_split[1] + ")";
+                this.list.add(task_split[0] + "(" + task_split[1] + ")");
                 break;
         }//end switch
-        this.done[item_count] = false;
+        //this.done.set(item_count, false);
+        this.done.add(false);
         item_count++;
         System.out.println("\t____________________________________________________________");
         System.out.print("\tGot it. I've added this task:\n\t");
@@ -96,13 +84,13 @@ public class List{
         if(index > item_count || index <= 0){
             duke_echo("There are only " + item_count + " items or the value is out of bound!");
         }
-        else if(this.done[index - 1] == true){
-            duke_echo("\"" + this.list[index - 1] + "\" was already marked as done");
+        else if(this.done.get(index - 1) == true){
+            duke_echo("\"" + this.list.get(index - 1) + "\" was already marked as done");
         }
         else{
-            this.done[index - 1] = true;
-            String tick = (this.done[index-1] == true) ? "✓" : "✗";
-            duke_echo("Nice! I've marked this task as done:\n\t[" + this.task_cat[index - 1] + "]" + "[" + tick + "] " + this.list[index - 1]);
+            this.done.set(index - 1, true);
+            String tick = (this.done.get(index-1) == true) ? "✓" : "✗";
+            duke_echo("Nice! I've marked this task as done:\n\t[" + this.task_cat.get(index - 1) + "]" + "[" + tick + "] " + this.list.get(index - 1));
         }
     }
     private void mark_all_complete(){
@@ -111,9 +99,25 @@ public class List{
             return;
         }
         for(int i = 0 ; i < item_count ; i++){
-            this.done[i] = true;
+            this.done.set(i, true);
         }
         duke_echo("All tasks(" + item_count + ") are marked as done");
+    }
+    private void delete(String input) throws IndexOutOfBoundsException{
+        String[] input_split = input.split(" ", 2);
+        int index = Integer.parseInt(input_split[1]);
+        if(index > item_count || index <= 0){
+            throw new IndexOutOfBoundsException();
+        }
+        item_count--;
+        System.out.println("\t____________________________________________________________");
+        System.out.print("\tNoted. I've removed this task:\n\t");
+        print_task(index - 1);
+        System.out.println("\tNow you have " + item_count + " tasks in the list.");
+        System.out.println("\t____________________________________________________________");
+        this.list.remove(index - 1);
+        this.done.remove(index - 1);
+        this.task_cat.remove(index - 1);
     }
     public void reader(){
         String user_input;
@@ -131,6 +135,9 @@ public class List{
         catch(NumberFormatException e){ //done
             duke_echo("☹ OOPS!!! The description of a " + user_input.trim() + " cannot be empty.");
         }
+        catch(IndexOutOfBoundsException e){
+            duke_echo("☹ OOPS!!! Delete is out of bound. ");
+        }
     }
     private void responses(String user_input) throws IllegalInputException{
         if(user_input.equals("bye")){ //bye: end duke
@@ -141,10 +148,6 @@ public class List{
             this.printList();
         }//end else if
         else if(user_input.contains("done") /*&& (user_input.equals("done") == false)*/){ //done: change done to true from false
-            /*if(item_count == 0){
-                duke_echo("List is empty!");
-                return;
-            }*/
             if(user_input.equals("done all")){
                 this.mark_all_complete();
                 return;
@@ -154,8 +157,10 @@ public class List{
         else if((user_input.contains("todo") || user_input.contains("deadline") || user_input.contains("event"))){ //insertion of item into list
             this.insert_item(user_input);
         }//end else if
+        else if(user_input.contains("delete")){
+            this.delete(user_input);
+        }
         else{
-            //duke_help();
             throw new IllegalInputException();
         }//end else
     }
