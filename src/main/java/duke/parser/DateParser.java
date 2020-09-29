@@ -2,7 +2,6 @@ package duke.parser;
 
 
 import duke.commands.CommandException;
-import duke.commands.ExitConfirm;
 import duke.ui.DukeUI;
 
 import java.text.ParseException;
@@ -81,7 +80,7 @@ public interface DateParser extends DukeUI {
 
         if(input == null) { return false; }
         String[] months = {"MMMMM", "MMM", "MM"};
-        ArrayList<SimpleDateFormat> formats = new ArrayList<SimpleDateFormat>();
+        ArrayList<SimpleDateFormat> formats = new ArrayList<>();
 
         for (String month : months) {
             formats.add(new SimpleDateFormat(month));
@@ -103,7 +102,7 @@ public interface DateParser extends DukeUI {
         return false;
     }
 
-    static boolean checkForYear(String input, HashMap<String, String> understoodDate) throws ParseException {
+    static boolean checkForYear(String input, HashMap<String, String> understoodDate) {
 
         if(input == null) { return false; }
         input = input.replace("'", "");
@@ -131,7 +130,7 @@ public interface DateParser extends DukeUI {
 
         String[] days = {"dd"};
         String[] months = {"MM", "MMM", "MMMMM"};
-        ArrayList<SimpleDateFormat> formats = new ArrayList<SimpleDateFormat>();
+        ArrayList<SimpleDateFormat> formats = new ArrayList<>();
 
         for (String day : days) {
             for (String month : months) {
@@ -163,7 +162,7 @@ public interface DateParser extends DukeUI {
 
         String[] months = {"MMM", "MMMMM"};
         String[] years = {"yy"};
-        ArrayList<SimpleDateFormat> formats = new ArrayList<SimpleDateFormat>();
+        ArrayList<SimpleDateFormat> formats = new ArrayList<>();
 
         for (String month : months) {
             for (String year : years) {
@@ -193,7 +192,7 @@ public interface DateParser extends DukeUI {
         String[] days = {"dd"};
         String[] months = {"MM", "MMM", "MMMMM"};
         String[] years = {"yy"};
-        ArrayList<SimpleDateFormat> formats = new ArrayList<SimpleDateFormat>();
+        ArrayList<SimpleDateFormat> formats = new ArrayList<>();
 
         for (String month: months) {
             for(String year: years) {
@@ -232,7 +231,7 @@ public interface DateParser extends DukeUI {
         input = input.replace(":", "~");
 
         String[] times = {"hh~mma", "hha", "HHmm'HS'", "HHmm'H'", "HH~mm"};
-        ArrayList<SimpleDateFormat> formats = new ArrayList<SimpleDateFormat>();
+        ArrayList<SimpleDateFormat> formats = new ArrayList<>();
 
         for(String time: times) {
             formats.add(new SimpleDateFormat(time));
@@ -252,14 +251,14 @@ public interface DateParser extends DukeUI {
 
         Date now = new Date();
         Date understoodDateTime;
-        HashMap<String, String> dateHash = new HashMap<String, String>();
+        HashMap<String, String> dateHash = new HashMap<>();
         dateHash.put("day", null);
         dateHash.put("month", null);
         dateHash.put("year", null);
         dateHash.put("time", null);
 
         String[] userInputs = userInput.toUpperCase().split(" ");
-        ArrayList<String> inputs = new ArrayList<String>();
+        ArrayList<String> inputs = new ArrayList<>();
         for(String input: userInputs){ inputs.add(input.trim()); }
 
 
@@ -343,10 +342,10 @@ public interface DateParser extends DukeUI {
             dateHash.replace("year", UNDERSTOOD_YEAR.format(now));
 
             Date cutOffMin = new Date(now.getTime() - ((long)90*86400000));
-            Date cutOffMax = new Date(now.getTime() - ((long)276*86400000));
+            Date cutOffMax = new Date(now.getTime() + ((long)276*86400000));
 
-            String dateString = dateHash.get("day") + "-" +
-                    dateHash.get("month") + "-" + dateHash.get("year");
+            String dateString = dateHash.get("day") + "-" + dateHash.get("month") + "-" +
+                    dateHash.get("year");
             Date testDate = DukeUI.INPUT_DATE.parse(dateString);
 
             if(testDate.before(cutOffMin)) {
@@ -356,14 +355,19 @@ public interface DateParser extends DukeUI {
             }
         }
 
-        String dateTimeString = dateHash.get("day") + "-" +
-                dateHash.get("month") + "-" +  dateHash.get("year") + " " +
-                dateHash.get("time");
+        if(dateHash.get("time") == null) {
+            dateHash.replace("time", "00:00");
+        }
+
+        String dateTimeString = dateHash.get("day") + "-" + dateHash.get("month") + "-" +
+                dateHash.get("year") + " " + dateHash.get("time");
+
         try {
             understoodDateTime = DukeUI.INPUT_TIME.parse(dateTimeString);
         } catch (ParseException e){
             throw new CommandException("I can't understand the date and time you are trying to specify.");
         }
+
         return understoodDateTime;
     }
 }

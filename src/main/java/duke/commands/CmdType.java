@@ -1,6 +1,5 @@
 package duke.commands;
 
-import duke.notes.Note;
 import duke.notes.NoteType;
 
 /**
@@ -9,6 +8,7 @@ import duke.notes.NoteType;
  * @author tanqiuyu
  * @since 2020-09-16
  */
+@SuppressWarnings("unused")
 public enum CmdType {
 
     AUTOSAVE("#autosave", "#ats", null, 0),

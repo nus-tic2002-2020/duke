@@ -17,8 +17,10 @@ import javafx.fxml.FXMLLoader;
 
 public class DukeDialogueBox extends HBox {
 
+    @SuppressWarnings("unused")
     @FXML
     private Label text;
+    @SuppressWarnings("unused")
     @FXML
     private ImageView displayPicture;
 

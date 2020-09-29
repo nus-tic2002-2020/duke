@@ -39,6 +39,7 @@ public class Todo extends Note {
      * This method is used to initialise a {@code Todo} object.
      *
      */
+    @SuppressWarnings("unused")
     public Todo() {
         tasksOutstanding++;
     }

@@ -10,7 +10,6 @@ import duke.parser.DukeParser;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
-import javafx.stage.Stage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -58,6 +57,7 @@ public class Duke implements DukeParser, DukeUI {
      * This method is used to initialise a {@code Duke} object.
      *
      */
+    @SuppressWarnings("unused")
     public Duke(){}
 
     /**
@@ -145,7 +145,7 @@ public class Duke implements DukeParser, DukeUI {
      *
      * @return String The text to be presented on the {@code Duke GUI Launcher}.
      */
-    public static String getResponse(String input) throws IOException, CommandException {
+    public String getResponse(String input) throws IOException, CommandException {
 
         assert input != null;
         ByteArrayOutputStream outputGUI = new ByteArrayOutputStream();

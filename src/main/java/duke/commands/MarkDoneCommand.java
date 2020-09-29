@@ -32,6 +32,7 @@ public class MarkDoneCommand extends DukeCommand implements DukeUI {
     /**
      * This method initialises a {@code MarkDoneCommand} object.
      */
+    @SuppressWarnings("unused")
     public MarkDoneCommand() { super(); }
 
     //METHODS-------------------------------------------

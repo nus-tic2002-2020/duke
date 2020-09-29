@@ -27,6 +27,7 @@ public class AutoSaveToggleCommand extends DukeCommand {
     /**
      * This method initialises a {@code AutoSaveToggleCommand} object.
      */
+    @SuppressWarnings("unused")
     public AutoSaveToggleCommand() { super(); }
 
 

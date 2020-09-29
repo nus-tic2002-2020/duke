@@ -10,6 +10,7 @@ import java.util.Date;
  * @author tanqiuyu
  * @since 2020-09-16
  */
+@SuppressWarnings("unused")
 public enum LunarMonth implements DukeUI {
 
     PIG12("26-DEC-2019 00:00", "24-JAN-2020 23:59:59", "12th Lunar Month"),

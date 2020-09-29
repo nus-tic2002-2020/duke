@@ -10,6 +10,7 @@ import java.util.Date;
  * @author tanqiuyu
  * @since 2020-09-16
  */
+@SuppressWarnings("unused")
 public enum SunSign implements DukeUI{
 
     ARIES("21-MAR", "19-APR", "Sun in Aries"),

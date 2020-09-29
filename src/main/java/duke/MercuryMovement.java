@@ -10,6 +10,7 @@ import java.util.Date;
  * @author tanqiuyu
  * @since 2020-09-16
  */
+@SuppressWarnings("unused")
 public enum MercuryMovement implements DukeUI {
 
     PROG1("01-JAN-2020 00:00:00", "01-FEB-2020 23:59:59", "Mercury in Prograde"),

@@ -37,7 +37,7 @@ public class Event extends Note {
      * @param endDate The end date and time of the {@code Event}.
      * @param addDate The date and time the note was added.
      */
-    public Event(int serialNum, String description, Date startDate, Date endDate, Date addDate) throws DateException {
+    public Event(int serialNum, String description, Date startDate, Date endDate, Date addDate) {
         super(serialNum, description, addDate);
         eventsOutstanding++;
         this.startDate = startDate;
@@ -49,6 +49,7 @@ public class Event extends Note {
      * This method is used to initialise a {@code Event} object.
      *
      */
+    @SuppressWarnings("unused")
     public Event() {
         eventsOutstanding++;
     }

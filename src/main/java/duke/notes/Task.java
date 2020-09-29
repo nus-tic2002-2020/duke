@@ -70,38 +70,11 @@ public interface Task extends DukeUI {
     boolean getIsDone();
 
     /**
-     * This method is used to retrieve the {@code Date} object reflecting
-     * the date the {@code Task} object was completed.
-     *
-     * @return Date The {@code Date} object reflecting the date the {@code Task} object was completed.
-     */
-    Date getDoneDate();
-
-    /**
      * This method is used to print details of the {@code Task} object.
      *
      * @exception CommandException If there are errors in the command input.
      */
     void printList() throws CommandException;
-
-    /**
-     * This method is used to print additional details of the {@code Task} object.
-     */
-    void printDetails();
-
-    /**
-     * This method is used to retrieve the status icon reflecting the completion status of the {@code Task} object.
-     *
-     * @return String The status icon reflecting the completion status of the {@code Task} object.
-     */
-    String getStatusIcon();
-
-    /**
-     * This method is used to retrieve the task icon reflecting the type of sub-class of {@code Task} objects.
-     *
-     * @return String The task icon reflecting the type of sub-class of {@code Task} objects.
-     */
-    String getTaskIcon() throws CommandException;
 
     /**
      * This method is used to delete existing {@code Task} object and make associated adjustments.

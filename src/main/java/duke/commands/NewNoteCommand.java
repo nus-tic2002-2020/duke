@@ -43,6 +43,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
     /**
      * This method initialises a {@code NewNoteCommand} object.
      */
+    @SuppressWarnings("unused")
     public NewNoteCommand() { super(); }
 
     //METHODS-------------------------------------------
@@ -120,7 +121,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
         Date now = new Date();
         if(date.before(now)) {
             throw new DateException(date, "TargetDate");
-        };
+        }
     }
 
     /**
@@ -138,7 +139,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
             DukeUI.printDivider();
             Date addDate = new Date();
             int nextSerialNum = dukeNotes.getNotes().size() + 1;
-            ArrayList<Task> notes = new ArrayList<Task>();
+            ArrayList<Task> notes = new ArrayList<>();
             switch (NoteType.getKey(this.cmdType).toString()) {
                 case "BILL" -> {
                     String description = inputs.get(1);

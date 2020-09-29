@@ -10,6 +10,7 @@ import java.util.Date;
  * @author tanqiuyu
  * @since 2020-09-16
  */
+@SuppressWarnings("unused")
 public enum ZodiacYear implements DukeUI{
 
     YEAR_20_21("25-JAN-2020 00:00:00", "11-FEB-2021 23:59:59", "Year of the Rat"),

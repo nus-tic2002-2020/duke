@@ -46,6 +46,7 @@ public class DateException extends Exception {
     /**
      * This method initialises a {@code DateException} object.
      */
+    @SuppressWarnings("unused")
     public DateException(){
         super();
     }

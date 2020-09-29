@@ -44,6 +44,7 @@ public class Shoplist extends Todo {
      * This method is used to initialise a {@code Shoplist} object.
      *
      */
+    @SuppressWarnings("unused")
     public Shoplist() { super(); }
 
     /**
@@ -68,7 +69,7 @@ public class Shoplist extends Todo {
      * @param serialNum The serial number automatically assigned for identification purposes.
      * @param description The description of the {@code Shoplist} object.
      * @param addDate The date and time the note was added.
-     * @param isDone True if the {@code Shoplist} objecthad concluded.
+     * @param isDone True if the {@code Shoplist} object had concluded.
      * @param itemBudget The budget amount for the {@code Shoplist} object.
      */
     public Shoplist(int serialNum, String description, Date addDate,

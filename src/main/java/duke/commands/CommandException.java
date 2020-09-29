@@ -25,6 +25,7 @@ public class CommandException extends Exception {
     /**
      * This method initialises a {@code CommandException} object.
      */
+    @SuppressWarnings("unused")
     public CommandException(){
         super();
     }

@@ -17,10 +17,9 @@ public class ExitConfirmWindow extends AnchorPane {
 
     private boolean isConfirmed;
 
+    @SuppressWarnings("EmptyMethod")
     @FXML
-    public void initialize() {
-
-    }
+    public void initialize() { }
 
     @FXML
     private void exitConfirm() {

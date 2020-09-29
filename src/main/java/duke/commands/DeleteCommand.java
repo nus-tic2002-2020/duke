@@ -33,11 +33,13 @@ public class DeleteCommand extends DukeCommand implements DukeUI {
     public DeleteCommand(String cmdType, ArrayList<Integer> toDelete) {
         super(cmdType);
         this.toDelete = toDelete;
+        this.confirmDelete = false;
     }
 
     /**
      * This method initialises a {@code DeleteCommand} object.
      */
+    @SuppressWarnings("unused")
     public DeleteCommand() {
         super();
     }
@@ -119,7 +121,7 @@ public class DeleteCommand extends DukeCommand implements DukeUI {
                 }
                 System.out.println("    The remaining notes have been renumbered!");
             }
-            System.out.println("");
+            System.out.print("\n");
             DukeUI.printCompleted();
             DukeUI.printOutstanding();
             DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));

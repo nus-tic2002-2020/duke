@@ -4,7 +4,6 @@ import duke.budget.Budget;
 import duke.commands.CommandException;
 import duke.commands.DateException;
 import java.util.Date;
-import java.util.Scanner;
 
 /**
  * An extension of the {@code Deadline} object that labels the deadline as a {@code Bill} object, and
@@ -42,6 +41,7 @@ public class Bill extends Deadline {
      * This method is used to initialise a {@code Bill} object.
      *
      */
+    @SuppressWarnings("unused")
     public Bill() { super(); }
 
     /**

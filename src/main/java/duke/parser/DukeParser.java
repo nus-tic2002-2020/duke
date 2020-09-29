@@ -35,13 +35,12 @@ public interface DukeParser extends DukeUI, DateParser {
 
                 String[] inputTokens = input.split(" ", 2);
                 String cmdType = inputTokens[0];
-                String[] delimiters;
                 switch (CmdType.getKey(cmdType).toString()) {
                     case "AUTOSAVE" -> {
                         if (inputTokens.length == 1) {
                             return new AutoSaveToggleCommand(cmdType);
                         } else {
-                            throw new CommandException("There seems to be invalid characters behind" +
+                            throw new CommandException("There seems to be invalid characters behind " +
                                     cmdType + ".");
                         }
                     }
@@ -54,7 +53,7 @@ public interface DukeParser extends DukeUI, DateParser {
                                     infoType.equals("mgmt")) {
                                 return new InfoCommand(cmdType, infoType);
                             }
-                            throw new CommandException("There seems to be invalid characters behind" +
+                            throw new CommandException("There seems to be invalid characters behind " +
                                     cmdType + ".");
                         }
                     }
@@ -63,6 +62,7 @@ public interface DukeParser extends DukeUI, DateParser {
                         String noteFilter = null;
                         String textFilter = null;
                         Date dateFilter = null;
+                        Date addedFilter = null;
                         if (inputTokens.length == 1) {
                             return new ListCommand(cmdType);
                         } else {
@@ -92,19 +92,30 @@ public interface DukeParser extends DukeUI, DateParser {
                                 dateFilter = DateParser.understandDateInput(listTokens[0].trim() + " 00:00");
                             }
 
-                            if(dateFilter == null && textFilter == null && noteFilter == null) {
-                                throw new CommandException("There seems to be invalid characters behind" +
+                            if(input.contains("/added")) {
+                                if(CmdType.getCommand(cmdType).equals("#shoplist")) {
+                                    throw new CommandException("Date filters are incompatible with " +
+                                            cmdType + ".");
+                                }
+                                String[] listTokens = input.split("/added", 2);
+                                listTokens = listTokens[1].trim().split("/", 2);
+                                addedFilter = DateParser.understandDateInput(listTokens[0].trim() + " 00:00");
+                            }
+
+                            if(noteFilter == null && textFilter == null && dateFilter == null && addedFilter == null) {
+                                throw new CommandException("There seems to be invalid characters behind " +
                                         cmdType + ".");
                             }
 
-                            return new ListCommand(cmdType, noteFilter, textFilter, dateFilter,
+                            return new ListCommand(cmdType, noteFilter, textFilter, dateFilter, addedFilter,
                                     CmdType.getTimelineDays(cmdType));
                         }
                     }
                     case "LISTNXT24", "LISTNXT48", "LISTNXT72" -> {
-                        String noteFilter = null;;
+                        String noteFilter = null;
                         String textFilter = null;
                         Date dateFilter = new Date();
+                        Date addedFilter = null;
                         if (inputTokens.length == 1) {
                             return new ListCommand(cmdType, dateFilter, CmdType.getTimelineDays(cmdType));
                         } else {
@@ -129,12 +140,22 @@ public interface DukeParser extends DukeUI, DateParser {
                                         cmdType + ".");
                             }
 
-                            if(textFilter == null && noteFilter == null) {
-                                throw new CommandException("There seems to be invalid characters behind" +
+                            if(input.contains("/added")) {
+                                if(CmdType.getCommand(cmdType).equals("#shoplist")) {
+                                    throw new CommandException("Date filters are incompatible with " +
+                                            cmdType + ".");
+                                }
+                                String[] listTokens = input.split("/added", 2);
+                                listTokens = listTokens[1].trim().split("/", 2);
+                                addedFilter = DateParser.understandDateInput(listTokens[0].trim() + " 00:00");
+                            }
+
+                            if(noteFilter == null && textFilter == null && addedFilter == null) {
+                                throw new CommandException("There seems to be invalid characters behind " +
                                         cmdType + ".");
                             }
 
-                            return new ListCommand(cmdType, noteFilter, textFilter, dateFilter,
+                            return new ListCommand(cmdType, noteFilter, textFilter, dateFilter, addedFilter,
                                     CmdType.getTimelineDays(cmdType));
                         }
                     }
@@ -347,7 +368,6 @@ public interface DukeParser extends DukeUI, DateParser {
                         int from;
                         int to;
                         double amount;
-                        ArrayList<String> transferInputs = new ArrayList<>();
                         if (inputTokens.length == 1) {
                             throw new CommandException("There seems to be insufficient attributes behind " +
                                     cmdType + ".");

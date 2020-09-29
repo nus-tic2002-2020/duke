@@ -26,8 +26,9 @@ public class DukeList {
      * This method is used to initialise a {@code DukeList} object.
      *
      */
+    @SuppressWarnings("unused")
     public DukeList() {
-        notes = new ArrayList<Task>();
+        notes = new ArrayList<>();
     }
 
     /**

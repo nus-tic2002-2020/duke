@@ -13,7 +13,7 @@ public class DateParserTest {
     @Test
     void dateTest() throws ParseException, CommandException {
 
-        String input = "09/08/20 6pm";
+        String input = "28th of september";
         Date results = DateParser.understandDateInput(input);
         System.out.println(DukeUI.INPUT_TIME.format(results));
     }

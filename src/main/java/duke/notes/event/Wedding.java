@@ -33,7 +33,7 @@ public class Wedding extends Event {
      * @param addDate The date and time the note was added.
      */
     public Wedding(int serialNum, String description, Date startDate, Date endDate,
-                   double itemBudget, Date addDate) throws DateException {
+                   double itemBudget, Date addDate) {
         super(serialNum, description, startDate, endDate, addDate);
         this.itemBudget = new Budget(itemBudget);
     }
@@ -42,6 +42,7 @@ public class Wedding extends Event {
      * This method is used to initialise a {@code Wedding} object.
      *
      */
+    @SuppressWarnings("unused")
     public Wedding() {
         super();
     }

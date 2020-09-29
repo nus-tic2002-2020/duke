@@ -30,6 +30,7 @@ public abstract class DukeCommand {
     /**
      * This method initialises a {@code DukeCommand} object.
      */
+    @SuppressWarnings("unused")
     public DukeCommand() {}
 
     //METHODS-------------------------------------------

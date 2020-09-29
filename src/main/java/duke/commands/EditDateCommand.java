@@ -40,6 +40,7 @@ public class EditDateCommand extends DukeCommand implements DukeUI {
     /**
      * This method initialises a {@code EditDateCommand} object.
      */
+    @SuppressWarnings("unused")
     public EditDateCommand() { super(); }
 
 

@@ -54,7 +54,8 @@ public class DukeStorage implements DukeUI {
         }
 
         File fileDir = new File(path.substring(0, lastSlash));
-        if(!fileDir.exists()){ fileDir.mkdirs(); }
+        if(!fileDir.exists()){ //noinspection ResultOfMethodCallIgnored
+            fileDir.mkdirs(); }
 
         this.file = new File(path);
         this.path = path;
@@ -67,6 +68,7 @@ public class DukeStorage implements DukeUI {
      * This method is used to initialise a {@code DukeStorage} object.
      *
      */
+    @SuppressWarnings("unused")
     public DukeStorage(){}
 
     //GET STATEMENTS----------------------------------
@@ -122,6 +124,7 @@ public class DukeStorage implements DukeUI {
      */
     public void setFile(File file) { this.file = file; }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void deleteFiles() {
         if(this.file != null) { this.file.delete(); }
         if(this.lastSave != null) { this.lastSave.delete(); }

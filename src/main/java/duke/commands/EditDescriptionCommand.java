@@ -36,6 +36,7 @@ public class EditDescriptionCommand extends DukeCommand {
     /**
      * This method initialises a {@code EditDescriptionCommand} object.
      */
+    @SuppressWarnings("unused")
     public EditDescriptionCommand() { super(); }
 
     //METHODS-------------------------------------------

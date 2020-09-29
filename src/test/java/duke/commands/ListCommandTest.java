@@ -25,7 +25,7 @@ public class ListCommandTest {
     }
 
     @Test
-    void selectionSortBudgetsTest() throws DateException {
+    void selectionSortBudgetsTest() {
 
         testNotes = new DukeList();
         ListCommand test = new ListCommand();

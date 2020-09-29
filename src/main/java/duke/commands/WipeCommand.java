@@ -1,9 +1,6 @@
 package duke.commands;
 
 import duke.Duke;
-import duke.budget.Budget;
-import duke.notes.event.Event;
-import duke.notes.todo.Todo;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
@@ -33,11 +30,13 @@ public class WipeCommand extends DukeCommand implements DukeUI {
      */
     public WipeCommand(String cmdType) {
         super(cmdType);
+        this.confirmWipe = false;
     }
 
     /**
      * This method initialises a {@code WipeCommand} object.
      */
+    @SuppressWarnings("unused")
     public WipeCommand( ) { super(); }
 
 
@@ -83,7 +82,7 @@ public class WipeCommand extends DukeCommand implements DukeUI {
         }
 
         if(this.confirmWipe) {
-            ArrayList<Integer> dukeMemory = new ArrayList<Integer>();
+            ArrayList<Integer> dukeMemory = new ArrayList<>();
             for(int i=0; i<dukeNotes.getNotes().size(); i++) {
                 int serialNum = dukeNotes.getNotes().get(i).getSerialNum();
                 dukeMemory.add(serialNum);

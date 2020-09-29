@@ -25,12 +25,12 @@ public class InfoCommand extends DukeCommand implements DukeUI {
 
         super(cmdType);
         this.infoType = infoType;
-        ;
     }
 
     /**
      * This method initialises a {@code InfoCommand} object.
      */
+    @SuppressWarnings("unused")
     public InfoCommand() { super(); }
 
 

@@ -46,6 +46,7 @@ public abstract class Note implements Task {
      * This method is used to initialise the various type of notes
      * that extends the {@code Note} class.
      */
+    @SuppressWarnings("unused")
     public Note() {}
 
 
@@ -126,16 +127,6 @@ public abstract class Note implements Task {
      */
     public boolean getIsDone() {
         return (this.isDone);
-    }
-
-    /**
-     * This method is used to retrieve the {@code Date} object reflecting
-     * the date the {@code Note} object was completed.
-     *
-     * @return Date The {@code Date} object reflecting the date the {@code Note} object was completed.
-     */
-    public Date getDoneDate() {
-        return (this.doneDate);
     }
 
     /**

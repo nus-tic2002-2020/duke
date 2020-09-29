@@ -19,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DukeTest {
 
-    protected static DukeStorage testStorage = new DukeStorage("data/testnotes.txt");
-    protected static DukeList testNotes = new DukeList();
+    protected static final DukeStorage testStorage = new DukeStorage("data/testnotes.txt");
+    protected static final DukeList testNotes = new DukeList();
     protected static final Date testStart = new Date();
 
     protected static Date fromTestStart(double days) {
@@ -29,7 +29,7 @@ public class DukeTest {
     }
 
     @BeforeAll
-    public static void initNotes() throws DateException {
+    public static void initNotes() {
 
         testNotes.getNotes().add(new Bill(testNotes.getNotes().size()+1, "Bill test #0",
                 fromTestStart(0.8), 780.27, testStart));

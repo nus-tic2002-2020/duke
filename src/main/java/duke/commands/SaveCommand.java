@@ -29,6 +29,7 @@ public class SaveCommand extends DukeCommand implements DukeUI {
     /**
      * This method initialises a {@code SaveCommand} object.
      */
+    @SuppressWarnings("unused")
     public SaveCommand() { super(); }
 
     //METHODS-------------------------------------------

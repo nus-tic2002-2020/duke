@@ -57,7 +57,7 @@ public class MainWindow extends AnchorPane {
             this.dialogueContainer.getChildren().addAll(
                     DukeDialogueBox.getUserDialogue(userText, userImage)
             );
-            handleDukeReply(Duke.getResponse(userText));
+            handleDukeReply(duke.getResponse(userText));
         }
     }
 

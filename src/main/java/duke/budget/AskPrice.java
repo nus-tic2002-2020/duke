@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  */
 public class AskPrice extends Application {
 
-    String itemName;
+    final String itemName;
     FXMLLoader fxmlLoader;
 
     public AskPrice(String itemName){

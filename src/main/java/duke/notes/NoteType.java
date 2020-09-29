@@ -8,6 +8,7 @@ import duke.commands.CommandException;
  * @author tanqiuyu
  * @since 2020-09-16
  */
+@SuppressWarnings("unused")
 public enum NoteType {
 
     BILL("Bill", "@bill", "@bl", "[BL]",

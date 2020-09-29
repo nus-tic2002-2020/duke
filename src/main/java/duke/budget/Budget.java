@@ -1,7 +1,5 @@
 package duke.budget;
 
-import duke.commands.CommandException;
-
 /**
  * An object that records and measures the budget performance of a task.
  *
@@ -16,7 +14,7 @@ import duke.commands.CommandException;
 public class Budget {
 
     //VARIABLES-----------------------------------------
-    private double budgetSet;
+    private final double budgetSet;
     private double budgetRevised;
     private double budgetUsed = 0;
     private double budgetBalance = 0;
@@ -40,12 +38,6 @@ public class Budget {
         this.budgetRevised = this.budgetSet;
         totalBudgetSet = totalBudgetSet + budgetSet;
     }
-
-    /**
-     * This method is used to initialise a {@code Budget} object.
-     *
-     */
-    public Budget() {}
 
     /**
      * This method is used to construct a {@code Budget} object based on information from a saved file.
@@ -73,18 +65,6 @@ public class Budget {
     }
 
     //SET STATEMENTS------------------------------------
-    /**
-     * This method is used to set or reset the initial budget amount.
-     *
-     * @param budgetSet The initial budget amount set.
-     */
-    public void setBudgetSet(double budgetSet) {
-        this.budgetSet = budgetSet;
-        this.budgetBalance = this.budgetSet - budgetUsed;
-        this.isOverBudget = this.budgetBalance < 0;
-        totalBudgetSet = totalBudgetSet + budgetSet;
-    }
-
     /**
      * This method is used to record the amount of budget used upon completion of the task.
      *
@@ -203,15 +183,6 @@ public class Budget {
     }
 
     /**
-     * This method is used to retrieve the amount of budget not utilised.
-     *
-     * @return double The amount of budget not utilised.
-     */
-    public double getBudgetBalance(){
-        return this.budgetBalance;
-    }
-
-    /**
      * This method is to retrieve the revision status of the {@code Budget} object
      * (i.e. whether the initial budget amount has been revised).
      *
@@ -238,6 +209,7 @@ public class Budget {
      * @return String The {@code Budget} object as a string in a format
      * readable and re-constructable as a {@code Budget} object.
      */
+    @SuppressWarnings("UnnecessaryLocalVariable")
     public String getSaveText() {
         String text = this.budgetSet + "/" +
                 this.budgetRevised + "/" +

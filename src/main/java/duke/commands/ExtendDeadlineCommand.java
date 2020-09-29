@@ -39,6 +39,7 @@ public class ExtendDeadlineCommand extends DukeCommand implements DukeUI{
     /**
      * This method initialises a {@code ExtendDeadlineCommand} object.
      */
+    @SuppressWarnings("unused")
     public ExtendDeadlineCommand() { super(); }
 
     //METHODS-------------------------------------------

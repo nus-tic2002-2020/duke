@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 
 public class DukeListBox extends HBox {
 
+    @SuppressWarnings("unused")
     @FXML
     private Label text;
 

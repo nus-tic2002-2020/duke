@@ -40,6 +40,7 @@ public class TransferCommand extends DukeCommand implements DukeUI {
     /**
      * This method initialises a {@code TransferCommand} object.
      */
+    @SuppressWarnings("unused")
     public TransferCommand() { super(); }
 
     //METHODS-------------------------------------------

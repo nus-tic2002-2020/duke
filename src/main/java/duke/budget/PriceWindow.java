@@ -20,10 +20,9 @@ public class PriceWindow extends AnchorPane {
     private Label itemName;
     private String inputPrice;
 
+    @SuppressWarnings("EmptyMethod")
     @FXML
-    public void initialize() {
-
-    }
+    public void initialize() { }
 
     @FXML
     private void getPriceInput() {

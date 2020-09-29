@@ -10,7 +10,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="300.0" style="-fx-background-color: #e9ecf5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="duke.budget.PriceWindow">
     <children>
-        <Label fx:id="itemName" alignment="CENTER" layoutX="10.0" layoutY="60.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="280.0" style="-fx-border-radius: 5; -fx-border-color: #f2cc8f; -fx-padding: 2; -fx-background-color: #FFFFFF; -fx-background-radius: 5;" text="" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0">
+        <Label fx:id="itemName" alignment="CENTER" layoutX="10.0" layoutY="60.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="280.0" style="-fx-border-radius: 5; -fx-border-color: #f2cc8f; -fx-padding: 2; -fx-background-color: #FFFFFF; -fx-background-radius: 5;"
+               textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0">
          <font>
             <Font name="Consolas Bold" size="16.0" />
          </font>

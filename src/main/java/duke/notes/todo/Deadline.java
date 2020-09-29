@@ -43,6 +43,7 @@ public class Deadline extends Todo {
      * This method is used to initialise a {@code Deadline} object.
      *
      */
+    @SuppressWarnings("unused")
     public Deadline() {
         super();
     }
@@ -97,6 +98,7 @@ public class Deadline extends Todo {
             throw new DateException(targetDate, "TargetDate");
         } else {
             this.targetDate = targetDate;
+            this.timesExtended++;
         }
     }
 

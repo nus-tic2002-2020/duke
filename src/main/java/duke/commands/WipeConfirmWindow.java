@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 /**
  * Controller for {@code WipeConfirm}. Provides the layout for the other controls.
  */
+@SuppressWarnings("unused")
 public class WipeConfirmWindow extends AnchorPane {
 
     @FXML
@@ -18,10 +19,9 @@ public class WipeConfirmWindow extends AnchorPane {
 
     private boolean isConfirmed;
 
+    @SuppressWarnings("EmptyMethod")
     @FXML
-    public void initialize() {
-
-    }
+    public void initialize() { }
 
     @FXML
     private void exitConfirm() {

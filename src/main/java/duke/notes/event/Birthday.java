@@ -1,6 +1,5 @@
 package duke.notes.event;
 
-import duke.commands.DateException;
 import java.util.Date;
 
 /**
@@ -27,7 +26,7 @@ public class Birthday extends Event {
      * @param addDate The date and time the note was added.
      */
     public Birthday(int serialNum, String description, Date startDate, Date endDate,
-                    Date addDate) throws DateException {
+                    Date addDate) {
         super(serialNum, description, startDate, endDate, addDate);
 
     }
@@ -36,6 +35,7 @@ public class Birthday extends Event {
      * This method is used to initialise a {@code Birthday} object.
      *
      */
+    @SuppressWarnings("unused")
     public Birthday() { super(); }
 
     /**

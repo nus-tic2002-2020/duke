@@ -13,8 +13,8 @@ import javafx.stage.Stage;
  */
 public class DeleteConfirm extends Application {
 
+    final String notes;
     FXMLLoader fxmlLoader;
-    String notes;
 
     public DeleteConfirm(String notes){
         this.notes = notes;

@@ -79,11 +79,11 @@ public interface DukeUI {
                     "\n" +
                     "              --------------------------------------------------------\n" +
                     "              Attributes Available:\n" +
-                    "               Budget           -->    /for $   <$X.xx>\n" +
-                    "               Description      -->             <Description>\n" +
-                    "               End Date-Time    -->    /to      <dd-MMM-yyyy HH:mm>\n" +
-                    "               Start Date-Time  -->    /from    <dd-MMM-yyyy HH:mm>\n" +
-                    "               Target Date-Time -->    /by      <dd-MMM-yyyy HH:mm>\n" +
+                    "               Budget            -->    /for $   <$X.xx>\n" +
+                    "               Description       -->             <Description>\n" +
+                    "               End Date-Time     -->    /to      <dd-MMM-yyyy HH:mm>\n" +
+                    "               Start Date-Time   -->    /from    <dd-MMM-yyyy HH:mm>\n" +
+                    "               Target Date-Time  -->    /by      <dd-MMM-yyyy HH:mm>\n" +
                     "              --------------------------------------------------------\n" +
                     "\n" +
                     "        @bill          / @bl  >>> Add a new bill payment.\n" +
@@ -114,51 +114,52 @@ public interface DukeUI {
                     "\n" +
                     "              --------------------------------------------------------\n" +
                     "              Filters Available:\n" +
-                    "               Completion Status    -->    /nf      <O> or <C>\n" +
-                    "                                                     O for Outstanding\n" +
-                    "                                                     C for Completed\n" +
-                    "               Date                 -->    /on      <dd-MMM-yyyy>\n" +
-                    "               Description Text     -->    /with    <Search Text>\n" +
+                    "               Completion Status -->    /nf      <O> or <C>\n" +
+                    "                                                      O for Outstanding\n" +
+                    "                                                      C for Completed\n" +
+                    "               Added Date        -->    /added   <dd-MMM-yyyy>\n" +
+                    "               Start/Target Date -->    /on      <dd-MMM-yyyy>\n" +
+                    "               Description Text  -->    /with    <Search Text>\n" +
                     "              --------------------------------------------------------\n" +
                     "                   \u2714 Required     \u271C Optional     \u2718 Not Available\n" +
                     "              --------------------------------------------------------\n" +
                     "\n" +
                     "        #listbills     / #lbp >>> List bill payments.\n" +
-                    "          [\u271C] Completion Status   [\u271C] Date\n" +
-                    "          [\u271C] Description Text\n" +
+                    "          [\u271C] Completion Status  [\u271C] Added Date\n" +
+                    "          [\u271C] Start/Target Date  [\u271C] Description Text\n" +
                     "        #listbirthdays / #lbd >>> List birthdays.\n" +
-                    "          [\u271C] Completion Status   [\u271C] Date\n" +
-                    "          [\u271C] Description Text\n" +
+                    "          [\u271C] Completion Status  [\u271C] Added Date\n" +
+                    "          [\u271C] Start/Target Date  [\u271C] Description Text\n" +
                     "        #listbudgets   / #lbg >>> List budgets set.\n" +
-                    "          [\u271C] Completion Status   [\u271C] Date\n" +
-                    "          [\u271C] Description Text\n" +
+                    "          [\u271C] Completion Status  [\u271C] Added Date\n" +
+                    "          [\u271C] Start/Target Date  [\u271C] Description Text\n" +
                     "        #listdeadlines / #ldl >>> List deadlines.\n" +
-                    "          [\u271C] Completion Status   [\u271C] Date\n" +
-                    "          [\u271C] Description Text\n" +
+                    "          [\u271C] Completion Status  [\u271C] Added Date\n" +
+                    "          [\u271C] Start/Target Date  [\u271C] Description Text\n" +
                     "        #listevents    / #lev >>> List events.\n" +
-                    "          [\u271C] Completion Status   [\u271C] Date\n" +
-                    "          [\u271C] Description Text\n" +
+                    "          [\u271C] Completion Status  [\u271C] Added Date\n" +
+                    "          [\u271C] Start/Target Date  [\u271C] Description Text\n" +
                     "        #listnotes     / #lnt >>> List notes.\n" +
-                    "          [\u271C] Completion Status   [\u271C] Date\n" +
-                    "          [\u271C] Description Text\n" +
+                    "          [\u271C] Completion Status  [\u271C] Added Date\n" +
+                    "          [\u271C] Start/Target Date  [\u271C] Description Text\n" +
                     "        #listnxt24     / #n24 >>> List deadlines & events in 24 hours.\n" +
-                    "          [\u271C] Completion Status   [\u2718] Date\n" +
-                    "          [\u271C] Description Text\n" +
+                    "          [\u271C] Completion Status  [\u271C] Added Date\n" +
+                    "          [\u2718] Start/Target Date  [\u271C] Description Text\n" +
                     "        #listnxt48     / #n48 >>> List deadlines & events in 48 hours.\n" +
-                    "          [\u271C] Completion Status   [\u2718] Date\n" +
-                    "          [\u271C] Description Text\n" +
+                    "          [\u271C] Completion Status  [\u271C] Added Date\n" +
+                    "          [\u2718] Start/Target Date  [\u271C] Description Text\n" +
                     "        #listnxt72     / #n72 >>> List deadlines & events in 72 hours.\n" +
-                    "          [\u271C] Completion Status   [\u2718] Date\n" +
-                    "          [\u271C] Description Text\n" +
+                    "          [\u271C] Completion Status  [\u271C] Added Date\n" +
+                    "          [\u271C] Start/Target Date  [\u271C] Description Text\n" +
                     "        #listshoplists / #lsl >>> List shopping list items.\n" +
-                    "          [\u271C] Completion Status   [\u2718] Date\n" +
-                    "          [\u271C] Description Text\n" +
+                    "          [\u271C] Completion Status  [\u271C] Added Date\n" +
+                    "          [\u2718] Start/Target Date  [\u271C] Description Text\n" +
                     "        #listtodos     / #ltd >>> List todo tasks.\n" +
-                    "          [\u271C] Completion Status   [\u271C] Date\n" +
-                    "          [\u271C] Description Text\n" +
+                    "          [\u271C] Completion Status  [\u271C] Added Date\n" +
+                    "          [\u271C] Start/Target Date  [\u271C] Description Text\n" +
                     "        #listweddings  / #lwd >>> List weddings.\n" +
-                    "          [\u271C] Completion Status   [\u271C] Date\n" +
-                    "          [\u271C] Description Text\n" +
+                    "          [\u271C] Completion Status  [\u271C] Added Date\n" +
+                    "          [\u271C] Start/Target Date  [\u271C] Description Text\n" +
                     "\n";
 
     String DUKE_MGMT =

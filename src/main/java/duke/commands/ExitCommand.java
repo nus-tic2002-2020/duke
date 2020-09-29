@@ -1,7 +1,6 @@
 package duke.commands;
 
 import duke.Duke;
-import duke.budget.AskPrice;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
@@ -33,6 +32,7 @@ public class ExitCommand extends DukeCommand implements DukeUI {
     /**
      * This method initialises a {@code ExitCommand} object.
      */
+    @SuppressWarnings("unused")
     public ExitCommand() {
         super();
     }

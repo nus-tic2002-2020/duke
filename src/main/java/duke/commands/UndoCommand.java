@@ -30,11 +30,13 @@ public class UndoCommand extends DukeCommand implements DukeUI {
      */
     public UndoCommand(String cmdType) {
         super(cmdType);
+        this.confirmUndo = false;
     }
 
     /**
      * This method initialises a {@code UndoLastCommand} object.
      */
+    @SuppressWarnings("unused")
     public UndoCommand() { super(); }
 
     //METHODS-------------------------------------------
@@ -73,9 +75,7 @@ public class UndoCommand extends DukeCommand implements DukeUI {
         if(this.confirmUndo) {
 
             switch (dukeStorage.revertToLastSave(dukeNotes)) {
-                case -1 -> {
-                    System.out.println("    I have undone the maximum number of times.\n");
-                }
+                case -1 -> System.out.println("    I have undone the maximum number of times.\n");
                 case 0 -> {
                     System.out.println("    I have undone the last save operation.");
                     System.out.println("    You have no more opportunities to undo.\n");
