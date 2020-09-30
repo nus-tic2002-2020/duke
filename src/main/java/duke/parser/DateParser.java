@@ -15,37 +15,62 @@ public interface DateParser extends DukeUI {
     SimpleDateFormat UNDERSTOOD_DAYM = new SimpleDateFormat("dd");
     SimpleDateFormat UNDERSTOOD_MONTH = new SimpleDateFormat("MMM");
     SimpleDateFormat UNDERSTOOD_YEAR = new SimpleDateFormat("yyyy");
-    SimpleDateFormat UNDERSTOOD_DAYW = new SimpleDateFormat("EEEEE");
+    SimpleDateFormat UNDERSTOOD_DAYW_FULL = new SimpleDateFormat("EEEEE");
+    SimpleDateFormat UNDERSTOOD_DAYW_PART = new SimpleDateFormat("E");
     SimpleDateFormat UNDERSTOOD_TIME = new SimpleDateFormat("HH:mm");
 
 
     static boolean checkForDayW(String input, HashMap<String, String> understoodDate) {
 
         if(input == null) { return false; }
+
         Date now = new Date();
+        Date ytd = new Date(now.getTime() - 86400000);
         Date tmr = new Date(now.getTime() + 86400000);
-        if (input.toUpperCase().equals("TODAY")) {
-            understoodDate.replace("day", UNDERSTOOD_DAYM.format(now));
-            understoodDate.replace("month", UNDERSTOOD_MONTH.format(now));
-            understoodDate.replace("year", UNDERSTOOD_YEAR.format(now));
-            return true;
-        } else if (input.toUpperCase().equals("TOMORROW")) {
-            understoodDate.replace("day", UNDERSTOOD_DAYM.format(tmr));
-            understoodDate.replace("month", UNDERSTOOD_MONTH.format(tmr));
-            understoodDate.replace("year", UNDERSTOOD_YEAR.format(tmr));
-            return true;
-        } else {
-            for (int i = 1; i < 8; i++) {
-                Date next = new Date(now.getTime() + (i * 86400000));
-                String nextDay = UNDERSTOOD_DAYW.format(next).toUpperCase();
-                if (input.toUpperCase().equals(nextDay)) {
-                    understoodDate.replace("day", UNDERSTOOD_DAYM.format(next));
-                    understoodDate.replace("month", UNDERSTOOD_MONTH.format(next));
-                    understoodDate.replace("year", UNDERSTOOD_YEAR.format(next));
-                    return true;
-                }
+
+        String[] today = {"TODAY", "TDY"};
+        String[] yesterday = {"YESTERDAY", "YTD"};
+        String[] tomorrow = {"TOMORROW", "TMR", "TML", "TMRW"};
+
+        for(String word: today) {
+            if (input.toUpperCase().equals(word)) {
+                understoodDate.replace("day", UNDERSTOOD_DAYM.format(now));
+                understoodDate.replace("month", UNDERSTOOD_MONTH.format(now));
+                understoodDate.replace("year", UNDERSTOOD_YEAR.format(now));
+                return true;
             }
         }
+
+        for(String word: yesterday) {
+            if (input.toUpperCase().equals(word)) {
+                understoodDate.replace("day", UNDERSTOOD_DAYM.format(ytd));
+                understoodDate.replace("month", UNDERSTOOD_MONTH.format(ytd));
+                understoodDate.replace("year", UNDERSTOOD_YEAR.format(ytd));
+                return true;
+            }
+        }
+
+        for(String word: tomorrow) {
+            if (input.toUpperCase().equals(word)) {
+                understoodDate.replace("day", UNDERSTOOD_DAYM.format(tmr));
+                understoodDate.replace("month", UNDERSTOOD_MONTH.format(tmr));
+                understoodDate.replace("year", UNDERSTOOD_YEAR.format(tmr));
+                return true;
+            }
+        }
+
+        for (int i = 1; i < 8; i++) {
+            Date next = new Date(now.getTime() + (i * 86400000));
+            String nextDay_Full = UNDERSTOOD_DAYW_FULL.format(next).toUpperCase();
+            String nextDay_Part = UNDERSTOOD_DAYW_PART.format(next).toUpperCase();
+            if (input.toUpperCase().equals(nextDay_Full) || input.toUpperCase().equals(nextDay_Part)) {
+                understoodDate.replace("day", UNDERSTOOD_DAYM.format(next));
+                understoodDate.replace("month", UNDERSTOOD_MONTH.format(next));
+                understoodDate.replace("year", UNDERSTOOD_YEAR.format(next));
+                return true;
+            }
+        }
+
         return false;
     }
 
