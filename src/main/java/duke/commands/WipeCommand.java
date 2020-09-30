@@ -7,6 +7,7 @@ import duke.ui.DukeUI;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -59,7 +60,7 @@ public class WipeCommand extends DukeCommand implements DukeUI {
      * @exception CommandException If there are errors in the command input.
      */
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage)
-            throws CommandException {
+            throws CommandException, IOException {
 
         if(Duke.isGUIMode) {
             WipeConfirm wipeConfirm = new WipeConfirm();

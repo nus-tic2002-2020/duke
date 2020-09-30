@@ -7,6 +7,7 @@ import duke.ui.DukeUI;
 import javafx.stage.Stage;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -54,7 +55,7 @@ public class DeleteCommand extends DukeCommand implements DukeUI {
      * @exception IndexOutOfBoundsException If the note specified does not exist.
      */
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage)
-            throws CommandException, IndexOutOfBoundsException {
+            throws CommandException, IndexOutOfBoundsException, IOException {
 
         ByteArrayOutputStream popupOut = new ByteArrayOutputStream();
         final PrintStream orgOut = System.out;

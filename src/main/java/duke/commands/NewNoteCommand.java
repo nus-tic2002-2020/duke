@@ -133,108 +133,103 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
      * @exception ParseException If there are errors reading previously saved files.
      */
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage)
-            throws CommandException, ParseException {
+            throws CommandException, ParseException, DateException {
 
-        try {
-            DukeUI.printDivider();
-            Date addDate = new Date();
-            int nextSerialNum = dukeNotes.getNotes().size() + 1;
-            ArrayList<Task> notes = new ArrayList<>();
-            switch (NoteType.getKey(this.cmdType).toString()) {
-                case "BILL" -> {
-                    String description = inputs.get(1);
-                    Date targetDate = DateParser.understandDateInput(inputs.get(2));
-                    double itemBudget = Double.parseDouble(inputs.get(3));
+        DukeUI.printDivider();
+        Date addDate = new Date();
+        int nextSerialNum = dukeNotes.getNotes().size() + 1;
+        ArrayList<Task> notes = new ArrayList<>();
+        switch (NoteType.getKey(this.cmdType).toString()) {
+            case "BILL" -> {
+                String description = inputs.get(1);
+                Date targetDate = DateParser.understandDateInput(inputs.get(2));
+                double itemBudget = Double.parseDouble(inputs.get(3));
 
-                    checkValidDescription(description);
-                    checkValidTargetDate(targetDate);
-                    checkValidAmount(itemBudget);
+                checkValidDescription(description);
+                checkValidTargetDate(targetDate);
+                checkValidAmount(itemBudget);
 
-                    Task note1 = new Bill(nextSerialNum, description, targetDate, itemBudget, addDate);
-                    notes.add(note1);
+                Task note1 = new Bill(nextSerialNum, description, targetDate, itemBudget, addDate);
+                notes.add(note1);
 
-                }
-                case "BIRTHDAY" -> {
-                    String description = inputs.get(1);
-                    String giftDescription = "Birthday gift for " + description;
-                    Date startDate = DateParser.understandDateInput(inputs.get(2));
-                    Date endDate = DateParser.understandDateInput(inputs.get(3));
-                    double itemBudget = Double.parseDouble(inputs.get(4));
-
-                    checkValidDescription(description);
-                    checkForClashes(dukeNotes, startDate, endDate);
-                    checkValidAmount(itemBudget);
-
-                    Task note1 = new Shoplist(nextSerialNum, giftDescription, itemBudget, addDate);
-                    notes.add(note1);
-                    Task note2 = new Birthday(nextSerialNum+1, description, startDate, endDate, addDate);
-                    notes.add(note2);
-                }
-                case "DEADLINE" -> {
-                    String description = inputs.get(1);
-                    Date targetDate = DateParser.understandDateInput(inputs.get(2));
-
-                    checkValidDescription(description);
-                    checkValidTargetDate(targetDate);
-
-                    Task note1 = new Deadline(nextSerialNum, description, targetDate, addDate);
-                    notes.add(note1);
-                }
-                case "EVENT" -> {
-                    String description = inputs.get(1);
-                    Date startDate = DateParser.understandDateInput(inputs.get(2));
-                    Date endDate = DateParser.understandDateInput(inputs.get(3));
-
-                    checkValidDescription(description);
-                    checkForClashes(dukeNotes, startDate, endDate);
-
-                    Task note1 = new Event(nextSerialNum, description, startDate, endDate, addDate);
-                    notes.add(note1);
-                }
-                case "SHOPLIST" -> {
-                    String description = inputs.get(1);
-                    double itemBudget = Double.parseDouble(inputs.get(2));
-
-                    checkValidDescription(description);
-                    checkValidAmount(itemBudget);
-
-                    Task note1 = new Shoplist(nextSerialNum, description, itemBudget, addDate);
-                    notes.add(note1);
-                }
-                case "TODO" -> {
-                    String description = inputs.get(1);
-
-                    checkValidDescription(description);
-
-                    Task note1 = new Todo(nextSerialNum, description, addDate);
-                    notes.add(note1);
-                }
-                case "WEDDING" -> {
-                    String description = inputs.get(1);
-                    Date startDate = DateParser.understandDateInput(inputs.get(2));
-                    Date endDate = DateParser.understandDateInput(inputs.get(3));
-                    double itemBudget = Double.parseDouble(inputs.get(4));
-
-                    checkValidDescription(description);
-                    checkForClashes(dukeNotes, startDate, endDate);
-                    checkValidAmount(itemBudget);
-
-                    Task note1 = new Wedding(nextSerialNum, description, startDate, endDate, itemBudget, addDate);
-                    notes.add(note1);
-                }
             }
-            for(int i=0; i < notes.size(); i++) {
-                DukeUI.addConfirm(notes.get(i).getObjectClass());
-                dukeNotes.getNotes().add(notes.get(i));
-                dukeNotes.getNotes().get(nextSerialNum + i - 1).printList();
-            }
-            DukeUI.printOutstanding();
-            DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
-            DukeUI.suggestListNotes();
-            DukeUI.printDivider();
+            case "BIRTHDAY" -> {
+                String description = inputs.get(1);
+                String giftDescription = "Birthday gift for " + description;
+                Date startDate = DateParser.understandDateInput(inputs.get(2));
+                Date endDate = DateParser.understandDateInput(inputs.get(3));
+                double itemBudget = Double.parseDouble(inputs.get(4));
 
-        } catch (DateException e) {
-            e.printExplanation();
+                checkValidDescription(description);
+                checkForClashes(dukeNotes, startDate, endDate);
+                checkValidAmount(itemBudget);
+
+                Task note1 = new Shoplist(nextSerialNum, giftDescription, itemBudget, addDate);
+                notes.add(note1);
+                Task note2 = new Birthday(nextSerialNum+1, description, startDate, endDate, addDate);
+                notes.add(note2);
+            }
+            case "DEADLINE" -> {
+                String description = inputs.get(1);
+                Date targetDate = DateParser.understandDateInput(inputs.get(2));
+
+                checkValidDescription(description);
+                checkValidTargetDate(targetDate);
+
+                Task note1 = new Deadline(nextSerialNum, description, targetDate, addDate);
+                notes.add(note1);
+            }
+            case "EVENT" -> {
+                String description = inputs.get(1);
+                Date startDate = DateParser.understandDateInput(inputs.get(2));
+                Date endDate = DateParser.understandDateInput(inputs.get(3));
+
+                checkValidDescription(description);
+                checkForClashes(dukeNotes, startDate, endDate);
+
+                Task note1 = new Event(nextSerialNum, description, startDate, endDate, addDate);
+                notes.add(note1);
+            }
+            case "SHOPLIST" -> {
+                String description = inputs.get(1);
+                double itemBudget = Double.parseDouble(inputs.get(2));
+
+                checkValidDescription(description);
+                checkValidAmount(itemBudget);
+
+                Task note1 = new Shoplist(nextSerialNum, description, itemBudget, addDate);
+                notes.add(note1);
+            }
+            case "TODO" -> {
+                String description = inputs.get(1);
+
+                checkValidDescription(description);
+
+                Task note1 = new Todo(nextSerialNum, description, addDate);
+                notes.add(note1);
+            }
+            case "WEDDING" -> {
+                String description = inputs.get(1);
+                Date startDate = DateParser.understandDateInput(inputs.get(2));
+                Date endDate = DateParser.understandDateInput(inputs.get(3));
+                double itemBudget = Double.parseDouble(inputs.get(4));
+
+                checkValidDescription(description);
+                checkForClashes(dukeNotes, startDate, endDate);
+                checkValidAmount(itemBudget);
+
+                Task note1 = new Wedding(nextSerialNum, description, startDate, endDate, itemBudget, addDate);
+                notes.add(note1);
+            }
         }
+        for(int i=0; i < notes.size(); i++) {
+            DukeUI.addConfirm(notes.get(i).getObjectClass());
+            dukeNotes.getNotes().add(notes.get(i));
+            dukeNotes.getNotes().get(nextSerialNum + i - 1).printList();
+        }
+        DukeUI.printOutstanding();
+        DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
+        DukeUI.suggestListNotes();
+        DukeUI.printDivider();
     }
 }

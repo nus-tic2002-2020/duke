@@ -34,7 +34,7 @@ public class MainWindow extends AnchorPane {
     private static final Image dukeImage = new Image(MainWindow.class.getResourceAsStream("/images/DPDuke.PNG"));
 
     @FXML
-    public void initialize() throws ParseException, CommandException {
+    public void initialize() throws ParseException, CommandException, IOException {
         this.scrollPane.vvalueProperty().bind(this.dialogueContainer.heightProperty());
         handleDukeReply(Duke.startUp());
     }
@@ -62,12 +62,12 @@ public class MainWindow extends AnchorPane {
     }
 
     @FXML
-    private void handleDukeReply(String dukeText) {
+    private void handleDukeReply(String dukeText) throws IOException {
 
         this.dialogueContainer.getChildren().addAll(
             DukeDialogueBox.getDukeDialogue(dukeText, dukeImage)
         );
-        if(Duke.getConfirmExit()) {
+        if(Duke.getIsConfirmedExit()) {
             Stage stage = (Stage) this.userInput.getScene().getWindow();
             stage.close();
         }

@@ -7,6 +7,7 @@ import duke.commands.DukeCommand;
 import duke.notes.event.Event;
 import duke.notes.todo.Todo;
 import duke.parser.DukeParser;
+import duke.parser.PrefixException;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
@@ -30,7 +31,8 @@ public class Duke implements DukeParser, DukeUI {
     private static DukeList dukeNotes;
     private static boolean isLoadedFromFile;
     public static boolean isGUIMode;
-    private static boolean confirmExit = false;
+    private static boolean isConfirmedExit = false;
+    private static boolean isErrorReturn = false;
 
 
     //RUN DUKE------------------------------------------
@@ -78,13 +80,12 @@ public class Duke implements DukeParser, DukeUI {
         //Run startup sequence
         DukeUI.printOnStartup(now, isLoadedFromFile);
 
-        while(!confirmExit) {
+        while(!isConfirmedExit) {
             String input = DukeUI.receiveCommand();
             try {
                 DukeCommand dukeCommand = DukeParser.readCommand(input);
-                assert dukeCommand != null : "Command cannot be null.";
                 dukeCommand.execute(dukeNotes, dukeStorage);
-                confirmExit = dukeCommand.getConfirmExit();
+                isConfirmedExit = dukeCommand.getConfirmExit();
 
             } catch (NullPointerException | IndexOutOfBoundsException e) {
                 DukeUI.printDivider();
@@ -114,6 +115,9 @@ public class Duke implements DukeParser, DukeUI {
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
+
+            } catch (PrefixException e) {
+                e.printExplanation(input);
             }
         }
     }
@@ -147,6 +151,8 @@ public class Duke implements DukeParser, DukeUI {
      */
     public String getResponse(String input) throws IOException, CommandException {
 
+        isErrorReturn = false;
+
         assert input != null;
         ByteArrayOutputStream outputGUI = new ByteArrayOutputStream();
         final PrintStream psConsole = System.out;
@@ -154,11 +160,11 @@ public class Duke implements DukeParser, DukeUI {
 
         try {
             DukeCommand dukeCommand = DukeParser.readCommand(input);
-            assert dukeCommand != null : "Command cannot be null.";
             dukeCommand.execute(dukeNotes, dukeStorage);
-            confirmExit = dukeCommand.getConfirmExit();
+            isConfirmedExit = dukeCommand.getConfirmExit();
 
         } catch (NullPointerException | IndexOutOfBoundsException e) {
+            isErrorReturn = true;
             DukeUI.printDivider();
             System.out.println("    I don't understand what you meant by...\n");
             DukeUI.commandWrap(input, 66);
@@ -170,6 +176,7 @@ public class Duke implements DukeParser, DukeUI {
             DukeUI.printDivider();
 
         } catch (NumberFormatException | ParseException e) {
+            isErrorReturn = true;
             DukeUI.printDivider();
             System.out.println("    I don't understand what you meant by...\n");
             DukeUI.commandWrap(input, 66);
@@ -179,13 +186,20 @@ public class Duke implements DukeParser, DukeUI {
             DukeUI.printDivider();
 
         } catch (CommandException e) {
+            isErrorReturn = true;
             e.printExplanation(input);
 
         } catch (DateException e) {
+            isErrorReturn = true;
             e.printExplanation();
 
         } catch (InterruptedException e) {
+            isErrorReturn = true;
             e.printStackTrace();
+
+        } catch (PrefixException e) {
+            isErrorReturn = true;
+            e.printExplanation(input);
         }
 
         System.setOut(psConsole);
@@ -197,8 +211,17 @@ public class Duke implements DukeParser, DukeUI {
      *
      * @return boolean True if an exit command is received and confirmed.
      */
-    public static boolean getConfirmExit() {
-        return confirmExit;
+    public static boolean getIsConfirmedExit() {
+        return isConfirmedExit;
+    }
+
+    /**
+     * This method is used to retrieve the status on whether a message returned by {@code Duke} is an error message.
+     *
+     * @return boolean True if message returned by {@code Duke} is an error message.
+     */
+    public static boolean getIsErrorReturn() {
+        return isErrorReturn;
     }
 
     /**

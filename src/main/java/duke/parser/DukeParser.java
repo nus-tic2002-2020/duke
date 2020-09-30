@@ -25,7 +25,7 @@ public interface DukeParser extends DukeUI, DateParser {
      * @exception CommandException If there are errors in the command input.
      * @exception ParseException If there are errors reading from the user input.
      */
-    static DukeCommand readCommand(String input) throws CommandException, ParseException {
+    static DukeCommand readCommand(String input) throws CommandException, ParseException, PrefixException {
 
         assert !input.isEmpty() && !input.isBlank() : "User Input cannot be empty or blank.";
         ArrayList<String> inputs = new ArrayList<>();
@@ -448,12 +448,8 @@ public interface DukeParser extends DukeUI, DateParser {
                 throw new PrefixException();
             }
 
-        } catch (PrefixException e) {
-            e.printExplanation(input);
-
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ParseException("Insufficient Attributes", 0);
+            throw new CommandException("There seems to be insufficient Attributes");
         }
-        return null;
     }
 }

@@ -8,6 +8,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 /**
  * A GUI for {@code Duke} to ask for confirmation to exit {@code Duke} using FXML.
  */
@@ -18,21 +20,17 @@ public class ExitConfirm extends Application {
     public ExitConfirm(){}
 
     @Override
-    public void start(Stage stage) {
-        try {
-            fxmlLoader = new FXMLLoader(this.getClass().getResource("/view/ExitConfirmWindow.fxml"));
-            AnchorPane ap = fxmlLoader.load();
-            Scene scene = new Scene(ap);
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Exit Confirmation");
-            stage.getIcons().add(new Image("/icons/Duke.png"));
-            stage.setResizable(false);
-            stage.showAndWait();
+    public void start(Stage stage) throws IOException {
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        fxmlLoader = new FXMLLoader(this.getClass().getResource("/view/ExitConfirmWindow.fxml"));
+        AnchorPane ap = fxmlLoader.load();
+        Scene scene = new Scene(ap);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Exit Confirmation");
+        stage.getIcons().add(new Image("/icons/Duke.png"));
+        stage.setResizable(false);
+        stage.showAndWait();
     }
 
     public boolean getConfirmation(){

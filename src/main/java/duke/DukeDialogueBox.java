@@ -24,20 +24,16 @@ public class DukeDialogueBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
-    private DukeDialogueBox(String text, Image img) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogueBox.fxml"));
-            fxmlLoader.setController(this);
-            fxmlLoader.setRoot(this);
-            fxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private DukeDialogueBox(String text, Image img) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogueBox.fxml"));
+        fxmlLoader.setController(this);
+        fxmlLoader.setRoot(this);
+        fxmlLoader.load();
 
         this.text.setText(text);
         this.displayPicture.setImage(img);
     }
-
 
     private void flip() {
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
@@ -46,13 +42,25 @@ public class DukeDialogueBox extends HBox {
         setAlignment(Pos.TOP_LEFT);
     }
 
-    public static DukeDialogueBox getDukeDialogue(String text, Image img) {
-        return new DukeDialogueBox(text, img);
+    public static DukeDialogueBox getDukeDialogue(String text, Image img) throws IOException {
+        var dukeReply = new DukeDialogueBox(text, img);
+        if(Duke.getIsErrorReturn()) {
+            dukeReply.setLabelBorderColour("#c14953");
+        } else {
+            dukeReply.setLabelBorderColour("#e4b363");
+        }
+        return dukeReply;
     }
 
-    public static DukeDialogueBox getUserDialogue(String text, Image img) {
-        var db = new DukeDialogueBox(text, img);
-        db.flip();
-        return db;
+    public static DukeDialogueBox getUserDialogue(String text, Image img) throws IOException {
+        var userInput = new DukeDialogueBox(text, img);
+        userInput.setLabelBorderColour("#058ed9");
+        userInput.flip();
+        return userInput;
+    }
+
+    public void setLabelBorderColour(String colour)  {
+        String style = this.text.getStyle();
+        this.text.setStyle(style + " -fx-border-color: " + colour + ";");
     }
 }

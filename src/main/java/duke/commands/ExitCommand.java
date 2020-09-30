@@ -6,6 +6,7 @@ import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -44,7 +45,7 @@ public class ExitCommand extends DukeCommand implements DukeUI {
      * @param dukeNotes The {@code DukeList} object that holds the notes managed by {@code Duke}.
      * @param dukeStorage The {@code DukeStorage} object that holds access to the saved files of {@code Duke}.
      */
-    public void execute(DukeList dukeNotes, DukeStorage dukeStorage) {
+    public void execute(DukeList dukeNotes, DukeStorage dukeStorage) throws IOException {
 
         if(Duke.isGUIMode) {
             ExitConfirm exitConfirm = new ExitConfirm();
