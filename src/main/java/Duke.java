@@ -22,25 +22,82 @@ public class Duke {
                 System.out.println(System.lineSeparator() + "Bye. Hope to see you again soon!");
                 break;
             default:
+
                 if(input.contains("done")){
                     memo = makeDone(input,memo);
                     break;
                 }
-                memo = addMemo(input, memo);
+
+                if(input.contains("todo")){
+                    memo = addMemo(input, memo,2);
+                    break;
+                }
+
+                if(input.contains("event")){
+                    memo = addMemo(input, memo,3);
+                    break;
+                }
+
+                if(input.contains("deadline")){
+                    memo = addMemo(input, memo,4);
+                    break;
+                }
+
+                memo = addMemo(input, memo,1);
+
         }
 
         return memo;
     }
 
-    public static Task[] addMemo(String newAddition, Task[] memo){
-        int size = memo.length + 1;
-        if(containsInMemo(newAddition, memo)){
+    //option 1 for Task, 2 for Todos, 3 for Events, 4 for Deadlines
+    public static Task[] addMemo(String input, Task[] memo, int option){
+        String secondPart;
+        int index;
+
+        int newSize = memo.length + 1;
+        if(containsInMemo(input, memo)){
             System.out.println("Your task is already in the memory.");
             return memo;
         }
-        memo = Arrays.copyOf(memo, size);
-        memo[size - 1] = new Task(newAddition);
-        System.out.println(System.lineSeparator() + "added: " + newAddition);
+        memo = Arrays.copyOf(memo, newSize);
+
+        switch(option){
+            case 1:
+                memo[newSize - 1] = new Task(input);
+                break;
+
+            case 2:
+                input = input.replaceFirst("todo", "").stripLeading();
+                memo[newSize - 1] = new ToDo(input);
+                break;
+
+            case 3:
+                index = input.indexOf("/at");
+                secondPart = input.substring(index);
+                secondPart = secondPart.replaceFirst( "/at", "").stripLeading();
+
+                input = input.substring(0,index - 1);
+                input = input.replaceFirst("event", "").stripLeading();
+                memo[newSize - 1] = new Event(input, secondPart);
+                break;
+
+
+            case 4:
+                index = input.indexOf("/by");
+                secondPart = input.substring(index);
+                secondPart = secondPart.replaceFirst( "/by", "").stripLeading();
+                input = input.substring(0,index - 1);
+                input = input.replaceFirst("deadline", "").stripLeading();
+                memo[newSize - 1] = new Deadline(input, secondPart);
+                break;
+        }
+
+
+        System.out.println(System.lineSeparator() + "Got it. I've added this task:" +
+                System.lineSeparator() + memo[newSize - 1].toString());
+
+        memo[newSize - 1].printTotalTasks();
         return memo;
     }
 
@@ -94,7 +151,6 @@ public class Duke {
             input = scan.nextLine();
             if(input.equals("bye")){
                 start = 0;
-                break;
             }
             memo = command(input,memo);
         }
