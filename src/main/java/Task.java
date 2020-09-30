@@ -1,15 +1,16 @@
 public class Task {
 
-    //TODO: toString override
-
     private String description;
     private boolean isDone;
+    private static int totalTasks = 0;
+
+
 
     public Task(String description){
         this.description = description;
         this.isDone = false;
+        totalTasks++;
     }
-
     public void changeCompletedTo(boolean value){
         this.isDone = value;
     }
@@ -30,6 +31,10 @@ public class Task {
             symbol = "\u2717";
         }
         return ("["+ symbol + "] " + getDescription());
+    }
+
+    public void printTotalTasks(){
+        System.out.println("Now you have " + totalTasks + " tasks in the list.");
     }
 
 }
