@@ -8,3 +8,4 @@ list
 deadline return book /by Sunday
 event project meeting /at Mon 2-4pm
 deadline do homework /by no idea :-p
+delete 3

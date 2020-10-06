@@ -4,6 +4,7 @@ public class DukeException extends Exception {
         NONE,
         MISSING_ARGUMENT,
         MEMORY_FULL,
+        TASK_NOT_FOUND,
         UNKNOWN_COMMAND
     }
 
@@ -18,7 +19,7 @@ public class DukeException extends Exception {
         this.code = code;
     }
 
-    public void printError(String message) {
+    public void printError() {
         System.out.println("    ____________________________________________________________");
         System.out.printf("     ☹ OOPS!!! %s\n", super.getMessage());
         System.out.println("    ____________________________________________________________");

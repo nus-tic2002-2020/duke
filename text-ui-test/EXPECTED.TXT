@@ -62,3 +62,8 @@ Hello from
       [D][✘] do homework (by: no idea :-p)
     Now you have 8 tasks in the list.
     ____________________________________________________________
+    ____________________________________________________________
+    Song la! Lim peh help you remove this task(s):
+       [E][✓] project meeting (at: Aug 6th 2-4pm)
+    Now you have 7 tasks in the list.
+    ____________________________________________________________

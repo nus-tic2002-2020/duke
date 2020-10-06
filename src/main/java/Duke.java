@@ -1,12 +1,12 @@
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
     private static final int MAX_TASKS = 100;
 
-    private static Task[] tasks = new Task[MAX_TASKS];
-    private static int countTasks = 0;
+    private static ArrayList<Task> tasks = new ArrayList<Task>();
 
     public static void main(String[] args) {
         String logo = "  ___    *   *    ____        *\n"
@@ -26,7 +26,7 @@ public class Duke {
             try {
                 exit = call(input.trim());
             } catch (DukeException e) {
-                // Do nothing
+                e.printError();
             }
         }
     }
@@ -60,6 +60,9 @@ public class Duke {
                     break;
                 case "done":
                     doneTasks(args);
+                    break;
+                case "delete":
+                    deleteTasks(args);
                     break;
                 case "todo":
                     text = readInputParameter(args, null);
@@ -134,7 +137,7 @@ public class Duke {
 
     private static int indexOf(Object[] arr, Object o) {
         int index = -1;
-        if(arr != null)  {
+        if (arr != null)  {
             for(int i = 0; i < arr.length; i++) {
                 if(arr[i].equals(o)) {
                     index = i;
@@ -151,6 +154,48 @@ public class Duke {
         System.out.println("    ____________________________________________________________");
     }
 
+    public static void deleteTasks(String[] args) throws DukeException {
+        System.out.println("    ____________________________________________________________");
+        System.out.println("    Song la! Lim peh help you remove this task(s):");
+
+        ArrayList<Task> tasksToRemove = new ArrayList<Task>();
+        ArrayList<Integer> errorIndices = new ArrayList<Integer>();
+
+        // Create a collection of index to delete
+        for (int i = 1; i < args.length; i++) { // Skip first: "delete" command
+
+            try {
+                int intTask = Integer.parseInt(args[i]) - 1;
+                if (intTask < MAX_TASKS && tasks.size() > intTask) { // Has task at list index
+                    Task t = tasks.get(intTask);
+                    tasksToRemove.add(t);
+                } else {
+                    errorIndices.add(intTask); // add index to error collection
+                }
+            } catch (NumberFormatException ex) {
+                // Do nothing, skip number
+            }
+
+        }
+
+        // Print deleted task
+        for (Task t: tasksToRemove) {
+            System.out.printf("       %s\n", t.toString());
+        }
+
+        // Delete all tasks in collection
+        tasks.removeAll(tasksToRemove);
+
+        System.out.printf("    Now you have %d tasks in the list.\n", tasks.size());
+
+        if (errorIndices.size() > 0) { // raise exception for wrong index
+            throw new DukeException(String.format("Err... cannot find these task(s) leh - %s", errorIndices.toString()),
+                    DukeException.DukeError.TASK_NOT_FOUND);
+        }
+
+        System.out.println("    ____________________________________________________________");
+    }
+
     public static void doneTasks(String[] args) {
         System.out.println("    ____________________________________________________________");
         System.out.println("    Power la! I've marked this task(s) as done:");
@@ -160,8 +205,8 @@ public class Duke {
 
                 int intTask = Integer.parseInt(args[i])-1;
 
-                if (intTask < MAX_TASKS && tasks[intTask] != null) { // Has task at list index
-                    Task t = tasks[intTask];
+                if (intTask < MAX_TASKS && tasks.size() > intTask) { // Has task at list index
+                    Task t = tasks.get(intTask);
 
                     t.markAsDone();
 
@@ -179,18 +224,19 @@ public class Duke {
 
     public static void addTask(Task t) throws DukeException {
         boolean ok = true;
+        int intCount = tasks.size();
         System.out.println("    ____________________________________________________________");
         System.out.println("    Got it. I've added this task:");
-        if (countTasks < MAX_TASKS) {
-            //Task t = new Task(description);
-            tasks[countTasks++] = t;
-            //echo("added: " + t);
+        if (intCount < MAX_TASKS) {
+            //tasks[countTasks++] = t;
+            tasks.add(t);
+            intCount = tasks.size();
+            //countTasks++;
             System.out.printf("      %s\n", t);
         } else {
-            //errorTaskFull();
             ok = false;
         }
-        System.out.printf("    Now you have %d tasks in the list.\n", countTasks);
+        System.out.printf("    Now you have %d tasks in the list.\n", intCount);
         System.out.println("    ____________________________________________________________");
 
         if (!ok) {
@@ -200,8 +246,9 @@ public class Duke {
     public static void printTasks() {
         System.out.println("    ____________________________________________________________");
         System.out.println("    Here are the tasks in your list:");
-        for(int i = 0; i < countTasks; i++) {
-            Task t = tasks[i];
+        int intCount = tasks.size();
+        for(int i = 0; i < intCount; i++) {
+            Task t = tasks.get(i);
             System.out.printf("     %d.%s\n", i+1, t);
         }
         System.out.println("    ____________________________________________________________");
