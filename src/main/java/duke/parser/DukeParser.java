@@ -18,7 +18,7 @@ public interface DukeParser extends DukeUI, DateParser {
 
     //METHODS-------------------------------------------
     /**
-     * This method is used to retrieve serial numbers of the {@code Task} object.
+     * This method is used to retrieve serial numbers of the {@code Note} object.
      *
      * @param input The textual input provided by the user in verbatim.
      * @return DukeCommand The appropriate {@code DukeCommand} object created based on the user input.
@@ -58,7 +58,7 @@ public interface DukeParser extends DukeUI, DateParser {
                         }
                     }
                     case "LISTBILLS", "LISTBIRTHDAYS", "LISTBUDGETS", "LISTDEADLINES", "LISTEVENTS",
-                            "LISTSHOPLISTS", "LISTTODOS", "LISTWEDDINGS", "LISTNOTES" -> {
+                            "LISTSHOPLISTS", "LISTTASKS", "LISTWEDDINGS", "LISTNOTES" -> {
                         String noteFilter = null;
                         String textFilter = null;
                         Date dateFilter = null;
@@ -433,7 +433,7 @@ public interface DukeParser extends DukeUI, DateParser {
                     case "DEADLINE" -> delimiters = new String[]{"/by"};
                     case "EVENT" -> delimiters = new String[]{"/from", "/to"};
                     case "SHOPLIST" -> delimiters = new String[]{"/for \\$"};
-                    case "TODO" -> delimiters = new String[]{};
+                    case "TASK" -> delimiters = new String[]{};
                     default -> throw new CommandException("It seems to be an invalid New Note Command.");
                 }
                 for (String delimiter : delimiters) {

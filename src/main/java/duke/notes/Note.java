@@ -3,7 +3,7 @@ package duke.notes;
 
 import duke.budget.Budget;
 import duke.commands.CommandException;
-import duke.commands.DateException;
+import duke.parser.DateException;
 import duke.ui.DukeUI;
 import java.util.Date;
 
@@ -15,7 +15,7 @@ import java.util.Date;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public abstract class Note implements Task {
+public abstract class Note implements DukeUI {
 
     //VARIABLES-----------------------------------------
     protected int serialNum;
@@ -149,7 +149,7 @@ public abstract class Note implements Task {
     public void printDetails(){
         if (this.isDone) {
             System.out.println("            Done     : " +
-                    TASK_TIME.format(this.doneDate));
+                    NOTE_TIME.format(this.doneDate));
         }
     }
 
@@ -176,6 +176,15 @@ public abstract class Note implements Task {
     }
 
     //ABSTRACT METHODS----------------------------------
+    /**
+     * This method exports the {@code Note} object as a string in a format that is
+     * readable and re-constructable as a {@code Note} object.
+     *
+     * @return String The {@code Note} object as a string in a format
+     * readable and re-constructable as a {@code Note} object.
+     */
+    public abstract String getSaveText();
+
     /**
      * This method is used to delete existing {@code Note} object and make associated adjustments.
      */

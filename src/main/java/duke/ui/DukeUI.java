@@ -9,7 +9,7 @@ import duke.commands.CmdType;
 import duke.commands.CommandException;
 import duke.notes.NoteType;
 import duke.notes.event.Event;
-import duke.notes.todo.Todo;
+import duke.notes.task.Task;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,8 +28,8 @@ public interface DukeUI {
     String DUKE_DIVIDER = "    ----------------------------------------------------------------------------";
 
     //Date formats to be used by Duke
-    SimpleDateFormat TASK_TIME = new SimpleDateFormat("dd-MMM-yyyy (E), hh:mm a");
-    SimpleDateFormat TASK_DATE = new SimpleDateFormat("dd-MMM-yyyy (E)");
+    SimpleDateFormat NOTE_TIME = new SimpleDateFormat("dd-MMM-yyyy (E), hh:mm a");
+    SimpleDateFormat NOTE_DATE = new SimpleDateFormat("dd-MMM-yyyy (E)");
     SimpleDateFormat DATE_TODAY = new SimpleDateFormat("dd MMMM yyyy");
     SimpleDateFormat DAY_TODAY = new SimpleDateFormat("EEEE");
     SimpleDateFormat YEAR_TODAY = new SimpleDateFormat("yyyy");
@@ -101,7 +101,7 @@ public interface DukeUI {
                     "        @shoplist      / @sl  >>> Add a new shopping list item.\n" +
                     "          [\u2714] Required Attributes in Order of:\n" +
                     "            Description  \u23E9  Budget\n" +
-                    "        @todo          / @td  >>> Add a new todo task without a deadline.\n" +
+                    "        @task          / @tk  >>> Add a new task without a deadline.\n" +
                     "          [\u2714] Required Attributes in Order of:\n" +
                     "            Description\n" +
                     "        @wedding       / @wd  >>> Add a new wedding event.\n" +
@@ -154,7 +154,7 @@ public interface DukeUI {
                     "        #listshoplists / #lsl >>> List shopping list items.\n" +
                     "          [\u271C] Completion Status  [\u271C] Added Date\n" +
                     "          [\u2718] Start/Target Date  [\u271C] Description Text\n" +
-                    "        #listtodos     / #ltd >>> List todo tasks.\n" +
+                    "        #listtasks     / #ltk >>> List tasks.\n" +
                     "          [\u271C] Completion Status  [\u271C] Added Date\n" +
                     "          [\u271C] Start/Target Date  [\u271C] Description Text\n" +
                     "        #listweddings  / #lwd >>> List weddings.\n" +
@@ -285,7 +285,7 @@ public interface DukeUI {
             if (input.length() < limit) {
                 if(firstLine) {
                     System.out.printf("%1$-28s%2$28s%n",
-                            input, "Added: " + TASK_TIME.format(addDate));
+                            input, "Added: " + NOTE_TIME.format(addDate));
                 } else {
                     System.out.println("                    " + input);
                 }
@@ -300,7 +300,7 @@ public interface DukeUI {
                 if(firstLine) {
                     System.out.printf("%1$-28s%2$28s%n",
                             input.substring(0, lastSpace), "Added: " +
-                                    TASK_TIME.format(addDate));
+                                    NOTE_TIME.format(addDate));
                     input = input.substring(lastSpace + 1);
                     firstLine = false;
 
@@ -344,7 +344,7 @@ public interface DukeUI {
      * This method is used to print a report on the number of completed {@code Note} objects.
      */
     static void printCompleted() {
-        System.out.println("    You have completed " + Todo.getTasksCompleted() +
+        System.out.println("    You have completed " + Task.getTasksCompleted() +
                 " task(s) and " + Event.getEventsCompleted() + " event(s)!");
     }
 
@@ -361,7 +361,7 @@ public interface DukeUI {
     static void printOutstanding() {
         System.out.println("    You have...");
         System.out.print("        ");
-        System.out.printf("%3d", Todo.getTasksOutstanding());
+        System.out.printf("%3d", Task.getTasksOutstanding());
         System.out.print(" outstanding task(s),\n");
         System.out.print("        ");
         System.out.printf("%3d", Event.getEventsOutstanding());

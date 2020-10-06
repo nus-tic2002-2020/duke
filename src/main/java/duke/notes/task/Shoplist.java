@@ -1,26 +1,26 @@
-package duke.notes.todo;
+package duke.notes.task;
 
 import duke.Duke;
 import duke.budget.AskPrice;
 import duke.budget.Budget;
 import duke.commands.CommandException;
-import duke.commands.DateException;
+import duke.parser.DateException;
 import javafx.stage.Stage;
 
 import java.util.Date;
 import java.util.Scanner;
 
 /**
- * An extension of the {@code Todo} object that labels the todo task as a {@code Shoplist} object, and
+ * An extension of the {@code Task} object that labels the todo task as a {@code Shoplist} object, and
  * includes an attached {@code Budget} object reflecting the budget set.
  *
  * To create a {@code Shoplist} object, a budget amount for the item must be set on top of
- * the requirements of the {@code Todo} object.
+ * the requirements of the {@code Task} object.
  *
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class Shoplist extends Todo {
+public class Shoplist extends Task {
 
     //VARIABLES-----------------------------------------
     protected Budget itemBudget;
@@ -141,7 +141,7 @@ public class Shoplist extends Todo {
                     String.format("%,14.2f", this.getItemPrice()) +
                     " " + this.getWithinBudget());
             System.out.println("            Done     : " +
-                    TASK_TIME.format(this.doneDate));
+                    NOTE_TIME.format(this.doneDate));
         }
     }
 

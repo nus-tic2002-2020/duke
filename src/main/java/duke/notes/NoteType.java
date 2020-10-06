@@ -21,12 +21,12 @@ public enum NoteType {
             "event", "events", "taking place on"),
     SHOPLIST("Shoplist", "@shoplist", "@sl","[SL]",
             "shopping list item", "shopping list items", ""),
-    TODO("Todo", "@todo", "@td","[TD]",
-            "todo task", "todo tasks", ""),
+    TASK("Task", "@task", "@tk","[TK]",
+            "task", "tasks", ""),
     WEDDING("Wedding", "@wedding", "@wd","[WD]",
             "wedding", "weddings", "happening on"),
-    TASK("Task", "N.A.", "N.A.", "N.A.",
-            "task", "tasks", "on");
+    NOTE("Note", "N.A.", "N.A.", "N.A.",
+            "note", "notes", "on");
 
     private final String constructor;
     private final String command;

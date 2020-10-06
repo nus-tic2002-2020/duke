@@ -1,7 +1,7 @@
 package duke.commands;
 
 import duke.notes.event.Event;
-import duke.notes.todo.Todo;
+import duke.notes.task.Task;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
@@ -56,7 +56,7 @@ public class EditDescriptionCommand extends DukeCommand {
 
                 DukeUI.printDivider();
                 if(dukeNotes.getNotes().get(i).getIsDone()) {
-                    if(dukeNotes.getNotes().get(i) instanceof Todo) {
+                    if(dukeNotes.getNotes().get(i) instanceof Task) {
                         System.out.println("    The task had already been completed.");
                     } else if(dukeNotes.getNotes().get(i) instanceof Event) {
                         System.out.println("    The event had already concluded.");

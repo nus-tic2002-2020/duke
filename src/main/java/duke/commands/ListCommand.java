@@ -1,14 +1,15 @@
 package duke.commands;
 
 import duke.notes.NoteType;
-import duke.notes.Task;
+import duke.notes.Note;
 import duke.notes.event.Event;
 import duke.notes.event.Birthday;
 import duke.notes.event.Wedding;
-import duke.notes.todo.Bill;
-import duke.notes.todo.Deadline;
-import duke.notes.todo.Shoplist;
-import duke.notes.todo.Todo;
+import duke.notes.task.Bill;
+import duke.notes.task.Deadline;
+import duke.notes.task.Shoplist;
+import duke.notes.task.Task;
+import duke.parser.DateException;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
@@ -96,7 +97,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
      * @param budgets The {@code ArrayList} of {@code Note} objects with {@code Budget}
      *                objects attached that is to be sorted.
      */
-    void selectionSortBudgets(ArrayList<Task> budgets) {
+    void selectionSortBudgets(ArrayList<Note> budgets) {
 
         double budgetI;
         double budgetJ;
@@ -106,7 +107,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
             for (int i=budgets.size()-1; i>0; i--) {
                 budgetJ = budgets.get(i-1).getBudgetObject().getBudgetRevised();
                 if (budgetI < budgetJ) {
-                    Task temp = budgets.get(i);
+                    Note temp = budgets.get(i);
                     budgets.set(i, budgets.get(i-1));
                     budgets.set(i-1, temp);
                 }
@@ -119,7 +120,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
      *
      * @param notes The {@code ArrayList} of {@code Note} objects with that is to be sorted.
      */
-    void selectionSortDates(ArrayList<Task> notes)
+    void selectionSortDates(ArrayList<Note> notes)
             throws DateException {
 
         Date dateI = new Date();
@@ -144,7 +145,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 }
 
                 if (dateI.before(dateJ)) {
-                    Task temp = notes.get(i);
+                    Note temp = notes.get(i);
                     notes.set(i, notes.get(i-1));
                     notes.set(i-1, temp);
                 } else {
@@ -160,7 +161,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
      * @param note The {@code Note} object that is to be assessed.
      * @return boolean True if the {@code Note} object fulfils the criteria and is to be included.
      */
-    private boolean filterByStartTargetDate(Task note) {
+    private boolean filterByStartTargetDate(Note note) {
 
         if(this.dateFilter == null) {
             return true;
@@ -186,7 +187,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
      * @param note The {@code Note} object that is to be assessed.
      * @return boolean True if the {@code Note} object fulfils the criteria and is to be included.
      */
-    private boolean filterByAddedDate(Task note) {
+    private boolean filterByAddedDate(Note note) {
 
         if(this.addedFilter == null) {
             return true;
@@ -204,7 +205,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
      * @param note The {@code Note} object that is to be assessed.
      * @return boolean True if the {@code Note} object fulfils the criteria and is to be included.
      */
-    private boolean filterByStatus(Task note) {
+    private boolean filterByStatus(Note note) {
 
         if(this.noteFilter == null) {
             return true;
@@ -223,7 +224,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
      * @param note The {@code Note} object that is to be assessed.
      * @return boolean True if the {@code Note} object fulfils the criteria and is to be included.
      */
-    private boolean filterByText(Task note) {
+    private boolean filterByText(Note note) {
 
         if(this.textFilter == null) {
             return true;
@@ -237,7 +238,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
      *
      * @param notes The {@code ArrayList} of {@code Note} objects with that is to be printed.
      */
-    private void printResults(ArrayList<Task> notes)
+    private void printResults(ArrayList<Note> notes)
             throws CommandException {
 
         String noteName = NoteType.getLowercaseNamePlural(this.noteType.toString());
@@ -247,7 +248,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
 
             String noteReport = "";
             if(this.noteFilter == null) {
-                noteReport = "You haven't asked me to take note of any " + noteName;
+                noteReport = "You haven't asked me to keep any " + noteName;
             } else if(this.noteFilter.equals("O")) {
                 noteReport = "You have no outstanding " + noteName;
             } else if(this.noteFilter.equals("C")) {
@@ -265,20 +266,20 @@ public class ListCommand extends DukeCommand implements DukeUI {
                     case "LISTNXT24" -> " in the next 24 hours";
                     case "LISTNXT48" -> " in the next 48 hours";
                     case "LISTNXT72" -> " in the next 72 hours";
-                    default -> " " + noteVerb + " " + TASK_DATE.format(this.dateFilter);
+                    default -> " " + noteVerb + " " + NOTE_DATE.format(this.dateFilter);
                 };
             }
 
             String addedReport = "";
             if(this.addedFilter != null) {
-                addedReport = " that was added on " + TASK_DATE.format(this.addedFilter);
+                addedReport = " that was added on " + NOTE_DATE.format(this.addedFilter);
             }
 
             DukeUI.standardWrap(noteReport + textReport + dateReport + addedReport + ".");
 
         } else {
             System.out.println("    Here are the " + noteName + " you told me to note:-");
-            for (Task note: notes) {
+            for (Note note: notes) {
                 note.printList();
             }
             System.out.print("\n");
@@ -294,10 +295,10 @@ public class ListCommand extends DukeCommand implements DukeUI {
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage)
             throws CommandException, DateException {
 
-        ArrayList<Task> notes = new ArrayList<>();
+        ArrayList<Note> notes = new ArrayList<>();
         DukeUI.printDivider();
 
-        for(Task note : dukeNotes.getNotes()) {
+        for(Note note : dukeNotes.getNotes()) {
             if(filterByStatus(note)) {
                 if(filterByText(note)) {
                     if(filterByStartTargetDate(note)) {
@@ -339,8 +340,8 @@ public class ListCommand extends DukeCommand implements DukeUI {
                                             selectionSortBudgets(notes);
                                         }
                                     }
-                                    case "Todo" -> {
-                                        if (note instanceof Todo) {
+                                    case "Task" -> {
+                                        if (note instanceof Task) {
                                             notes.add(note);
                                         }
                                     }
@@ -350,7 +351,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
                                             selectionSortDates(notes);
                                         }
                                     }
-                                    case "Task" -> notes.add(note);
+                                    case "Note" -> notes.add(note);
                                 }
                             }
                         }

@@ -1,25 +1,26 @@
 package duke.storage;
 
-import duke.notes.Task;
+import duke.notes.Note;
+
 import java.util.ArrayList;
 
 /**
- * An object that holds all the {@code Task} objects in {@code Duke} for quick access.
+ * An object that holds all the {@code Note} objects in {@code Duke} for quick access.
  *
  * @author tanqiuyu
  * @since 2020-09-16
  */
 public class DukeList {
 
-    private ArrayList<Task> notes;
+    private ArrayList<Note> notes;
 
     /**
      * This method is used to construct a {@code DukeList} object.
      *
-     * @param tasks The ArrayList of {@code Task} objects to be held.
+     * @param notes The ArrayList of {@code Note} objects to be held.
      */
-    public DukeList(ArrayList<Task> tasks) {
-        this.notes = tasks;
+    public DukeList(ArrayList<Note> notes) {
+        this.notes = notes;
     }
 
     /**
@@ -32,20 +33,20 @@ public class DukeList {
     }
 
     /**
-     * This method is used to access the ArrayList of {@code Task} objects held.
+     * This method is used to access the ArrayList of {@code Note} objects held.
      *
-     * @return ArrayList<Task> The ArrayList of {@code Task} objects held.
+     * @return ArrayList<Note> The ArrayList of {@code Note} objects held.
      */
-    public ArrayList<Task> getNotes() {
+    public ArrayList<Note> getNotes() {
         return this.notes;
     }
 
     /**
-     * This method is used to replace the ArrayList of {@code Task} held in the {@code DukeList} object.
+     * This method is used to replace the ArrayList of {@code Note} held in the {@code DukeList} object.
      *
-     * @param newNotes The new ArrayList of {@code Task} objects to be held.
+     * @param newNotes The new ArrayList of {@code Note} objects to be held.
      */
-    public void replaceNotes(ArrayList<Task> newNotes) {
+    public void replaceNotes(ArrayList<Note> newNotes) {
         this.notes = newNotes;
     }
 

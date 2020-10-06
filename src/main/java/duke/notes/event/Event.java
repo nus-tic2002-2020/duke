@@ -2,7 +2,7 @@ package duke.notes.event;
 
 import duke.budget.Budget;
 import duke.commands.CommandException;
-import duke.commands.DateException;
+import duke.parser.DateException;
 import duke.notes.Note;
 import java.util.Date;
 
@@ -225,12 +225,12 @@ public class Event extends Note {
         System.out.println("            Duration : " +
                 String.format("%,5d", this.durationMinutes) +  "mins");
         System.out.println("            From     : " +
-                TASK_TIME.format(this.startDate));
+                NOTE_TIME.format(this.startDate));
         System.out.println("            To       : " +
-                TASK_TIME.format(this.endDate));
+                NOTE_TIME.format(this.endDate));
         if (this.isDone) {
             System.out.println("            Done     : " +
-                    TASK_TIME.format(this.doneDate));
+                    NOTE_TIME.format(this.doneDate));
         }
     }
 

@@ -1,7 +1,8 @@
 package duke.commands;
 
 import duke.notes.event.Event;
-import duke.notes.todo.Deadline;
+import duke.notes.task.Deadline;
+import duke.parser.DateException;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
@@ -76,9 +77,9 @@ public class EditDateCommand extends DukeCommand implements DukeUI {
 
                                 DukeUI.printDivider();
                                 System.out.println("    Target Date of Note #" + this.targetNote + " changed from...");
-                                DukeUI.commandWrap(TASK_TIME.format(this.oldDate), 66);
+                                DukeUI.commandWrap(NOTE_TIME.format(this.oldDate), 66);
                                 System.out.println("    to...");
-                                DukeUI.commandWrap(TASK_TIME.format(this.newDate), 66);
+                                DukeUI.commandWrap(NOTE_TIME.format(this.newDate), 66);
                                 DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
                                 DukeUI.suggestListNotes();
                             }
@@ -111,11 +112,11 @@ public class EditDateCommand extends DukeCommand implements DukeUI {
                                 DukeUI.printDivider();
                                 System.out.println("    Start and End Date of Note #" + this.targetNote +
                                         " changed from...");
-                                DukeUI.commandWrap(TASK_TIME.format(this.oldDate) + " ...and... " +
-                                        TASK_TIME.format(oldEnd), 66);
+                                DukeUI.commandWrap(NOTE_TIME.format(this.oldDate) + " ...and... " +
+                                        NOTE_TIME.format(oldEnd), 66);
                                 System.out.println("    to...");
-                                DukeUI.commandWrap(TASK_TIME.format(this.newDate) + " ...and... " +
-                                        TASK_TIME.format(newEnd), 66);
+                                DukeUI.commandWrap(NOTE_TIME.format(this.newDate) + " ...and... " +
+                                        NOTE_TIME.format(newEnd), 66);
                                 DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
                                 DukeUI.suggestListNotes();
                             }
@@ -139,9 +140,9 @@ public class EditDateCommand extends DukeCommand implements DukeUI {
 
                                 DukeUI.printDivider();
                                 System.out.println("    End Date of Note #" + this.targetNote + " changed from...");
-                                DukeUI.commandWrap(TASK_TIME.format(this.oldDate), 66);
+                                DukeUI.commandWrap(NOTE_TIME.format(this.oldDate), 66);
                                 System.out.println("    to...");
-                                DukeUI.commandWrap(TASK_TIME.format(this.newDate), 66);
+                                DukeUI.commandWrap(NOTE_TIME.format(this.newDate), 66);
                                 DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
                                 DukeUI.suggestListNotes();
                             }

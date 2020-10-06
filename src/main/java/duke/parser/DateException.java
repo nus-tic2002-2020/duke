@@ -1,5 +1,6 @@
-package duke.commands;
+package duke.parser;
 
+import duke.commands.CommandException;
 import duke.notes.event.Event;
 import duke.ui.DukeUI;
 import java.util.Date;

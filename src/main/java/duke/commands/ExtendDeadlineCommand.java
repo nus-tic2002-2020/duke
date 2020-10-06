@@ -1,6 +1,7 @@
 package duke.commands;
 
-import duke.notes.todo.Deadline;
+import duke.notes.task.Deadline;
+import duke.parser.DateException;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
@@ -73,9 +74,9 @@ public class ExtendDeadlineCommand extends DukeCommand implements DukeUI{
                     ((Deadline) dukeNotes.getNotes().get(i)).setTargetDate(this.newDate);
 
                     System.out.println("    extended from...");
-                    DukeUI.commandWrap(TASK_TIME.format(this.oldDate), 66);
+                    DukeUI.commandWrap(NOTE_TIME.format(this.oldDate), 66);
                     System.out.println("    to...");
-                    DukeUI.commandWrap(TASK_TIME.format(this.newDate), 66);
+                    DukeUI.commandWrap(NOTE_TIME.format(this.newDate), 66);
                     DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
                     DukeUI.suggestListNotes();
                 }

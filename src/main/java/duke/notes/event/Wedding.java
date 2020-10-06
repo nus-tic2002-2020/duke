@@ -2,7 +2,7 @@ package duke.notes.event;
 
 import duke.budget.Budget;
 import duke.commands.CommandException;
-import duke.commands.DateException;
+import duke.parser.DateException;
 import java.util.Date;
 
 /**
@@ -121,9 +121,9 @@ public class Wedding extends Event {
         System.out.println("            Duration : " +
                 String.format("%,5d", this.durationMinutes) +  "mins");
         System.out.println("            From     : " +
-                TASK_TIME.format(this.startDate));
+                NOTE_TIME.format(this.startDate));
         System.out.println("            To       : " +
-                TASK_TIME.format(this.endDate));
+                NOTE_TIME.format(this.endDate));
         System.out.println("            Budget   : $" +
                 String.format("%,14.2f", this.getItemBudget()));
         if (this.itemBudget.getIsRevised()) {
@@ -135,7 +135,7 @@ public class Wedding extends Event {
                     String.format("%,14.2f", this.getItemPrice()) +
                     " " + this.getWithinBudget());
             System.out.println("            Done     : " +
-                    TASK_TIME.format(this.doneDate));
+                    NOTE_TIME.format(this.doneDate));
         }
     }
 

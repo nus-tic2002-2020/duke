@@ -1,8 +1,8 @@
-package duke.notes.todo;
+package duke.notes.task;
 
 import duke.budget.Budget;
 import duke.commands.CommandException;
-import duke.commands.DateException;
+import duke.parser.DateException;
 import java.util.Date;
 
 /**
@@ -114,7 +114,7 @@ public class Bill extends Deadline {
     @Override
     public void printDetails(){
         System.out.print("            Deadline : " +
-                TASK_TIME.format(this.targetDate));
+                NOTE_TIME.format(this.targetDate));
         if(this.timesExtended > 0){
             System.out.print("(" + this.timesExtended +
                     " extensions)\n");
@@ -132,7 +132,7 @@ public class Bill extends Deadline {
                     String.format("%,14.2f", this.getItemPrice()) +
                     " " + this.getWithinBudget());
             System.out.println("            Done     : " +
-                    TASK_TIME.format(this.doneDate));
+                    NOTE_TIME.format(this.doneDate));
         }
     }
 

@@ -4,10 +4,11 @@ import duke.commands.*;
 import duke.notes.event.Birthday;
 import duke.notes.event.Event;
 import duke.notes.event.Wedding;
-import duke.notes.todo.Bill;
-import duke.notes.todo.Deadline;
-import duke.notes.todo.Shoplist;
-import duke.notes.todo.Todo;
+import duke.notes.task.Bill;
+import duke.notes.task.Deadline;
+import duke.notes.task.Shoplist;
+import duke.notes.task.Task;
+import duke.parser.DateException;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import org.junit.jupiter.api.BeforeAll;
@@ -52,7 +53,7 @@ public class DukeTest {
         testNotes.getNotes().add(new Wedding(testNotes.getNotes().size()+1, "Wedding test #1",
                 fromTestStart(1.75), fromTestStart(1.93), 668.88, testStart));
 
-        testNotes.getNotes().add(new Todo(testNotes.getNotes().size()+1, "Todo test #2",
+        testNotes.getNotes().add(new Task(testNotes.getNotes().size()+1, "Task test #2",
                 testStart));
 
         testNotes.getNotes().add(new Deadline(testNotes.getNotes().size()+1, "Deadline test #4",
@@ -61,7 +62,7 @@ public class DukeTest {
         testNotes.getNotes().add(new Birthday(testNotes.getNotes().size()+1, "Birthday test #4",
                 fromTestStart(4.18), fromTestStart(4.23), testStart));
 
-        testNotes.getNotes().add(new Todo(testNotes.getNotes().size()+1, "Todo test #5",
+        testNotes.getNotes().add(new Task(testNotes.getNotes().size()+1, "Task test #5",
                 testStart));
 
         testNotes.getNotes().add(new Deadline(testNotes.getNotes().size()+1, "Deadline test #5",
@@ -70,7 +71,7 @@ public class DukeTest {
         testNotes.getNotes().add(new Wedding(testNotes.getNotes().size()+1, "Wedding test #5",
                 fromTestStart(5.15), fromTestStart(5.26), 298.15, testStart));
 
-        testNotes.getNotes().add(new Todo(testNotes.getNotes().size()+1, "Todo test #6",
+        testNotes.getNotes().add(new Task(testNotes.getNotes().size()+1, "Task test #6",
                 testStart));
 
         testNotes.getNotes().add(new Bill(testNotes.getNotes().size()+1, "Bill test #5",
@@ -112,13 +113,13 @@ public class DukeTest {
         testNotes.getNotes().add(new Event(testNotes.getNotes().size()+1, "Event test #4",
                 fromTestStart(4.82), fromTestStart(4.98), testStart));
 
-        testNotes.getNotes().add(new Todo(testNotes.getNotes().size()+1, "Todo test #0",
+        testNotes.getNotes().add(new Task(testNotes.getNotes().size()+1, "Task test #0",
                 testStart));
 
         testNotes.getNotes().add(new Wedding(testNotes.getNotes().size()+1, "Wedding test #3",
                 fromTestStart(3.42), fromTestStart(3.65), 988.88, testStart));
 
-        testNotes.getNotes().add(new Todo(testNotes.getNotes().size()+1, "Todo test #4",
+        testNotes.getNotes().add(new Task(testNotes.getNotes().size()+1, "Task test #4",
                 testStart));
 
         testNotes.getNotes().add(new Bill(testNotes.getNotes().size()+1, "Bill test #6",
@@ -148,7 +149,7 @@ public class DukeTest {
         testNotes.getNotes().add(new Wedding(testNotes.getNotes().size()+1, "Wedding test #0",
                 fromTestStart(0.55), fromTestStart(0.6), 500.27, testStart));
 
-        testNotes.getNotes().add(new Todo(testNotes.getNotes().size()+1, "Todo test #1",
+        testNotes.getNotes().add(new Task(testNotes.getNotes().size()+1, "Task test #1",
                 testStart));
 
         testNotes.getNotes().add(new Birthday(testNotes.getNotes().size()+1, "Birthday test #1",
@@ -163,7 +164,7 @@ public class DukeTest {
         testNotes.getNotes().add(new Wedding(testNotes.getNotes().size()+1, "Wedding test #2",
                 fromTestStart(2.75), fromTestStart(2.90), 728.37, testStart));
 
-        testNotes.getNotes().add(new Todo(testNotes.getNotes().size()+1, "Todo test #3",
+        testNotes.getNotes().add(new Task(testNotes.getNotes().size()+1, "Task test #3",
                 testStart));
 
         testNotes.getNotes().add(new Event(testNotes.getNotes().size()+1, "Event test #3",
@@ -182,7 +183,7 @@ public class DukeTest {
 
     @Test
     void countOutstandingTest() {
-        assertEquals(28, Todo.getTasksOutstanding());
+        assertEquals(28, Task.getTasksOutstanding());
         assertEquals(21, Event.getEventsOutstanding());
     }
 

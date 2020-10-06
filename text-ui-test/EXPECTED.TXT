@@ -21,8 +21,8 @@ Welcome to PROJECT >>>
 	What do you need done today?
 
 		#commands     >>> List Duke's commands.
-		#listtask     >>> List all the tasks in memory.
-		#markdone X   >>> Mark task X as done.
+		#listtask     >>> List all the notes in memory.
+		#markdone X   >>> Mark note X as done.
 		#quitduke     >>> Exit Project Duke.
 			......more coming soon!
 	----------------------------------------------------------------------------

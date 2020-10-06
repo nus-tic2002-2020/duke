@@ -1,22 +1,22 @@
-package duke.notes.todo;
+package duke.notes.task;
 
 
 import duke.budget.Budget;
 import duke.commands.CommandException;
-import duke.commands.DateException;
+import duke.parser.DateException;
 import java.util.Date;
 
 /**
- * An extension of the {@code Todo} object that includes a target date for which the (@code Deadline}
+ * An extension of the {@code Task} object that includes a target date for which the (@code Deadline}
  * object is to be completed. The (@code Deadline} object also includes performance measurements.
  *
  * To create a {@code Deadline} object, a target date and time is required on top of
- * the requirements of the {@code Todo} object.
+ * the requirements of the {@code Task} object.
  *
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class Deadline extends Todo {
+public class Deadline extends Task {
 
     //VARIABLES-----------------------------------------
     protected Date targetDate;
@@ -128,7 +128,7 @@ public class Deadline extends Todo {
     @Override
     public void printDetails(){
         System.out.print("            Deadline : " +
-                TASK_TIME.format(this.targetDate));
+                NOTE_TIME.format(this.targetDate));
         if(this.timesExtended > 0){
             System.out.print("(" + this.timesExtended +
                     " extensions)\n");
@@ -137,7 +137,7 @@ public class Deadline extends Todo {
         }
         if (this.isDone) {
             System.out.println("            Done     : " +
-                    TASK_TIME.format(this.doneDate) + " " +
+                    NOTE_TIME.format(this.doneDate) + " " +
                     this.getDoneAhead());
         }
     }

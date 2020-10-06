@@ -2,14 +2,14 @@ package duke.storage;
 
 import duke.Duke;
 import duke.budget.Budget;
-import duke.notes.Task;
+import duke.notes.Note;
 import duke.notes.event.Birthday;
 import duke.notes.event.Event;
 import duke.notes.event.Wedding;
-import duke.notes.todo.Bill;
-import duke.notes.todo.Deadline;
-import duke.notes.todo.Shoplist;
-import duke.notes.todo.Todo;
+import duke.notes.task.Bill;
+import duke.notes.task.Deadline;
+import duke.notes.task.Shoplist;
+import duke.notes.task.Task;
 import duke.ui.DukeUI;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -162,15 +162,15 @@ public class DukeStorage implements DukeUI {
 
     //WRITE METHODS-------------------------------------
     /**
-     * This method is used to write to file, the ArrayList of {@code Task} objects held by the {@code DukeList} object.
+     * This method is used to write to file, the ArrayList of {@code Note} objects held by the {@code DukeList} object.
      *
      * @param dukeNotes The {@code DukeList} object to be written to file.
      * @throws IOException If the saved file could not be found via the file path.
      */
     public void writeToFile(DukeList dukeNotes) throws IOException {
         FileWriter fw = new FileWriter(this.path, false);
-        for(Task task: dukeNotes.getNotes()){
-            String text = task.getSaveText();
+        for(Note note : dukeNotes.getNotes()){
+            String text = note.getSaveText();
             text = encodeText(text) + "\n";
             fw.write(text);
         }
@@ -228,15 +228,15 @@ public class DukeStorage implements DukeUI {
      * This method is used to read data from saved files and reconstruct the {@code Note} objects,
      * thereafter holding them in an ArrayList.
      *
-     * @return ArrayList<Task> The ArrayList of reconstructed {@code Note} objects from the saved file.
+     * @return ArrayList<Note> The ArrayList of reconstructed {@code Note} objects from the saved file.
      * @throws FileNotFoundException If the saved file could not be found via the file path.
      * @throws ParseException If there are errors reading from saved files.
      */
-    public ArrayList<Task> readFromFile() throws FileNotFoundException, ParseException {
+    public ArrayList<Note> readFromFile() throws FileNotFoundException, ParseException {
 
-        ArrayList<Task> notes = new ArrayList<>();
+        ArrayList<Note> notes = new ArrayList<>();
 
-        Task note = null;
+        Note note = null;
         Scanner read = new Scanner(this.file);
 
         if(!read.hasNext()) {
@@ -351,7 +351,7 @@ public class DukeStorage implements DukeUI {
                                 false, itemBudget);
                     }
                 }
-                case "Todo" -> {
+                case "Task" -> {
                     int serialNum = Integer.parseInt(readIndexes[1]);
                     String description = readIndexes[2];
                     Date addDate = INPUT_TIME.parse(readIndexes[3]);
@@ -359,10 +359,10 @@ public class DukeStorage implements DukeUI {
 
                     if(isDone) {
                         Date doneDate = INPUT_TIME.parse(readIndexes[5]);
-                        note = new Todo(serialNum, description, addDate, doneDate,
+                        note = new Task(serialNum, description, addDate, doneDate,
                                 true);
                     } else {
-                        note = new Todo(serialNum, description, addDate,
+                        note = new Task(serialNum, description, addDate,
                                 false);
                     }
                 }

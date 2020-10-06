@@ -2,10 +2,10 @@ package duke;
 
 import duke.budget.Budget;
 import duke.commands.CommandException;
-import duke.commands.DateException;
+import duke.notes.task.Task;
+import duke.parser.DateException;
 import duke.commands.DukeCommand;
 import duke.notes.event.Event;
-import duke.notes.todo.Todo;
 import duke.parser.DukeParser;
 import duke.parser.PrefixException;
 import duke.storage.DukeList;
@@ -92,7 +92,7 @@ public class Duke implements DukeParser, DukeUI {
                 System.out.println("    I don't understand what you meant by...\n");
                 DukeUI.commandWrap(input, 66);
                 e.printStackTrace();
-                System.out.println("    The task(s) you mentioned cannot be found.");
+                System.out.println("    The note(s) you mentioned cannot be found.");
                 System.out.println("    There could be errors or omissions in the data entry, format or delimiters.");
                 DukeUI.suggestFormat();
                 DukeUI.suggestListNotes();
@@ -169,7 +169,7 @@ public class Duke implements DukeParser, DukeUI {
             System.out.println("    I don't understand what you meant by...\n");
             DukeUI.commandWrap(input, 66);
             e.printStackTrace();
-            System.out.println("    The task(s) you mentioned cannot be found.");
+            System.out.println("    The note(s) you mentioned cannot be found.");
             System.out.println("    There could be errors or omissions in the data entry, format or delimiters.");
             DukeUI.suggestFormat();
             DukeUI.suggestListNotes();
@@ -230,7 +230,7 @@ public class Duke implements DukeParser, DukeUI {
      */
     public static void resetStaticVariables() {
         Event.resetStaticVariables();
-        Todo.resetStaticVariables();
+        Task.resetStaticVariables();
         Budget.resetStaticVariables();
     }
 

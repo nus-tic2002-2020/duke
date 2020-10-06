@@ -1,14 +1,15 @@
 package duke.commands;
 
+import duke.notes.Note;
 import duke.notes.NoteType;
-import duke.notes.Task;
 import duke.notes.event.Event;
 import duke.notes.event.Birthday;
 import duke.notes.event.Wedding;
-import duke.notes.todo.Bill;
-import duke.notes.todo.Deadline;
-import duke.notes.todo.Shoplist;
-import duke.notes.todo.Todo;
+import duke.notes.task.Bill;
+import duke.notes.task.Deadline;
+import duke.notes.task.Shoplist;
+import duke.notes.task.Task;
+import duke.parser.DateException;
 import duke.parser.DateParser;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
@@ -66,7 +67,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
             throw new DateException(end, "EndB4Start");
         }
 
-        for(Task note: dukeNotes.getNotes()){
+        for(Note note: dukeNotes.getNotes()){
             if(note instanceof Event){
                 Date noteStart = ((Event) note).getStartDate();
                 Date noteEnd = ((Event) note).getEndDate();
@@ -98,7 +99,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
     }
 
     /**
-     * This method checks for the validity of {@code Date} objects used in the {@code Todo} class of objects.
+     * This method checks for the validity of {@code Date} objects used in the {@code Task} class of objects.
      *
      * @param description The description to be checked for validity.
      * @exception CommandException If the description is blank or empty.
@@ -111,7 +112,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
     }
 
     /**
-     * This method checks for the validity of {@code Date} objects used in the {@code Todo} class of objects.
+     * This method checks for the validity of {@code Date} objects used in the {@code Task} class of objects.
      *
      * @param date The {@code Date} object to be checked for validity.
      * @exception DateException If the {@code Date} object is before the present date-time.
@@ -138,7 +139,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
         DukeUI.printDivider();
         Date addDate = new Date();
         int nextSerialNum = dukeNotes.getNotes().size() + 1;
-        ArrayList<Task> notes = new ArrayList<>();
+        ArrayList<Note> notes = new ArrayList<>();
         switch (NoteType.getKey(this.cmdType).toString()) {
             case "BILL" -> {
                 String description = inputs.get(1);
@@ -149,7 +150,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
                 checkValidTargetDate(targetDate);
                 checkValidAmount(itemBudget);
 
-                Task note1 = new Bill(nextSerialNum, description, targetDate, itemBudget, addDate);
+                Note note1 = new Bill(nextSerialNum, description, targetDate, itemBudget, addDate);
                 notes.add(note1);
 
             }
@@ -164,9 +165,9 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
                 checkForClashes(dukeNotes, startDate, endDate);
                 checkValidAmount(itemBudget);
 
-                Task note1 = new Shoplist(nextSerialNum, giftDescription, itemBudget, addDate);
+                Note note1 = new Shoplist(nextSerialNum, giftDescription, itemBudget, addDate);
                 notes.add(note1);
-                Task note2 = new Birthday(nextSerialNum+1, description, startDate, endDate, addDate);
+                Note note2 = new Birthday(nextSerialNum+1, description, startDate, endDate, addDate);
                 notes.add(note2);
             }
             case "DEADLINE" -> {
@@ -176,7 +177,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
                 checkValidDescription(description);
                 checkValidTargetDate(targetDate);
 
-                Task note1 = new Deadline(nextSerialNum, description, targetDate, addDate);
+                Note note1 = new Deadline(nextSerialNum, description, targetDate, addDate);
                 notes.add(note1);
             }
             case "EVENT" -> {
@@ -187,7 +188,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
                 checkValidDescription(description);
                 checkForClashes(dukeNotes, startDate, endDate);
 
-                Task note1 = new Event(nextSerialNum, description, startDate, endDate, addDate);
+                Note note1 = new Event(nextSerialNum, description, startDate, endDate, addDate);
                 notes.add(note1);
             }
             case "SHOPLIST" -> {
@@ -197,15 +198,15 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
                 checkValidDescription(description);
                 checkValidAmount(itemBudget);
 
-                Task note1 = new Shoplist(nextSerialNum, description, itemBudget, addDate);
+                Note note1 = new Shoplist(nextSerialNum, description, itemBudget, addDate);
                 notes.add(note1);
             }
-            case "TODO" -> {
+            case "TASK" -> {
                 String description = inputs.get(1);
 
                 checkValidDescription(description);
 
-                Task note1 = new Todo(nextSerialNum, description, addDate);
+                Note note1 = new Task(nextSerialNum, description, addDate);
                 notes.add(note1);
             }
             case "WEDDING" -> {
@@ -218,7 +219,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
                 checkForClashes(dukeNotes, startDate, endDate);
                 checkValidAmount(itemBudget);
 
-                Task note1 = new Wedding(nextSerialNum, description, startDate, endDate, itemBudget, addDate);
+                Note note1 = new Wedding(nextSerialNum, description, startDate, endDate, itemBudget, addDate);
                 notes.add(note1);
             }
         }
