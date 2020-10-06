@@ -169,7 +169,7 @@ public interface DukeUI {
                     "          [\u2714] Required Attributes\n" +
                     "            Serial Number of Note         -->  /n      <Note#>\n" +
                     "          [\u271C] Optional Attributes\n" +
-                    "            Serial Number of Notes        -->  /n      <Note#> & <Note#>\n" +
+                    "            Serial Numbers of Notes        -->  /n      <Note#> & <Note#>\n" +
                     "        #editdesc      / #edd >>> Edit the description of a note.\n" +
                     "          [\u2714] Required Attributes\n" +
                     "            Serial Number of Note         -->  /n      <Note#>\n" +
