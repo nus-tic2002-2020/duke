@@ -1,8 +1,9 @@
+import java.util.ArrayList;
 import java.util.Scanner; //
 
 //import DukeException;
 public class Duke {
-	private static Task[] task = new Task[100];
+	private static ArrayList<Task> task = new ArrayList<Task>();
 	private static int count = 0;
 	private static String ln = "  ____________________________________________________________\n";
 	private static boolean going = true;
@@ -43,11 +44,9 @@ public class Duke {
 		}
 			break;
 		case "list": {
-			int n = 1;
-			for (int a = 0; a < count; a++) {
-				System.out.println(n + ". [" + task[a].icon() + "] " + task[a].getTitle());
-				n++;
-			}
+			System.out.println(ln + "Here are the tasks in your list:");
+			listALL();
+			System.out.println(ln);
 		}
 			break;
 		case "done": {
@@ -58,18 +57,35 @@ public class Duke {
 				throw new DukeException("Invalid number");
 			}
 			if (Tasknum > count)
-				System.out.println("Invalid task number");
-			task[Tasknum - 1].markDone();
-			System.out.println(ln + " Nice! I've marked this task as done:\n" + "[" + task[Tasknum - 1].icon() + "] "
-					+ task[Tasknum - 1].getTitle() + "\n" + ln);
+				throw new DukeException("Invalid task number");
+			task.get(Tasknum - 1).markDone();
+			System.out.println(ln + " Nice! I've marked this task as done:\n" + "[" + task.get(Tasknum - 1).icon() + "] "
+					+ task.get(Tasknum - 1).getTitle() + "\n" + ln);
+		}
+			break;
+		case "delete": {
+			int Tasknum = 0;
+			try {
+				Tasknum = Integer.parseInt(_userinput[1]);
+			} catch (NumberFormatException e) {
+				throw new DukeException("Invalid number");
+			}
+			if (Tasknum > count)
+				throw new DukeException("Invalid task number");
+			System.out.println(ln + "Noted. I've removed this task: \n[" + task.get(Tasknum - 1).icon() + "] " + task.get(Tasknum - 1).getTitle());
+			task.remove(Tasknum - 1);
+			count--;
+			listALL();
+			System.out.println("Now you have "+count+" tasks in the list.");
+			System.out.println(ln);
 		}
 			break;
 		case "deadline": {
 			try {
 				String[] dl = _userinput[1].split("/");
 				String by[] = (dl[1].split(" ", 2));
-				task[count] = new Deadline((dl[0]).trim(), by[1].trim());
-				printAdded(task[count].toString());
+				task.add(count,new Deadline((dl[0]).trim(), by[1].trim()));
+				printAdded(task.get(count).toString());
 				count++;
 			} catch (RuntimeException e) {
 				throw new MissDescException(input_type);
@@ -81,8 +97,8 @@ public class Duke {
 			try {
 				String[] dl = _userinput[1].split("/");
 				String at[] = (dl[1].split(" ", 2));
-				task[count] = new Event((dl[0]).trim(), at[1].trim());
-				printAdded(task[count].toString());
+				task.add(count,new Event((dl[0]).trim(), at[1].trim()));
+				printAdded(task.get(count).toString());
 				count++;
 			} catch (RuntimeException e) {
 				throw new MissDescException(input_type);
@@ -92,8 +108,8 @@ public class Duke {
 			break;
 		case "todo": {
 			try {
-				task[count] = new Task(_userinput[1]);
-				printAdded(task[count].toString());
+				task.add(count,new Task(_userinput[1]));
+				printAdded(task.get(count).toString());
 				count++;
 			} catch (RuntimeException e) {
 				throw new MissDescException(input_type);
@@ -104,6 +120,13 @@ public class Duke {
 		default: {
 			throw new DukeException("");
 		}
+		}
+	}
+	public static void listALL() {
+		int n = 1;
+		for (int a = 0; a < count; a++) {
+			System.out.println(n + ". [" + task.get(a).icon() + "] " + task.get(a).getTitle());
+			n++;
 		}
 	}
 
