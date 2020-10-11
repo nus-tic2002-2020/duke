@@ -13,7 +13,13 @@ public class Duke {
         return false;
     }
 
-    public static Task[] command(String input, Task[] memo){
+    public static Task[] command(String input, Task[] memo) throws DukeException{
+        if(input.equals("blah")){
+            System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            throw new DukeException();
+            //return memo;
+        }
+
         switch(input){
             case "list":
                 printMemo(memo);
@@ -22,22 +28,18 @@ public class Duke {
                 System.out.println(System.lineSeparator() + "Bye. Hope to see you again soon!");
                 break;
             default:
-
                 if(input.contains("done")){
                     memo = makeDone(input,memo);
                     break;
                 }
-
                 if(input.contains("todo")){
                     memo = addMemo(input, memo,2);
                     break;
                 }
-
                 if(input.contains("event")){
                     memo = addMemo(input, memo,3);
                     break;
                 }
-
                 if(input.contains("deadline")){
                     memo = addMemo(input, memo,4);
                     break;
@@ -51,10 +53,14 @@ public class Duke {
     }
 
     //option 1 for Task, 2 for Todos, 3 for Events, 4 for Deadlines
-    public static Task[] addMemo(String input, Task[] memo, int option){
+    public static Task[] addMemo(String input, Task[] memo, int option) throws DukeException{
+
+
+
+
+
         String secondPart;
         int index;
-
         int newSize = memo.length + 1;
         if(containsInMemo(input, memo)){
             System.out.println("Your task is already in the memory.");
@@ -69,6 +75,11 @@ public class Duke {
 
             case 2:
                 input = input.replaceFirst("todo", "").stripLeading();
+                if(input.isEmpty() == true){
+                    System.out.println("☹ OOPS!!! The description of a Todo cannot be empty.");
+                    throw new DukeException();
+                    //return memo;
+                }
                 memo[newSize - 1] = new ToDo(input);
                 break;
 
@@ -81,7 +92,6 @@ public class Duke {
                 input = input.replaceFirst("event", "").stripLeading();
                 memo[newSize - 1] = new Event(input, secondPart);
                 break;
-
 
             case 4:
                 index = input.indexOf("/by");
@@ -147,12 +157,18 @@ public class Duke {
         int start = 1;
 
         while(start == 1){
-            System.out.println(System.lineSeparator() + "What can I do for you?");
-            input = scan.nextLine();
-            if(input.equals("bye")){
-                start = 0;
+            try{
+                System.out.println(System.lineSeparator() + "What can I do for you?");
+                input = scan.nextLine();
+                if(input.equals("bye")){
+                    start = 0;
+                }
+                memo = command(input,memo);
             }
-            memo = command(input,memo);
+            catch (DukeException ex){
+                System.out.println("Please input again.");
+            }
+
         }
 
 
