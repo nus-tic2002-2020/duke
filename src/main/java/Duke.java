@@ -17,8 +17,8 @@ public class Duke {
     public static String markAsDone(int taskNumber){
         return t[taskNumber].setDone();
     }
-    
-    public static void commandInput(){
+
+    public static void commandInput() throws DukeException {
         int arrSize = 100;
         String[] commands = new String[arrSize];
         Scanner sc = new Scanner(System.in);
@@ -37,23 +37,49 @@ public class Duke {
                     break;
                 default:
                     if(userCommand.contains("mark")){
-                        System.out.println(markAsDone(Integer.parseInt(userCommand.split(" ")[1])-1));
+                        try{
+                            if((userCommand.substring(userCommand.indexOf("mark") + 5, userCommand.length()).trim()).equals("")){
+                                throw new DukeException();
+                            }System.out.println(markAsDone(Integer.parseInt(userCommand.split(" ")[1])-1));
+                        }catch(StringIndexOutOfBoundsException | DukeException e){
+                            System.out.println("☹ OOPS!!! Item to be marked cannot be empty.");
+                        }
                         break;
                     }
                     if(userCommand.contains("todo")){
-                        setTask(new Todo(userCommand.substring(userCommand.indexOf("todo") + 5, userCommand.length())));
+                        try{
+                            if((userCommand.substring(userCommand.indexOf("todo") + 5, userCommand.length()).trim()).equals("")){
+                                throw new DukeException();
+                            }setTask(new Todo(userCommand.substring(userCommand.indexOf("todo") + 5, userCommand.length())));
+                        }catch(StringIndexOutOfBoundsException | DukeException e){
+                            System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
+                        }
                         break;
                     }
-                    if(userCommand.contains("deadline")){
-                        setTask(new Deadline(userCommand.substring(userCommand.indexOf("deadline") + 9, userCommand.indexOf("by") - 1), userCommand.substring(userCommand.indexOf("by") + 3, userCommand.length())));
+
+                    if (userCommand.contains("deadline")) {
+                        try{
+                            if((userCommand.substring(userCommand.indexOf("deadline") + 9, userCommand.length()).trim()).equals("")){
+                                throw new DukeException();
+                            }setTask(new Deadline(userCommand.substring(userCommand.indexOf("deadline") + 9, userCommand.indexOf("by") - 1), userCommand.substring(userCommand.indexOf("by") + 3, userCommand.length())));
+                        }catch(StringIndexOutOfBoundsException | DukeException e){
+                            System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
+                        }
                         break;
                     }
+
                     if(userCommand.contains("event")){
-                        setTask(new Event(userCommand.substring(userCommand.indexOf("event") + 6, userCommand.indexOf("at") - 1), userCommand.substring(userCommand.indexOf("at") + 3, userCommand.length())));
+                        try{
+                            if((userCommand.substring(userCommand.indexOf("event") + 6, userCommand.length()).trim()).equals("")){
+                                throw new DukeException();
+                            }setTask(new Event(userCommand.substring(userCommand.indexOf("event") + 6, userCommand.indexOf("at") - 1), userCommand.substring(userCommand.indexOf("at") + 3, userCommand.length())));
+                        }catch(StringIndexOutOfBoundsException | DukeException e){
+                            System.out.println("☹ OOPS!!! The description of an event cannot be empty.");
+                        }
                         break;
                     }
                     else{
-                        setTask(new Task(userCommand));
+                        System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                     }
             }
 
@@ -61,7 +87,7 @@ public class Duke {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DukeException {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
