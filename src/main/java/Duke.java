@@ -4,42 +4,40 @@ import java.util.*;
 
 
 public class Duke {
+    //private static Task[] tasks = new Task[100];
+    private static int arrCounter = 0;
 
 
     public static void commandInput(){
         int arrSize = 100;
         String[] commands = new String[arrSize];
         Scanner sc = new Scanner(System.in);
-
-        for(int i = 0; i < arrSize; i++){
-
-            String userCommand = sc.nextLine();
-
-            if(userCommand.equals("bye")){
-                System.out.println("Bye. Hope to see you again soon!");
-                break;
-            }
-
-            if(userCommand.equals("print list")){
-                //System.out.println(Arrays.toString(commands));
-                for(int y = 0; y<i; y++){
-                    if(commands[y].equals(null)){
-                        System.out.println("Please input a value");
-                        break;
+        String userCommand;
+        do{
+            userCommand = sc.nextLine();
+            switch(userCommand){
+                case "bye":
+                    System.out.println("Bye. Hope to see you again soon!");
+                    break;
+                case "print list":
+                    for(int i = 0; i<arrCounter; i++){
+                        System.out.println(i+1 + ". " + commands[i]);
                     }
-                    else{
-                        System.out.println(y+1+". "+ commands[y]);
-                    }
-                }
+                    break;
+                
+                default:
+                    commands[arrCounter] = userCommand;
+                    System.out.println("added: " + commands[arrCounter]);
+                    arrCounter++;
             }
 
-            else{
-                commands[i] = userCommand;
-                System.out.println("added: " + userCommand);
-            }
-        }
+        }while(!(userCommand.equals("bye")));
+
     }
-
+    /*
+    public static String markAsDone(int task){
+        return tasks[task].setDone();
+    }*/
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
