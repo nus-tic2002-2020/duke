@@ -4,7 +4,6 @@ import java.util.*;
 
 
 public class Duke {
-    //private static Task[] tasks = new Task[100];
     private static int arrCounter = 0;
 
 
@@ -34,10 +33,7 @@ public class Duke {
         }while(!(userCommand.equals("bye")));
 
     }
-    /*
-    public static String markAsDone(int task){
-        return tasks[task].setDone();
-    }*/
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
