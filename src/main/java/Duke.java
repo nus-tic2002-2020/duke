@@ -1,6 +1,12 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.format.DateTimeParseException;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 public class Duke {
 
@@ -76,7 +82,11 @@ public class Duke {
                 } else if (line.contains("event")) {
 
                     int separator = line.indexOf('/');
-                    tasks.add(new Event(line.substring(6, separator - 1), line.substring(separator + 4)));
+
+                    String dateAndTime = line.substring(separator + 4);
+                    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+                    LocalDateTime dateTime = LocalDateTime.parse(dateAndTime, format);
+                    tasks.add(new Event(line.substring(6, separator - 1), dateTime));
 
                     System.out.println("Got it. I've added this task:");
                     System.out.println(tasks.get(tasks.size() - 1).toString());
@@ -84,10 +94,16 @@ public class Duke {
                     pointer++;
 
 
+
                 } else if (line.contains("deadline")) {
 
                     int separator = line.indexOf("/");
-                    tasks.add(new Deadline(line.substring(9, separator - 1), line.substring(separator + 4)));
+
+                    String dateAndTime = line.substring(separator + 4);
+                    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+                    LocalDateTime dateTime = LocalDateTime.parse(dateAndTime, format);
+                    tasks.add(new Deadline(line.substring(9, separator - 1), dateTime));
+
 
                     System.out.println("Got it. I've added this task:");
                     System.out.println(tasks.get(tasks.size() - 1).toString());
@@ -109,7 +125,9 @@ public class Duke {
             } catch (StringIndexOutOfBoundsException e) {
                 System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
 
-
+            } catch (DateTimeParseException ex) {
+                System.out.println("Invalid date and time format\n"
+                        + "Please enter date and time as 'dd/MM/yyyy HHmm'");
             }
         }
     }
