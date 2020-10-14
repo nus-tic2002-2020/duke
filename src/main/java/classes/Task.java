@@ -5,7 +5,6 @@ public abstract class Task {
     protected boolean done;
     protected String symbol;
 
-
     public Task(String description) {
         setDescription(description);
         this.done = false;
@@ -13,12 +12,10 @@ public abstract class Task {
     }
 
     public String getDone() {
-        if (done == false) {
+        if (!done) {
             return ("[✗]");
         }
-        else {
             return ("[✓]");
-        }
     }
 
     public void setDescription(String description) {
@@ -34,8 +31,6 @@ public abstract class Task {
         return null;
     };
 
-    public abstract void printAdd(int storeSize);
-    public abstract void printDelete(int storeSize);
     public abstract void setDone();
     public abstract String getSymbol();
     public abstract void setSymbol();
