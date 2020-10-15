@@ -1,23 +1,17 @@
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.ArrayList;
 
+
+//TODO: Should refactor exceptions. Refactor addMemo[need to check for copies] and deleteMemo[need to reduce total task size when delete]
 
 public class Duke {
-    public static boolean containsInMemo(String value, Task[] memo){
-        int size = memo.length;
-        for(int i = 0; i < size; i ++){
-            if(memo[i].getDescription().equals(value)){
-                return true;
-            }
-        }
-        return false;
-    }
 
-    public static Task[] command(String input, Task[] memo) throws DukeException{
+
+    public static void command(String input, ArrayList<Task> memo) throws DukeException{
         if(input.equals("blah")){
             System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             throw new DukeException();
-            //return memo;
         }
 
         switch(input){
@@ -29,48 +23,72 @@ public class Duke {
                 break;
             default:
                 if(input.contains("done")){
-                    memo = makeDone(input,memo);
+                    makeDone(input,memo);
                     break;
                 }
                 if(input.contains("todo")){
-                    memo = addMemo(input, memo,2);
+                    addMemo(input, memo,2);
                     break;
                 }
                 if(input.contains("event")){
-                    memo = addMemo(input, memo,3);
+                    addMemo(input, memo,3);
                     break;
                 }
                 if(input.contains("deadline")){
-                    memo = addMemo(input, memo,4);
+                    addMemo(input, memo,4);
                     break;
                 }
 
-                memo = addMemo(input, memo,1);
+                if(input.contains("delete")){
+                    deleteMemo(input,memo);
+                    break;
+                }
+
+                //default add task.
+                addMemo(input, memo,1);
 
         }
 
-        return memo;
+        //return memo;
     }
 
+    public static void deleteMemo(String input, ArrayList<Task> memo) throws DukeException{
+        int option = 0;
+        input = input.replaceFirst("delete", "").strip();
+        if(input.isEmpty() == true){
+            throw new DukeException();
+        }
+
+        try{
+            option = Integer.parseInt(input);
+        }catch(NumberFormatException e){
+            System.out.println("Please enter an integer for your delete command.");
+        }
+
+
+        memo.remove(option - 1);
+
+        return;
+    }
+
+
+    //TODO: Need to check for copies
     //option 1 for Task, 2 for Todos, 3 for Events, 4 for Deadlines
-    public static Task[] addMemo(String input, Task[] memo, int option) throws DukeException{
-
-
-
-
+    public static void addMemo(String input, ArrayList<Task> memo, int option) throws DukeException{
 
         String secondPart;
-        int index;
-        int newSize = memo.length + 1;
-        if(containsInMemo(input, memo)){
-            System.out.println("Your task is already in the memory.");
-            return memo;
-        }
-        memo = Arrays.copyOf(memo, newSize);
+        int index = 0;
+        int size = 0;
+
+        //if(memo.contains(Task(input)) == true){
+            //System.out.println("Your task is already in the memory.");
+            //return;
+        //}
+
 
         switch(option){
             case 1:
-                memo[newSize - 1] = new Task(input);
+                memo.add( new Task (input) );
                 break;
 
             case 2:
@@ -80,7 +98,7 @@ public class Duke {
                     throw new DukeException();
                     //return memo;
                 }
-                memo[newSize - 1] = new ToDo(input);
+                memo.add(new ToDo(input) );
                 break;
 
             case 3:
@@ -90,7 +108,7 @@ public class Duke {
 
                 input = input.substring(0,index - 1);
                 input = input.replaceFirst("event", "").stripLeading();
-                memo[newSize - 1] = new Event(input, secondPart);
+                memo.add( new Event(input, secondPart) );
                 break;
 
             case 4:
@@ -99,20 +117,21 @@ public class Duke {
                 secondPart = secondPart.replaceFirst( "/by", "").stripLeading();
                 input = input.substring(0,index - 1);
                 input = input.replaceFirst("deadline", "").stripLeading();
-                memo[newSize - 1] = new Deadline(input, secondPart);
+                memo.add(new Deadline(input, secondPart) );
                 break;
         }
 
+        size = memo.size();
 
         System.out.println(System.lineSeparator() + "Got it. I've added this task:" +
-                System.lineSeparator() + memo[newSize - 1].toString());
+                System.lineSeparator() + memo.get(size - 1).toString());
 
-        memo[newSize - 1].printTotalTasks();
-        return memo;
+        memo.get(size - 1).printTotalTasks();
+        return;
     }
 
-    public static void printMemo(Task[] memo){
-        int size = memo.length;
+    public static void printMemo(ArrayList<Task> memo){
+        int size = memo.size();
         if(size == 0){
             System.out.println(System.lineSeparator() + "Task List is empty.");
             return;
@@ -120,24 +139,24 @@ public class Duke {
 
         System.out.println(System.lineSeparator() + "Here are the tasks in your list");
         for(int i = 0; i < size; i ++){
-            System.out.println(System.lineSeparator() + (i+1) + "." + memo[i].toString());
+            System.out.println(System.lineSeparator() + (i+1) + "." + memo.get(i).toString());
         }
 
     }
 
 
-    public static Task[] makeDone(String input, Task[] memo){
+    public static void makeDone(String input, ArrayList<Task> memo){
         int option = 0;
         option = Integer.parseInt(input.replace("done", "").trim());
 
-        if(option <= memo.length && option >= 1){
-            memo[option - 1].changeCompletedTo(true);
-            System.out.println(System.lineSeparator() + "Nice! I've marked this task as done:" + System.lineSeparator() + memo[option - 1].toString());
+        if(option <= memo.size() && option >= 1){
+            memo.get(option - 1).changeCompletedTo(true);
+            System.out.println(System.lineSeparator() + "Nice! I've marked this task as done:" + System.lineSeparator() + memo.get(option - 1).toString());
 
         }else{
             System.out.println("Input Invalid");
         }
-        return memo;
+        return;
     }
 
 
@@ -148,7 +167,7 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
-        Task[] memo = new Task[0];
+        ArrayList<Task> memo = new ArrayList<Task> ();
 
         String input;
         Scanner scan = new Scanner(System.in);
@@ -163,9 +182,9 @@ public class Duke {
                 if(input.equals("bye")){
                     start = 0;
                 }
-                memo = command(input,memo);
+                command(input,memo);
             }
-            catch (DukeException ex){
+            catch (Exception ex){
                 System.out.println("Please input again.");
             }
 
