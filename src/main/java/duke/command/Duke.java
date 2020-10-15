@@ -1,7 +1,10 @@
+package duke.command;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import duke.task.*;
 
 public class Duke {
     private static final int MAX_TASKS = 100;
