@@ -1,5 +1,9 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Duke {
     static Scanner getInput = new Scanner(System.in);
@@ -12,6 +16,34 @@ public class Duke {
         System.out.println("Hello from\n" + logo); */
         greeting();
         ifBye();
+        String file = "data/duke.txt";
+        try {
+            writeToFile(file);
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+    }
+
+//    private static void printFilePath(){
+//        File f = new File("data/duke.txt");
+//        System.out.println("full path: " + f.getAbsolutePath());
+//    }
+
+    private static void printFileContents(String filePath) throws FileNotFoundException {
+        File f = new File(filePath); // create a File for the given file path
+        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        while (s.hasNext()) {
+            System.out.println(s.nextLine());
+        }
+    }
+
+    private static void writeToFile(String filePath) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true);
+        for (int i = 0; i< numberOfTask; i++){
+            fw.write(taskList.get(i).getDescription() + System.lineSeparator());
+        }
+        fw.close();
+        printFileContents(filePath);
     }
 
     public static void greeting(){
