@@ -8,8 +8,17 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Storage class for handling interactions with task_list.txt file
+ */
 public class Storage {
 
+    /**
+     * Constructor. Checks whether data folder exists, creates it with task_list.txt if it does not
+     *
+     * @param filePath filePath to task_list.txt
+     * @throws IOException Error for input-output
+     */
     public Storage(String filePath) throws IOException {
         File dataFolder = new File("data");
         if (!dataFolder.exists()) {
@@ -19,6 +28,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Access task_list.txt to facilitate loading of tasks to ArrayList
+     *
+     * @return Returns the tasks as an ArrayList of strings
+     * @throws IOException Error for input-output
+     */
     public static ArrayList<String> load() throws IOException {
         ArrayList tasks = new ArrayList<String>();
         Scanner scanner = new Scanner(new File("data/task_list.txt"));
@@ -28,7 +43,13 @@ public class Storage {
         return tasks;
     }
 
-    public static void delete(String input) throws IOException {
+    /**
+     * Access task_list.txt to facilitate deleting of selected task
+     *
+     * @param input User-input
+     * @throws IOException Error for input-output
+     */
+    public void delete(String input) throws IOException {
         int index = Integer.parseInt(input.substring(7));
         int counter = 1;
         Files.copy(Paths.get("data/task_list.txt"), Paths.get("data/temp.txt"));
@@ -48,24 +69,30 @@ public class Storage {
         Files.delete(Paths.get("data/temp.txt"));
     }
 
-    public static void insert(String input) throws IOException {
+    /**
+     * Access task_list.txt to facilitate insertion of task
+     *
+     * @param task Task-object to be inserted
+     * @throws IOException Error for input-output
+     */
+    public void insert(Task task) throws IOException {
         FileWriter fw = new FileWriter("data/task_list.txt", true);
-        String[] temp = input.split(" ");
-        int function = 0;
-        if (input.toLowerCase().startsWith("t")) { function = 1; }
-        if (input.toLowerCase().startsWith("d")) { function = 2; }
-        if (input.toLowerCase().startsWith("e")) { function = 3; }
+        String function = task.getSymbol();
         switch (function) {
-            case 1: {
-                fw.write("T | X | " + temp[1] + "\n");
+            case "[T]": {
+                fw.write("T | X | " + task.getDescription() + "\n");
                 break;
             }
-            case 2: {
-                fw.write("D | X | " + temp[1] + " | " + temp[3] + "\n");
+            case "[D]": {
+                fw.write("D | X | " + task.getDescription() + " | " + task.getDateAndTime().getDayOfMonth()
+                        + "/" + task.getDateAndTime().getMonthValue() + "/" + task.getDateAndTime().getYear() + ", "
+                        + task.getDateAndTime().getHour() + ":" + task.getDateAndTime().getMinute() + "\n");
                 break;
             }
-            case 3: {
-                fw.write("E | X | " + temp[1] + " | " + temp[3] + "\n");
+            case "[E]": {
+                fw.write("E | X | " + task.getDescription() + " | " + task.getDateAndTime().getDayOfMonth()
+                        + "/" + task.getDateAndTime().getMonthValue() + "/" + task.getDateAndTime().getYear() + ", "
+                        + task.getDateAndTime().getHour() + ":" + task.getDateAndTime().getMinute() + "\n");
                 break;
             }
         }

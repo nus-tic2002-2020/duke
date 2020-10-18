@@ -1,27 +1,67 @@
 package classes;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Locale;
+
+/**
+ * Deadline-subclass of Task-superclass
+ */
 public class Deadline extends Task {
-    private String dateAndTime;
+    private LocalDateTime dateAndTime;
 
-    public Deadline(String description, String dateAndTime) {
+
+    /**
+     * Constructs Deadline-class object
+     *
+     * @param description description of deadline
+     * @param dateAndTime date and time of deadline, two different initialization statements depending whether used
+     *                    for adding tasks or loading from file
+     * @throws DateTimeParseException error if date is wrong format
+     */
+    public Deadline(String description, String dateAndTime) throws DateTimeParseException {
         super(description);
-        this.dateAndTime = dateAndTime;
+        try {
+            this.dateAndTime = LocalDateTime.parse(dateAndTime, formatter());
+        } catch (DateTimeParseException e) {
+            this.dateAndTime = LocalDateTime.parse(dateAndTime, formatterLoad());
+        }
     }
 
-    public void setDone() {
-        this.done = true;
-    }
-
+    /**
+     * Sets the symbol of task to "[D]" to signify Deadline-subclass
+     */
     public void setSymbol() {
         symbol = "[D]";
     }
 
+    /**
+     * @return Returns symbol of task
+     */
     public String getSymbol() {
         return symbol;
     }
 
+    /**
+     * @return Returns LocalDateTime of deadline
+     */
     @Override
-    public String getDateAndTime() {
+    public LocalDateTime getDateAndTime() {
         return dateAndTime;
+    }
+
+    /**
+     * Date formatter used when adding deadlines
+     */
+    private DateTimeFormatter formatter() {
+        return DateTimeFormatter.ofPattern("d/M/yyyy HH:mm");
+    }
+
+    /**
+     * Date formatter used when loading from file
+     */
+    private DateTimeFormatter formatterLoad() {
+        return DateTimeFormatter.ofPattern("d/M/yyyy, HH:mm", Locale.ENGLISH);
     }
 }

@@ -4,9 +4,17 @@ import exceptions.*;
 import exceptions.Exception;
 import java.util.ArrayList;
 
+/**
+ * Class which holds a list of tasks stored as string in ArrayList, and related methods
+ */
 public class TaskList {
-    private static ArrayList<Task> store;
+    private ArrayList<Task> store;
 
+    /**
+     * Constructor. Loads task data from txt file and stores them to an ArrayList
+     *
+     * @param tasks ArrayList of string which makes up the tasks
+     */
     public TaskList(ArrayList<String> tasks) {
         this.store = new ArrayList<>();
         for (String i : tasks) {
@@ -29,23 +37,43 @@ public class TaskList {
         }
     }
 
-    public static ArrayList<Task> getStore() {
+    /**
+     * @return Returns the ArrayList
+     */
+    public ArrayList<Task> getStore() {
         return store;
     }
 
+    /**
+     * Helper method, used by add-method to identify user-input errors.
+     *
+     * @param input User-input
+     * @return
+     */
     public static boolean catcher(String input) { // exception helper method
         input = input.toLowerCase();
         String[] split = input.split(" ");
         return input.trim().length() == split[0].length();
     }
 
-    public static void done(String input) {
+    /**
+     * Sets the done status of the selected task to true by calling method in task-class
+     *
+     * @param input User-input
+     */
+    public void done(String input) {
         String[] temp = input.split(" ");
         int index = Integer.parseInt(temp[1]) - 1;
         store.get(index).setDone();
     }
 
-    public static void delete(String input) throws Exception {
+    /**
+     * Deletes the selected task from the ArrayList
+     *
+     * @param input User-input
+     * @throws Exception Error when invalid task index number is inputted or when input format is wrong
+     */
+    public void delete(String input) throws Exception {
         String[] temp = input.split(" ");
         if (input.contains("  ")) {
             throw new TooManySpacesException();
@@ -53,7 +81,14 @@ public class TaskList {
         store.remove(Integer.parseInt(temp[1]) - 1);
     }
 
-    public static void add(String input) throws Exception {
+    /**
+     * Adds the task to the ArrayList. Catches the first alphabet of the input to determine type of task. Calls
+     * constructor of that task
+     *
+     * @param input User-input
+     * @throws Exception Error when input format is wrong or missing information
+     */
+    public void add(String input) throws Exception {
         int function = 0;
         String[] s = input.split(" ");
         if (input.toLowerCase().startsWith("t")) { function = 1; }
@@ -79,9 +114,9 @@ public class TaskList {
                 }
                 String[] split = input.split("/by");
                 if (catcher(split[1])) {
-                    throw new NoDeadlineException();
+                    throw new NoTimeframeException();
                 }
-                store.add(new Deadline(split[0].trim(), split[1].trim()));
+                store.add(new Deadline(split[0].substring(8).trim(), split[1].trim()));
                 break;
             }
             case 3: {
@@ -95,7 +130,7 @@ public class TaskList {
                 if (catcher(split[1])) {
                     throw new NoTimeframeException();
                 }
-                store.add(new Event(split[0].trim(), split[1].trim()));
+                store.add(new Event(split[0].substring(5).trim(), split[1].trim()));
                 break;
             }
         }
