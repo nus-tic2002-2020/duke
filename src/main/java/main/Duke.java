@@ -22,73 +22,89 @@ public class Duke {
         String input = "";
         int count = 0;
         //so long input is not bye
-        while (!input.equals("bye"))
-        {
-            //get user input
-            input = sc.nextLine();
-            //split into array
-            String[] arrValue;
-            arrValue = input.split(" ");
-            if (input.equals("list"))
-            {
-                //loop everything in the array
-                System.out.println("_______________________________________________");
-                for (int i = 0; i < count; i++)
-                {
-                    System.out.println(i+1 +".[" +task[i].getStatusIcon() +"] " + task[i]);
+        while (!input.equals("bye")) {
+            try {
+                //get user input
+                input = sc.nextLine();
+                //split into array
+                String[] arrValue;
+                arrValue = input.split(" ");
+                if (input.equals("list")) {
+                    //loop everything in the array
+                    System.out.println("_______________________________________________");
+                    for (int i = 0; i < count; i++) {
+                        System.out.println(i + 1 + ".[" + task[i].getStatusIcon() + "] " + task[i]);
+                    }
+                    System.out.println("_______________________________________________");
+                } else if (arrValue[0].equals("done")) {
+                    if (arrValue.length < 2) {
+                        throw new EmptyDescriptionException("OOOPS!!! The description of a done cannot be empty");
+                    }
+                    int index = Integer.parseInt(arrValue[1]);
+                    task[index - 1].markAsDone();
+                    System.out.println("_______________________________________________");
+                    System.out.println("Nice! I've marked this task as done: ");
+                    System.out.println("\t[" + task[index - 1].getStatusIcon() + "] " + task[index - 1]);
+                    System.out.println("_______________________________________________");
+                } else if (arrValue[0].equals("todo")) {
+                    if (arrValue.length < 2) {
+                        throw new EmptyDescriptionException("OOOPS!!! The description of a todo cannot be empty");
+                    }
+                    String replaceString = input.replace("todo ", "");
+                    task[count] = new ToDo(replaceString, false);
+                    System.out.println("_______________________________________________");
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("\t" + task[count]);
+                    count++;
+                    System.out.println("Now you have " + count + " tasks in the list.");
+                    System.out.println("_______________________________________________");
+                } else if (arrValue[0].equals("deadline")) {
+                    if (arrValue.length < 2) {
+                        throw new EmptyDescriptionException("OOOPS!!! The description of a deadline cannot be empty");
+                    }
+                    String replaceString = input.replace("deadline ", "");
+                    String[] splitBy = replaceString.split(" /by ");
+                    task[count] = new Deadline(splitBy[0], false, splitBy[1]);
+                    System.out.println("_______________________________________________");
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println("\t" + task[count]);
+                    count++;
+                    System.out.println("Now you have " + count + " tasks in the list.");
+                    System.out.println("_______________________________________________");
+                } else if (arrValue[0].equals("event")) {
+                    if (arrValue.length < 2) {
+                        throw new EmptyDescriptionException("OOOPS!!! The description of a event cannot be empty");
+                    }
+                    String replaceString = input.replace("event", "");
+                    String[] splitAt = replaceString.split(" /at ");
+                    if (splitAt.length < 2) {
+                        throw new EmptyDescriptionException("OOOPS!!! The date of a event cannot be empty");
+                    }
+                    else if(splitAt.length>=2) {
+                        task[count] = new Event(splitAt[0], false, splitAt[1]);
+                        System.out.println("_______________________________________________");
+                        System.out.println("Got it. I've added this task:");
+                        System.out.println("\t" + task[count]);
+                        count++;
+                        System.out.println("Now you have " + count + " tasks in the list.");
+                        System.out.println("_______________________________________________");
+                    }
+                    else
+                    {
+                        throw new InvalidCommandException("OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    }
                 }
-                System.out.println("_______________________________________________");
-            }
-            else if (arrValue[0].equals("done"))
-            {
-                int index = Integer.parseInt(arrValue[1]);
-                task[index-1].markAsDone();
-                System.out.println("_______________________________________________");
-                System.out.println("Nice! I've marked this task as done: ");
-                System.out.println("\t["+task[index-1].getStatusIcon() + "] "+ task[index-1]);
-                System.out.println("_______________________________________________");
-            }
-            else if (arrValue[0].equals("todo"))
-            {
-                String replaceString = input.replace("todo ", "");
-                task[count] = new ToDo(replaceString, false);
-                System.out.println("_______________________________________________");
-                System.out.println("Got it. I've added this task:");
-                System.out.println("\t" + task[count]);
-                count ++;
-                System.out.println("Now you have " + count + " tasks in the list.");
-                System.out.println("_______________________________________________");
-            }
-            else if (arrValue[0].equals("deadline"))
-            {
-                String replaceString = input.replace("deadline ","");
-                String [] splitBy = replaceString.split(" /by ");
-                task[count] = new Deadline(splitBy[0], false, splitBy[1]);
-                System.out.println("_______________________________________________");
-                System.out.println("Got it. I've added this task:");
-                System.out.println("\t" + task[count]);
-                count ++;
-                System.out.println("Now you have " + count + " tasks in the list.");
-                System.out.println("_______________________________________________");
-            }
-            else if (arrValue[0].equals("event"))
-            {
-                String replaceString = input.replace("event", "");
-                String [] splitAt = replaceString.split(" /at ");
-                task [count] = new Event(splitAt[0], false, splitAt[1]);
-                System.out.println("_______________________________________________");
-                System.out.println("Got it. I've added this task:");
-                System.out.println("\t" + task[count]);
-                count ++;
-                System.out.println("Now you have " + count + " tasks in the list.");
-                System.out.println("_______________________________________________");
-            }
-            else {
+                else {
 
-                task[count] = new Task(input,false);
-                System.out.println("added: " + task[count]);
-                count++;
+                    task[count] = new Task(input, false);
+                    System.out.println("added: " + task[count]);
+                    count++;
+                }
+
+            } catch (EmptyDescriptionException | InvalidCommandException e) {
+                System.out.println(e.getMessage());
             }
+
         }
         System.out.println("Bye. Hope to see you again soon !");
     }
