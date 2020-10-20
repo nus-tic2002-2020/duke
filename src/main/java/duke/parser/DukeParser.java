@@ -18,7 +18,7 @@ public interface DukeParser extends DukeUI, DateParser {
 
     //METHODS-------------------------------------------
     /**
-     * This method is used to retrieve serial numbers of the {@code Note} object.
+     * This method is used to create the appropriate {@code DukeCommand} object created based on the user input.
      *
      * @param input The textual input provided by the user in verbatim.
      * @return DukeCommand The appropriate {@code DukeCommand} object created based on the user input.

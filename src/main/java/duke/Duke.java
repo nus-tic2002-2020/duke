@@ -41,7 +41,7 @@ public class Duke implements DukeParser, DukeUI {
      *
      * @param path The path to the saved files in the hard drive.
      */
-    public Duke(String path){
+    public Duke(String path) {
 
         dukeStorage = new DukeStorage(path);
 
@@ -69,7 +69,7 @@ public class Duke implements DukeParser, DukeUI {
      * @exception IOException If (@code Note} or {@code File} objects specified could not be found.
      * @exception CommandException If there are errors in the command input.
      */
-    public void run() throws ParseException, IOException, CommandException {
+    public void run() throws ParseException, CommandException {
 
 
         isGUIMode = false;
@@ -87,7 +87,7 @@ public class Duke implements DukeParser, DukeUI {
                 dukeCommand.execute(dukeNotes, dukeStorage);
                 isConfirmedExit = dukeCommand.getConfirmExit();
 
-            } catch (NullPointerException | IndexOutOfBoundsException e) {
+            } catch (NullPointerException | IndexOutOfBoundsException | IOException e) {
                 DukeUI.printDivider();
                 System.out.println("    I don't understand what you meant by...\n");
                 DukeUI.commandWrap(input, 66);

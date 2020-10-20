@@ -44,7 +44,7 @@ public class DukeStorage implements DukeUI {
      *
      * @param path The path to the saved files in the hard drive.
      */
-    public DukeStorage(String path){
+    public DukeStorage(String path)  {
 
         int lastSlash = 0;
         for (int i = 0; i < path.length(); i++) {
@@ -57,7 +57,17 @@ public class DukeStorage implements DukeUI {
         if(!fileDir.exists()){ //noinspection ResultOfMethodCallIgnored
             fileDir.mkdirs(); }
 
+
         this.file = new File(path);
+        if(!this.file.isFile()) {
+            try { //noinspection ResultOfMethodCallIgnored
+                this.file.createNewFile();
+            } catch (IOException e) {
+                DukeUI.printDivider();
+                System.out.println("    There has been a storage error. Saving is not available...\n");
+                DukeUI.printDivider();
+            }
+        }
         this.path = path;
         this.lastSave = null;
         this.last2Save = null;
