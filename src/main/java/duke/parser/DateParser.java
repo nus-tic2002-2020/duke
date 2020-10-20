@@ -345,6 +345,14 @@ public interface DateParser extends DukeUI {
             }
         }
 
+        for(int i=0; i<inputs.size(); i++) {
+            String input = inputs.get(i);
+            if (checkForTime(input, dateHash)) {
+                inputs.remove(i);
+                break;
+            }
+        }
+
         if(dateHash.get("year") == null) {
             for(int i=0; i<inputs.size(); i++) {
                 String input = inputs.get(i);
@@ -352,14 +360,6 @@ public interface DateParser extends DukeUI {
                     inputs.remove(i);
                     break;
                 }
-            }
-        }
-
-        for(int i=0; i<inputs.size(); i++) {
-            String input = inputs.get(i);
-            if (checkForTime(input, dateHash)) {
-                inputs.remove(i);
-                break;
             }
         }
 

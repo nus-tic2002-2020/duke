@@ -10,7 +10,7 @@
 <fx:root alignment="TOP_RIGHT" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="100.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #FFFFFF;" width="100.0" />
-        <Label fx:id="text" alignment="TOP_LEFT" maxWidth="-Infinity" minHeight="100.0" minWidth="-Infinity" prefWidth="763.0" style="-fx-border-radius: 6px; -fx-background-color: #e9ecf5; -fx-border-width: 2px; -fx-background-radius: 6px;">
+        <Label fx:id="text" alignment="TOP_LEFT" wrapText="true" maxWidth="-Infinity" minHeight="100.0" minWidth="-Infinity" prefWidth="763.0" style="-fx-border-radius: 6px; -fx-background-color: #e9ecf5; -fx-border-width: 2px; -fx-background-radius: 6px;">
          <HBox.margin>
             <Insets left="20.0" right="20.0" />
          </HBox.margin>

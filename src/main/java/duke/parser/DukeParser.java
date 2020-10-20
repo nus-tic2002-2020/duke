@@ -344,7 +344,7 @@ public interface DukeParser extends DukeUI, DateParser {
                             if (input.contains("/n")) {
                                 String[] doneTokens = input.split("/n", 2);
                                 doneTokens = doneTokens[1].trim().split("/", 2);
-                                doneTokens = doneTokens[1].trim().split("&");
+                                doneTokens = doneTokens[0].trim().split("&");
                                 for (String doneToken : doneTokens) {
                                     toMarkDone.add(Integer.parseInt(doneToken.trim()));
                                 }
@@ -449,7 +449,7 @@ public interface DukeParser extends DukeUI, DateParser {
             }
 
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CommandException("There seems to be insufficient Attributes");
+            throw new CommandException("There seems to be insufficient attributes.");
         }
     }
 }

@@ -150,7 +150,7 @@ public interface DukeUI {
                     "          [\u2718] Start/Target Date  [\u271C] Description Text\n" +
                     "        #listnxt72     / #n72 >>> List deadlines & events in 72 hours.\n" +
                     "          [\u271C] Completion Status  [\u271C] Added Date\n" +
-                    "          [\u271C] Start/Target Date  [\u271C] Description Text\n" +
+                    "          [\u2718] Start/Target Date  [\u271C] Description Text\n" +
                     "        #listshoplists / #lsl >>> List shopping list items.\n" +
                     "          [\u271C] Completion Status  [\u271C] Added Date\n" +
                     "          [\u2718] Start/Target Date  [\u271C] Description Text\n" +

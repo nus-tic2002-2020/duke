@@ -66,7 +66,6 @@ public class Duke implements DukeParser, DukeUI {
      * This method run {@code Duke} when using the {@code Duke Console}.
      *
      * @exception ParseException If there is an error in reading and understanding inputs.
-     * @exception IOException If (@code Note} or {@code File} objects specified could not be found.
      * @exception CommandException If there are errors in the command input.
      */
     public void run() throws ParseException, CommandException {
@@ -88,7 +87,6 @@ public class Duke implements DukeParser, DukeUI {
                 isConfirmedExit = dukeCommand.getConfirmExit();
 
             } catch (NullPointerException | IndexOutOfBoundsException | IOException e) {
-                DukeUI.printDivider();
                 System.out.println("    I don't understand what you meant by...\n");
                 DukeUI.commandWrap(input, 66);
                 e.printStackTrace();
@@ -99,7 +97,6 @@ public class Duke implements DukeParser, DukeUI {
                 DukeUI.printDivider();
 
             } catch (NumberFormatException | ParseException e) {
-                DukeUI.printDivider();
                 System.out.println("    I don't understand what you meant by...\n");
                 DukeUI.commandWrap(input, 66);
                 System.out.println("    The attribute(s) you mentioned cannot be understood.");
@@ -165,7 +162,6 @@ public class Duke implements DukeParser, DukeUI {
 
         } catch (NullPointerException | IndexOutOfBoundsException e) {
             isErrorReturn = true;
-            DukeUI.printDivider();
             System.out.println("    I don't understand what you meant by...\n");
             DukeUI.commandWrap(input, 66);
             e.printStackTrace();
@@ -177,7 +173,6 @@ public class Duke implements DukeParser, DukeUI {
 
         } catch (NumberFormatException | ParseException e) {
             isErrorReturn = true;
-            DukeUI.printDivider();
             System.out.println("    I don't understand what you meant by...\n");
             DukeUI.commandWrap(input, 66);
             System.out.println("    The attribute(s) you mentioned cannot be understood.");

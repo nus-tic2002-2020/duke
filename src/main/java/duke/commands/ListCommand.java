@@ -229,7 +229,9 @@ public class ListCommand extends DukeCommand implements DukeUI {
         if(this.textFilter == null) {
             return true;
         } else {
-            return note.getDescription().contains(textFilter);
+            String desc = note.getDescription().toUpperCase();
+            String text = this.textFilter.toUpperCase();
+            return desc.contains(text);
         }
     }
 
