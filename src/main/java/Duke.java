@@ -1,11 +1,19 @@
+
+import java.io.BufferedReader;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileReader;
 
 
 //TODO: Should refactor exceptions. Refactor addMemo[need to check for copies] and deleteMemo[need to reduce total task size when delete]
 
 public class Duke {
+
 
 
     public static void command(String input, ArrayList<Task> memo) throws DukeException{
@@ -71,12 +79,11 @@ public class Duke {
         return;
     }
 
-
     //TODO: Need to check for copies
     //option 1 for Task, 2 for Todos, 3 for Events, 4 for Deadlines
     public static void addMemo(String input, ArrayList<Task> memo, int option) throws DukeException{
 
-        String secondPart;
+        String secondPart = "";
         int index = 0;
         int size = 0;
 
@@ -144,7 +151,6 @@ public class Duke {
 
     }
 
-
     public static void makeDone(String input, ArrayList<Task> memo){
         int option = 0;
         option = Integer.parseInt(input.replace("done", "").trim());
@@ -159,8 +165,81 @@ public class Duke {
         return;
     }
 
+    private static void writeToFile(String filePath, ArrayList<Task> memo) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
 
-    public static void main(String[] args) {
+        int size = memo.size();
+        if(size == 0){
+            System.out.println(System.lineSeparator() + "Task List is empty.");
+            return;
+        }
+
+        String temp = "";
+        String text = "";
+        String firstPart;
+        String secPart = "";
+        int done = 0;
+
+        System.out.println(System.lineSeparator() + "Loading Tasks List in Memo to File");
+        for(int i = 0; i < size; i ++){
+            temp = memo.get(i).getClass().toString();
+            switch(temp){
+                case "class Task":
+                    firstPart = "O | ";
+                    break;
+                case "class ToDo":
+                    firstPart = "T | ";
+                    break;
+                case "class Deadline":
+                    firstPart = "D | ";
+                    secPart = " | " + ((Deadline)memo.get(i)).getByDeadline();
+                    break;
+                case "class Event":
+                    firstPart = "E | ";
+                    secPart = " | " + ((Event)memo.get(i)).getAt();
+                    break;
+                default:
+                    System.out.println("Can't get Class from Task Array");
+                    return;
+            }
+
+            done = (memo.get(i).getIsDone()) ? 1:0;
+            text = firstPart + String.valueOf(done) + " | " + memo.get(i).getDescription() + secPart;
+            fw.write(text + System.lineSeparator());
+            text = "";
+
+        }
+        fw.close();
+    }
+
+
+    public static void loadToMemo(String filePath, ArrayList<Task> memo){
+        File f = new File(filePath);
+        FileReader fr =new FileReader(f);
+        BufferedReader br = new BufferedReader(fr);
+
+        String line;
+        String[] splitInput;
+        while((line=br.readLine())!=null){
+            splitInput = line.split(" | ");
+            switch(splitInput[0]){
+                case "O":
+                    memo.add(new Task (splitInput[2]));
+                    break;
+                case "T":
+                case "D":
+                case "E":
+
+
+            }
+
+        }
+
+        fr.close();
+    }
+
+
+    public static void main(String[] args) throws IOException{
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -170,7 +249,24 @@ public class Duke {
         ArrayList<Task> memo = new ArrayList<Task> ();
 
         String input;
+
+        File directoryData = new File("data");
+        if(directoryData.isDirectory() == false || directoryData.exists() == false){
+            System.out.println("Directory \"data\" is not found, creating a new one");
+            directoryData.mkdir();
+        }
+
+        File f = new File("data/tasks_list.txt");
+
+        if(f.isFile() == false || f.exists() == false){
+            System.out.println("File \"duke.text\" is not found, creating a new one");
+            f.createNewFile();
+        }
+
         Scanner scan = new Scanner(System.in);
+
+        //loadToMemo("data/tasks_list.txt", memo);
+        printMemo();
 
 
         int start = 1;
@@ -188,6 +284,15 @@ public class Duke {
                 System.out.println("Please input again.");
             }
 
+        }
+
+
+        String toFile = "data/tasks_list.txt";
+
+        try{
+            writeToFile(toFile,memo);
+        } catch (IOException e){
+            System.out.println("Write to file error");
         }
 
 
