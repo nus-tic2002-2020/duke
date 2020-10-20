@@ -1,8 +1,11 @@
+package seedu.duke.commands;
+
 public class Todo extends Task {
     public Todo(String description) {
         super(description);
     }
-    //@Override
+
+    @Override
     public String getDescription() {
         return "[T]" + super.getDescription();
     }

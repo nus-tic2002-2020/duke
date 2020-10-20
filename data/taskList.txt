@@ -1,0 +1,5 @@
+[T][✘]eat
+[T][✘]eat more
+[T][✘]sleep 
+[T][✘]sleep more
+[T][✘]repeat
