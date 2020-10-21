@@ -83,7 +83,7 @@ public interface DukeParser extends DukeUI, DateParser {
                             }
 
                             if(input.contains("/on")) {
-                                if(CmdType.getCommand(cmdType).equals("#shoplist")) {
+                                if(CmdType.getCommand(cmdType).equals("#listshoplists")) {
                                     throw new CommandException("Date filters are incompatible with " +
                                             cmdType + ".");
                                 }
@@ -93,10 +93,6 @@ public interface DukeParser extends DukeUI, DateParser {
                             }
 
                             if(input.contains("/added")) {
-                                if(CmdType.getCommand(cmdType).equals("#shoplist")) {
-                                    throw new CommandException("Date filters are incompatible with " +
-                                            cmdType + ".");
-                                }
                                 String[] listTokens = input.split("/added", 2);
                                 listTokens = listTokens[1].trim().split("/", 2);
                                 addedFilter = DateParser.understandDateInput(listTokens[0].trim() + " 00:00");
@@ -136,15 +132,11 @@ public interface DukeParser extends DukeUI, DateParser {
                             }
 
                             if(input.contains("/on")) {
-                                throw new CommandException("Date filters are incompatible with " +
+                                throw new CommandException("Date filters are redundant with " +
                                         cmdType + ".");
                             }
 
                             if(input.contains("/added")) {
-                                if(CmdType.getCommand(cmdType).equals("#shoplist")) {
-                                    throw new CommandException("Date filters are incompatible with " +
-                                            cmdType + ".");
-                                }
                                 String[] listTokens = input.split("/added", 2);
                                 listTokens = listTokens[1].trim().split("/", 2);
                                 addedFilter = DateParser.understandDateInput(listTokens[0].trim() + " 00:00");
