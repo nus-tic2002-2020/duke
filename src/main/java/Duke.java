@@ -180,7 +180,7 @@ public class Duke {
         String secPart = "";
         int done = 0;
 
-        System.out.println(System.lineSeparator() + "Loading Tasks List in Memo to File");
+        System.out.println(System.lineSeparator() + "Writing Tasks List from Memo to File");
         for(int i = 0; i < size; i ++){
             temp = memo.get(i).getClass().toString();
             switch(temp){
@@ -207,13 +207,14 @@ public class Duke {
             text = firstPart + String.valueOf(done) + " | " + memo.get(i).getDescription() + secPart;
             fw.write(text + System.lineSeparator());
             text = "";
+            secPart = "";
 
         }
         fw.close();
     }
 
-
-    public static void loadToMemo(String filePath, ArrayList<Task> memo){
+    //Todo: need to include done or not
+    public static void loadToMemo(String filePath, ArrayList<Task> memo) throws IOException{
         File f = new File(filePath);
         FileReader fr =new FileReader(f);
         BufferedReader br = new BufferedReader(fr);
@@ -224,14 +225,26 @@ public class Duke {
             splitInput = line.split(" | ");
             switch(splitInput[0]){
                 case "O":
-                    memo.add(new Task (splitInput[2]));
+                    memo.add(new Task (splitInput[4]));
                     break;
                 case "T":
+                    memo.add(new ToDo(splitInput[4]));
+                    break;
                 case "D":
+                    memo.add(new Deadline(splitInput[4],splitInput[6]) );
+                    break;
                 case "E":
-
-
+                    memo.add(new Event(splitInput[4],splitInput[6]) );
+                    break;
+                default:
+                    System.out.println("Error in loading file to memo");
+                    return;
             }
+
+            if(splitInput[2].equals("1")){
+                memo.get(memo.size()-1).changeCompletedTo(true);
+            }
+
 
         }
 
@@ -265,8 +278,13 @@ public class Duke {
 
         Scanner scan = new Scanner(System.in);
 
-        //loadToMemo("data/tasks_list.txt", memo);
-        printMemo();
+        try{
+            loadToMemo("data/tasks_list.txt", memo);
+        }catch(IOException e){
+            System.out.println("Load to file error");
+        }
+
+        printMemo(memo);
 
 
         int start = 1;

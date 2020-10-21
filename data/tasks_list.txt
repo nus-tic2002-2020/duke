@@ -1,4 +1,0 @@
-O | 0 | super
-T | 0 | happy
-D | 0 | apple | winter
-E | 0 | pine | home
