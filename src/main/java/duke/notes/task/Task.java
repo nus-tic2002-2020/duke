@@ -4,6 +4,7 @@ import duke.budget.Budget;
 import duke.commands.CommandException;
 import duke.notes.Note;
 import duke.parser.DateException;
+import duke.ui.DukeUI;
 
 import java.util.Date;
 
@@ -97,6 +98,7 @@ public class Task extends Note {
         if(super.markAsDone(doneDate)) {
             tasksOutstanding--;
             tasksCompleted++;
+
             this.printList();
             return true;
         } else {

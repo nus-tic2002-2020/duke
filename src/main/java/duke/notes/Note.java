@@ -60,6 +60,7 @@ public abstract class Note implements DukeUI {
      * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
      */
     public boolean markAsDone(Date doneDate) throws CommandException, DateException, InterruptedException {
+        DukeUI.printDivider();
         if(this.isDone) {
             System.out.println("    Note #" + this.serialNum + " was already done!");
             return false;

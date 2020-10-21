@@ -4,6 +4,8 @@ import duke.budget.Budget;
 import duke.commands.CommandException;
 import duke.parser.DateException;
 import duke.notes.Note;
+import duke.ui.DukeUI;
+
 import java.util.Date;
 
 /**

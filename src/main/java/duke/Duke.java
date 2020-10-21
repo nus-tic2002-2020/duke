@@ -87,9 +87,9 @@ public class Duke implements DukeParser, DukeUI {
                 isConfirmedExit = dukeCommand.getConfirmExit();
 
             } catch (NullPointerException | IndexOutOfBoundsException | IOException e) {
+                DukeUI.printDivider();
                 System.out.println("    I don't understand what you meant by...\n");
                 DukeUI.commandWrap(input, 66);
-                e.printStackTrace();
                 System.out.println("    The note(s) you mentioned cannot be found.");
                 System.out.println("    There could be errors or omissions in the data entry, format or delimiters.");
                 DukeUI.suggestFormat();
@@ -97,6 +97,7 @@ public class Duke implements DukeParser, DukeUI {
                 DukeUI.printDivider();
 
             } catch (NumberFormatException | ParseException e) {
+                DukeUI.printDivider();
                 System.out.println("    I don't understand what you meant by...\n");
                 DukeUI.commandWrap(input, 66);
                 System.out.println("    The attribute(s) you mentioned cannot be understood.");
@@ -162,9 +163,9 @@ public class Duke implements DukeParser, DukeUI {
 
         } catch (NullPointerException | IndexOutOfBoundsException e) {
             isErrorReturn = true;
+            DukeUI.printDivider();
             System.out.println("    I don't understand what you meant by...\n");
             DukeUI.commandWrap(input, 66);
-            e.printStackTrace();
             System.out.println("    The note(s) you mentioned cannot be found.");
             System.out.println("    There could be errors or omissions in the data entry, format or delimiters.");
             DukeUI.suggestFormat();
@@ -173,6 +174,7 @@ public class Duke implements DukeParser, DukeUI {
 
         } catch (NumberFormatException | ParseException e) {
             isErrorReturn = true;
+            DukeUI.printDivider();
             System.out.println("    I don't understand what you meant by...\n");
             DukeUI.commandWrap(input, 66);
             System.out.println("    The attribute(s) you mentioned cannot be understood.");

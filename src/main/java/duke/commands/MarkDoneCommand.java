@@ -51,7 +51,6 @@ public class MarkDoneCommand extends DukeCommand implements DukeUI {
 
         Date doneDate = new Date();
 
-        DukeUI.printDivider();
         for (int note : this.toMarkDone) {
             dukeNotes.getNotes().get(note-1).markAsDone(doneDate);
         }

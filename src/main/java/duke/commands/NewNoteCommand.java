@@ -136,7 +136,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
     public void execute(DukeList dukeNotes, DukeStorage dukeStorage)
             throws CommandException, ParseException, DateException {
 
-        DukeUI.printDivider();
+
         Date addDate = new Date();
         int nextSerialNum = dukeNotes.getNotes().size() + 1;
         ArrayList<Note> notes = new ArrayList<>();
@@ -223,6 +223,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
                 notes.add(note1);
             }
         }
+        DukeUI.printDivider();
         for(int i=0; i < notes.size(); i++) {
             DukeUI.addConfirm(notes.get(i).getObjectClass());
             dukeNotes.getNotes().add(notes.get(i));
