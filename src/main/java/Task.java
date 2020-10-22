@@ -11,6 +11,7 @@ public class Task {
         this.isDone = false;
         totalTasks++;
     }
+
     public void changeCompletedTo(boolean value){
         this.isDone = value;
     }

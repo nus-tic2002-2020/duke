@@ -1,8 +1,12 @@
 
 import java.io.BufferedReader;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -10,11 +14,14 @@ import java.io.IOException;
 import java.io.FileReader;
 
 
-//TODO: Should refactor exceptions. Refactor addMemo[need to check for copies] and deleteMemo[need to reduce total task size when delete]
+
+//TODO: Refactor exceptions. Refactor addMemo[need to check for copies] and deleteMemo[need to reduce total task size when delete]
+//TODO: Probably ensure that delete task function, will also print? Not sure TBC
+//TODO: More OOP and Packages from Level 7
+//TODO: JavaDoc and JUnit Testing from level 8
+
 
 public class Duke {
-
-
 
     public static void command(String input, ArrayList<Task> memo) throws DukeException{
         if(input.equals("blah")){
@@ -144,7 +151,7 @@ public class Duke {
             return;
         }
 
-        System.out.println(System.lineSeparator() + "Here are the tasks in your list");
+        System.out.println(System.lineSeparator() + "Task List:");
         for(int i = 0; i < size; i ++){
             System.out.println(System.lineSeparator() + (i+1) + "." + memo.get(i).toString());
         }
@@ -213,7 +220,6 @@ public class Duke {
         fw.close();
     }
 
-    //Todo: need to include done or not
     public static void loadToMemo(String filePath, ArrayList<Task> memo) throws IOException{
         File f = new File(filePath);
         FileReader fr =new FileReader(f);
@@ -222,35 +228,33 @@ public class Duke {
         String line;
         String[] splitInput;
         while((line=br.readLine())!=null){
-            splitInput = line.split(" | ");
+            splitInput = line.split(" \\| ");
             switch(splitInput[0]){
                 case "O":
-                    memo.add(new Task (splitInput[4]));
+                    memo.add(new Task (splitInput[2]));
                     break;
                 case "T":
-                    memo.add(new ToDo(splitInput[4]));
+                    memo.add(new ToDo(splitInput[2]));
                     break;
                 case "D":
-                    memo.add(new Deadline(splitInput[4],splitInput[6]) );
+                    memo.add(new Deadline(splitInput[2], LocalDateTime.parse(splitInput[3], DateTimeFormatter.ofPattern("d MMM yyyy H:m:s")).toString() ) );
                     break;
                 case "E":
-                    memo.add(new Event(splitInput[4],splitInput[6]) );
+                    memo.add(new Event(splitInput[2],splitInput[3]) );
                     break;
                 default:
                     System.out.println("Error in loading file to memo");
                     return;
             }
 
-            if(splitInput[2].equals("1")){
+            if(splitInput[1].equals("1")){
                 memo.get(memo.size()-1).changeCompletedTo(true);
             }
-
 
         }
 
         fr.close();
     }
-
 
     public static void main(String[] args) throws IOException{
         String logo = " ____        _        \n"
@@ -277,6 +281,8 @@ public class Duke {
         }
 
         Scanner scan = new Scanner(System.in);
+
+        System.out.println("Loading from File to Memo");
 
         try{
             loadToMemo("data/tasks_list.txt", memo);
