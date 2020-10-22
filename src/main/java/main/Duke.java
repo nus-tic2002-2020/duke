@@ -34,8 +34,9 @@ public class Duke {
                     //loop everything in the array
                     System.out.println("_______________________________________________");
                     for (int i = 0; i < count; i++) {
-                        System.out.println(i+1 + ". " + task.get(i));
+                        System.out.println(i+1 + ". ["+ "\u2718" + "] " + task.get(i));
                     }
+                    System.out.println("Now you have " + count + " tasks in the list.");
                     System.out.println("_______________________________________________");
                 } else if (arrValue[0].equals("done")) {
                     if (arrValue.length < 2) {
@@ -101,6 +102,22 @@ public class Duke {
                     {
                         throw new InvalidCommandException("OOPS!!! I'm sorry, but I don't know what that means :-(");
                     }
+
+                }
+                else if (arrValue[0].equals("delete"))
+                {
+                    if(arrValue.length < 2)
+                    {
+                        throw new EmptyDescriptionException("OOPS!!! The description of a done cannot be empty");
+                    }
+                    int index = Integer.parseInt(arrValue[1]);
+                    System.out.println("_______________________________________________");
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println(index + ". " + task.get(index-1));
+                    task.remove(index-1);
+                    count --;
+                    System.out.println("Now you have " + count + " tasks in the list.");
+                    System.out.println("_______________________________________________");
                 }
                 else {
 
