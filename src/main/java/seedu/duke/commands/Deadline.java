@@ -7,7 +7,7 @@ public class Deadline extends Task {
         super(description);
         this.by = by;
     }
-    //@Override
+    @Override
     public String getDescription() {
         return "[D]" + super.getDescription() + " (by: " + by + ")";
     }

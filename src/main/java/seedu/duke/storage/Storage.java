@@ -12,30 +12,34 @@ import java.io.FileWriter;
 import seedu.duke.commands.*;
 import seedu.duke.exception.*;
 
-/**
- * Represents the file used to store address book data.
- */
 public class Storage {
     public static final String DEFAULT_STORAGE_FILEPATH = "data/taskList.txt";
-    public final Path path;
+    //public final Path path;
 
     private String filePath;
     private File file;
-    private Scanner scan;
+    Scanner s;
 
     public Storage () throws InvalidStorageFilePathException {
         this(DEFAULT_STORAGE_FILEPATH);
     }
 
     public Storage(String filePath) {//throws InvalidStorageFilePathException{
-        path = Paths.get(filePath);
-        if (!isValidPath(path)) {
+        try {
+            if (!isValidPath(filePath)) {
+                //createFileAndDirectory();
+                //throw new InvalidStorageFilePathException("New file is created.\n Storage file should end with '.txt'");
+            } else {
+                this.filePath = filePath;
+                this.file = new File(filePath);
+                s = new Scanner(file);
+            }
+        }catch(FileNotFoundException e){
             createFileAndDirectory();
-            //throw new InvalidStorageFilePathException("New file is created.\n Storage file should end with '.txt'");
         }
     }
 
-    private static boolean isValidPath(Path filePath) {
+    private static boolean isValidPath(String filePath) {
         return filePath.toString().endsWith(".txt");
     }
 
@@ -48,20 +52,14 @@ public class Storage {
         }
     }
 
-    /**
-     * Saves the {@code addressBook} data to the storage file.
-     *
-     * @throws StorageOperationException if there were errors converting and/or storing data to file.
-     */
     public void save() throws StorageOperationException {
-        //FileWriter fw = new FileWriter(filePath, true);
         try {
             FileWriter fw = new FileWriter(filePath, true);
-            for (int i = 0; i< TaskList.length(); i++){
+            for (int i = 0; i< TaskList.length(); ++i){
                 fw.write(TaskList.getATask(i) + System.lineSeparator());
             }
             fw.close();
-            throw new IOException();
+            //throw new IOException();
         }catch (IOException ioe) {
             System.out.println("\t☹ OOPS!!! Error saving the file.");
         }//catch (StorageOperationException ioe) {
@@ -69,38 +67,16 @@ public class Storage {
         //}
     }
 
-    /**
-     * Signals that the given file path does not fulfill the storage filepath constraints.
-     */
-//    public static class InvalidStorageFilePathException extends IllegalValueException {
-//        public InvalidStorageFilePathException(String message) {
-//            super(message);
-//        }
-//    }
-    /**
-     * Loads the {@code AddressBook} data from this storage file, and then returns it.
-     * Returns an empty {@code AddressBook} if the file does not exist, or is not a regular file.
-     *
-     * @throws StorageOperationException if there were errors reading and/or converting data from file.
-     */
-    public ArrayList<Task> load(String filepath) {//throws StorageOperationException {
-
-        if (!Files.exists(path) || !Files.isRegularFile(path)) {
+    public ArrayList<Task> load() {//throws StorageOperationException {
+        ArrayList<Task> taskList = new ArrayList<>();
+        if (!file.exists() || !file.isFile()) {
             return new ArrayList<Task>();
+        }else{
+            while (s.hasNext()){
+                System.out.println(s.nextLine());
+            }
         }
-        while (scan.hasNext()){
-            System.out.println(scan.nextLine());
-        }
-        return TaskList.taskList;
-
-//        try {
-//            while (scan.hasNext()){
-//                System.out.println(scan.nextLine());
-//            }
-//            throw new IllegalValueException("");
-//        } catch (IllegalValueException ive) {
-//            System.out.println("\t☹ OOPS!!! Error saving the file.");
-//        }
+        return taskList;
     }
 
     public static class InvalidStorageFilePathException extends IllegalValueException {

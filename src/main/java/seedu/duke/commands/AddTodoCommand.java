@@ -8,8 +8,8 @@ public class AddTodoCommand extends Command {
 
     public static final String COMMAND_WORD = "todo";
     public static final String TODO_MSG = "Got it. I've added this task:\n\t";
-    public static final String TODO_MSG1 = "Now you have ";
-    public static final String TODO_MSG2 = " in task list.\n";
+    public static final String TODO_MSG1 = "\n\tNow you have ";
+    public static final String TODO_MSG2 = " in task list.";
     protected Todo todo;
 
 
@@ -24,7 +24,8 @@ public class AddTodoCommand extends Command {
                 if (description.substring(4).equals("")){ //if after keywords is empty
                     throw new DukeException("\t☹ OOPS!!! The description of todo cannot be empty.\n");
                 }
-                TaskList.setTaskList(new Todo(description.substring(5)));
+                todo = new Todo(description.substring(5));
+                TaskList.setTaskList(todo);
                 ui.showOutputToUser(TODO_MSG + todo.getDescription() + TODO_MSG1 + taskList.length() + TODO_MSG2);
                 storage.save();
             }catch (DukeException | Storage.StorageOperationException e){

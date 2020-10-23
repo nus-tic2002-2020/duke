@@ -7,8 +7,8 @@ import seedu.duke.ui.Ui;
 public class AddDeadlineCommand extends Command {
     public static final String COMMAND_WORD = "deadline";
     public static final String DEADLINE_MSG = "Got it. I've added this task:\n\t";
-    public static final String DEADLINE_MSG1 = "Now you have ";
-    public static final String DEADLINE_MSG2 = " in task list.\n";
+    public static final String DEADLINE_MSG1 = "\n\tNow you have ";
+    public static final String DEADLINE_MSG2 = " in task list.";
     protected Deadline deadline;
 
     public AddDeadlineCommand(boolean isExit, String description) {
@@ -23,7 +23,8 @@ public class AddDeadlineCommand extends Command {
             }else if (description.contains("by  ")){ //if after keywords is empty
                 throw new DukeException("\t☹ OOPS!!! The event date cannot be empty.\n");
             }
-            TaskList.setTaskList(new Deadline(description.substring(9, description.indexOf("by")-2), description.substring(description.indexOf("by")+3)));
+            deadline = new Deadline(description.substring(9, description.indexOf("by")-2), description.substring(description.indexOf("by")+3));
+            TaskList.setTaskList(deadline);
             ui.showOutputToUser(DEADLINE_MSG + deadline.getDescription() + DEADLINE_MSG1 + taskList.length() + DEADLINE_MSG2);
             storage.save();
         }catch (DukeException | Storage.StorageOperationException e){

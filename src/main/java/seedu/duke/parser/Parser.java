@@ -2,15 +2,8 @@ package seedu.duke.parser;
 
 import seedu.duke.commands.*;
 
-public class Parser{
-    /**
-     * Parses user input into command for execution.
-     *
-     * @param userInput full user input string
-     * @return the command based on the user input
-     */
+public class Parser {
     public static Command parserCommand(String userInput) {
-        //String commandWord = userInput;
 
         switch (userInput.split(" ")[0]) {
             case AddTodoCommand.COMMAND_WORD:
@@ -29,6 +22,7 @@ public class Parser{
                 return new ByeCommand(true, userInput);
             default:
                 System.out.println("\t☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                return new Command (false, userInput);
         }
     }
 }

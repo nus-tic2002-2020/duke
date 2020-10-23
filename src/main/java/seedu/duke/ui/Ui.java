@@ -5,10 +5,8 @@ import java.util.Scanner;
 
 public class Ui{
 
-    /** A platform independent line separator. */
     private static final String LS = System.lineSeparator();
     private static final String DIVIDER = "\n\t____________________________________________________________\n";
-
     private final Scanner input;
 
     public Ui() {
@@ -24,7 +22,6 @@ public class Ui{
     }
 
     public String getUserCommand() {
-        //System.out.println("Enter command: ");
         String fullInputLine = input.nextLine();
 
         // silently consume all ignored lines
@@ -52,8 +49,7 @@ public class Ui{
         System.out.println(DIVIDER + "\t" + output + DIVIDER);
     }
 
-    public static void showError(String errorMessage){
+    public static void showLoadingError(String errorMessage){
         System.out.println(DIVIDER + "\t☹ OOPS!!! " + "\t" + errorMessage + DIVIDER);
-        //System.out.println(DIVIDER + "\t☹ OOPS!!! " + "\t"  + DIVIDER);
     }
 }
