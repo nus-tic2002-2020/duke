@@ -1,11 +1,18 @@
 import java.util.Scanner;
-import java.util.List;
 import java.util.ArrayList;
 
 public class Duke {
-    public static void main(String[] args) {
 
-        List<Task> taskList = new ArrayList<Task>();
+    private static ArrayList<Task> taskList = new ArrayList<>();
+
+    private static void addTask(String echo) {
+        if (!echo.equals("list") && !echo.contains("done")) {
+            Task newTask = new Task(echo);
+            taskList.add(newTask);
+        }
+    }
+
+    public static void main(String[] args) {
 
         System.out.println("Hello! I'm Duke\nWhat can I do for you?\n");
 
@@ -13,10 +20,7 @@ public class Duke {
             Scanner scan = new Scanner(System.in);
             String echo = scan.nextLine();
 
-            if (!echo.equals("list") && !echo.contains("done")) {
-                Task newTask = new Task(echo);
-                taskList.add(newTask);
-            }
+            addTask(echo);
 
             if (echo.contains("done")) {
                 String doneSplit[] = echo.split(" ");
