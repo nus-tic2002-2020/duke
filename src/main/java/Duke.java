@@ -1,11 +1,10 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.lang.*;
 
 public class Duke {
 
     private static ArrayList<Task> taskList = new ArrayList<>();
-    private static final String[] keywords = {"list", "bye", "done", "deadline", "event", "todo"};
+    private static final String[] keywords = {"list", "bye", "done", "deadline", "event", "todo", "delete"};
 
     private static void addTask(String echo) {
         String description = "";
@@ -45,6 +44,18 @@ public class Duke {
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + newTask.toString());
         System.out.println("Now you have " + numberOfTask() + " task in the list.");
+    }
+
+    private static void deleteTask(String index) {
+        int numberIndex = Integer.parseInt(index);
+        System.out.println("Noted. I've removed this task: ");
+        System.out.println("  " + taskList.get(numberIndex - 1).toString());
+        taskList.remove(numberIndex - 1);
+        System.out.println("Now you have " + numberOfTask() + " task in the list.");
+    }
+
+    private static String[] messageSplitter(String echo) {
+        return echo.split(" ");
     }
 
     private static void printList(String echo) {
@@ -104,6 +115,10 @@ public class Duke {
             else if (echo.contains("done")) {
                 checkForError(echo);
                 taskDone(echo);
+            }
+            else if (echo.contains("delete")) {
+                String[] splitMessage = messageSplitter(echo);
+                deleteTask(splitMessage[1]);
             }
             else {
                 checkForError(echo);
