@@ -7,9 +7,9 @@ public class Duke {
     private static ArrayList<Task> taskList = new ArrayList<>();
 
     private static void addTask(String echo) {
-        String[] splitMessage = echo.split(" ");
         String description = "";
         String by = "";
+        String[] splitMessage = echo.split(" ");
         int flagIndex = 0;
 
         for (int i = 1; i < splitMessage.length; i++) {
@@ -21,18 +21,29 @@ public class Duke {
                 break;
             }
         }
-
         for (int i = flagIndex; i < splitMessage.length; i++) {
             by = by + " " + splitMessage[i];
         }
 
         if (splitMessage[0].contains("deadline")) {
             Task newTask = new Deadline(description, by);
-            taskList.add(newTask);
-            System.out.println("Got it. I've added this task:");
-            System.out.println("  " + newTask.toString());
-            System.out.println("Now you have " + numberOfTask() + " task in the list.");
+            createNewTask(newTask);
         }
+        else if (splitMessage[0].contains("event")) {
+            Task newTask = new Event(description, by);
+            createNewTask(newTask);
+        }
+        else if (splitMessage[0].contains("todo")) {
+            Task newTask = new Todo(description);
+            createNewTask(newTask);
+        }
+    }
+
+    private static void createNewTask(Task newTask) {
+        taskList.add(newTask);
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + newTask.toString());
+        System.out.println("Now you have " + numberOfTask() + " task in the list.");
     }
 
     private static void printList(String echo) {
