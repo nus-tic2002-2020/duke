@@ -8,6 +8,7 @@ public class Duke {
 
     public static String humanName;
     public static int taskNumber;
+    public static int numberOftask;
 
 // Storing userSentence into list
 
@@ -16,19 +17,17 @@ public class Duke {
         int counter = 0;
         int numbering = 1;
         while (true) {
-            //System.out.println(counter);
-            //System.out.println(listOfThings);
-            // set it to false here
             if (listOfThings[counter] == null) {
-
+                // here task assignment is being done by task.java
                 listOfThings[counter] = new Task(input);
                 System.out.println("\tGot it. I've added this task: ");
                 System.out.println("\t" + listOfThings[counter].getTag() +  "[" + listOfThings[counter].getStatusIcon() + "] " + listOfThings[counter].description +  listOfThings[counter].timeDate);
-                System.out.println("\tNow you have " + numbering +" task in the list ");
+                System.out.println("\tNow you have " + numberOftask +" task in the list ");
                 break;
             }
             counter++;
             numbering++;
+           numberOftask = numbering;
 
         }//end while loop
 
@@ -73,6 +72,8 @@ public class Duke {
         Matcher matcher2 = pattern2.matcher(userSentence);
         Pattern pattern3 = Pattern.compile((".*" + "done" + ".*"), Pattern.CASE_INSENSITIVE);
         Matcher matcher3 = pattern3.matcher(userSentence);
+        Pattern pattern4 = Pattern.compile((".*" + "delete" + ".*"), Pattern.CASE_INSENSITIVE);
+        Matcher matcher4 = pattern4.matcher(userSentence);
         if (matcher2.find()) {
             printListOfThings(listOfThings); //
         }
@@ -83,6 +84,18 @@ public class Duke {
             System.out.println("\tNice! I've marked this task as done: ");
             listOfThings[taskNumber-1].isDone = true; // not sure about this
             System.out.println(listOfThings[taskNumber-1].getTag()+" ["+listOfThings[taskNumber-1].getStatusIcon()+"] "+ listOfThings[taskNumber - 1].description );
+        }
+        //handling delete
+        else if (matcher4.find()){
+            Pattern pattern = Pattern.compile("[^0-9]");
+            String numberOnly = pattern.matcher(userSentence).replaceAll("");
+            taskNumber = Integer.parseInt(numberOnly);
+            System.out.println("\tNoted. I've removed this task: ");
+            System.out.println(listOfThings[taskNumber-1].getTag()+" ["+listOfThings[taskNumber-1].getStatusIcon()+"] "+ listOfThings[taskNumber - 1].description );
+        // add delete logic here by modifying listOfThings
+            listOfThings[taskNumber-1] = null;
+            numberOftask = numberOftask - 1;
+            System.out.println("\tNow you have " + numberOftask +" task in the list ");
         }
         else{
             listOfThings = storeList(listOfThings, userSentence);
