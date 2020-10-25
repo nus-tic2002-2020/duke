@@ -1,0 +1,7 @@
+D | 1 | Communication Proposal /by 26 Oct 2020
+T | 1 | Complete Duke level 7
+T | 0 | Math tutorials
+T | 0 | buy groceries
+T | 0 | exercise
+E | 0 | meeting /at 1 Nov 2020
+D | 0 | finish working paper /by 9am
