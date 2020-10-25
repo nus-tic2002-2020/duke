@@ -5,6 +5,7 @@ import java.lang.*;
 public class Duke {
 
     private static ArrayList<Task> taskList = new ArrayList<>();
+    private static final String[] keywords = {"list", "bye", "done", "deadline", "event", "todo"};
 
     private static void addTask(String echo) {
         String description = "";
@@ -65,22 +66,47 @@ public class Duke {
         return taskList.size();
     }
 
-    public static void main(String[] args) {
+    private static void checkForError(String echo) throws DukeException {
+        boolean flag = true;
+        String[] splitMessage = echo.split(" ");
+
+        for (int i = 2; i < keywords.length; i++) {
+            if (splitMessage[0].equals(keywords[i])) {
+                flag = false;
+                break;
+            }
+        }
+
+        if (flag) {
+            throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+        }
+        else if (splitMessage.length == 1) {
+            throw new DukeException("☹ OOPS!!! The description of a " + splitMessage[0] + " cannot be empty.");
+        }
+    }
+
+    public static void main(String[] args) throws DukeException {
         Scanner scan = new Scanner(System.in);
         String echo = "";
 
         System.out.println("Hello! I'm Duke\nWhat can I do for you?\n");
 
-        while (!echo.equals("bye")) {
+        while (true) {
             echo = scan.nextLine();
 
-            if (echo.equals("list")) {
+            if (echo.equals("bye")) {
+                System.out.println("See you!");
+                break;
+            }
+            else if (echo.equals("list")) {
                 printList(echo);
             }
             else if (echo.contains("done")) {
+                checkForError(echo);
                 taskDone(echo);
             }
             else {
+                checkForError(echo);
                 addTask(echo);
             }
         }
