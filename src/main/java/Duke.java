@@ -19,6 +19,7 @@ import java.io.FileReader;
 //TODO: Probably ensure that delete task function, will also print? Not sure TBC
 //TODO: More OOP and Packages from Level 7
 //TODO: JavaDoc and JUnit Testing from level 8
+//TODO: Level 9 Individual Feature, Coding Standard and Coding Quality
 
 
 public class Duke {
@@ -56,6 +57,11 @@ public class Duke {
 
                 if(input.contains("delete")){
                     deleteMemo(input,memo);
+                    break;
+                }
+
+                if(input.contains("find")){
+                    findMemo(input,memo);
                     break;
                 }
 
@@ -142,6 +148,20 @@ public class Duke {
 
         memo.get(size - 1).printTotalTasks();
         return;
+    }
+
+    public static void findMemo(String input, ArrayList<Task> memo){
+        int size = memo.size();
+        int total = 0;
+        String keyword = input.replace("find ", "");
+        System.out.println(System.lineSeparator() + "Tasks that contain the keyword \"" + keyword + "\":");
+        for(int i = 0; i < size; i ++){
+
+            if(memo.get(i).toString().contains(keyword)){
+                System.out.println(System.lineSeparator() + (total+1) + "." + memo.get(i).toString());
+            }
+
+        }
     }
 
     public static void printMemo(ArrayList<Task> memo){
