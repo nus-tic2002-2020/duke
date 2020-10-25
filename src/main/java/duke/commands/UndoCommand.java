@@ -16,10 +16,9 @@ import java.util.Scanner;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class UndoCommand extends DukeCommand implements DukeUI {
+public class UndoCommand extends DukeCommand {
 
     //VARIABLES-----------------------------------------
-
     private boolean confirmUndo;
 
     //CONSTRUCTORS--------------------------------------
@@ -28,7 +27,7 @@ public class UndoCommand extends DukeCommand implements DukeUI {
      *
      * @param cmdType The type of {@code DukeCommand} being constructed.
      */
-    public UndoCommand(String cmdType) {
+    public UndoCommand(String cmdType) throws CommandException {
         super(cmdType);
         this.confirmUndo = false;
     }

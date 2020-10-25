@@ -11,7 +11,7 @@ import java.io.IOException;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class SaveCommand extends DukeCommand implements DukeUI {
+public class SaveCommand extends DukeCommand {
 
     //VARIABLES-----------------------------------------
     private static boolean autoSave = true;
@@ -22,7 +22,7 @@ public class SaveCommand extends DukeCommand implements DukeUI {
      *
      * @param cmdType The type of {@code DukeCommand} being constructed.
      */
-    public SaveCommand(String cmdType) {
+    public SaveCommand(String cmdType) throws CommandException {
         super(cmdType);
     }
 

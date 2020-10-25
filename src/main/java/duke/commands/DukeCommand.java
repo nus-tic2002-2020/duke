@@ -15,7 +15,7 @@ import java.text.ParseException;
 public abstract class DukeCommand {
 
     //VARIABLES-----------------------------------------
-    protected String cmdType;
+    protected CmdType cmdType;
     boolean confirmExit = false;
 
     //CONSTRUCTORS--------------------------------------
@@ -24,8 +24,8 @@ public abstract class DukeCommand {
      *
      * @param cmdType The type of {@code DukeCommand} being constructed.
      */
-    public DukeCommand(String cmdType) {
-        this.cmdType = cmdType;
+    public DukeCommand(String cmdType) throws CommandException {
+        this.cmdType =  CmdType.getKey(cmdType);
     }
 
     /**

@@ -1,4 +1,4 @@
-package duke.budget;
+package duke.notes.budget;
 
 /**
  * An object that records and measures the budget performance of a task.
@@ -14,7 +14,7 @@ package duke.budget;
 public class Budget {
 
     //VARIABLES-----------------------------------------
-    private final double budgetSet;
+    private final double BUDGET_SET;
     private double budgetRevised;
     private double budgetUsed = 0;
     private double budgetBalance = 0;
@@ -34,8 +34,8 @@ public class Budget {
      */
     public Budget(double budgetSet) {
         assert budgetSet > 0 : "Budget set cannot be less than or equals to zero.";
-        this.budgetSet = budgetSet;
-        this.budgetRevised = this.budgetSet;
+        this.BUDGET_SET = budgetSet;
+        this.budgetRevised = this.BUDGET_SET;
         totalBudgetSet = totalBudgetSet + budgetSet;
     }
 
@@ -52,7 +52,7 @@ public class Budget {
     public Budget(double budgetSet, double budgetRevised,
                   double budgetUsed, double budgetBalance,
                   boolean isRevised, boolean isOverBudget) {
-        this.budgetSet = budgetSet;
+        this.BUDGET_SET = budgetSet;
         this.budgetRevised = budgetRevised;
         this.budgetUsed = budgetUsed;
         this.budgetBalance = budgetBalance;
@@ -136,7 +136,7 @@ public class Budget {
      * The method also updates class-level members to reflect the removal of the {@code Budget} object.
      */
     public void deleteExistingBudget() {
-        totalBudgetSet = totalBudgetSet - this.budgetSet;
+        totalBudgetSet = totalBudgetSet - this.BUDGET_SET;
         totalBudgetUsed = totalBudgetUsed - this.budgetUsed;
         totalBudgetBalance = totalBudgetBalance - this.budgetBalance;
         isTotalOverBudget = totalBudgetBalance < 0;
@@ -160,8 +160,8 @@ public class Budget {
      *
      * @return double The initial budget amount set.
      */
-    public double getBudgetSet(){
-        return this.budgetSet;
+    public double getBUDGET_SET(){
+        return this.BUDGET_SET;
     }
 
     /**
@@ -203,29 +203,11 @@ public class Budget {
     }
 
     /**
-     * This method exports the {@code Budget} object as a string in a format
-     * that is readable and re-constructable as a {@code Budget} object.
-     *
-     * @return String The {@code Budget} object as a string in a format
-     * readable and re-constructable as a {@code Budget} object.
-     */
-    @SuppressWarnings("UnnecessaryLocalVariable")
-    public String getSaveText() {
-        String text = this.budgetSet + "/" +
-                this.budgetRevised + "/" +
-                this.budgetUsed + "/" +
-                this.budgetBalance + "/" +
-                this.isRevised + "/" +
-                this.isOverBudget;
-        return text;
-    }
-
-    /**
      * This method returns as a String a report on the budget utilisation status and budget balance.
      *
      * @return String A report on the budget utilisation status and budget balance.
      */
-    public String getWithinBudget() {
+    public String printWithinBudget() {
         if(this.isOverBudget){
             return "\u26A0    $" + String.format("%,14.2f",
                     Math.abs(this.budgetBalance)) + " over budget.";
@@ -236,6 +218,26 @@ public class Budget {
                     Math.abs(this.budgetBalance)) + " under budget.";
         }
     }
+
+    /**
+     * This method exports the {@code Budget} object as a string in a format
+     * that is readable and re-constructable as a {@code Budget} object.
+     *
+     * @return String The {@code Budget} object as a string in a format
+     * readable and re-constructable as a {@code Budget} object.
+     */
+    @SuppressWarnings("UnnecessaryLocalVariable")
+    public String getSaveText() {
+        String text = this.BUDGET_SET + "/" +
+                this.budgetRevised + "/" +
+                this.budgetUsed + "/" +
+                this.budgetBalance + "/" +
+                this.isRevised + "/" +
+                this.isOverBudget;
+        return text;
+    }
+
+
 
     /**
      * This method prints a report of the overall budget utilisation status and budget balance
@@ -288,7 +290,7 @@ public class Budget {
      *
      * @return boolean True if the budget utilisation status is over-budget.
      */
-    public static boolean isIsTotalOverBudget() {
+    public static boolean getIsTotalOverBudget() {
         return isTotalOverBudget;
     }
 

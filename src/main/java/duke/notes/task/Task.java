@@ -1,10 +1,9 @@
 package duke.notes.task;
 
-import duke.budget.Budget;
+import duke.notes.budget.Budget;
 import duke.commands.CommandException;
 import duke.notes.Note;
 import duke.parser.DateException;
-import duke.ui.DukeUI;
 
 import java.util.Date;
 
@@ -108,6 +107,15 @@ public class Task extends Note {
     }
 
     /**
+     * This method is used to reset the static variables of the {@code Task}
+     * class in the event of a program reset.
+     */
+    public static void resetStaticVariables() {
+        tasksOutstanding = 0;
+        tasksCompleted = 0;
+    }
+
+    /**
      * This method is used to delete an {@code Task} object.
      * Class-level members will be updated to reflect the change in completion status.
      */
@@ -121,16 +129,6 @@ public class Task extends Note {
             tasksOutstanding--;
         }
     }
-
-    /**
-     * This method is used to reset the static variables of the {@code Task}
-     * class in the event of a program reset.
-     */
-    public static void resetStaticVariables() {
-        tasksOutstanding = 0;
-        tasksCompleted = 0;
-    }
-
 
     //GET STATEMENTS------------------------------------
     /**

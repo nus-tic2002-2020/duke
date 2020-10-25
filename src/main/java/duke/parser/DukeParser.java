@@ -1,20 +1,19 @@
 package duke.parser;
 
 import duke.commands.*;
-import duke.notes.NoteType;
-import duke.ui.DukeUI;
+import duke.commands.NoteType;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * An interface that extends the (@code DukeUI} interface.
+ * An interface that extends the (@code DateParser} interface.
  * (@code DukeParser} makes sense of user inputs and creates the appropriate {@code DukeCommand} objects.
  *
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public interface DukeParser extends DukeUI, DateParser {
+public interface DukeParser extends DateParser {
 
     //METHODS-------------------------------------------
     /**
@@ -83,7 +82,7 @@ public interface DukeParser extends DukeUI, DateParser {
                             }
 
                             if(input.contains("/on")) {
-                                if(CmdType.getCommand(cmdType).equals("#listshoplists")) {
+                                if(CmdType.getCOMMAND(cmdType).equals("#listshoplists")) {
                                     throw new CommandException("Date filters are incompatible with " +
                                             cmdType + ".");
                                 }
@@ -104,7 +103,7 @@ public interface DukeParser extends DukeUI, DateParser {
                             }
 
                             return new ListCommand(cmdType, noteFilter, textFilter, dateFilter, addedFilter,
-                                    CmdType.getTimelineDays(cmdType));
+                                    CmdType.getTIMELINE_DAYS(cmdType));
                         }
                     }
                     case "LISTNXT24", "LISTNXT48", "LISTNXT72" -> {
@@ -113,7 +112,7 @@ public interface DukeParser extends DukeUI, DateParser {
                         Date dateFilter = new Date();
                         Date addedFilter = null;
                         if (inputTokens.length == 1) {
-                            return new ListCommand(cmdType, dateFilter, CmdType.getTimelineDays(cmdType));
+                            return new ListCommand(cmdType, dateFilter, CmdType.getTIMELINE_DAYS(cmdType));
                         } else {
                             if(input.contains("/nf")){
                                 String[] listTokens = input.split("/nf", 2);
@@ -148,7 +147,7 @@ public interface DukeParser extends DukeUI, DateParser {
                             }
 
                             return new ListCommand(cmdType, noteFilter, textFilter, dateFilter, addedFilter,
-                                    CmdType.getTimelineDays(cmdType));
+                                    CmdType.getTIMELINE_DAYS(cmdType));
                         }
                     }
                     case "DELETE" -> {

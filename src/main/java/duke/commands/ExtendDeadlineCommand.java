@@ -14,7 +14,7 @@ import java.util.Date;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class ExtendDeadlineCommand extends DukeCommand implements DukeUI{
+public class ExtendDeadlineCommand extends DukeCommand {
 
     //VARIABLES-----------------------------------------
     protected int targetNote;
@@ -31,7 +31,7 @@ public class ExtendDeadlineCommand extends DukeCommand implements DukeUI{
      * @param targetNote The {@code Note} whose {@code Date} object is to be extended.
      * @param millisecondsToExtend The number of milliseconds to extend the {@code Date} object by.
      */
-    public ExtendDeadlineCommand(String cmdType, int targetNote, long millisecondsToExtend) {
+    public ExtendDeadlineCommand(String cmdType, int targetNote, long millisecondsToExtend) throws CommandException {
         super(cmdType);
         this.targetNote = targetNote;
         this.millisecondsToExtend = millisecondsToExtend;
@@ -74,9 +74,9 @@ public class ExtendDeadlineCommand extends DukeCommand implements DukeUI{
                     ((Deadline) dukeNotes.getNotes().get(i)).setTargetDate(this.newDate);
 
                     System.out.println("    extended from...");
-                    DukeUI.commandWrap(NOTE_TIME.format(this.oldDate), 66);
+                    DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.oldDate), 66);
                     System.out.println("    to...");
-                    DukeUI.commandWrap(NOTE_TIME.format(this.newDate), 66);
+                    DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.newDate), 66);
                     DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
                     DukeUI.suggestListNotes();
                 }

@@ -1,7 +1,7 @@
 package duke.storage;
 
 import duke.Duke;
-import duke.budget.Budget;
+import duke.notes.budget.Budget;
 import duke.notes.Note;
 import duke.notes.event.Birthday;
 import duke.notes.event.Event;
@@ -28,7 +28,7 @@ import java.util.Scanner;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class DukeStorage implements DukeUI {
+public class DukeStorage {
 
     //VARIABLES-----------------------------------------
     private File file;
@@ -221,7 +221,7 @@ public class DukeStorage implements DukeUI {
      * @param toFile The primary file holding the {@code DukeList} object in memory.
      * @throws IOException If the saved file could not be found via the file path.
      */
-    public void copyFile(File fromFile, File toFile) throws IOException {
+    private void copyFile(File fromFile, File toFile) throws IOException {
 
         Scanner read = new Scanner(fromFile);
         FileWriter fw = new FileWriter(toFile, false);
@@ -263,9 +263,9 @@ public class DukeStorage implements DukeUI {
                 case "Bill" -> {
                     int serialNum = Integer.parseInt(readIndexes[1]);
                     String description = readIndexes[2];
-                    Date addDate = INPUT_TIME.parse(readIndexes[3]);
+                    Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
                     boolean isDone = Boolean.parseBoolean(readIndexes[4]);
-                    Date targetDate = INPUT_TIME.parse(readIndexes[5]);
+                    Date targetDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
                     boolean doneAhead = Boolean.parseBoolean(readIndexes[6]);
                     double budgetSet = Double.parseDouble(readIndexes[7]);
                     double budgetRevised = Double.parseDouble(readIndexes[8]);
@@ -277,7 +277,7 @@ public class DukeStorage implements DukeUI {
                             budgetBalance, isRevised, isOverBudget);
 
                     if(isDone) {
-                        Date doneDate = INPUT_TIME.parse(readIndexes[13]);
+                        Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[13]);
                         note = new Bill(serialNum, description, addDate, doneDate,
                                 true, targetDate, doneAhead, itemBudget);
                     } else {
@@ -288,14 +288,14 @@ public class DukeStorage implements DukeUI {
                 case "Birthday" -> {
                     int serialNum = Integer.parseInt(readIndexes[1]);
                     String description = readIndexes[2];
-                    Date addDate = INPUT_TIME.parse(readIndexes[3]);
+                    Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
                     boolean isDone = Boolean.parseBoolean(readIndexes[4]);
-                    Date startDate = INPUT_TIME.parse(readIndexes[5]);
-                    Date endDate = INPUT_TIME.parse(readIndexes[6]);
+                    Date startDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
+                    Date endDate = DukeUI.INPUT_TIME.parse(readIndexes[6]);
                     long durationMinutes = Long.parseLong(readIndexes[7]);
 
                     if(isDone) {
-                        Date doneDate = INPUT_TIME.parse(readIndexes[8]);
+                        Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[8]);
                         note = new Birthday(serialNum, description, addDate, doneDate,
                                 true, startDate, endDate, durationMinutes);
                     } else {
@@ -306,13 +306,13 @@ public class DukeStorage implements DukeUI {
                 case "Deadline" -> {
                     int serialNum = Integer.parseInt(readIndexes[1]);
                     String description = readIndexes[2];
-                    Date addDate = INPUT_TIME.parse(readIndexes[3]);
+                    Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
                     boolean isDone = Boolean.parseBoolean(readIndexes[4]);
-                    Date targetDate = INPUT_TIME.parse(readIndexes[5]);
+                    Date targetDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
                     boolean doneAhead = Boolean.parseBoolean(readIndexes[6]);
 
                     if(isDone) {
-                        Date doneDate = INPUT_TIME.parse(readIndexes[7]);
+                        Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[7]);
                         note = new Deadline(serialNum, description, addDate, doneDate,
                                 true, targetDate, doneAhead);
                     } else {
@@ -323,14 +323,14 @@ public class DukeStorage implements DukeUI {
                 case "Event" -> {
                     int serialNum = Integer.parseInt(readIndexes[1]);
                     String description = readIndexes[2];
-                    Date addDate = INPUT_TIME.parse(readIndexes[3]);
+                    Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
                     boolean isDone = Boolean.parseBoolean(readIndexes[4]);
-                    Date startDate = INPUT_TIME.parse(readIndexes[5]);
-                    Date endDate = INPUT_TIME.parse(readIndexes[6]);
+                    Date startDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
+                    Date endDate = DukeUI.INPUT_TIME.parse(readIndexes[6]);
                     long durationMinutes = Long.parseLong(readIndexes[7]);
 
                     if(isDone) {
-                        Date doneDate = INPUT_TIME.parse(readIndexes[8]);
+                        Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[8]);
                         note = new Event(serialNum, description, addDate, doneDate,
                                 true, startDate, endDate, durationMinutes);
                     } else {
@@ -341,7 +341,7 @@ public class DukeStorage implements DukeUI {
                 case "Shoplist" -> {
                     int serialNum = Integer.parseInt(readIndexes[1]);
                     String description = readIndexes[2];
-                    Date addDate = INPUT_TIME.parse(readIndexes[3]);
+                    Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
                     boolean isDone = Boolean.parseBoolean(readIndexes[4]);
                     double budgetSet = Double.parseDouble(readIndexes[5]);
                     double budgetRevised = Double.parseDouble(readIndexes[6]);
@@ -353,7 +353,7 @@ public class DukeStorage implements DukeUI {
                             budgetBalance, isRevised, isOverBudget);
 
                     if(isDone) {
-                        Date doneDate = INPUT_TIME.parse(readIndexes[11]);
+                        Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[11]);
                         note = new Shoplist(serialNum, description, addDate, doneDate,
                                 true, itemBudget);
                     } else {
@@ -364,11 +364,11 @@ public class DukeStorage implements DukeUI {
                 case "Task" -> {
                     int serialNum = Integer.parseInt(readIndexes[1]);
                     String description = readIndexes[2];
-                    Date addDate = INPUT_TIME.parse(readIndexes[3]);
+                    Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
                     boolean isDone = Boolean.parseBoolean(readIndexes[4]);
 
                     if(isDone) {
-                        Date doneDate = INPUT_TIME.parse(readIndexes[5]);
+                        Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
                         note = new Task(serialNum, description, addDate, doneDate,
                                 true);
                     } else {
@@ -379,10 +379,10 @@ public class DukeStorage implements DukeUI {
                 case "Wedding" -> {
                     int serialNum = Integer.parseInt(readIndexes[1]);
                     String description = readIndexes[2];
-                    Date addDate = INPUT_TIME.parse(readIndexes[3]);
+                    Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
                     boolean isDone = Boolean.parseBoolean(readIndexes[4]);
-                    Date startDate = INPUT_TIME.parse(readIndexes[5]);
-                    Date endDate = INPUT_TIME.parse(readIndexes[6]);
+                    Date startDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
+                    Date endDate = DukeUI.INPUT_TIME.parse(readIndexes[6]);
                     long durationMinutes = Long.parseLong(readIndexes[7]);
                     double budgetSet = Double.parseDouble(readIndexes[8]);
                     double budgetRevised = Double.parseDouble(readIndexes[9]);
@@ -394,7 +394,7 @@ public class DukeStorage implements DukeUI {
                             budgetBalance, isRevised, isOverBudget);
 
                     if(isDone) {
-                        Date doneDate = INPUT_TIME.parse(readIndexes[14]);
+                        Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[14]);
                         note = new Wedding(serialNum, description, addDate, doneDate,
                                 true, startDate, endDate, durationMinutes, itemBudget);
                     } else {

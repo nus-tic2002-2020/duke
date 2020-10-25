@@ -1,6 +1,5 @@
-package duke;
+package duke.ui;
 
-import duke.ui.DukeUI;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -11,7 +10,7 @@ import java.util.Date;
  * @since 2020-09-16
  */
 @SuppressWarnings("unused")
-public enum MercuryMovement implements DukeUI {
+public enum MercuryMovement {
 
     PROG1("01-JAN-2020 00:00:00", "01-FEB-2020 23:59:59", "Mercury in Prograde"),
     PRER1("02-FEB-2020 00:00:00", "15-FEB-2020 23:59:59", "Mercury in Pre-Retrograde"),
@@ -28,9 +27,9 @@ public enum MercuryMovement implements DukeUI {
     PROG4("20-NOV-2020 00:00:00", "31-DEC-2020 23:59:59", "Mercury in Prograde");
 
 
-    private final String from;
-    private final String to;
-    private final String mercuryMovement;
+    private final String FROM;
+    private final String TO;
+    private final String MERCURY_MOVEMENT;
 
     /**
      * This method constructs the various {@code MercuryMovement} enum items.
@@ -40,9 +39,9 @@ public enum MercuryMovement implements DukeUI {
      * @param mercuryMovement The corresponding movement of Mercury for the Gregorian date period.
      */
     MercuryMovement(String from, String to, String mercuryMovement) {
-        this.from = from;
-        this.to = to;
-        this.mercuryMovement = mercuryMovement;
+        this.FROM = from;
+        this.TO = to;
+        this.MERCURY_MOVEMENT = mercuryMovement;
     }
 
     /**
@@ -53,13 +52,13 @@ public enum MercuryMovement implements DukeUI {
      * @return String The corresponding movement of Mercury for the Gregorian date.
      * @exception ParseException If there are errors converting the String input into a {@code Date} object.
      */
-    public static String getMercuryMovement(Date date) throws ParseException {
+    public static String getMERCURY_MOVEMENT(Date date) throws ParseException {
 
-        for(duke.MercuryMovement mercury: duke.MercuryMovement.values()){
-            Date start = INPUT_TIME.parse(mercury.from);
-            Date end = INPUT_TIME.parse(mercury.to);
+        for(MercuryMovement mercury: MercuryMovement.values()){
+            Date start = DukeUI.INPUT_TIME.parse(mercury.FROM);
+            Date end = DukeUI.INPUT_TIME.parse(mercury.TO);
             if(date.compareTo(start)>=0 && date.compareTo(end)<=0){
-                return mercury.mercuryMovement;
+                return mercury.MERCURY_MOVEMENT;
             }
         }
         return "ERROR";

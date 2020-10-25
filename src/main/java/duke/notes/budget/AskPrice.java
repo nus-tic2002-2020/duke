@@ -1,4 +1,4 @@
-package duke.budget;
+package duke.notes.budget;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

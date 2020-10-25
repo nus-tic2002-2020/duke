@@ -46,7 +46,7 @@ public class DukeList {
      *
      * @param newNotes The new ArrayList of {@code Note} objects to be held.
      */
-    public void replaceNotes(ArrayList<Note> newNotes) {
+    void replaceNotes(ArrayList<Note> newNotes) {
         this.notes = newNotes;
     }
 

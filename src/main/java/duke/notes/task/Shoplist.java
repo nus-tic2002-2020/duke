@@ -1,10 +1,11 @@
 package duke.notes.task;
 
 import duke.Duke;
-import duke.budget.AskPrice;
-import duke.budget.Budget;
+import duke.notes.budget.AskPrice;
+import duke.notes.budget.Budget;
 import duke.commands.CommandException;
 import duke.parser.DateException;
+import duke.ui.DukeUI;
 import javafx.stage.Stage;
 
 import java.util.Date;
@@ -131,68 +132,18 @@ public class Shoplist extends Task {
     @Override
     public void printDetails(){
         System.out.println("            Budget   : $" +
-                String.format("%,14.2f", this.getItemBudget()));
+                String.format("%,14.2f", this.getBudgetObject().getBUDGET_SET()));
         if (this.itemBudget.getIsRevised()) {
             System.out.println("            Revised  : $" +
-                    String.format("%,14.2f", this.getItemBudgetRevised()));
+                    String.format("%,14.2f", this.getBudgetObject().getBudgetRevised()));
         }
         if (this.isDone) {
             System.out.println("            Actual   : $" +
-                    String.format("%,14.2f", this.getItemPrice()) +
-                    " " + this.getWithinBudget());
+                    String.format("%,14.2f", this.getBudgetObject().getBudgetUsed()) +
+                    " " + this.getBudgetObject().printWithinBudget());
             System.out.println("            Done     : " +
-                    NOTE_TIME.format(this.doneDate));
+                    DukeUI.NOTE_TIME.format(this.doneDate));
         }
-    }
-
-    /**
-     * This method is used to retrieve the {@code Budget} object attached to the {@code Shoplist} object.
-     *
-     * @return Budget The {@code Budget} object attached to the {@code Shoplist} object.
-     */
-    public Budget getBudgetObject() {
-        return (this.itemBudget);
-    }
-
-    /**
-     * This method is used to retrieve the initial budget set in the {@code Budget} object attached
-     * to the {@code Shoplist} object.
-     *
-     * @return double The initial budget set in {@code Budget} object attached to the {@code Shoplist} object.
-     */
-    public double getItemBudget() {
-        return (this.itemBudget.getBudgetSet());
-    }
-
-    /**
-     * This method is used to retrieve the revised budget amount in the {@code Budget} object attached
-     * to the {@code Shoplist} object.
-     *
-     * @return double The revised budget amount in {@code Budget} object attached to the {@code Shoplist} object.
-     */
-    public double getItemBudgetRevised() {
-        return (this.itemBudget.getBudgetRevised());
-    }
-
-    /**
-     * This method is used to retrieve the amount of budget utilised in the {@code Budget} object attached
-     * to the {@code Shoplist} object.
-     *
-     * @return double The amount of budget utilised in {@code Budget} object attached to the {@code Shoplist} object.
-     */
-    public double getItemPrice() {
-        return (this.itemBudget.getBudgetUsed());
-    }
-
-    /**
-     * This method returns as a String a report on the budget utilisation status and budget balance
-     * in the {@code Budget} object attached to the {@code Shoplist} object.
-     *
-     * @return String A report on the budget utilisation status and budget balance
-     * in the {@code Budget} object attached to the {@code Shoplist} object.
-     */
-    public String getWithinBudget() {
-        return this.itemBudget.getWithinBudget();
     }
 
     /**
@@ -207,12 +158,12 @@ public class Shoplist extends Task {
         String text = "Shoplist/" +
                 this.serialNum + "/" +
                 this.description + "/" +
-                INPUT_TIME.format(this.addDate) + "/" +
+                DukeUI.INPUT_TIME.format(this.addDate) + "/" +
                 this.isDone + "/" +
                 this.itemBudget.getSaveText();
 
         if(isDone) {
-            text = text + "/" + INPUT_TIME.format(this.doneDate);
+            text = text + "/" + DukeUI.INPUT_TIME.format(this.doneDate);
         }
         return text;
     }
@@ -227,4 +178,12 @@ public class Shoplist extends Task {
         return "Shoplist";
     }
 
+    /**
+     * This method is used to retrieve the {@code Budget} object attached to the {@code Shoplist} object.
+     *
+     * @return Budget The {@code Budget} object attached to the {@code Shoplist} object.
+     */
+    public Budget getBudgetObject() {
+        return (this.itemBudget);
+    }
 }

@@ -1,7 +1,5 @@
 package duke.commands;
 
-import duke.notes.NoteType;
-
 /**
  * This enum lists all the generic commands available in {@code Duke}.
  *
@@ -38,10 +36,10 @@ public enum CmdType {
     UNDO("#undo", "#und", null, 0),
     WIPEDUKE("#wipeduke", "#wpe", null, 0);
 
-    private final String command;
-    private final String shortCommand;
-    private final NoteType relevantNoteType;
-    private final int timelineDays;
+    private final String COMMAND;
+    private final String SHORT_COMMAND;
+    private final NoteType RELEVANT_NOTE_TYPE;
+    private final int TIMELINE_DAYS;
 
     /**
      * This method constructs the various {@code CmdType} enum items.
@@ -52,10 +50,10 @@ public enum CmdType {
      * @param timelineDays The timeline associated with the {@code ListCommand} objects.
      */
     CmdType(String command, String shortCommand, NoteType relevantNoteType, int timelineDays) {
-        this.command = command;
-        this.shortCommand = shortCommand;
-        this.relevantNoteType = relevantNoteType;
-        this.timelineDays = timelineDays;
+        this.COMMAND = command;
+        this.SHORT_COMMAND = shortCommand;
+        this.RELEVANT_NOTE_TYPE = relevantNoteType;
+        this.TIMELINE_DAYS = timelineDays;
     }
 
     /**
@@ -69,7 +67,7 @@ public enum CmdType {
     public static CmdType getKey(String cmdType) throws CommandException {
 
         for(CmdType type: CmdType.values()){
-            if(cmdType.equals(type.command) || cmdType.equals(type.shortCommand) || cmdType.equals(type.toString())){
+            if(cmdType.equals(type.COMMAND) || cmdType.equals(type.SHORT_COMMAND) || cmdType.equals(type.toString())){
                 return type;
             }
         }
@@ -84,11 +82,11 @@ public enum CmdType {
      * @return String The corresponding standard command text.
      * @exception CommandException If no matching standard command text could be found.
      */
-    public static String getCommand(String cmdType) throws CommandException {
+    public static String getCOMMAND(String cmdType) throws CommandException {
 
         for(CmdType type: CmdType.values()){
-            if(cmdType.equals(type.command) || cmdType.equals(type.shortCommand) || cmdType.equals(type.toString())){
-                return type.command;
+            if(cmdType.equals(type.COMMAND) || cmdType.equals(type.SHORT_COMMAND) || cmdType.equals(type.toString())){
+                return type.COMMAND;
             }
         }
         throw new CommandException("There is no " + cmdType + " type of command in Duke, yet.");
@@ -102,11 +100,11 @@ public enum CmdType {
      * @return String The corresponding short command text.
      * @exception CommandException If no matching short command text could be found.
      */
-    public static String getShortCommand(String cmdType) throws CommandException {
+    public static String getSHORT_COMMAND(String cmdType) throws CommandException {
 
         for(CmdType type: CmdType.values()){
-            if(cmdType.equals(type.command) || cmdType.equals(type.shortCommand) || cmdType.equals(type.toString())){
-                return type.shortCommand;
+            if(cmdType.equals(type.COMMAND) || cmdType.equals(type.SHORT_COMMAND) || cmdType.equals(type.toString())){
+                return type.SHORT_COMMAND;
             }
         }
         throw new CommandException("There is no " + cmdType + " type of command in Duke, yet.");
@@ -120,11 +118,11 @@ public enum CmdType {
      * @return NoteType The corresponding relevant NoteType.
      * @exception CommandException If no matching NoteType could be found.
      */
-    public static NoteType getNoteType(String cmdType) throws CommandException {
+    public static NoteType getRELEVANT_NOTE_TYPE(String cmdType) throws CommandException {
 
         for(CmdType type: CmdType.values()){
-            if(cmdType.equals(type.command) || cmdType.equals(type.shortCommand) || cmdType.equals(type.toString())){
-                return type.relevantNoteType;
+            if(cmdType.equals(type.COMMAND) || cmdType.equals(type.SHORT_COMMAND) || cmdType.equals(type.toString())){
+                return type.RELEVANT_NOTE_TYPE;
             }
         }
         throw new CommandException("There is no " + cmdType + " type of command in Duke, yet.");
@@ -138,11 +136,11 @@ public enum CmdType {
      * @return int The corresponding relevant timeline element applicable, returns {@code 0} if not applicable.
      * @exception CommandException If no matching timeline element could be found.
      */
-    public static int getTimelineDays(String cmdType) throws CommandException {
+    public static int getTIMELINE_DAYS(String cmdType) throws CommandException {
 
         for(CmdType type: CmdType.values()){
-            if(cmdType.equals(type.command) || cmdType.equals(type.shortCommand) || cmdType.equals(type.toString())){
-                return type.timelineDays;
+            if(cmdType.equals(type.COMMAND) || cmdType.equals(type.SHORT_COMMAND) || cmdType.equals(type.toString())){
+                return type.TIMELINE_DAYS;
             }
         }
         throw new CommandException("There is no " + cmdType + " type of command in Duke, yet.");

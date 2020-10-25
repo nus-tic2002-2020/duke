@@ -10,7 +10,7 @@ import duke.ui.DukeUI;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class InfoCommand extends DukeCommand implements DukeUI {
+public class InfoCommand extends DukeCommand {
 
     //VARIABLES-----------------------------------------
     private String infoType;
@@ -21,7 +21,7 @@ public class InfoCommand extends DukeCommand implements DukeUI {
      *
      * @param cmdType The type of {@code DukeCommand} being constructed.
      */
-    public InfoCommand(String cmdType, String infoType) {
+    public InfoCommand(String cmdType, String infoType) throws CommandException {
 
         super(cmdType);
         this.infoType = infoType;

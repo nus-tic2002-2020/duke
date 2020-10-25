@@ -1,7 +1,6 @@
 package duke.commands;
 
 import duke.notes.Note;
-import duke.notes.NoteType;
 import duke.notes.event.Event;
 import duke.notes.event.Birthday;
 import duke.notes.event.Wedding;
@@ -24,10 +23,10 @@ import java.text.ParseException;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class NewNoteCommand extends DukeCommand implements DukeUI {
+public class NewNoteCommand extends DukeCommand {
 
     //VARIABLES-----------------------------------------
-    ArrayList<String> inputs;
+    private ArrayList<String> inputs;
 
     //CONSTRUCTORS--------------------------------------
     /**
@@ -36,7 +35,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
      * @param cmdType The type of {@code DukeCommand} being constructed.
      * @param inputs The list of user input elements to be used to create new {@code Note} objects.
      */
-    public NewNoteCommand(String cmdType, ArrayList<String> inputs) {
+    public NewNoteCommand(String cmdType, ArrayList<String> inputs) throws CommandException {
         super(cmdType);
         this.inputs = inputs;
     }
@@ -140,7 +139,7 @@ public class NewNoteCommand extends DukeCommand implements DukeUI {
         Date addDate = new Date();
         int nextSerialNum = dukeNotes.getNotes().size() + 1;
         ArrayList<Note> notes = new ArrayList<>();
-        switch (NoteType.getKey(this.cmdType).toString()) {
+        switch (NoteType.getKey(this.cmdType.toString()).toString()) {
             case "BILL" -> {
                 String description = inputs.get(1);
                 Date targetDate = DateParser.understandDateInput(inputs.get(2));

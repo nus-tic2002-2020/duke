@@ -1,10 +1,9 @@
 package duke.notes.event;
 
-import duke.budget.Budget;
+import duke.notes.budget.Budget;
 import duke.commands.CommandException;
 import duke.parser.DateException;
 import duke.notes.Note;
-import duke.ui.DukeUI;
 
 import java.util.Date;
 
@@ -131,6 +130,15 @@ public class Event extends Note {
     }
 
     /**
+     * This method is used to reset the static variables of the {@code Event}
+     * class in the event of a program reset.
+     */
+    public static void resetStaticVariables() {
+        eventsOutstanding = 0;
+        eventsCompleted = 0;
+    }
+
+    /**
      * This method is used to delete an {@code Event} object.
      * Class-level members will be updated to reflect the change in completion status.
      */
@@ -191,14 +199,6 @@ public class Event extends Note {
         }
     }
 
-    /**
-     * This method is used to reset the static variables of the {@code Event}
-     * class in the event of a program reset.
-     */
-    public static void resetStaticVariables() {
-        eventsOutstanding = 0;
-        eventsCompleted = 0;
-    }
 
     //GET STATEMENTS------------------------------------
     /**

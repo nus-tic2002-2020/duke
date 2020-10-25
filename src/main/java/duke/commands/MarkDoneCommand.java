@@ -13,7 +13,7 @@ import java.util.Date;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class MarkDoneCommand extends DukeCommand implements DukeUI {
+public class MarkDoneCommand extends DukeCommand {
 
     //VARIABLES-----------------------------------------
     private ArrayList<Integer> toMarkDone;
@@ -25,7 +25,7 @@ public class MarkDoneCommand extends DukeCommand implements DukeUI {
      * @param cmdType The type of {@code DukeCommand} being constructed.
      * @param toMarkDone The serial number(s) of {@code Note} objects to be marked as done.
      */
-    public MarkDoneCommand(String cmdType, ArrayList<Integer> toMarkDone) {
+    public MarkDoneCommand(String cmdType, ArrayList<Integer> toMarkDone) throws CommandException {
         super(cmdType);
         this.toMarkDone = toMarkDone;
     }

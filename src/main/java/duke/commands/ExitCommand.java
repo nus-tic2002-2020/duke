@@ -15,7 +15,7 @@ import java.util.Scanner;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class ExitCommand extends DukeCommand implements DukeUI {
+public class ExitCommand extends DukeCommand {
 
     //VARIABLES-----------------------------------------
 
@@ -26,7 +26,7 @@ public class ExitCommand extends DukeCommand implements DukeUI {
      *
      * @param cmdType The type of {@code DukeCommand} being constructed.
      */
-    public ExitCommand(String cmdType) {
+    public ExitCommand(String cmdType) throws CommandException {
         super(cmdType);
     }
 

@@ -18,7 +18,7 @@ import java.util.Scanner;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class DeleteCommand extends DukeCommand implements DukeUI {
+public class DeleteCommand extends DukeCommand {
 
     //VARIABLES-----------------------------------------
     private ArrayList<Integer> toDelete;
@@ -31,7 +31,7 @@ public class DeleteCommand extends DukeCommand implements DukeUI {
      * @param cmdType The type of {@code DukeCommand} being constructed.
      * @param toDelete The serial number(s) of {@code Note} objects to be deleted.
      */
-    public DeleteCommand(String cmdType, ArrayList<Integer> toDelete) {
+    public DeleteCommand(String cmdType, ArrayList<Integer> toDelete) throws CommandException {
         super(cmdType);
         this.toDelete = toDelete;
         this.confirmDelete = false;

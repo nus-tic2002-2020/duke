@@ -1,6 +1,5 @@
-package duke;
+package duke.ui;
 
-import duke.ui.DukeUI;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -11,7 +10,7 @@ import java.util.Date;
  * @since 2020-09-16
  */
 @SuppressWarnings("unused")
-public enum SunSign implements DukeUI{
+public enum SunSign {
 
     ARIES("21-MAR", "19-APR", "Sun in Aries"),
     TAURUS("20-APR", "20-MAY", "Sun in Taurus"),
@@ -26,9 +25,9 @@ public enum SunSign implements DukeUI{
     AQUARIUS("20-JAN", "18-FEB", "Sun in Aquarius"),
     PISCES("19-FEB", "20-MAR", "Sun in Pisces");
 
-    private final String from;
-    private final String to;
-    private final String sunSign;
+    private final String FROM;
+    private final String TO;
+    private final String SUN_SIGN;
 
     /**
      * This method constructs the various {@code SunSign} enum items.
@@ -38,9 +37,9 @@ public enum SunSign implements DukeUI{
      * @param sunSign The corresponding Sun Sign for the Gregorian date period.
      */
     SunSign(String from, String to, String sunSign) {
-        this.from = from;
-        this.to = to;
-        this.sunSign = sunSign;
+        this.FROM = from;
+        this.TO = to;
+        this.SUN_SIGN = sunSign;
     }
 
     /**
@@ -51,15 +50,15 @@ public enum SunSign implements DukeUI{
      * @return String The corresponding Sun Sign for the Gregorian date.
      * @exception ParseException If there are errors converting the String input into a {@code Date} object.
      */
-    public static String getSunSign(Date date) throws ParseException {
+    public static String getSUN_SIGN(Date date) throws ParseException {
 
         for(SunSign sign: SunSign.values()){
-            String from = sign.from + "-" + YEAR_TODAY.format(date) + " 00:00:00";
-            String to = sign.to + "-" + YEAR_TODAY.format(date)  + " 23:59:59";
-            Date start = INPUT_TIME.parse(from);
-            Date end = INPUT_TIME.parse(to);
+            String from = sign.FROM + "-" + DukeUI.YEAR_TODAY.format(date) + " 00:00:00";
+            String to = sign.TO + "-" + DukeUI.YEAR_TODAY.format(date)  + " 23:59:59";
+            Date start = DukeUI.INPUT_TIME.parse(from);
+            Date end = DukeUI.INPUT_TIME.parse(to);
             if(date.compareTo(start)>=0 && date.compareTo(end)<=0){
-                return sign.sunSign;
+                return sign.SUN_SIGN;
             }
         }
         return "ERROR";

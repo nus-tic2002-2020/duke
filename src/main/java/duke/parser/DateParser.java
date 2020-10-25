@@ -3,14 +3,19 @@ package duke.parser;
 
 import duke.commands.CommandException;
 import duke.ui.DukeUI;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public interface DateParser extends DukeUI {
+/**
+ * An interface that read and understand user inputs representing dates and times.
+ *
+ * @author tanqiuyu
+ * @since 2020-09-16
+ */
+public interface DateParser {
 
     SimpleDateFormat UNDERSTOOD_DAYM = new SimpleDateFormat("dd");
     SimpleDateFormat UNDERSTOOD_MONTH = new SimpleDateFormat("MMM");
@@ -19,7 +24,13 @@ public interface DateParser extends DukeUI {
     SimpleDateFormat UNDERSTOOD_DAYW_PART = new SimpleDateFormat("E");
     SimpleDateFormat UNDERSTOOD_TIME = new SimpleDateFormat("HH:mm");
 
-
+    /**
+     * This method is used to understand any textual input that could indicate a specific date.
+     *
+     * @param input The textual input provided by the user in verbatim.
+     * @param understoodDate The {@code HashMap} object used to store the results.
+     * @return boolean Whether the understanding has been successful.
+     */
     static boolean checkForDayW(String input, HashMap<String, String> understoodDate) {
 
         if(input == null) { return false; }
@@ -74,6 +85,13 @@ public interface DateParser extends DukeUI {
         return false;
     }
 
+    /**
+     * This method is used to understand any textual input that could indicate a specific day in the month.
+     *
+     * @param input The textual input provided by the user in verbatim.
+     * @param understoodDate The {@code HashMap} object used to store the results.
+     * @return boolean Whether the understanding has been successful.
+     */
     static boolean checkForDayM(String input, HashMap<String, String> understoodDate) {
 
         if(input == null) { return false; }
@@ -100,7 +118,13 @@ public interface DateParser extends DukeUI {
         return false;
     }
 
-
+    /**
+     * This method is used to understand any textual input that could indicate a specific month in the year.
+     *
+     * @param input The textual input provided by the user in verbatim.
+     * @param understoodDate The {@code HashMap} object used to store the results.
+     * @return boolean Whether the understanding has been successful.
+     */
     static boolean checkForMonth(String input, HashMap<String, String> understoodDate) {
 
         if(input == null) { return false; }
@@ -127,6 +151,13 @@ public interface DateParser extends DukeUI {
         return false;
     }
 
+    /**
+     * This method is used to understand any textual input that could indicate a specific year.
+     *
+     * @param input The textual input provided by the user in verbatim.
+     * @param understoodDate The {@code HashMap} object used to store the results.
+     * @return boolean Whether the understanding has been successful.
+     */
     static boolean checkForYear(String input, HashMap<String, String> understoodDate) {
 
         if(input == null) { return false; }
@@ -146,6 +177,13 @@ public interface DateParser extends DukeUI {
         return false;
     }
 
+    /**
+     * This method is used to understand any textual input that could indicate a specific day in a specific month.
+     *
+     * @param input The textual input provided by the user in verbatim.
+     * @param understoodDate The {@code HashMap} object used to store the results.
+     * @return boolean Whether the understanding has been successful.
+     */
     static boolean checkForDayMonth(String input, HashMap<String, String> understoodDate) {
 
         if(input == null) { return false; }
@@ -178,6 +216,13 @@ public interface DateParser extends DukeUI {
         return false;
     }
 
+    /**
+     * This method is used to understand any textual input that could indicate a specific month in a specific year.
+     *
+     * @param input The textual input provided by the user in verbatim.
+     * @param understoodDate The {@code HashMap} object used to store the results.
+     * @return boolean Whether the understanding has been successful.
+     */
     static boolean checkForMonthYear(String input, HashMap<String, String> understoodDate) {
 
         if(input == null) { return false; }
@@ -206,6 +251,13 @@ public interface DateParser extends DukeUI {
         return false;
     }
 
+    /**
+     * This method is used to understand any textual input that could indicate a specific date in full.
+     *
+     * @param input The textual input provided by the user in verbatim.
+     * @param understoodDate The {@code HashMap} object used to store the results.
+     * @return boolean Whether the understanding has been successful.
+     */
     static boolean checkForFullDate(String input, HashMap<String, String> understoodDate) {
 
         if(input == null) { return false; }
@@ -247,6 +299,13 @@ public interface DateParser extends DukeUI {
         return false;
     }
 
+    /**
+     * This method is used to understand any textual input that could indicate a specific time.
+     *
+     * @param input The textual input provided by the user in verbatim.
+     * @param understoodDate The {@code HashMap} object used to store the results.
+     * @return boolean Whether the understanding has been successful.
+     */
     static boolean checkForTime(String input, HashMap<String, String> understoodDate) {
 
         if(input == null) { return false; }
@@ -271,7 +330,12 @@ public interface DateParser extends DukeUI {
         return false;
     }
 
-
+    /**
+     * This method is used to understand textual input representing dates and times.
+     *
+     * @param userInput The textual input provided by the user in verbatim.
+     * @return Date The understood date and time in the format of a {@code Date} object.
+     */
     static Date understandDateInput(String userInput) throws ParseException, CommandException {
 
         Date now = new Date();

@@ -10,12 +10,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * A GUI for {@code Duke}  using FXML.
+ * A GUI for {@code Duke} using FXML.
  */
 public class Main extends Application {
 
-    final String path = "data/notes.txt";
-    private final Duke duke = new Duke(path);
+    final String PATH = "data/notes.txt";
+    private final Duke DUKE = new Duke(PATH);
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -24,7 +24,7 @@ public class Main extends Application {
         AnchorPane ap = fxmlLoader.load();
         Scene scene = new Scene(ap);
         stage.setScene(scene);
-        fxmlLoader.<MainWindow>getController().setDuke(duke);
+        fxmlLoader.<MainWindow>getController().setDuke(DUKE);
         stage.show();
         stage.setTitle("Project Duke");
         stage.getIcons().add(new Image("/icons/Duke.png"));

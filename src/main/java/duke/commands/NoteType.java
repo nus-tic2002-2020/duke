@@ -1,6 +1,4 @@
-package duke.notes;
-
-import duke.commands.CommandException;
+package duke.commands;
 
 /**
  * This enum lists all the {@code Note} objects available in {@code Duke}.
@@ -28,13 +26,13 @@ public enum NoteType {
     NOTE("Note", "N.A.", "N.A.", "N.A.",
             "note", "notes", "on");
 
-    private final String constructor;
-    private final String command;
-    private final String shortCommand;
-    private final String taskIcon;
-    private final String lowercaseName;
-    private final String lowercaseNamePlural;
-    private final String verb;
+    private final String CONSTRUCTOR;
+    private final String COMMAND;
+    private final String SHORT_COMMAND;
+    private final String TASK_ICON;
+    private final String LOWERCASE_NAME;
+    private final String LOWERCASE_NAME_PLURAL;
+    private final String VERB;
 
     /**
      * This method constructs the various {@code NoteType} enum items.
@@ -49,13 +47,13 @@ public enum NoteType {
      */
     NoteType(String constructor, String command, String shortCommand, String taskIcon,
              String lowercaseName, String lowercaseNamePlural, String verb) {
-        this.constructor = constructor;
-        this.command = command;
-        this.shortCommand = shortCommand;
-        this.taskIcon = taskIcon;
-        this.lowercaseName = lowercaseName;
-        this.lowercaseNamePlural = lowercaseNamePlural;
-        this.verb = verb;
+        this.CONSTRUCTOR = constructor;
+        this.COMMAND = command;
+        this.SHORT_COMMAND = shortCommand;
+        this.TASK_ICON = taskIcon;
+        this.LOWERCASE_NAME = lowercaseName;
+        this.LOWERCASE_NAME_PLURAL = lowercaseNamePlural;
+        this.VERB = verb;
     }
 
     /**
@@ -69,8 +67,8 @@ public enum NoteType {
     public static NoteType getKey(String noteType) throws CommandException {
 
         for(NoteType type: NoteType.values()){
-            if(noteType.equals(type.constructor) || noteType.equals(type.command) ||
-                    noteType.equals(type.shortCommand) || noteType.equals(type.toString())){
+            if(noteType.equals(type.CONSTRUCTOR) || noteType.equals(type.COMMAND) ||
+                    noteType.equals(type.SHORT_COMMAND) || noteType.equals(type.toString())){
                 return type;
             }
         }
@@ -85,12 +83,12 @@ public enum NoteType {
      * @return String The constructor associated with the command.
      * @exception CommandException If no matching command could be found.
      */
-    public static String getConstructor(String noteType) throws CommandException {
+    public static String getCONSTRUCTOR(String noteType) throws CommandException {
 
         for(NoteType type: NoteType.values()){
-            if(noteType.equals(type.constructor) || noteType.equals(type.command) ||
-                    noteType.equals(type.shortCommand) || noteType.equals(type.toString())){
-                return type.constructor;
+            if(noteType.equals(type.CONSTRUCTOR) || noteType.equals(type.COMMAND) ||
+                    noteType.equals(type.SHORT_COMMAND) || noteType.equals(type.toString())){
+                return type.CONSTRUCTOR;
             }
         }
         throw new CommandException("There is no " + noteType + " type of notes in Duke, yet.");
@@ -104,12 +102,12 @@ public enum NoteType {
      * @return String The corresponding standard command text.
      * @exception CommandException If no matching standard command text could be found.
      */
-    public static String getCommand(String noteType) throws CommandException {
+    public static String getCOMMAND(String noteType) throws CommandException {
 
         for(NoteType type: NoteType.values()){
-            if(noteType.equals(type.constructor) || noteType.equals(type.command) ||
-                    noteType.equals(type.shortCommand) || noteType.equals(type.toString())){
-                return type.command;
+            if(noteType.equals(type.CONSTRUCTOR) || noteType.equals(type.COMMAND) ||
+                    noteType.equals(type.SHORT_COMMAND) || noteType.equals(type.toString())){
+                return type.COMMAND;
             }
         }
         throw new CommandException("There is no " + noteType + " type of notes in Duke, yet.");
@@ -123,12 +121,12 @@ public enum NoteType {
      * @return String The corresponding short command text.
      * @exception CommandException If no matching short command text could be found.
      */
-    public static String getShortCommand(String noteType) throws CommandException {
+    public static String getSHORT_COMMAND(String noteType) throws CommandException {
 
         for(NoteType type: NoteType.values()){
-            if(noteType.equals(type.constructor) || noteType.equals(type.command) ||
-                    noteType.equals(type.shortCommand) || noteType.equals(type.toString())){
-                return type.shortCommand;
+            if(noteType.equals(type.CONSTRUCTOR) || noteType.equals(type.COMMAND) ||
+                    noteType.equals(type.SHORT_COMMAND) || noteType.equals(type.toString())){
+                return type.SHORT_COMMAND;
             }
         }
         throw new CommandException("There is no " + noteType + " type of notes in Duke, yet.");
@@ -142,12 +140,12 @@ public enum NoteType {
      * @return String The corresponding short command text.
      * @exception CommandException If no matching short command text could be found.
      */
-    public static String getTaskIcon(String noteType) throws CommandException {
+    public static String getTASK_ICON(String noteType) throws CommandException {
 
         for(NoteType type: NoteType.values()){
-            if(noteType.equals(type.constructor) || noteType.equals(type.command) ||
-                    noteType.equals(type.shortCommand) || noteType.equals(type.toString())){
-                return type.taskIcon;
+            if(noteType.equals(type.CONSTRUCTOR) || noteType.equals(type.COMMAND) ||
+                    noteType.equals(type.SHORT_COMMAND) || noteType.equals(type.toString())){
+                return type.TASK_ICON;
             }
         }
         throw new CommandException("There is no " + noteType + " type of notes in Duke, yet.");
@@ -161,12 +159,12 @@ public enum NoteType {
      * @return String The corresponding short command text.
      * @exception CommandException If no matching short command text could be found.
      */
-    public static String getLowercaseName(String noteType) throws CommandException {
+    public static String getLOWERCASE_NAME(String noteType) throws CommandException {
 
         for(NoteType type: NoteType.values()){
-            if(noteType.equals(type.constructor) || noteType.equals(type.command) ||
-                    noteType.equals(type.shortCommand) || noteType.equals(type.toString())){
-                return type.lowercaseName;
+            if(noteType.equals(type.CONSTRUCTOR) || noteType.equals(type.COMMAND) ||
+                    noteType.equals(type.SHORT_COMMAND) || noteType.equals(type.toString())){
+                return type.LOWERCASE_NAME;
             }
         }
         throw new CommandException("There is no " + noteType + " type of notes in Duke, yet.");
@@ -180,12 +178,12 @@ public enum NoteType {
      * @return String The corresponding short command text.
      * @exception CommandException If no matching short command text could be found.
      */
-    public static String getLowercaseNamePlural(String noteType) throws CommandException {
+    public static String getLOWERCASE_NAME_PLURAL(String noteType) throws CommandException {
 
         for(NoteType type: NoteType.values()){
-            if(noteType.equals(type.constructor) || noteType.equals(type.command) ||
-                    noteType.equals(type.shortCommand) || noteType.equals(type.toString())){
-                return type.lowercaseNamePlural;
+            if(noteType.equals(type.CONSTRUCTOR) || noteType.equals(type.COMMAND) ||
+                    noteType.equals(type.SHORT_COMMAND) || noteType.equals(type.toString())){
+                return type.LOWERCASE_NAME_PLURAL;
             }
         }
         throw new CommandException("There is no " + noteType + " type of notes in Duke, yet.");
@@ -199,12 +197,12 @@ public enum NoteType {
      * @return String The corresponding short command text.
      * @exception CommandException If no matching short command text could be found.
      */
-    public static String getVerb(String noteType) throws CommandException {
+    public static String getVERB(String noteType) throws CommandException {
 
         for(NoteType type: NoteType.values()){
-            if(noteType.equals(type.constructor) || noteType.equals(type.command) ||
-                    noteType.equals(type.shortCommand) || noteType.equals(type.toString())){
-                return type.verb;
+            if(noteType.equals(type.CONSTRUCTOR) || noteType.equals(type.COMMAND) ||
+                    noteType.equals(type.SHORT_COMMAND) || noteType.equals(type.toString())){
+                return type.VERB;
             }
         }
         throw new CommandException("There is no " + noteType + " type of notes in Duke, yet.");

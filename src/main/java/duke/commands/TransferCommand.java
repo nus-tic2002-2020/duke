@@ -1,6 +1,6 @@
 package duke.commands;
 
-import duke.budget.Budget;
+import duke.notes.budget.Budget;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
@@ -11,7 +11,7 @@ import duke.ui.DukeUI;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class TransferCommand extends DukeCommand implements DukeUI {
+public class TransferCommand extends DukeCommand {
 
     //VARIABLES-----------------------------------------
     private int from;
@@ -29,7 +29,7 @@ public class TransferCommand extends DukeCommand implements DukeUI {
      *           transferred to its attached {@code Budget} object.
      * @param amount The amount to be transferred between the {@code Budget} objects.
      */
-    public TransferCommand(String cmdType, int from, int to, double amount) {
+    public TransferCommand(String cmdType, int from, int to, double amount) throws CommandException {
         super(cmdType);
         assert amount > 0 : "Transfer amount cannot be less than or equals to zero.";
         this.from = from;

@@ -1,8 +1,9 @@
 package duke.notes;
 
 
-import duke.budget.Budget;
+import duke.notes.budget.Budget;
 import duke.commands.CommandException;
+import duke.commands.NoteType;
 import duke.parser.DateException;
 import duke.ui.DukeUI;
 import java.util.Date;
@@ -15,7 +16,7 @@ import java.util.Date;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public abstract class Note implements DukeUI {
+public abstract class Note {
 
     //VARIABLES-----------------------------------------
     protected int serialNum;
@@ -150,7 +151,7 @@ public abstract class Note implements DukeUI {
     public void printDetails(){
         if (this.isDone) {
             System.out.println("            Done     : " +
-                    NOTE_TIME.format(this.doneDate));
+                    DukeUI.NOTE_TIME.format(this.doneDate));
         }
     }
 
@@ -173,10 +174,15 @@ public abstract class Note implements DukeUI {
      * @return String The task icon reflecting the type of sub-class of {@code Note} objects.
      */
     public String getTaskIcon() throws CommandException {
-        return NoteType.getTaskIcon(this.getObjectClass());
+        return NoteType.getTASK_ICON(this.getObjectClass());
     }
 
     //ABSTRACT METHODS----------------------------------
+    /**
+     * This method is used to delete existing {@code Note} object and make associated adjustments.
+     */
+    public abstract void deleteExistingNote();
+
     /**
      * This method exports the {@code Note} object as a string in a format that is
      * readable and re-constructable as a {@code Note} object.
@@ -187,9 +193,11 @@ public abstract class Note implements DukeUI {
     public abstract String getSaveText();
 
     /**
-     * This method is used to delete existing {@code Note} object and make associated adjustments.
+     * This method returns the class name of the {@code Note} object as a {@code String}.
+     *
+     * @return String The class name of the {@code Note} object.
      */
-    public abstract void deleteExistingNote();
+    public abstract String getObjectClass();
 
     /**
      * This method is used to retrieve the {@code Budget} object attached to the {@code Note} object, if any.
@@ -198,10 +206,4 @@ public abstract class Note implements DukeUI {
      */
     public abstract Budget getBudgetObject();
 
-    /**
-     * This method returns the class name of the {@code Note} object as a {@code String}.
-     *
-     * @return String The class name of the {@code Note} object.
-     */
-    public abstract String getObjectClass();
 }

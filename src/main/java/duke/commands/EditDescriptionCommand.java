@@ -27,7 +27,7 @@ public class EditDescriptionCommand extends DukeCommand {
      * @param targetNote The {@code Note} whose {@code Date} object is to be edited.
      * @param newDescription The new description that is to replace the old description.
      */
-    public EditDescriptionCommand(String cmdType, int targetNote, String newDescription) {
+    public EditDescriptionCommand(String cmdType, int targetNote, String newDescription) throws CommandException {
         super(cmdType);
         this.targetNote = targetNote;
         this.newDescription = newDescription;

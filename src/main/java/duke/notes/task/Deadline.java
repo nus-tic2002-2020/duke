@@ -1,7 +1,7 @@
 package duke.notes.task;
 
 
-import duke.budget.Budget;
+import duke.notes.budget.Budget;
 import duke.commands.CommandException;
 import duke.parser.DateException;
 import java.util.Date;
@@ -86,23 +86,6 @@ public class Deadline extends Task {
 
     //SET STATEMENTS------------------------------------
     /**
-     * This method is used to set or edit the target date assigned to the {@code Deadline} object.
-     *
-     * @param targetDate The target date and time of the {@code Deadline}.
-     * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
-     */
-    public void setTargetDate(Date targetDate) throws DateException {
-
-        Date now = new Date();
-        if(targetDate.before(now)){
-            throw new DateException(targetDate, "TargetDate");
-        } else {
-            this.targetDate = targetDate;
-            this.timesExtended++;
-        }
-    }
-
-    /**
      * This method is used to mark an outstanding {@code Deadline} object as completed.
      * Class-level members will be updated to reflect the change in completion status.
      *
@@ -118,6 +101,23 @@ public class Deadline extends Task {
             this.doneAhead = true;
         }
         return false;
+    }
+
+    /**
+     * This method is used to set or edit the target date assigned to the {@code Deadline} object.
+     *
+     * @param targetDate The target date and time of the {@code Deadline}.
+     * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
+     */
+    public void setTargetDate(Date targetDate) throws DateException {
+
+        Date now = new Date();
+        if(targetDate.before(now)){
+            throw new DateException(targetDate, "TargetDate");
+        } else {
+            this.targetDate = targetDate;
+            this.timesExtended++;
+        }
     }
 
 

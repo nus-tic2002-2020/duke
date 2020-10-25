@@ -17,7 +17,7 @@ import java.util.Scanner;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class WipeCommand extends DukeCommand implements DukeUI {
+public class WipeCommand extends DukeCommand {
 
     //VARIABLES-----------------------------------------
 
@@ -29,7 +29,7 @@ public class WipeCommand extends DukeCommand implements DukeUI {
      *
      * @param cmdType The type of {@code DukeCommand} being constructed.
      */
-    public WipeCommand(String cmdType) {
+    public WipeCommand(String cmdType) throws CommandException {
         super(cmdType);
         this.confirmWipe = false;
     }

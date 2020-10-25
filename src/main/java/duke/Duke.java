@@ -1,6 +1,6 @@
 package duke;
 
-import duke.budget.Budget;
+import duke.notes.budget.Budget;
 import duke.commands.CommandException;
 import duke.notes.task.Task;
 import duke.parser.DateException;
@@ -24,13 +24,13 @@ import java.util.Date;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class Duke implements DukeParser, DukeUI {
+public class Duke {
 
     //DUKE VARIABLES------------------------------------
     private static DukeStorage dukeStorage;
     private static DukeList dukeNotes;
-    private static boolean isLoadedFromFile;
     public static boolean isGUIMode;
+    private static boolean isLoadedFromFile;
     private static boolean isConfirmedExit = false;
     private static boolean isErrorReturn = false;
 

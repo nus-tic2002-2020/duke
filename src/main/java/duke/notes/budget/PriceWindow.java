@@ -1,4 +1,4 @@
-package duke.budget;
+package duke.notes.budget;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

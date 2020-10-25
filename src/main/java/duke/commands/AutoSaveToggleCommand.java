@@ -20,7 +20,7 @@ public class AutoSaveToggleCommand extends DukeCommand {
      *
      * @param cmdType The type of {@code DukeCommand} being constructed.
      */
-    public AutoSaveToggleCommand(String cmdType) {
+    public AutoSaveToggleCommand(String cmdType) throws CommandException {
         super(cmdType);
     }
 

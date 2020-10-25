@@ -1,6 +1,5 @@
-package duke;
+package duke.ui;
 
-import duke.ui.DukeUI;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -11,7 +10,7 @@ import java.util.Date;
  * @since 2020-09-16
  */
 @SuppressWarnings("unused")
-public enum ZodiacYear implements DukeUI{
+public enum ZodiacYear {
 
     YEAR_20_21("25-JAN-2020 00:00:00", "11-FEB-2021 23:59:59", "Year of the Rat"),
     YEAR_21_22("12-FEB-2021 00:00:00", "31-JAN-2022 23:59:59", "Year of the Ox"),
@@ -26,9 +25,9 @@ public enum ZodiacYear implements DukeUI{
     YEAR_30_31("03-FEB-2030 00:00:00", "22-JAN-2031 23:59:59", "Year of the Dog"),
     YEAR_31_32("23-JAN-2031 00:00:00", "10-FEB-2032 23:59:59", "Year of the Pig");
 
-    private final String from;
-    private final String to;
-    private final String zodiacYear;
+    private final String FROM;
+    private final String TO;
+    private final String ZODIAC_YEAR;
 
     /**
      * This method constructs the various {@code ZodiacYear} enum items.
@@ -38,9 +37,9 @@ public enum ZodiacYear implements DukeUI{
      * @param zodiacYear The corresponding Zodiac Year for the Gregorian date period.
      */
     ZodiacYear(String from, String to, String zodiacYear) {
-        this.from = from;
-        this.to = to;
-        this.zodiacYear = zodiacYear;
+        this.FROM = from;
+        this.TO = to;
+        this.ZODIAC_YEAR = zodiacYear;
     }
 
     /**
@@ -51,13 +50,13 @@ public enum ZodiacYear implements DukeUI{
      * @return String The corresponding Zodiac Year for the Gregorian date.
      * @exception ParseException If there are errors converting the String input into a {@code Date} object.
      */
-    public static String getZodiacYear(Date date) throws ParseException {
+    public static String getZODIAC_YEAR(Date date) throws ParseException {
 
         for(ZodiacYear year: ZodiacYear.values()){
-            Date start = INPUT_TIME.parse(year.from);
-            Date end = INPUT_TIME.parse(year.to);
+            Date start = DukeUI.INPUT_TIME.parse(year.FROM);
+            Date end = DukeUI.INPUT_TIME.parse(year.TO);
             if(date.compareTo(start)>=0 && date.compareTo(end)<=0){
-                return year.zodiacYear;
+                return year.ZODIAC_YEAR;
             }
         }
         return "ERROR";

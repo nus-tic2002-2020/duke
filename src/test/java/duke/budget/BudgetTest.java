@@ -1,5 +1,6 @@
 package duke.budget;
 
+import duke.notes.budget.Budget;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,13 +39,13 @@ public class BudgetTest {
         assertTrue(budgetX.getIsOverBudget());
         assertFalse(budgetY.getIsOverBudget());
         assertFalse(budgetZ.getIsOverBudget());
-        assertEquals(1500.50, budgetX.getBudgetSet());
-        assertEquals(7500.25, budgetY.getBudgetSet());
-        assertEquals(3725.75, budgetZ.getBudgetSet());
+        assertEquals(1500.50, budgetX.getBUDGET_SET());
+        assertEquals(7500.25, budgetY.getBUDGET_SET());
+        assertEquals(3725.75, budgetZ.getBUDGET_SET());
         assertEquals(12726.50, Budget.getTotalBudgetSet());
         assertEquals(5797.05, Budget.getTotalBudgetUsed());
         assertEquals(3203.70, Budget.getTotalBudgetBalance());
-        assertFalse(Budget.isIsTotalOverBudget());
+        assertFalse(Budget.getIsTotalOverBudget());
     }
 
     @Test
@@ -56,12 +57,12 @@ public class BudgetTest {
         budgetY.deleteExistingBudget();
         assertTrue(budgetX.getIsOverBudget());
         assertFalse(budgetZ.getIsOverBudget());
-        assertEquals(1500.50, budgetX.getBudgetSet());
-        assertEquals(3725.75, budgetZ.getBudgetSet());
+        assertEquals(1500.50, budgetX.getBUDGET_SET());
+        assertEquals(3725.75, budgetZ.getBUDGET_SET());
         assertEquals(5226.25, Budget.getTotalBudgetSet());
         assertEquals(2538.50, Budget.getTotalBudgetUsed());
         assertEquals(-1038, Budget.getTotalBudgetBalance());
-        assertTrue(Budget.isIsTotalOverBudget());
+        assertTrue(Budget.getIsTotalOverBudget());
     }
 
     @Test
@@ -71,9 +72,9 @@ public class BudgetTest {
         budgetX.transferBudgetOut(500.25, budgetY);
         assertFalse(budgetX.getIsOverBudget());
         assertFalse(budgetY.getIsOverBudget());
-        assertEquals(1500.50, budgetX.getBudgetSet());
+        assertEquals(1500.50, budgetX.getBUDGET_SET());
         assertEquals(1000.25, budgetX.getBudgetRevised());
-        assertEquals(7500.25, budgetY.getBudgetSet());
+        assertEquals(7500.25, budgetY.getBUDGET_SET());
         assertEquals(8000.50, budgetY.getBudgetRevised());
         assertTrue(budgetX.getIsRevised());
         assertTrue(budgetY.getIsRevised());
@@ -87,9 +88,9 @@ public class BudgetTest {
         assertTrue(budgetX.getIsOverBudget());
         assertFalse(budgetY.getIsOverBudget());
         budgetX.transferBudgetOut(500.25, budgetY);
-        assertEquals(1500.50, budgetX.getBudgetSet());
+        assertEquals(1500.50, budgetX.getBUDGET_SET());
         assertEquals(1500.50, budgetX.getBudgetRevised());
-        assertEquals(7500.25, budgetY.getBudgetSet());
+        assertEquals(7500.25, budgetY.getBUDGET_SET());
         assertEquals(7500.25, budgetY.getBudgetRevised());
         assertFalse(budgetX.getIsRevised());
         assertFalse(budgetY.getIsRevised());
@@ -103,9 +104,9 @@ public class BudgetTest {
         assertFalse(budgetX.getIsOverBudget());
         assertFalse(budgetY.getIsOverBudget());
         budgetX.transferBudgetOut(500.25, budgetY);
-        assertEquals(1500.50, budgetX.getBudgetSet());
+        assertEquals(1500.50, budgetX.getBUDGET_SET());
         assertEquals(1000.25, budgetX.getBudgetRevised());
-        assertEquals(7500.25, budgetY.getBudgetSet());
+        assertEquals(7500.25, budgetY.getBUDGET_SET());
         assertEquals(8000.50, budgetY.getBudgetRevised());
         assertTrue(budgetX.getIsRevised());
         assertTrue(budgetY.getIsRevised());

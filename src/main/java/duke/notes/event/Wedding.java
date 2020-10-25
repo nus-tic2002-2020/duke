@@ -1,6 +1,6 @@
 package duke.notes.event;
 
-import duke.budget.Budget;
+import duke.notes.budget.Budget;
 import duke.commands.CommandException;
 import duke.parser.DateException;
 import java.util.Date;
@@ -125,68 +125,18 @@ public class Wedding extends Event {
         System.out.println("            To       : " +
                 NOTE_TIME.format(this.endDate));
         System.out.println("            Budget   : $" +
-                String.format("%,14.2f", this.getItemBudget()));
+                String.format("%,14.2f", this.getBudgetObject().getBUDGET_SET()));
         if (this.itemBudget.getIsRevised()) {
             System.out.println("            Revised  : $" +
-                    String.format("%,14.2f", this.getItemBudgetRevised()));
+                    String.format("%,14.2f", this.getBudgetObject().getBudgetRevised()));
         }
         if (this.isDone) {
             System.out.println("            Actual   : $" +
-                    String.format("%,14.2f", this.getItemPrice()) +
-                    " " + this.getWithinBudget());
+                    String.format("%,14.2f", this.getBudgetObject().getBudgetUsed()) +
+                    " " + this.getBudgetObject().printWithinBudget());
             System.out.println("            Done     : " +
                     NOTE_TIME.format(this.doneDate));
         }
-    }
-
-    /**
-     * This method is used to retrieve the {@code Budget} object attached to the {@code Wedding} object.
-     *
-     * @return Budget The {@code Budget} object attached to the {@code Wedding} object.
-     */
-    public Budget getBudgetObject() {
-        return (this.itemBudget);
-    }
-
-    /**
-     * This method is used to retrieve the initial budget set in the {@code Budget} object attached
-     * to the {@code Wedding} object.
-     *
-     * @return double The initial budget set in {@code Budget} object attached to the {@code Wedding} object.
-     */
-    public double getItemBudget() {
-        return (this.itemBudget.getBudgetSet());
-    }
-
-    /**
-     * This method is used to retrieve the revised budget amount in the {@code Budget} object attached
-     * to the {@code Wedding} object.
-     *
-     * @return double The revised budget amount in {@code Budget} object attached to the {@code Wedding} object.
-     */
-    public double getItemBudgetRevised() {
-        return (this.itemBudget.getBudgetRevised());
-    }
-
-    /**
-     * This method is used to retrieve the amount of budget utilised in the {@code Budget} object attached
-     * to the {@code Wedding} object.
-     *
-     * @return double The amount of budget utilised in {@code Budget} object attached to the {@code Wedding} object.
-     */
-    public double getItemPrice() {
-        return (this.itemBudget.getBudgetUsed());
-    }
-
-    /**
-     * This method returns as a String a report on the budget utilisation status and budget balance
-     * in the {@code Budget} object attached to the {@code Wedding} object.
-     *
-     * @return String A report on the budget utilisation status and budget balance
-     * in the {@code Budget} object attached to the {@code Wedding} object.
-     */
-    public String getWithinBudget() {
-        return this.itemBudget.getWithinBudget();
     }
 
     /**
@@ -222,4 +172,11 @@ public class Wedding extends Event {
     public String getObjectClass() {
         return "Wedding";
     }
+
+    /**
+     * This method is used to retrieve the {@code Budget} object attached to the {@code Wedding} object.
+     *
+     * @return Budget The {@code Budget} object attached to the {@code Wedding} object.
+     */
+    public Budget getBudgetObject() { return (this.itemBudget); }
 }

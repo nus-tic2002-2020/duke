@@ -1,6 +1,5 @@
-package duke;
+package duke.ui;
 
-import duke.ui.DukeUI;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -11,7 +10,7 @@ import java.util.Date;
  * @since 2020-09-16
  */
 @SuppressWarnings("unused")
-public enum LunarMonth implements DukeUI {
+public enum LunarMonth {
 
     PIG12("26-DEC-2019 00:00", "24-JAN-2020 23:59:59", "12th Lunar Month"),
     RAT01("25-JAN-2020 00:00", "22-FEB-2020 23:59:59", "1st Lunar Month"),
@@ -29,9 +28,9 @@ public enum LunarMonth implements DukeUI {
     RAT12("13-JAN-2021 00:00", "11-FEB-2021 23:59:59", "12th Lunar Month");
 
 
-    private final String from;
-    private final String to;
-    private final String lunarMonth;
+    private final String FROM;
+    private final String TO;
+    private final String LUNAR_MONTH;
 
     /**
      * This method constructs the various {@code LunarMonth} enum items.
@@ -41,9 +40,9 @@ public enum LunarMonth implements DukeUI {
      * @param lunarMonth The corresponding Lunar Month for the Gregorian date period.
      */
     LunarMonth(String from, String to, String lunarMonth) {
-        this.from = from;
-        this.to = to;
-        this.lunarMonth = lunarMonth;
+        this.FROM = from;
+        this.TO = to;
+        this.LUNAR_MONTH = lunarMonth;
     }
 
     /**
@@ -54,13 +53,13 @@ public enum LunarMonth implements DukeUI {
      * @return String The corresponding Lunar Month for the Gregorian date.
      * @exception ParseException If there are errors converting the String input into a {@code Date} object.
      */
-    public static String getLunarMonth(Date date) throws ParseException {
+    public static String getLUNAR_MONTH(Date date) throws ParseException {
 
-        for(duke.LunarMonth month: duke.LunarMonth.values()){
-            Date start = INPUT_TIME.parse(month.from);
-            Date end = INPUT_TIME.parse(month.to);
+        for(LunarMonth month: LunarMonth.values()){
+            Date start = DukeUI.INPUT_TIME.parse(month.FROM);
+            Date end = DukeUI.INPUT_TIME.parse(month.TO);
             if(date.compareTo(start)>=0 && date.compareTo(end)<=0){
-                return month.lunarMonth;
+                return month.LUNAR_MONTH;
             }
         }
         return "ERROR";

@@ -1,13 +1,9 @@
 package duke.ui;
 
-import duke.LunarMonth;
-import duke.MercuryMovement;
-import duke.SunSign;
-import duke.ZodiacYear;
-import duke.budget.Budget;
+import duke.notes.budget.Budget;
 import duke.commands.CmdType;
 import duke.commands.CommandException;
-import duke.notes.NoteType;
+import duke.commands.NoteType;
 import duke.notes.event.Event;
 import duke.notes.task.Task;
 import java.text.ParseException;
@@ -35,7 +31,6 @@ public interface DukeUI {
     SimpleDateFormat YEAR_TODAY = new SimpleDateFormat("yyyy");
     SimpleDateFormat INPUT_TIME = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
     SimpleDateFormat INPUT_DATE = new SimpleDateFormat("dd-MMM-yyyy");
-
 
     //Project Duke's opening logo
     String DUKE_LOGO =
@@ -217,7 +212,7 @@ public interface DukeUI {
      */
     static void addConfirm(String typeAdded) throws CommandException {
         System.out.println("    Noted! I've added a new "
-                + NoteType.getLowercaseName(typeAdded) + " to the list.");
+                + NoteType.getLOWERCASE_NAME(typeAdded) + " to the list.");
     }
 
     /**
@@ -381,9 +376,9 @@ public interface DukeUI {
     static void printOnStartup(Date now, boolean isLoadedFromFile) throws ParseException, CommandException {
         System.out.print("\nWelcome to PROJECT >>>\n" + DUKE_LOGO);
         System.out.printf("%1$-42s%2$42s%n", DATE_TODAY.format(now), DAY_TODAY.format(now));
-        System.out.printf("%1$-42s%2$42s%n", ZodiacYear.getZodiacYear(now), SunSign.getSunSign(now));
-        System.out.println(String.format("%1$-42s%2$42s", LunarMonth.getLunarMonth(now),
-                MercuryMovement.getMercuryMovement(now)) + "\n");
+        System.out.printf("%1$-42s%2$42s%n", ZodiacYear.getZODIAC_YEAR(now), SunSign.getSUN_SIGN(now));
+        System.out.println(String.format("%1$-42s%2$42s", LunarMonth.getLUNAR_MONTH(now),
+                MercuryMovement.getMERCURY_MOVEMENT(now)) + "\n");
 
         try {
             Thread.sleep(3 * 1000);
@@ -441,7 +436,7 @@ public interface DukeUI {
      * @exception CommandException If there are errors reading from the set {@code DukeCommand} enums.
      */
     static void suggestCommands() throws CommandException {
-        System.out.println("    Use command " + CmdType.getCommand("COMMANDS") +
+        System.out.println("    Use command " + CmdType.getCOMMAND("COMMANDS") +
                 " to see a list of things I can do for you.");
     }
 
@@ -452,7 +447,7 @@ public interface DukeUI {
      * @exception CommandException If there are errors reading from the set {@code DukeCommand} enums.
      */
     static void suggestFormat() throws CommandException {
-        System.out.println("    Use command " + CmdType.getCommand("COMMANDS") +
+        System.out.println("    Use command " + CmdType.getCOMMAND("COMMANDS") +
                 " to see the correct format for command attributes.");
     }
 
@@ -463,7 +458,7 @@ public interface DukeUI {
      * @exception CommandException If there are errors reading from the set {@code DukeCommand} enums.
      */
     static void suggestListNotes() throws CommandException {
-        System.out.println("    Enter command " + CmdType.getCommand("LISTNOTES") +
+        System.out.println("    Enter command " + CmdType.getCOMMAND("LISTNOTES") +
                 " to see them all.");
     }
 }

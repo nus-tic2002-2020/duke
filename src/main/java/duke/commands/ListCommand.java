@@ -1,6 +1,5 @@
 package duke.commands;
 
-import duke.notes.NoteType;
 import duke.notes.Note;
 import duke.notes.event.Event;
 import duke.notes.event.Birthday;
@@ -22,7 +21,7 @@ import java.util.Date;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class ListCommand extends DukeCommand implements DukeUI {
+public class ListCommand extends DukeCommand {
 
     //VARIABLES-----------------------------------------
     private NoteType noteType;
@@ -41,7 +40,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
      */
     public ListCommand(String cmdType) throws CommandException {
         super(cmdType);
-        this.noteType = CmdType.getNoteType(cmdType);
+        this.noteType = CmdType.getRELEVANT_NOTE_TYPE(cmdType);
     }
 
     /**
@@ -55,7 +54,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
     public ListCommand(String cmdType, Date dateFilter, int timelineDays)
             throws CommandException {
         super(cmdType);
-        this.noteType = CmdType.getNoteType(cmdType);
+        this.noteType = CmdType.getRELEVANT_NOTE_TYPE(cmdType);
         this.dateFilter = dateFilter;
         this.timelineDays = timelineDays;
     }
@@ -74,7 +73,7 @@ public class ListCommand extends DukeCommand implements DukeUI {
                        Date dateFilter, Date addedFilter, int timelineDays)
             throws CommandException {
         super(cmdType);
-        this.noteType = CmdType.getNoteType(cmdType);
+        this.noteType = CmdType.getRELEVANT_NOTE_TYPE(cmdType);
         this.noteFilter = noteFilter;
         this.textFilter = textFilter;
         this.dateFilter = dateFilter;
@@ -243,8 +242,8 @@ public class ListCommand extends DukeCommand implements DukeUI {
     private void printResults(ArrayList<Note> notes)
             throws CommandException {
 
-        String noteName = NoteType.getLowercaseNamePlural(this.noteType.toString());
-        String noteVerb = NoteType.getVerb(this.noteType.toString());
+        String noteName = NoteType.getLOWERCASE_NAME_PLURAL(this.noteType.toString());
+        String noteVerb = NoteType.getVERB(this.noteType.toString());
 
         if(notes.size() == 0) {
 
@@ -264,17 +263,17 @@ public class ListCommand extends DukeCommand implements DukeUI {
 
             String dateReport = "";
             if(this.dateFilter != null) {
-                dateReport = switch (CmdType.getKey(cmdType).toString()) {
+                dateReport = switch (CmdType.getKey(this.cmdType.toString()).toString()) {
                     case "LISTNXT24" -> " in the next 24 hours";
                     case "LISTNXT48" -> " in the next 48 hours";
                     case "LISTNXT72" -> " in the next 72 hours";
-                    default -> " " + noteVerb + " " + NOTE_DATE.format(this.dateFilter);
+                    default -> " " + noteVerb + " " + DukeUI.NOTE_DATE.format(this.dateFilter);
                 };
             }
 
             String addedReport = "";
             if(this.addedFilter != null) {
-                addedReport = " that was added on " + NOTE_DATE.format(this.addedFilter);
+                addedReport = " that was added on " + DukeUI.NOTE_DATE.format(this.addedFilter);
             }
 
             DukeUI.standardWrap(noteReport + textReport + dateReport + addedReport + ".");
@@ -305,13 +304,13 @@ public class ListCommand extends DukeCommand implements DukeUI {
                 if(filterByText(note)) {
                     if(filterByStartTargetDate(note)) {
                         if(filterByAddedDate(note)) {
-                            if (CmdType.getKey(this.cmdType).toString().equals("LISTBUDGETS")) {
+                            if (CmdType.getKey(this.cmdType.toString()).toString().equals("LISTBUDGETS")) {
                                 if (note.getBudgetObject() != null) {
                                     notes.add(note);
                                     selectionSortBudgets(notes);
                                 }
                             } else {
-                                switch (NoteType.getConstructor(this.noteType.toString())) {
+                                switch (NoteType.getCONSTRUCTOR(this.noteType.toString())) {
                                     case "Bill" -> {
                                         if (note instanceof Bill) {
                                             notes.add(note);
