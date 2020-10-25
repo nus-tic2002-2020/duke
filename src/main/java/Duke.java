@@ -1,46 +1,76 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.lang.*;
 
 public class Duke {
 
     private static ArrayList<Task> taskList = new ArrayList<>();
 
     private static void addTask(String echo) {
-        if (!echo.equals("list") && !echo.contains("done")) {
-            Task newTask = new Task(echo);
+        String[] splitMessage = echo.split(" ");
+        String description = "";
+        String by = "";
+        int flagIndex = 0;
+
+        for (int i = 1; i < splitMessage.length; i++) {
+            if (!splitMessage[i].contains("/")) {
+                description = description + " " + splitMessage[i];
+            }
+            else {
+                flagIndex = i + 1;
+                break;
+            }
+        }
+
+        for (int i = flagIndex; i < splitMessage.length; i++) {
+            by = by + " " + splitMessage[i];
+        }
+
+        if (splitMessage[0].contains("deadline")) {
+            Task newTask = new Deadline(description, by);
             taskList.add(newTask);
+            System.out.println("Got it. I've added this task:");
+            System.out.println("  " + newTask.toString());
+            System.out.println("Now you have " + numberOfTask() + " task in the list.");
         }
     }
 
+    private static void printList(String echo) {
+        System.out.println("Here are the tasks in your list:");
+        for (int i = 0; i < taskList.size(); i++) {
+            System.out.println(i+1 + "." + taskList.get(i));
+        }
+    }
+
+    private static void taskDone(String echo) {
+        String[] splitMessage = echo.split(" ");
+        int item = Integer.parseInt(splitMessage[1]) - 1;
+        taskList.get(item).markAsDone();
+        System.out.println("Nice! I've marked this task as done:");
+        System.out.println("  " + taskList.get(item).toString());
+    }
+
+    private static int numberOfTask() {
+        return taskList.size();
+    }
+
     public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String echo = "";
 
         System.out.println("Hello! I'm Duke\nWhat can I do for you?\n");
 
-        while (true) {
-            Scanner scan = new Scanner(System.in);
-            String echo = scan.nextLine();
+        while (!echo.equals("bye")) {
+            echo = scan.nextLine();
 
-            addTask(echo);
-
-            if (echo.contains("done")) {
-                String doneSplit[] = echo.split(" ");
-                int item = Integer.parseInt(doneSplit[1]) - 1;
-                taskList.get(item).markAsDone();
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.println("  [" + taskList.get(item).getStatusIcon() + "] " + taskList.get(item).toString());
+            if (echo.equals("list")) {
+                printList(echo);
             }
-            else if (echo.equals("bye")) {
-                System.out.println("Bye. Hope to see you again soon!");
-                break;
-            }
-            else if (echo.equals("list")) {
-                System.out.println("Here are the tasks in your list:");
-                for (int i = 0; i < taskList.size(); i++) {
-                    System.out.println(i+1 + "." + "[" + taskList.get(i).getStatusIcon() + "] " + taskList.get(i));
-                }
+            else if (echo.contains("done")) {
+                taskDone(echo);
             }
             else {
-                System.out.println(echo);
+                addTask(echo);
             }
         }
     }
