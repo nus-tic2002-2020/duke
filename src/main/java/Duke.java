@@ -3,57 +3,68 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.ArrayList;
 
 public class Duke {
 
     public static String humanName;
     public static int taskNumber;
-    public static int numberOftask;
+    public static int numberOftask = 0;
+
+
+
 
 // Storing userSentence into list
+// storage
 
-    public static Task[] storeList(Task[] listOfThings, String input) throws IllegalInputException { //listOfThings should be array class task?
+    public static ArrayList<Task> storeList(ArrayList<Task> listOfThings, String input) throws IllegalInputException { //listOfThings should be array class task?
 
-        int counter = 0;
-        int numbering = 1;
         while (true) {
-            if (listOfThings[counter] == null) {
-                // here task assignment is being done by task.java
-                listOfThings[counter] = new Task(input);
-                System.out.println("\tGot it. I've added this task: ");
-                System.out.println("\t" + listOfThings[counter].getTag() +  "[" + listOfThings[counter].getStatusIcon() + "] " + listOfThings[counter].description +  listOfThings[counter].timeDate);
-                System.out.println("\tNow you have " + numberOftask +" task in the list ");
-                break;
-            }
-            counter++;
-            numbering++;
-           numberOftask = numbering;
+        // here task/categorization assignment is being done by task.java
+
+        listOfThings.add(new Task (input));
+        System.out.println("\tGot it. I've added this task: ");
+        System.out.println("\t" + listOfThings.get(numberOftask).getTag() + "[" + listOfThings.get(numberOftask).getStatusIcon() + "] " + listOfThings.get(numberOftask).description +  listOfThings.get(numberOftask).timeDate);
+        System.out.println("\tNow you have " + (numberOftask+1) +" task in the list ");
+
+            numberOftask++;
+            break;
 
         }//end while loop
 
         return listOfThings;
     }
 
-
     //print list
-    public static void printListOfThings(Task[] listOfThings) {
-        if (listOfThings[0] == null) {
+    public static void printListOfThings(ArrayList<Task> listOfThings) {
+        if(listOfThings.size() == 0) {
             System.out.println(humanName + "\tthe list is empty!");
             return;
         }
         System.out.println("\tHere are the tasks in your list: ");
-        for (int i = 1; i <= listOfThings.length; i++) {
-
-            System.out.println("\t" + i + ". " + listOfThings[i-1].getTag() +  "[" + listOfThings[i-1].getStatusIcon() + "] " + listOfThings[i - 1].description );
-            if (listOfThings[i] == null) {
-                System.out.println("\tOk that's about everything!");
-                return;
-            }
+//        for (int i = 1; i <= listOfThings.length; i++) {
+//
+//            System.out.println("\t" + i + ". " + listOfThings[i-1].getTag() +  "[" + listOfThings[i-1].getStatusIcon() + "] " + listOfThings[i - 1].description );
+//           // String lineItem = listOfThings[i-1].getTag() +  " | " + listOfThings[i-1].getStatusIcon()  + " | " + listOfThings[i - 1].description;
+//
+//            if (listOfThings[i] == null) {
+//                System.out.println("\tOk that's about everything!");
+//                return;
+//            }
+//        }
+        for(int i = 1 ; i <= numberOftask ; i++) {
+            System.out.println("\t" + i+". "  + listOfThings.get(i-1).getTag() + "[" + listOfThings.get(i-1).getStatusIcon() + "] " + listOfThings.get(i-1).description );
         }
+
+//        for (Task temp: listOfThings){
+//            int i = 1;
+//            System.out.println("\t" + i+". "  + temp.getTag() + "[" + temp.getStatusIcon() + "] " + temp.description );
+//            i++;
+//        }
     }
 
-
-    public static Task[] echoCommands(Task[] listOfThings) throws IllegalInputException {
+//UI
+    public static ArrayList<Task> echoCommands(ArrayList<Task> listOfThings) throws IllegalInputException {
 
         //int taskNumber;
 
@@ -82,20 +93,20 @@ public class Duke {
             String numberOnly = pattern.matcher(userSentence).replaceAll("");
             taskNumber = Integer.parseInt(numberOnly);
             System.out.println("\tNice! I've marked this task as done: ");
-            listOfThings[taskNumber-1].isDone = true; // not sure about this
-            System.out.println(listOfThings[taskNumber-1].getTag()+" ["+listOfThings[taskNumber-1].getStatusIcon()+"] "+ listOfThings[taskNumber - 1].description );
+            listOfThings.get(taskNumber-1).isDone = true; // this might just access not modify
+            System.out.println(listOfThings.get(taskNumber-1).getTag()+" ["+listOfThings.get(taskNumber-1).getStatusIcon()+"] "+ listOfThings.get(taskNumber - 1).description );
         }
         //handling delete
         else if (matcher4.find()){
             Pattern pattern = Pattern.compile("[^0-9]");
             String numberOnly = pattern.matcher(userSentence).replaceAll("");
             taskNumber = Integer.parseInt(numberOnly);
+            numberOftask--;
             System.out.println("\tNoted. I've removed this task: ");
-            System.out.println(listOfThings[taskNumber-1].getTag()+" ["+listOfThings[taskNumber-1].getStatusIcon()+"] "+ listOfThings[taskNumber - 1].description );
+            System.out.println(listOfThings.get(taskNumber-1).getTag()+" ["+listOfThings.get(taskNumber-1).getStatusIcon()+"] "+ listOfThings.get(taskNumber-1).description );
         // add delete logic here by modifying listOfThings
-            listOfThings[taskNumber-1] = null;
-            numberOftask = numberOftask - 1;
-            System.out.println("\tNow you have " + numberOftask +" task in the list ");
+            listOfThings.remove(taskNumber-1);
+
         }
         else{
             listOfThings = storeList(listOfThings, userSentence);
@@ -107,8 +118,11 @@ public class Duke {
 
 
 
+
         public static void main (String[] args) throws IllegalInputException {
-            Task[] List = new Task[100];
+            ArrayList<Task> List = new ArrayList<Task>() ;
+
+
 
             String logo = " ____        _        \n"
                     + "|  _ \\ _   _| | _____ \n"
