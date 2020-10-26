@@ -132,7 +132,7 @@ public class Deadline extends Task {
         System.out.print("            Deadline : " +
                 DukeUI.NOTE_TIME.format(this.targetDate));
         if(this.timesExtended > 0){
-            System.out.print("(" + this.timesExtended +
+            System.out.print(" (" + this.timesExtended +
                     " extensions)\n");
         } else {
             System.out.print("\n");

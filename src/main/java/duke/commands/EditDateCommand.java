@@ -1,11 +1,14 @@
 package duke.commands;
 
+import duke.notes.Note;
 import duke.notes.event.Event;
 import duke.notes.task.Deadline;
 import duke.parser.DateException;
 import duke.storage.DukeList;
 import duke.storage.DukeStorage;
 import duke.ui.DukeUI;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -99,7 +102,9 @@ public class EditDateCommand extends DukeCommand {
                                 long durationInMS = ((Event) dukeNotes.getNotes().get(i)).getDurationMinutes() * 60000;
                                 Date newEnd = new Date(this.newDate.getTime() + durationInMS);
 
-                                NewNoteCommand.checkForClashes(dukeNotes, newDate, newEnd);
+                                ArrayList<Note> notesLess_i = new ArrayList<>(dukeNotes.getNotes());
+                                notesLess_i.remove(i);
+                                NewNoteCommand.checkForClashes(notesLess_i, this.newDate, newEnd);
 
                                 if(this.newDate.after(this.oldDate)) {
                                     ((Event) dukeNotes.getNotes().get(i)).setEndDate(newEnd);
@@ -134,7 +139,9 @@ public class EditDateCommand extends DukeCommand {
                                 this.oldDate = ((Event) dukeNotes.getNotes().get(i)).getEndDate();
                                 Date oldStart = ((Event) dukeNotes.getNotes().get(i)).getStartDate();
 
-                                NewNoteCommand.checkForClashes(dukeNotes, oldStart, newDate);
+                                ArrayList<Note> notesLess_i = new ArrayList<>(dukeNotes.getNotes());
+                                notesLess_i.remove(i);
+                                NewNoteCommand.checkForClashes(notesLess_i, oldStart, newDate);
 
                                 ((Event) dukeNotes.getNotes().get(i)).setEndDate(this.newDate);
 

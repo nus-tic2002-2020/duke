@@ -26,17 +26,19 @@ import java.text.ParseException;
 public class NewNoteCommand extends DukeCommand {
 
     //VARIABLES-----------------------------------------
+    private NoteType noteType;
     private ArrayList<String> inputs;
 
     //CONSTRUCTORS--------------------------------------
     /**
      * This method constructs a {@code NewNoteCommand} object.
      *
-     * @param cmdType The type of {@code DukeCommand} being constructed.
+     * @param noteType The type of {@code Note} being created.
      * @param inputs The list of user input elements to be used to create new {@code Note} objects.
      */
-    public NewNoteCommand(String cmdType, ArrayList<String> inputs) throws CommandException {
-        super(cmdType);
+    public NewNoteCommand(String noteType, ArrayList<String> inputs) throws CommandException {
+        super("NEWNOTE");
+        this.noteType = NoteType.getKey(noteType);
         this.inputs = inputs;
     }
 
@@ -50,12 +52,12 @@ public class NewNoteCommand extends DukeCommand {
     /**
      * This method checks for clashes between new and existing {@code Event} objects, as well as the current date-time.
      *
-     * @param dukeNotes The {@code DukeList} object that holds the notes managed by {@code Duke}.
+     * @param notes The {@code ArrayList} object that holds the notes managed by {@code Duke}.
      * @param start The {@code Date} object indicating the start date of the new {@code Event} object.
      * @param end The {@code Date} object indicating the end date of the new {@code Event} object.
      * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
      */
-    static void checkForClashes(DukeList dukeNotes, Date start, Date end)
+    static void checkForClashes(ArrayList<Note> notes, Date start, Date end)
             throws DateException {
 
         Date now = new Date();
@@ -66,7 +68,7 @@ public class NewNoteCommand extends DukeCommand {
             throw new DateException(end, "EndB4Start");
         }
 
-        for(Note note: dukeNotes.getNotes()){
+        for(Note note: notes){
             if(note instanceof Event){
                 Date noteStart = ((Event) note).getStartDate();
                 Date noteEnd = ((Event) note).getEndDate();
@@ -139,7 +141,7 @@ public class NewNoteCommand extends DukeCommand {
         Date addDate = new Date();
         int nextSerialNum = dukeNotes.getNotes().size() + 1;
         ArrayList<Note> notes = new ArrayList<>();
-        switch (NoteType.getKey(this.cmdType.toString()).toString()) {
+        switch (noteType.toString()) {
             case "BILL" -> {
                 String description = inputs.get(1);
                 Date targetDate = DateParser.understandDateInput(inputs.get(2));
@@ -160,7 +162,7 @@ public class NewNoteCommand extends DukeCommand {
                 double itemBudget = Double.parseDouble(inputs.get(4));
 
                 checkValidDescription(description);
-                checkForClashes(dukeNotes, startDate, endDate);
+                checkForClashes(dukeNotes.getNotes(), startDate, endDate);
                 checkValidAmount(itemBudget);
 
                 Note note1 = new Shoplist(nextSerialNum, giftDescription, itemBudget, addDate);
@@ -184,7 +186,7 @@ public class NewNoteCommand extends DukeCommand {
                 Date endDate = DateParser.understandDateInput(inputs.get(3));
 
                 checkValidDescription(description);
-                checkForClashes(dukeNotes, startDate, endDate);
+                checkForClashes(dukeNotes.getNotes(), startDate, endDate);
 
                 Note note1 = new Event(nextSerialNum, description, startDate, endDate, addDate);
                 notes.add(note1);
@@ -214,7 +216,7 @@ public class NewNoteCommand extends DukeCommand {
                 double itemBudget = Double.parseDouble(inputs.get(4));
 
                 checkValidDescription(description);
-                checkForClashes(dukeNotes, startDate, endDate);
+                checkForClashes(dukeNotes.getNotes(), startDate, endDate);
                 checkValidAmount(itemBudget);
 
                 Note note1 = new Wedding(nextSerialNum, description, startDate, endDate, itemBudget, addDate);

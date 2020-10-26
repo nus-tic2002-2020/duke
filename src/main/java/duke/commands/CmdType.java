@@ -34,7 +34,8 @@ public enum CmdType {
     SAVEDUKE("#saveduke", "#sav", null, 0),
     TRANSFER("#transfer", "#txf", null, 0),
     UNDO("#undo", "#und", null, 0),
-    WIPEDUKE("#wipeduke", "#wpe", null, 0);
+    WIPEDUKE("#wipeduke", "#wpe", null, 0),
+    NEWNOTE("na", "na",null,0);
 
     private final String COMMAND;
     private final String SHORT_COMMAND;
