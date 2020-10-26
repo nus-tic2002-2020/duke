@@ -7,7 +7,7 @@ import seedu.duke.ui.Ui;
 public class DeleteCommand extends Command{
     public static final String COMMAND_WORD = "delete";
     public static final String DELETE_MSG = "Noted. I've removed this task: \n";
-    public static final String DELETE_MSG1 = "Now you have ";
+    public static final String DELETE_MSG1 = "\n\tNow you have ";
     public static final String DELETE_MSG2 = " in task list.\n";
 
 
@@ -17,12 +17,15 @@ public class DeleteCommand extends Command{
 
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
+        int index = 0;
         try {
             if (description.substring(7).equals("")){ //if after keywords is empty
                 throw new DukeException("\t☹ OOPS!!! Which task to delete? \n");
             }
-            TaskList.toDelete(Integer.parseInt(description.substring(7))-1);
-            ui.showOutputToUser(DELETE_MSG + TaskList.getATask(Integer.parseInt(description.substring(7))-1) + DELETE_MSG1 + taskList.length() + DELETE_MSG2);
+            index = Integer.parseInt(description.substring(7))-1;
+            ui.showOutputToUser(DELETE_MSG + "\t" + taskList.getATask(index));
+            taskList.toDelete(index);
+            //ui.showOutputToUser(DELETE_MSG1 + taskList.length() + DELETE_MSG2);
             storage.save();
         }catch (DukeException | Storage.StorageOperationException e){
             System.out.println("\t____________________________________________________________");
@@ -30,5 +33,4 @@ public class DeleteCommand extends Command{
             System.out.println("\t____________________________________________________________");
         }
     }
-
 }

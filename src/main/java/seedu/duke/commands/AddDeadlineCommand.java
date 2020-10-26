@@ -24,7 +24,7 @@ public class AddDeadlineCommand extends Command {
                 throw new DukeException("\t☹ OOPS!!! The event date cannot be empty.\n");
             }
             deadline = new Deadline(description.substring(9, description.indexOf("by")-2), description.substring(description.indexOf("by")+3));
-            TaskList.setTaskList(deadline);
+            taskList.setTaskList(deadline);
             ui.showOutputToUser(DEADLINE_MSG + deadline.getDescription() + DEADLINE_MSG1 + taskList.length() + DEADLINE_MSG2);
             storage.save();
         }catch (DukeException | Storage.StorageOperationException e){

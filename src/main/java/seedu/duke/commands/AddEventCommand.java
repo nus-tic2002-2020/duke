@@ -24,7 +24,7 @@ public class AddEventCommand extends Command {
                 throw new DukeException("\t☹ OOPS!!! The event date cannot be empty.\n");
             }
             event = new Event(description.substring(6, description.indexOf("at")-2), description.substring(description.indexOf("at")+3));
-            TaskList.setTaskList(event);
+            taskList.setTaskList(event);
             ui.showOutputToUser(EVENT_MSG  + EVENT_MSG1 + taskList.length() + EVENT_MSG2);
             storage.save();
         }catch (DukeException | Storage.StorageOperationException e){

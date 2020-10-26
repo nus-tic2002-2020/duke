@@ -12,10 +12,10 @@ public class Parser {
                 return new AddEventCommand(false, userInput);
             case AddDeadlineCommand.COMMAND_WORD:
                 return new AddDeadlineCommand(false, userInput);
-//            case DoneCommand.COMMAND_WORD:
-//                return DoneCommand(false, userInput);
-//            case TaskList.COMMAND_WORD:
-//                return TaskList(false, userInput);
+            case DoneCommand.COMMAND_WORD:
+                return new DoneCommand(false, userInput);
+            case ListCommand.COMMAND_WORD:
+                return new ListCommand(false, ""); //just print
             case DeleteCommand.COMMAND_WORD:
                 return new DeleteCommand(false, userInput);
             case ByeCommand.COMMAND_WORD:

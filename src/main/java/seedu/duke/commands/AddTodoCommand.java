@@ -25,7 +25,7 @@ public class AddTodoCommand extends Command {
                     throw new DukeException("\t☹ OOPS!!! The description of todo cannot be empty.\n");
                 }
                 todo = new Todo(description.substring(5));
-                TaskList.setTaskList(todo);
+                taskList.setTaskList(todo);
                 ui.showOutputToUser(TODO_MSG + todo.getDescription() + TODO_MSG1 + taskList.length() + TODO_MSG2);
                 storage.save();
             }catch (DukeException | Storage.StorageOperationException e){

@@ -28,9 +28,4 @@ public class TaskList{
     public static Task getATask(int description){
         return taskList.get(description);
     }
-
-    public ArrayList<Task> getTaskList(){
-        return taskList;
-    }
-
 }
