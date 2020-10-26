@@ -4,7 +4,7 @@ import duke.notes.budget.Budget;
 import duke.commands.CommandException;
 import duke.notes.Note;
 import duke.parser.DateException;
-
+import duke.ui.DukeUI;
 import java.util.Date;
 
 /**
@@ -160,11 +160,11 @@ public class Task extends Note {
         String text = "Task/" +
                 this.serialNum + "/" +
                 this.description + "/" +
-                INPUT_TIME.format(this.addDate) + "/" +
+                DukeUI.INPUT_TIME.format(this.addDate) + "/" +
                 this.isDone;
 
         if(isDone) {
-            text = text + "/" + INPUT_TIME.format(this.doneDate);
+            text = text + "/" + DukeUI.INPUT_TIME.format(this.doneDate);
         }
         return text;
     }

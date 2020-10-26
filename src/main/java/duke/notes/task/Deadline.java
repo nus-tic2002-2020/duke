@@ -4,6 +4,8 @@ package duke.notes.task;
 import duke.notes.budget.Budget;
 import duke.commands.CommandException;
 import duke.parser.DateException;
+import duke.ui.DukeUI;
+
 import java.util.Date;
 
 /**
@@ -128,7 +130,7 @@ public class Deadline extends Task {
     @Override
     public void printDetails(){
         System.out.print("            Deadline : " +
-                NOTE_TIME.format(this.targetDate));
+                DukeUI.NOTE_TIME.format(this.targetDate));
         if(this.timesExtended > 0){
             System.out.print("(" + this.timesExtended +
                     " extensions)\n");
@@ -137,7 +139,7 @@ public class Deadline extends Task {
         }
         if (this.isDone) {
             System.out.println("            Done     : " +
-                    NOTE_TIME.format(this.doneDate) + " " +
+                    DukeUI.NOTE_TIME.format(this.doneDate) + " " +
                     this.getDoneAhead());
         }
     }
@@ -177,13 +179,13 @@ public class Deadline extends Task {
         String text = "Deadline/" +
                 this.serialNum + "/" +
                 this.description + "/" +
-                INPUT_TIME.format(this.addDate) + "/" +
+                DukeUI.INPUT_TIME.format(this.addDate) + "/" +
                 this.isDone + "/" +
-                INPUT_TIME.format(this.targetDate) + "/" +
+                DukeUI.INPUT_TIME.format(this.targetDate) + "/" +
                 this.doneAhead;
 
         if(isDone) {
-            text = text + "/" + INPUT_TIME.format(this.doneDate);
+            text = text + "/" + DukeUI.INPUT_TIME.format(this.doneDate);
         }
         return text;
     }

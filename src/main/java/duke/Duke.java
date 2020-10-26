@@ -24,7 +24,7 @@ import java.util.Date;
  * @author tanqiuyu
  * @since 2020-09-16
  */
-public class Duke {
+public class Duke implements DukeUI, DukeParser {
 
     //DUKE VARIABLES------------------------------------
     private static DukeStorage dukeStorage;

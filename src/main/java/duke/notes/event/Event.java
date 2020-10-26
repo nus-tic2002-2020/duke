@@ -4,6 +4,7 @@ import duke.notes.budget.Budget;
 import duke.commands.CommandException;
 import duke.parser.DateException;
 import duke.notes.Note;
+import duke.ui.DukeUI;
 
 import java.util.Date;
 
@@ -227,12 +228,12 @@ public class Event extends Note {
         System.out.println("            Duration : " +
                 String.format("%,5d", this.durationMinutes) +  "mins");
         System.out.println("            From     : " +
-                NOTE_TIME.format(this.startDate));
+                DukeUI.NOTE_TIME.format(this.startDate));
         System.out.println("            To       : " +
-                NOTE_TIME.format(this.endDate));
+                DukeUI.NOTE_TIME.format(this.endDate));
         if (this.isDone) {
             System.out.println("            Done     : " +
-                    NOTE_TIME.format(this.doneDate));
+                    DukeUI.NOTE_TIME.format(this.doneDate));
         }
     }
 
@@ -265,13 +266,13 @@ public class Event extends Note {
         String text = "Event/" +
                 this.serialNum + "/" +
                 this.description + "/" +
-                INPUT_TIME.format(this.addDate) + "/" +
+                DukeUI.INPUT_TIME.format(this.addDate) + "/" +
                 this.isDone + "/" +
-                INPUT_TIME.format(this.startDate) + "/" +
-                INPUT_TIME.format(this.endDate) + "/" +
+                DukeUI.INPUT_TIME.format(this.startDate) + "/" +
+                DukeUI.INPUT_TIME.format(this.endDate) + "/" +
                 this.durationMinutes;
         if(isDone) {
-            text = text + "/" + INPUT_TIME.format(this.doneDate);
+            text = text + "/" + DukeUI.INPUT_TIME.format(this.doneDate);
         }
         return text;
     }

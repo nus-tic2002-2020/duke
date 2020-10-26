@@ -65,15 +65,16 @@ public class TransferCommand extends DukeCommand {
         }
 
 
-        Budget  fromBudget = dukeNotes.getNotes().get(this.from).getBudgetObject();
-        Budget  toBudget = dukeNotes.getNotes().get(this.to).getBudgetObject();
+        Budget fromBudget = dukeNotes.getNotes().get(this.from).getBudgetObject();
+        Budget toBudget = dukeNotes.getNotes().get(this.to).getBudgetObject();
 
         if(fromBudget == null || toBudget == null) {
             throw new CommandException("No Budget object(s) were found in one or both of the note(s) you specified.");
         }
 
         DukeUI.printDivider();
-        if(fromBudget.transferBudgetOut(this.amount, toBudget)){
+        boolean isSuccessful = fromBudget.transferBudgetOut(this.amount, toBudget);
+        if(isSuccessful){
             System.out.println("    Budget transferred from...");
             dukeNotes.getNotes().get(this.from).printList();
             System.out.println("    to...");

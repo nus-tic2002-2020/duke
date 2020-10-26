@@ -1,7 +1,5 @@
 package duke.commands;
 
-
-
 import duke.notes.event.Birthday;
 import duke.notes.event.Event;
 import duke.notes.event.Wedding;
@@ -13,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 public class ListCommandTest {
 
@@ -88,3 +85,4 @@ public class ListCommandTest {
     }
 
 }
+

@@ -11,7 +11,8 @@ import java.text.ParseException;
 import java.util.Scanner;
 
 /**
- * An extension of the {@code DukeCommand} object that reloads a previously saved version of {@code Note} objects.
+ * An extension of the {@code DukeCommand} object that reloads a previously
+ * saved version of {@code Note} objects.
  *
  * @author tanqiuyu
  * @since 2020-09-16

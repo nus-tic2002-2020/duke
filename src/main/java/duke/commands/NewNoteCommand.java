@@ -151,7 +151,6 @@ public class NewNoteCommand extends DukeCommand {
 
                 Note note1 = new Bill(nextSerialNum, description, targetDate, itemBudget, addDate);
                 notes.add(note1);
-
             }
             case "BIRTHDAY" -> {
                 String description = inputs.get(1);

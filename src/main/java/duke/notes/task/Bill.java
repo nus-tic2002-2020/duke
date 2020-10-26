@@ -3,6 +3,8 @@ package duke.notes.task;
 import duke.notes.budget.Budget;
 import duke.commands.CommandException;
 import duke.parser.DateException;
+import duke.ui.DukeUI;
+
 import java.util.Date;
 
 /**
@@ -114,7 +116,7 @@ public class Bill extends Deadline {
     @Override
     public void printDetails(){
         System.out.print("            Deadline : " +
-                NOTE_TIME.format(this.targetDate));
+                DukeUI.NOTE_TIME.format(this.targetDate));
         if(this.timesExtended > 0){
             System.out.print("(" + this.timesExtended +
                     " extensions)\n");
@@ -132,7 +134,7 @@ public class Bill extends Deadline {
                     String.format("%,14.2f", this.getBudgetObject().getBudgetUsed()) +
                     " " + this.getBudgetObject().printWithinBudget());
             System.out.println("            Done     : " +
-                    NOTE_TIME.format(this.doneDate));
+                    DukeUI.NOTE_TIME.format(this.doneDate));
         }
     }
 
@@ -148,14 +150,14 @@ public class Bill extends Deadline {
         String text = "Bill/" +
                 this.serialNum + "/" +
                 this.description + "/" +
-                INPUT_TIME.format(this.addDate) + "/" +
+                DukeUI.INPUT_TIME.format(this.addDate) + "/" +
                 this.isDone + "/" +
-                INPUT_TIME.format(this.targetDate) + "/" +
+                DukeUI.INPUT_TIME.format(this.targetDate) + "/" +
                 this.doneAhead + "/" +
                 this.itemBudget.getSaveText();
 
         if(isDone) {
-            text = text + "/" + INPUT_TIME.format(this.doneDate);
+            text = text + "/" + DukeUI.INPUT_TIME.format(this.doneDate);
         }
         return text;
     }

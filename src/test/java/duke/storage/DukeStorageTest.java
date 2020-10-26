@@ -17,3 +17,4 @@ public class DukeStorageTest {
         assertEquals(testText, decodedText);
     }
 }
+

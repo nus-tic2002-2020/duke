@@ -4,9 +4,10 @@ package duke.notes.budget;
  * An object that records and measures the budget performance of a task.
  *
  * To create a {@code Budget} object, a budget amount must minimally be set.
- * The {@code Budget} object can thereafter record revisions, utilisation and the residual balance.
- * Class-level members are available to aggregate the total budget set, used and remaining across
- * all Budget objects created.
+ * The {@code Budget} object can thereafter record revisions, utilisation and
+ * the residual balance.
+ * Class-level members are available to aggregate the total budget set,
+ * used and remaining across all Budget objects created.
  *
  * @author tanqiuyu
  * @since 2020-09-16
@@ -40,7 +41,8 @@ public class Budget {
     }
 
     /**
-     * This method is used to construct a {@code Budget} object based on information from a saved file.
+     * This method is used to construct a {@code Budget} object based on information
+     * from a saved file.
      *
      * @param budgetSet The initial budget amount set.
      * @param budgetRevised The revised budget amount.

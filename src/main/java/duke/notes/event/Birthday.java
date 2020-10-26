@@ -1,5 +1,7 @@
 package duke.notes.event;
 
+import duke.ui.DukeUI;
+
 import java.util.Date;
 
 /**
@@ -87,14 +89,14 @@ public class Birthday extends Event {
         String text = "Birthday/" +
                 this.serialNum + "/" +
                 this.description + "/" +
-                INPUT_TIME.format(this.addDate) + "/" +
+                DukeUI.INPUT_TIME.format(this.addDate) + "/" +
                 this.isDone + "/" +
-                INPUT_TIME.format(this.startDate) + "/" +
-                INPUT_TIME.format(this.endDate) + "/" +
+                DukeUI.INPUT_TIME.format(this.startDate) + "/" +
+                DukeUI.INPUT_TIME.format(this.endDate) + "/" +
                 this.getDurationMinutes();
 
         if(isDone) {
-            text = text + "/" + INPUT_TIME.format(this.doneDate);
+            text = text + "/" + DukeUI.INPUT_TIME.format(this.doneDate);
         }
         return text;
     }
