@@ -1,3 +1,7 @@
+package duke.storage;
+
+import duke.ui.*;
+import duke.task.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -19,24 +23,22 @@ public class Storage {
             int counter = 0;
             while (s.hasNext()) {
                 String line_item = s.nextLine();
-                String[] split_line_item = line_item.split("\\|", 3);
+                String[] split_line_item = line_item.split("\\|", 4);
                 switch (split_line_item[0].trim()) {
                     case "T":
                         line_item = "todo " + split_line_item[2].trim();
                         break;
                     case "D":
-                        line_item = "deadline " + split_line_item[2].trim();
+                        line_item = "deadline " + split_line_item[2].trim() + "/by " + split_line_item[3].trim();
                         break;
                     case "E":
-                        line_item = "event " + split_line_item[2].trim();
+                        line_item = "event " + split_line_item[2].trim() + "/at " + split_line_item[3].trim();
                         break;
                 }
                 ui.responses(new_list, line_item);
-                //new_list.reader(line_item);
                 counter++;
                 if (split_line_item[1].trim().equals("1")) {
                     ui.responses(new_list, "done " + counter);
-                    //new_list.reader("done " + counter);
                 }
             }
         }

@@ -1,3 +1,5 @@
+package duke.task;
+
 public class todo extends Task{
     private char category;
 
@@ -7,5 +9,8 @@ public class todo extends Task{
     }
     public char getCat(){
         return this.category;
+    }
+    public String getTime(){
+        return "";
     }
 }

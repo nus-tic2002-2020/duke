@@ -1,3 +1,5 @@
+package duke.task;
+
 public abstract class Task {
     protected String Description;
     protected Boolean Completed;
@@ -13,6 +15,7 @@ public abstract class Task {
         return this.Completed;
     }
     public abstract char getCat();
+    public abstract String getTime();
     public void mark_completed(){
         this.Completed = true;
     }

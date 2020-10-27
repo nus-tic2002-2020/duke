@@ -1,3 +1,7 @@
+import duke.task.*;
+import duke.ui.*;
+import duke.storage.*;
+
 public class Duke {
     //variables
     private Storage storage;

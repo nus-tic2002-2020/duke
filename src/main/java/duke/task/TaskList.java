@@ -1,3 +1,5 @@
+package duke.task;
+
 import java.util.ArrayList;
 
 public class TaskList{
@@ -29,34 +31,53 @@ public class TaskList{
         for(int i = 1 ; i <= item_count ; i++){
             String tick = (this.List.get(i - 1).getStatus()) ? "✓" : "✗";
             String to_print = "[" + this.List.get(i - 1).getCat() + "]" + "[" + tick + "] " + this.List.get(i - 1).getDesc();
-            System.out.println("\t" + i + ". " + to_print);
+            System.out.print("\t" + i + ". " + to_print);
+            if(this.List.get(i - 1).getCat() != 'T'){
+                String print_line = (this.List.get(i - 1).getCat() == 'D') ? "(by: " : "(at: ";
+                print_line = print_line + this.List.get(i - 1).getTime() + ")";
+                System.out.print(print_line);
+            }
+            System.out.print("\n");
         }
         System.out.println("\t____________________________________________________________");
     }
     private void print_task(int index){
         String tick = (this.List.get(index - 1).getStatus()) ? "✓" : "✗";
         String to_print = "\t[" + this.List.get(index - 1).getCat() + "]" + "[" + tick + "] " + this.List.get(index - 1).getDesc();
+        if(this.List.get(index - 1).getCat() != 'T'){
+            String print_line = (this.List.get(index - 1).getCat() == 'D') ? "(by: " : "(at ";
+            to_print += (print_line + this.List.get(index - 1).getTime() + ")" );
+        }
         System.out.println(to_print);
     }
     public String convert_lineItem(int index){
         String status = (this.List.get(index - 1).getStatus())? "1" : "0";
         String item_line = this.List.get(index - 1).getCat() + " | " + status + " | "
                 + this.List.get(index - 1).getDesc();
+        if(this.List.get(index - 1).getCat() != 'T'){
+            item_line += ("| " + this.List.get(index - 1).getTime());
+        }
         return item_line;
     }
 
     //setters
     public void insert_item(String input){
         String[] task_split = input.split(" ", 2);
+        String[] time_split;
+        if(task_split[0].equals("deadline") || task_split[0].equals("event")){
+            time_split = task_split[1].split("/", 2);
+        }
         switch(task_split[0]){
             case "todo":
                 List.add(new todo(task_split[1]));
                 break;
             case "deadline":
-                List.add(new deadline(task_split[1], "TBC"));
+                time_split = task_split[1].split("/", 2);
+                List.add(new deadline(time_split[0], time_split[1].trim()));
                 break;
             case "event":
-                List.add(new event(task_split[1], "TBC"));
+                time_split = task_split[1].split("/", 2);
+                List.add(new event(time_split[0], time_split[1].trim()));
                 break;
         }//end switch
         item_count++;
@@ -114,7 +135,6 @@ public class TaskList{
         }
         for(int i = 0 ; i < item_count ; i++){
             this.List.get(i).mark_completed();
-            //this.done.set(i, true);
         }
         duke_echo("All tasks(" + item_count + ") are marked as done");
     }

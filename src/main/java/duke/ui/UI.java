@@ -1,3 +1,8 @@
+package duke.ui;
+
+import duke.task.*;
+import duke.storage.*;
+import duke.command.*;
 import java.util.Scanner;
 
 public class UI {
@@ -37,7 +42,7 @@ public class UI {
         else if(user_input.equals("list")){ //list: list items
             tasks.printList();
         }//end else if
-        else if(user_input.contains("done") /*&& (user_input.equals("done") == false)*/){ //done: change done to true from false
+        else if(user_input.contains("done")){ //done: change done to true from false
             if(user_input.equals("done all")){
                 tasks.mark_all_complete();
                 return;
@@ -56,7 +61,7 @@ public class UI {
     }
     /*for loading previously saved list*/
     public void responses(TaskList tasks, String user_input){
-        if(user_input.contains("done") /*&& (user_input.equals("done") == false)*/){ //done: change done to true from false
+        if(user_input.contains("done")){ //done: change done to true from false
             if(user_input.equals("done all")){
                 tasks.mark_all_complete();
                 return;
