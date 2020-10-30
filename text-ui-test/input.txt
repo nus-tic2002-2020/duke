@@ -1,12 +1,12 @@
-list
-buy book
-borrow book
-read book
+todo read book
+deadline return book /by june 6th
+event project meeting /at Aug 6th 2-4pm
+todo join football club
+todo cooking
 list
 done 1
 list
-do math
+delete 3
 list
-done 4
+delete 4
 list
-bye
