@@ -21,30 +21,43 @@ import java.io.IOException;
 public class Duke {
 
     private Storage storage;
-    private TaskList tasks;
+    private TaskList list;
     private Ui ui;
 
     public Duke(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
         try {
-            //tasks = new TaskList(storage.load());
+            list = new TaskList(storage.load());
         } catch (DukeException e) {
             //ui.showLoadingError();
-            //tasks = new TaskList();
+            list = new TaskList();
         }
     }
 
 
     public void run() {
+        ui.printIntro();
+        boolean isRunning = true;
+        while (isRunning) {
+            try {
+                String input = ui.scanForInput();
+                ui.showLine(); // show the divider line ("_______")
+
+                Command c = Parser.parse(input);
+                c.execute(list, ui, storage);
+                isRunning = c.isRunning();
+            } catch (DukeException e) {
+                //ui.showError(e.getMessage());
+            } finally {
+                ui.showLine();
+            }
+        }
     }
 
 
     public static void main(String[] args) throws IOException{
-        ArrayList<Task> memo = new ArrayList<Task> ();
-
-        String input;
-
+        new Duke("data/tasks_list.txt").run();
 
 
         try{
@@ -53,28 +66,7 @@ public class Duke {
             System.out.println("Load to file error");
         }
 
-        printMemo(memo);
 
-
-        int start = 1;
-
-        while(start == 1){
-            try{
-
-                input = scan.nextLine();
-                if(input.equals("bye")){
-                    start = 0;
-                }
-                command(input,memo);
-            }
-            catch (Exception ex){
-                System.out.println("Please input again.");
-            }
-
-        }
-
-
-        String toFile = "data/tasks_list.txt";
 
         try{
             writeToFile(toFile,memo);
