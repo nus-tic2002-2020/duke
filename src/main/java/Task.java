@@ -15,10 +15,6 @@ public class Task {
         return "[" + getStatusIcon() + "]" + this.description;
     }
 
-    public String deleteItem(){
-        return "Noted. I've removed this task: \n\t " + toString();
-    }
-
     public String setDone(){
         this.isDone = true;
         return "Nice! I've marked this task as done: \n\t [\u2713] " + this.description;
