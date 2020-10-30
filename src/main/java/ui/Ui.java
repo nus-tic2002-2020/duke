@@ -28,6 +28,9 @@ public class Ui {
         System.out.println("____________________________________");
     }
 
+    public void printBye(){
+        System.out.println(System.lineSeparator() + "Bye. Hope to see you again soon!");
+    }
 
     public String scanForInput(){
         System.out.println(System.lineSeparator() + "What can I do for you?");

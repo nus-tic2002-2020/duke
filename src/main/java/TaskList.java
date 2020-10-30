@@ -83,26 +83,16 @@ public class TaskList {
                     //System.out.println("☹ OOPS!!! The description of a Todo cannot be empty.");
                     //throw new DukeException();
                     //return memo;
-                }
+                //}
                 this.list.add(new ToDo(description) );
                 break;
 
             case 3:
-                //index = input.indexOf("/at");
-                //secondPart = input.substring(index);
-                //secondPart = secondPart.replaceFirst( "/at", "").stripLeading();
 
-                //input = input.substring(0,index - 1);
-                //input = input.replaceFirst("event", "").stripLeading();
                 this.list.add( new Event(description, secondPart) );
                 break;
 
             case 4:
-                //index = input.indexOf("/by");
-                //secondPart = input.substring(index);
-                //secondPart = secondPart.replaceFirst( "/by", "").stripLeading();
-                //input = input.substring(0,index - 1);
-                //input = input.replaceFirst("deadline", "").stripLeading();
                 this.list.add(new Deadline(description, secondPart) );
                 break;
         }

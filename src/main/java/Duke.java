@@ -53,6 +53,9 @@ public class Duke {
                 ui.showLine();
             }
         }
+
+        ui.printBye();
+
     }
 
 
@@ -60,19 +63,19 @@ public class Duke {
         new Duke("data/tasks_list.txt").run();
 
 
-        try{
-            loadToMemo("data/tasks_list.txt", memo);
-        }catch(IOException e){
-            System.out.println("Load to file error");
-        }
+        //try{
+          //  loadToMemo("data/tasks_list.txt", memo);
+        //}catch(IOException e){
+        //    System.out.println("Load to file error");
+       // }
 
 
 
-        try{
-            writeToFile(toFile,memo);
-        } catch (IOException e){
-            System.out.println("Write to file error");
-        }
+        //try{
+         //   writeToFile(toFile,memo);
+       // } catch (IOException e){
+        //    System.out.println("Write to file error");
+       // }
 
 
     }

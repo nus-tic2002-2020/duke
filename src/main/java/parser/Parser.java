@@ -1,6 +1,7 @@
 package parser;//deals with making sense of the user command
 
-import command.*;
+
+import commands.*;
 
 
 public class Parser {
@@ -10,9 +11,11 @@ public class Parser {
         this.parsedInput = "";
     }
 
-    public Command parse(String input){
-        Command result = new Command();
-
+    public static Command parse(String input){
+        String description;
+        String secPart;
+        int option = 0;
+        int index = 0;
 
         if(input.equals("blah")){
             System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
@@ -21,47 +24,55 @@ public class Parser {
 
         switch(input){
             case "list":
-                return new Command()
+                //return Command()
             case "bye":
-
                 return new ExitCommand();
-                System.out.println(System.lineSeparator() + "Bye. Hope to see you again soon!");
                 break;
             default:
                 if(input.contains("done")){
-                    return Command(input,memo);
-                    break;
+                    option = Integer.parseInt(input.replace("done", "").trim());
+                    return new DoneCommand(option);
                 }
+
+
                 if(input.contains("todo")){
-                    return AddCommand();
-                    //addMemo(input, memo,2);
-                    break;
+                    description = input.replaceFirst("todo", "").stripLeading();
+                    if(input.isEmpty() == true) {
+                        System.out.println("☹ OOPS!!! The description of a Todo cannot be empty.");
+                    }
+
+                    return new AddCommand("todo", description, secPart);
                 }
+
                 if(input.contains("event")){
-                    return AddCommand();
-                    //addMemo(input, memo,3);
-                    break;
+                    index = input.indexOf("/at");
+                    secPart = input.substring(index);
+                    secPart = secPart.replaceFirst( "/at", "").stripLeading();
+
+                    description = input.substring(0,index - 1);
+                    description = input.replaceFirst("event", "").stripLeading();
+                    return new AddCommand("event", description, secPart);
                 }
                 if(input.contains("deadline")){
-                    return AddCommand();
-                    //addMemo(input, memo,4);
-                    break;
+                    index = input.indexOf("/by");
+                    secPart = input.substring(index);
+                    secPart = secPart.replaceFirst( "/by", "").stripLeading();
+                    description = input.substring(0,index - 1);
+                    description = input.replaceFirst("deadline", "").stripLeading();
+                    return new AddCommand("deadline", description, secPart);
                 }
 
                 if(input.contains("delete")){
-                    return DeleteCommand ();
+                    return new DeleteCommand ();
                     //deleteMemo(input,memo);
-                    break;
                 }
 
                 if(input.contains("find")){
-                    return FindCommand();
-                    //findMemo(input,memo);
-                    //break;
+                    return new FindCommand();
                 }
 
                 //default add task.
-                return AddCommand();
+                return AddCommand("task", description, secPart);
                 //addMemo(input, memo,1);
 
         }
