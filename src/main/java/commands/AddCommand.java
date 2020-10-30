@@ -2,6 +2,7 @@ package commands;
 
 import storage.Storage;
 import ui.Ui;
+import tasks.*;
 
 public class AddCommand extends Command{
     String taskType;
@@ -16,7 +17,7 @@ public class AddCommand extends Command{
 
 
     public void execute(TaskList list, Ui ui, Storage storage){
-
+        list.addToList();
     }
 
 }

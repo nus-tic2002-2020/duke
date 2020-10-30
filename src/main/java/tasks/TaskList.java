@@ -1,3 +1,9 @@
+package tasks;
+
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Task;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -57,42 +63,35 @@ public class TaskList {
     }
 
 
-    public void deleteFromList(int option) throws DukeException{
+    public void deleteFromList(int option) throws DukeException {
         this.list.remove(option - 1);
     }
 
     //TODO: Need to check for copies
-    //option 1 for Task, 2 for Todos, 3 for Events, 4 for Deadlines
-    public void addToList(String description, String secondPart, int option) throws DukeException{
+    //option 1 for tasks.Task, 2 for Todos, 3 for Events, 4 for Deadlines
+    public void addToList(String taskType, String description, String secondPart) throws DukeException {
         int index = 0;
         int size = 0;
 
-        //if(memo.contains(Task(input)) == true){
+        //if(memo.contains(tasks.Task(input)) == true){
         //System.out.println("Your task is already in the memory.");
         //return;
         //}
 
-        switch(option){
-            case 1:
+        switch(taskType){
+            case "task":
                 this.list.add( new Task (description) );
                 break;
 
-            case 2:
-                //input = input.replaceFirst("todo", "").stripLeading();
-                //if(input.isEmpty() == true){
-                    //System.out.println("☹ OOPS!!! The description of a Todo cannot be empty.");
-                    //throw new DukeException();
-                    //return memo;
-                //}
+            case "todo":
                 this.list.add(new ToDo(description) );
                 break;
 
-            case 3:
-
+            case "event":
                 this.list.add( new Event(description, secondPart) );
                 break;
 
-            case 4:
+            case "deadline":
                 this.list.add(new Deadline(description, secondPart) );
                 break;
         }
@@ -122,11 +121,11 @@ public class TaskList {
     public void printList(){
         int size = this.list.size();
         if(size == 0){
-            System.out.println(System.lineSeparator() + "Task List is empty.");
+            System.out.println(System.lineSeparator() + "tasks.Task List is empty.");
             return;
         }
 
-        System.out.println(System.lineSeparator() + "Task List:");
+        System.out.println(System.lineSeparator() + "tasks.Task List:");
         for(int i = 0; i < size; i ++){
             System.out.println(System.lineSeparator() + (i+1) + "." + this.list.get(i).toString());
         }

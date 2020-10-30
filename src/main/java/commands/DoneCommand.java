@@ -2,6 +2,7 @@ package commands;
 
 import storage.Storage;
 import ui.Ui;
+import tasks.*;
 
 public class DoneCommand extends Command{
     private int option = 0;

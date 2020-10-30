@@ -1,9 +1,8 @@
 package storage;
 
 import java.io.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import tasks.*;
 
 
 //deals with loading tasks from the file and saving tasks in the file
@@ -38,8 +37,6 @@ public class Storage {
         this.filePath = filePath;
     }
 
-
-
     private static void writeToFile(TaskList list) throws IOException {
         System.out.println("Loading from File to List");
 
@@ -47,7 +44,7 @@ public class Storage {
 
         int size = list.getSize();
         if(size == 0){
-            System.out.println(System.lineSeparator() + "Task List is empty.");
+            System.out.println(System.lineSeparator() + "tasks.Task List is empty.");
             return;
         }
 
@@ -61,22 +58,22 @@ public class Storage {
         for(int i = 0; i < size; i ++){
             temp = list.get(i).getClass().toString();
             switch(temp){
-                case "class Task":
+                case "class tasks.Task":
                     firstPart = "O | ";
                     break;
-                case "class ToDo":
+                case "class tasks.ToDo":
                     firstPart = "T | ";
                     break;
-                case "class Deadline":
+                case "class tasks.Deadline":
                     firstPart = "D | ";
                     secPart = " | " + ((Deadline)list.get(i)).getByDeadline();
                     break;
-                case "class Event":
+                case "class tasks.Event":
                     firstPart = "E | ";
                     secPart = " | " + ((Event)list.get(i)).getAt();
                     break;
                 default:
-                    System.out.println("Can't get Class from Task Array");
+                    System.out.println("Can't get Class from tasks.Task Array");
                     return;
             }
 
@@ -95,7 +92,6 @@ public class Storage {
         this.fr =new FileReader(this.f);
         this.br = new BufferedReader(this.fr);
         String line;
-
 
         while((line = this.br.readLine())!=null){
             this.parsedFile.add(line.split(" \\| ") );

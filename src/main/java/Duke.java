@@ -1,13 +1,9 @@
-
-import storage.Storage;
-import ui.Ui;
-import parser.Parser;
 import commands.Command;
+import parser.Parser;
+import storage.Storage;
+import tasks.TaskList;
+import ui.Ui;
 
-import java.util.Scanner;
-import java.util.ArrayList;
-
-import java.io.File;
 import java.io.IOException;
 
 
@@ -61,15 +57,11 @@ public class Duke {
 
     public static void main(String[] args) throws IOException{
         new Duke("data/tasks_list.txt").run();
-
-
         //try{
           //  loadToMemo("data/tasks_list.txt", memo);
         //}catch(IOException e){
         //    System.out.println("Load to file error");
        // }
-
-
 
         //try{
          //   writeToFile(toFile,memo);

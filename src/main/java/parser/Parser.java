@@ -14,6 +14,7 @@ public class Parser {
     public static Command parse(String input){
         String description;
         String secPart;
+        String keyword;
         int option = 0;
         int index = 0;
 
@@ -68,12 +69,12 @@ public class Parser {
                 }
 
                 if(input.contains("find")){
-                    return new FindCommand();
+                    keyword = input.replaceFirst( "find", "").stripLeading();
+                    return new FindCommand(keyword);
                 }
 
-                //default add task.
+
                 return AddCommand("task", description, secPart);
-                //addMemo(input, memo,1);
 
         }
     }
