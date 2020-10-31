@@ -20,7 +20,7 @@ public class Event extends Task {
         this.time = time;
     }
 
-    private String generateDateAndTimeString() {
+    protected String generateDateAndTimeString() {
         String dateAndTime = "" + time.getDayOfMonth();
         int day = time.getDayOfMonth();
 

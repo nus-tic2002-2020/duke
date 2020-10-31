@@ -63,6 +63,7 @@ public class Duke {
                     int delete = Integer.parseInt(line.substring(7)) - 1; //delete
                     Task currenttask = tasks.taskList.get(delete);
                     tasks.removeTask(delete);
+                    System.out.println("Deleted!");
 
                     pointer++;
 
