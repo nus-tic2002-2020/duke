@@ -1,3 +1,0 @@
-E | 1 | drink coffee | 2019-09-13T08:30
-D | 0 | dance hard | 2019-10-13T04:00
-[D][✘]return book (by: 2nd of December 2019, 6pm)

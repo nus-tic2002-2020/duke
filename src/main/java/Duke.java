@@ -10,40 +10,19 @@ import java.time.LocalDateTime;
 
 public class Duke {
 
-    private Storage storage;
-    private TaskList tasks;
-    private UI ui;
-
-    public Duke(String filePath) {
-        ui = new UI();
-        storage = new Storage(filePath);
-        try {
-            tasks = new TaskList(storage.load());
-        } catch (DukeException e) {
-            ui.showLoadingError();
-            tasks = new TaskList();
-        }
+    public static void greet() {
+        System.out.print("Hello! I'm Duke\n" + "What can I do for you?\n");
     }
 
-    public static void main(String[] args) throws DukeException {
-        new Duke("D:\\ZaZa's Programming\\TIC2002\\Clone\\data\\duke.txt").run();
+    public static void printLine() {
+        System.out.println("    ____________________________________________________________");
     }
 
-    public void run() {
-        ui.showWelcome();
-        Scanner scn = new Scanner(System.in);
+    public static void bye() {
+        System.out.println("   Bye. Hope to see you again soon!");
+    }
 
-        //public static void greet() {
-        // System.out.print("Hello! I'm Duke\n" + "What can I do for you?\n");
-        //}
-
-        //  public static void printLine() {
-        //  System.out.println("    ____________________________________________________________");
-        // }
-
-        // public static void bye() {
-        //     System.out.println("   Bye. Hope to see you again soon!");
-        // }
+    public static void command() {
 
         String[] list = new String[10]; // create list!
         ArrayList<Task> tasks = new ArrayList<Task>(); //change to Array
@@ -61,8 +40,8 @@ public class Duke {
 
                 line = in.nextLine();
                 if (line.equals(endconvo)) { //if user enter bye
-                    ui.showClosing();
-                    //printLine();
+                    bye();
+                    printLine();
                     return;
 
                 } else if (line.equals("list")) {  //number of list
@@ -78,13 +57,6 @@ public class Duke {
                     int j = Integer.parseInt(line.substring(5)) - 1; //refer to which list is done and mark it
                     Task currenttask = tasks.get(j);
                     currenttask.markDone();
-
-                    try {
-                        storage.updateTaskInFile(j + 1);
-                    } catch (IOException e) {
-                        System.out.println("Can't update task in the file");
-                    }
-
                     System.out.println("   Nice! I've marked this task as done:\n " + currenttask.toString());
 
                 } else if (line.contains("delete")) {
@@ -93,14 +65,8 @@ public class Duke {
                     Task currenttask = tasks.get(delete);
                     tasks.remove(delete);
 
-                    try {
-                        storage.deleteFromFile(delete + 1);
-                        System.out.println("   Noted. I've removed this task:\n " + currenttask.toString());
-                        System.out.println("   Now you have " + (tasks.size()) + " tasks in the list.");
-                    } catch (IOException e) {
-                        System.out.print("No saved files");
-                    }
-
+                    System.out.println("   Noted. I've removed this task:\n " + currenttask.toString());
+                    System.out.println("   Now you have " + (tasks.size()) + " tasks in the list.");
                     pointer++;
 
                 } else if (line.contains("todo")) { //try to combine all three classes
@@ -122,16 +88,11 @@ public class Duke {
                     LocalDateTime dateTime = LocalDateTime.parse(dateAndTime, format);
                     tasks.add(new Event(line.substring(6, separator - 1), dateTime));
 
-                    try {
-                        storage.addToFile(tasks.get(tasks.size() - 1).toString());
-                    } catch (IOException e) {
-                        System.out.println("Cannot save new task in file");
-                    }
-
                     System.out.println("Got it. I've added this task:");
                     System.out.println(tasks.get(tasks.size() - 1).toString());
                     System.out.println("Now you have " + (tasks.size()) + " tasks in the list.");
                     pointer++;
+
 
 
                 } else if (line.contains("deadline")) {
@@ -142,12 +103,6 @@ public class Duke {
                     DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
                     LocalDateTime dateTime = LocalDateTime.parse(dateAndTime, format);
                     tasks.add(new Deadline(line.substring(9, separator - 1), dateTime));
-
-                    try {
-                        storage.addToFile(tasks.get(tasks.size() - 1).toString());
-                    } catch (IOException e) {
-                        System.out.println("Cannot save new task in file");
-                    }
 
 
                     System.out.println("Got it. I've added this task:");
@@ -175,12 +130,20 @@ public class Duke {
                         + "Please enter date and time as 'dd/MM/yyyy HHmm'");
             }
         }
-
     }
 
+    public static void main(String[] args) {
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        System.out.println("Hello from\n" + logo);
+        //System.out.print("Hello! I'm Duke\n" + "What can I do for you?\n");
+
+        greet();
+        printLine();
+        command();
+
+    }
 }
-
-
-
-
-
