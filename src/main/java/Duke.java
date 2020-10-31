@@ -20,34 +20,34 @@ public class Duke {
     private TaskList list;
     private Ui ui;
 
-    public Duke(String filePath) {
+    public Duke(String filePath) throws DukeException, IOException {
         ui = new Ui();
         storage = new Storage(filePath);
-        try {
-            list = new TaskList(storage.load());
-        } catch (DukeException e) {
+        //try {
+            //list = new TaskList(storage.load());
+        //} catch (DukeException e) {
             //ui.showLoadingError();
             list = new TaskList();
-        }
+        //}
     }
 
 
-    public void run() {
+    public void run() throws IOException {
         ui.printIntro();
         boolean isRunning = true;
         while (isRunning) {
-            try {
+            //try {
                 String input = ui.scanForInput();
                 ui.showLine(); // show the divider line ("_______")
 
                 Command c = Parser.parse(input);
                 c.execute(list, ui, storage);
                 isRunning = c.isRunning();
-            } catch (DukeException e) {
+            //} catch (DukeException e) {
                 //ui.showError(e.getMessage());
-            } finally {
-                ui.showLine();
-            }
+            //} finally {
+                //ui.showLine();
+            //}
         }
 
         ui.printBye();
@@ -55,20 +55,7 @@ public class Duke {
     }
 
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException, DukeException {
         new Duke("data/tasks_list.txt").run();
-        //try{
-          //  loadToMemo("data/tasks_list.txt", memo);
-        //}catch(IOException e){
-        //    System.out.println("Load to file error");
-       // }
-
-        //try{
-         //   writeToFile(toFile,memo);
-       // } catch (IOException e){
-        //    System.out.println("Write to file error");
-       // }
-
-
     }
 }

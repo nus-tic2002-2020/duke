@@ -38,6 +38,9 @@ public class Ui {
     }
 
 
+    public void showError(String errorMessage){
+        System.out.println(errorMessage);
+    }
 
 
 

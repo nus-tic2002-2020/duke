@@ -16,8 +16,15 @@ public class AddCommand extends Command{
     }
 
 
+    @Override
     public void execute(TaskList list, Ui ui, Storage storage){
-        list.addToList();
+        int size = 0;
+        list.addToList(taskType,taskDescription,taskSecondPart);
+        size = list.getSize();
+        System.out.println(System.lineSeparator() + "Got it. I've added this task:" +
+                System.lineSeparator() + list.get(size - 1).toString());
+
+        list.get(size - 1).printTotalTasks();
     }
 
 }

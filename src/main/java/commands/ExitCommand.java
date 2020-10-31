@@ -4,6 +4,8 @@ import storage.Storage;
 import ui.Ui;
 import tasks.*;
 
+import java.io.IOException;
+
 
 public class ExitCommand extends Command{
 
@@ -11,8 +13,9 @@ public class ExitCommand extends Command{
         this.running = false;
     }
 
-    public void execute(TaskList list, Ui ui, Storage storage){
-
+    @Override
+    public void execute(TaskList list, Ui ui, Storage storage) throws IOException {
+        storage.writeToFile(list);
     }
 
 }

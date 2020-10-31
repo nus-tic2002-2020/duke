@@ -3,7 +3,6 @@ package parser;//deals with making sense of the user command
 
 import commands.*;
 
-
 public class Parser {
     String parsedInput;
 
@@ -12,23 +11,22 @@ public class Parser {
     }
 
     public static Command parse(String input){
-        String description;
-        String secPart;
+        String description = "";
+        String secPart = "";
         String keyword;
         int option = 0;
         int index = 0;
 
         if(input.equals("blah")){
             System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-            throw new DukeException();
+            //throw new DukeException();
         }
 
         switch(input){
             case "list":
-                //return Command()
+                return new ListCommand();
             case "bye":
                 return new ExitCommand();
-                break;
             default:
                 if(input.contains("done")){
                     option = Integer.parseInt(input.replace("done", "").trim());
@@ -51,21 +49,22 @@ public class Parser {
                     secPart = secPart.replaceFirst( "/at", "").stripLeading();
 
                     description = input.substring(0,index - 1);
-                    description = input.replaceFirst("event", "").stripLeading();
+                    description = description.replaceFirst("event", "").stripLeading();
                     return new AddCommand("event", description, secPart);
                 }
                 if(input.contains("deadline")){
                     index = input.indexOf("/by");
                     secPart = input.substring(index);
                     secPart = secPart.replaceFirst( "/by", "").stripLeading();
+
                     description = input.substring(0,index - 1);
-                    description = input.replaceFirst("deadline", "").stripLeading();
+                    description = description.replaceFirst("deadline", "").stripLeading();
                     return new AddCommand("deadline", description, secPart);
                 }
 
                 if(input.contains("delete")){
-                    return new DeleteCommand ();
-                    //deleteMemo(input,memo);
+                    option = Integer.parseInt(input.replace("delete", "").trim());
+                    return new DeleteCommand(option);
                 }
 
                 if(input.contains("find")){
@@ -73,11 +72,10 @@ public class Parser {
                     return new FindCommand(keyword);
                 }
 
-
-                return AddCommand("task", description, secPart);
+                description = input;
+                return new AddCommand("task", description, secPart);
 
         }
     }
-
 
 }

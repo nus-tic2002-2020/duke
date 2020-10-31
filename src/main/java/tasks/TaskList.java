@@ -58,18 +58,19 @@ public class TaskList {
         return this.list.size();
     }
 
-    public Task at(int index){
+    public Task get(int index){
         return this.list.get(index);
     }
 
-
-    public void deleteFromList(int option) throws DukeException {
+    //throws DukeException
+    public void deleteFromList(int option)  {
         this.list.remove(option - 1);
     }
 
     //TODO: Need to check for copies
     //option 1 for tasks.Task, 2 for Todos, 3 for Events, 4 for Deadlines
-    public void addToList(String taskType, String description, String secondPart) throws DukeException {
+    //throws DukeException
+    public void addToList(String taskType, String description, String secondPart) {
         int index = 0;
         int size = 0;
 
@@ -98,10 +99,7 @@ public class TaskList {
 
         size = this.list.size();
 
-        System.out.println(System.lineSeparator() + "Got it. I've added this task:" +
-                System.lineSeparator() + this.list.get(size - 1).toString());
 
-        this.list.get(size - 1).printTotalTasks();
     }
 
     public void findList(String keyword){

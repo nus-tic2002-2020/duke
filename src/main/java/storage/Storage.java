@@ -19,7 +19,7 @@ public class Storage {
     ArrayList<String[]> parsedFile;
 
 
-    public Storage(String filePath){
+    public Storage(String filePath) throws IOException {
 
         this.directory = new File("data");
         if(this.directory.isDirectory() == false || this.directory.exists() == false){
@@ -37,7 +37,7 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    private static void writeToFile(TaskList list) throws IOException {
+    public void writeToFile(TaskList list) throws IOException {
         System.out.println("Loading from File to List");
 
         FileWriter fw = new FileWriter(this.filePath);
