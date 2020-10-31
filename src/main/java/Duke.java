@@ -33,6 +33,15 @@ public class Duke {
                 case "done":
                     Taskdone(num);
                     break;
+                case "todo":
+                    ToDoTask(input);
+                    break;
+                case "deadline":
+                    DeadlineTask(input);
+                    break;
+                case "event":
+                    EventTask(input);
+                    break;
                 case "bye":
                     System.out.print("Bye. Hope to see you again soon!");
                     return 1;
@@ -42,6 +51,7 @@ public class Duke {
         }
         return 0;
     }
+
 
     public static void addTask (String description) {
         Task t = new Task(description);
@@ -53,7 +63,7 @@ public class Duke {
         System.out.println("Here are the tasks in your list: ");
         for (int a = 0; a < count; a++) {
             Task t = store[a];
-            System.out.println(a + 1 + ". " + "[" + store[a].getStatusIcon() + "] " + store[a]);
+            System.out.println(a + 1 + ". " + store[a]);
         }
     }
 
@@ -64,8 +74,37 @@ public class Duke {
             if (store[TaskNo-1] != null ){ //to check that input is in list
                 Task t = store[TaskNo-1];
                 t.markAsDone();
-                System.out.println("[" + store[TaskNo-1].getStatusIcon() + "] "+ store[TaskNo-1]);
+                System.out.println( store[TaskNo-1]);
             }
         }
     }
+
+    public static void ToDoTask(String description){
+        System.out.println("Got it. I've added this task: : ");
+        String[] td = description.split("todo "); //omit the first word
+        Task t = new ToDo(td[1]);
+        store[count++] = t;
+        System.out.println(store[count-1]);
+        System.out.println("Now you have " + count + " tasks in the list.");
+    }
+
+    public static void DeadlineTask(String description){
+        System.out.println("Got it. I've added this task: : ");
+        String[] due = description.split("/by ");
+        Task t = new Deadline(due[0],due[1]);
+        store[count++] = t;
+        System.out.println( store[count-1]);
+        System.out.println("Now you have " + count + " tasks in the list.");
+    }
+
+    public static void EventTask(String description){
+        System.out.println("Got it. I've added this task: : ");
+        String[] due = description.split("/at ");
+        Task t = new Event(due[0],due[1]);
+        store[count++] = t;
+        System.out.println( store[count-1]);
+        System.out.println("Now you have " + count + " tasks in the list.");
+    }
 }
+
+
