@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner; //
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,12 +9,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 //import DukeException;
 public class Duke {
 	private static ArrayList<Task> task = new ArrayList<Task>();
 	private static int count = 0;
-	private static String ln = "  ____________________________________________________________\n";
+	private static String ln = "____________________________________________________________\n";
 	private static boolean going = true;
 	private static String path = "F:/NUS/duke_new/data/";
 	private static String filename = "duke.txt";
@@ -56,14 +61,25 @@ public class Duke {
 		switch (input_type) {
 			case "bye": {
 				saveFile();
-				System.out.println(ln + "   Bye. Hope to see you again soon!\n" + ln);
+				System.out.println(ln + "   Current tasks are saved. Bye. Hope to see you again soon!\n" + ln);
 				going = false;
 			}
 				break;
 			case "list": {
-				System.out.println(ln + "Here are the tasks in your list:");
-				listALL();
-				System.out.println(ln);
+				//two ways: list & list+date. exp: list 2020-01-01
+				if(_userinput[1]=="") {
+					System.out.println(ln + "Here are the tasks in your list:");
+					listALL();			
+				} else {
+					try {
+						LocalDate d = processDate(_userinput[1]);
+						System.out.println(ln + "Here are the tasks in your list on "+_userinput[1]+":");
+						listALLwithDate(d);
+					} catch (NumberFormatException e) {
+						throw new DukeException("Invalid number");
+					}
+				}
+				System.out.println(ln);		
 			}
 				break;
 			case "done": {
@@ -102,7 +118,7 @@ public class Duke {
 				try {
 					String[] dl = _userinput[1].split("/");
 					String by[] = (dl[1].split(" ", 2));
-					task.add(count, new Deadline((dl[0]).trim(), by[1].trim(),userinput));
+					task.add(count, new Deadline((dl[0]).trim(), processDate(by[1]),userinput));
 					if(print) {
 						printAdded(task.get(count).toString());
 					}
@@ -117,7 +133,7 @@ public class Duke {
 				try {
 					String[] dl = _userinput[1].split("/");
 					String at[] = (dl[1].split(" ", 2));
-					task.add(count, new Event((dl[0]).trim(), at[1].trim(),userinput));
+					task.add(count, new Event((dl[0]).trim(), processDate(at[1]),userinput));
 					if(print) {
 						printAdded(task.get(count).toString());
 					}
@@ -150,11 +166,22 @@ public class Duke {
 	public static void listALL() {
 		int n = 1;
 		for (int a = 0; a < count; a++) {
-			System.out.println(n + ". [" + task.get(a).icon() + "] " + task.get(a).getTitle());
+			System.out.println(n+". "+task.get(a).printTask());
 			n++;
 		}
 	}
 
+	public static void listALLwithDate(LocalDate d) {
+		int n = 1;
+		for (int a = 0; a < count; a++) {
+			LocalDate date=task.get(a).getDate();
+			if(date!=null && date.equals(d)) {
+				System.out.println(n+". "+task.get(a).printTask());
+				n++;
+			}
+		}
+		if(n==1) System.out.println("Oh you dont have a task on that day");
+	}
 	public static void checkFile() throws IOException {
 		File dir = new File(path);
 		if (dir.exists() == false) {
@@ -192,6 +219,11 @@ public class Duke {
 		 }
 	      prw.println(inputs);          
 	      prw.close();
+	}
+	
+	public static LocalDate processDate(String msg) {
+		LocalDate d=LocalDate.parse(msg.trim());;
+		return d;
 	}
 
 }
