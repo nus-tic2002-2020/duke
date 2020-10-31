@@ -7,6 +7,10 @@ public class Task {
         this.description = description;
         this.isdone = false;
     }
+    public Task(String description, boolean status) {
+        this.description = description;
+        this.isdone = status;
+    }
 
     public String symbols() {
         return (isdone ? "\u2713" : "\u2718"); // tick for yes and x for no
@@ -19,5 +23,10 @@ public class Task {
 
     public String toString() {
         return ( "[" + this.symbols() + "]" + description);
+    }
+
+    public String toSaveString() {
+        assert !description.isEmpty() : "Description field is empty";
+        return "T | " + (isdone ? 1 : 0) + " | " + description;
     }
 }

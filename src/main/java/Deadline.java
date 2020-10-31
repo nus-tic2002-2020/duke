@@ -4,10 +4,20 @@ import java.util.Locale;
 
 public class Deadline extends Task{
 
+
     protected LocalDateTime timecheck;
 
     public Deadline (String description, LocalDateTime timecheck) {
         super(description);
+        this.timecheck = timecheck;
+    }
+
+    public Deadline(String description, Boolean status) { //check
+        super(description, status);
+    }
+
+    public Deadline(String description, Boolean status, LocalDateTime timecheck) {
+        super(description, status);
         this.timecheck = timecheck;
     }
 
@@ -51,6 +61,11 @@ public class Deadline extends Task{
     @Override
     public String toString(){
         return "[D]" + super.toString() + " (by: " + generateDateAndTimeString() + ")";
+    }
+
+    @Override
+    public String toSaveString() {
+        return "D | " + super.toSaveString() + " | " + timecheck;
     }
 
 }

@@ -10,6 +10,16 @@ public class Event extends Task {
         super(description);
         this.time = time;
     }
+
+    public Event(String description, Boolean status) {
+        super(description,status);
+    }
+
+    public Event(String description,Boolean status, LocalDateTime time) {
+        super(description,status);
+        this.time = time;
+    }
+
     private String generateDateAndTimeString() {
         String dateAndTime = "" + time.getDayOfMonth();
         int day = time.getDayOfMonth();
@@ -51,5 +61,11 @@ public class Event extends Task {
     public String toString() {
         return ( "[E]" + super.toString() + " (at: " + generateDateAndTimeString() + ")");
     }
+
+    @Override
+    public String toSaveString() {
+        return "E | " + super.toSaveString() + " | " + time;
+    }
+
 
 }
