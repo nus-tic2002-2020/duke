@@ -114,7 +114,9 @@ public class Duke {
 
 
                 } else if (line.contains("deadline")) {
-
+/**
+ * Deadline class syntax where user inputs in format -  Deadline /by 12/12/2020 1230, return in localDateTime format
+ */
                     int separator = line.indexOf("/");
 
                     String dateAndTime = line.substring(separator + 4);

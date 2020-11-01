@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 public class TaskList {
+
+    /**
+     * Array for tasks; add/delete task in the list
+     */
     public ArrayList<Task> taskList;
 
     public TaskList() {
@@ -26,6 +30,10 @@ public class TaskList {
         return taskList.get(i);
     }
 
+    /**
+     *
+     * @return the number of tasks in the list
+     */
     public int getNumOfTasks(){
         return taskList.size();
     }

@@ -42,6 +42,7 @@ public class Storage {
     /****
      *
      * @param fileContent the tasks stored in the file
+     * Convert from LocalDate time format to string from txt file back to Duke
      */
     static void loadFormat(String fileContent) {
         System.out.println(fileContent);

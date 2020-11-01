@@ -12,8 +12,12 @@ public class Task {
         this.isdone = status;
     }
 
+    /**
+     *
+     * @return ✓ or ✘ depending if task is completed
+     */
     public String symbols() {
-        return (isdone ? "\u2713" : "\u2718"); // tick for yes and x for no
+        return (isdone ? "\u2713" : "\u2718");
     }
 
     public void markDone() { //mark task as done
@@ -25,8 +29,12 @@ public class Task {
         return ( "[" + this.symbols() + "]" + description);
     }
 
+    /**
+     *
+     * @return convert to 1 or 0 in txt file for task completion since text file unable to capture tick and cross
+     */
     public String toSaveString() {
         assert !description.isEmpty() : "Description field is empty";
-        return "T | " + (isdone ? 1 : 0) + " | " + description;
+        return  + (isdone ? 1 : 0) + " | " + description;
     }
 }

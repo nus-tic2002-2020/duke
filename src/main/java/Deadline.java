@@ -2,8 +2,13 @@ import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
-public class Deadline extends Task{
+/**
+ * Deadline class syntax format - deadline /by
+ * Event class syntax format - event /at
+ * Todo class syntax format - todo
+ */
 
+public class Deadline extends Task{
 
     protected LocalDateTime timecheck;
 
@@ -20,6 +25,11 @@ public class Deadline extends Task{
         super(description, status);
         this.timecheck = timecheck;
     }
+
+    /**
+     *
+     * @return date and time in format - 12th of December 2020, 12.30pm
+     */
 
     private String generateDateAndTimeString() {
         String dateAndTime = "" + timecheck.getDayOfMonth();
@@ -63,6 +73,10 @@ public class Deadline extends Task{
         return "[D]" + super.toString() + " (by: " + generateDateAndTimeString() + ")";
     }
 
+    /**
+     *
+     * @return string to be store in txt file
+     */
     @Override
     public String toSaveString() {
         return "D | " + super.toSaveString() + " | " + timecheck;

@@ -1,7 +1,11 @@
 import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.Locale;
-
+/**
+ * Deadline class syntax format - deadline /by
+ * Event class syntax format - event /at
+ * Todo class syntax format - todo
+ */
 public class Event extends Task {
 
     protected LocalDateTime time;
@@ -19,7 +23,10 @@ public class Event extends Task {
         super(description,status);
         this.time = time;
     }
-
+    /**
+     *
+     * @return date and time in format - 12th of December 2020, 12.30pm
+     */
     private String generateDateAndTimeString() {
         String dateAndTime = "" + time.getDayOfMonth();
         int day = time.getDayOfMonth();
@@ -62,10 +69,12 @@ public class Event extends Task {
         return ( "[E]" + super.toString() + " (at: " + generateDateAndTimeString() + ")");
     }
 
+    /**
+     *
+     * @return string to be store in txt file
+     */
     @Override
-    public String toSaveString() {
-        return "E | " + super.toSaveString() + " | " + time;
-    }
+    public String toSaveString() { return "E | " + super.toSaveString() + " | " + time; }
 
 
 }
