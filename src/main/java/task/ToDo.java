@@ -1,4 +1,4 @@
-package classes;
+package task;
 
 /**
  * Todo-subclass of Task-superclass
@@ -11,14 +11,7 @@ public class ToDo extends Task {
      */
     public ToDo(String description) {
         super(description);
-        setSymbol();
-    }
-
-    /**
-     * Sets the symbol of task to "[T]" to signify Todo-subclass
-     */
-    public void setSymbol() {
-        symbol = "[T]";
+        this.symbol = "[T]";
     }
 
     /**

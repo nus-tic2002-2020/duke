@@ -1,4 +1,4 @@
-package classes;
+package task;
 
 import java.time.LocalDateTime;
 
@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
  */
 public abstract class Task {
     protected String description;
-    protected boolean done;
+    protected boolean isDone;
     protected String symbol;
 
     /**
@@ -17,15 +17,14 @@ public abstract class Task {
      */
     public Task(String description) {
         setDescription(description);
-        this.done = false;
-        setSymbol();
+        this.isDone = false;
     }
 
     /**
      * @return Returns done-value of task as a string, either [✗] or [✓]
      */
     public String getDone() {
-        if (!done) {
+        if (!isDone) {
             return ("[✗]");
         }
             return ("[✓]");
@@ -51,11 +50,11 @@ public abstract class Task {
      * Sets done parameter to true
      */
     public void setDone() {
-        this.done = true;
+        this.isDone = true;
     }
 
     /**
-     * Empty method utilized for subclass-overriding
+     * Empty methods utilized for subclass-overriding
      *
      * @return Empty return
      */
@@ -63,14 +62,17 @@ public abstract class Task {
         return null;
     };
 
-    /**
-     * Abstract. Actual in subclasses.
-     */
-    public abstract String getSymbol();
+    public LocalDateTime getStart() {
+        return null;
+    }
+
+    public LocalDateTime getEnd() {
+        return null;
+    }
 
     /**
      * Abstract. Actual in subclasses.
      */
-    public abstract void setSymbol();
+    public abstract String getSymbol();
 
 }

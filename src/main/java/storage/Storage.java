@@ -1,4 +1,4 @@
-package classes;
+package storage;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
+import task.Task;
 
 /**
  * Storage class for handling interactions with task_list.txt file
@@ -79,22 +80,26 @@ public class Storage {
         FileWriter fw = new FileWriter("data/task_list.txt", true);
         String function = task.getSymbol();
         switch (function) {
-            case "[T]": {
+            case "[T]":
                 fw.write("T | X | " + task.getDescription() + "\n");
                 break;
-            }
-            case "[D]": {
+            case "[D]":
                 fw.write("D | X | " + task.getDescription() + " | " + task.getDateAndTime().getDayOfMonth()
                         + "/" + task.getDateAndTime().getMonthValue() + "/" + task.getDateAndTime().getYear() + ", "
                         + task.getDateAndTime().getHour() + ":" + task.getDateAndTime().getMinute() + "\n");
                 break;
-            }
-            case "[E]": {
+            case "[E]":
                 fw.write("E | X | " + task.getDescription() + " | " + task.getDateAndTime().getDayOfMonth()
                         + "/" + task.getDateAndTime().getMonthValue() + "/" + task.getDateAndTime().getYear() + ", "
                         + task.getDateAndTime().getHour() + ":" + task.getDateAndTime().getMinute() + "\n");
                 break;
-            }
+            case "[W]":
+                fw.write("W | X | " + task.getDescription() + " | " + task.getStart().getDayOfMonth()
+                        + "/" + task.getStart().getMonthValue() + "/" + task.getStart().getYear() + ", "
+                        + task.getStart().getHour() + ":" + task.getStart().getMinute() + " - " + task.getEnd().getDayOfMonth()
+                        + "/" + task.getEnd().getMonthValue() + "/" + task.getEnd().getYear() + ", "
+                        + task.getEnd().getHour() + ":" + task.getEnd().getMinute() + "\n");
+                break;
         }
         fw.close();
     }

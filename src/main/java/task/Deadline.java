@@ -1,4 +1,4 @@
-package classes;
+package task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,18 +22,12 @@ public class Deadline extends Task {
      */
     public Deadline(String description, String dateAndTime) throws DateTimeParseException {
         super(description);
+        this.symbol = "[D]";
         try {
             this.dateAndTime = LocalDateTime.parse(dateAndTime, formatter());
         } catch (DateTimeParseException e) {
             this.dateAndTime = LocalDateTime.parse(dateAndTime, formatterLoad());
         }
-    }
-
-    /**
-     * Sets the symbol of task to "[D]" to signify Deadline-subclass
-     */
-    public void setSymbol() {
-        symbol = "[D]";
     }
 
     /**
@@ -55,13 +49,13 @@ public class Deadline extends Task {
      * Date formatter used when adding deadlines
      */
     private DateTimeFormatter formatter() {
-        return DateTimeFormatter.ofPattern("d/M/yyyy HH:mm");
+        return DateTimeFormatter.ofPattern("d/M/yyyy H:mm");
     }
 
     /**
      * Date formatter used when loading from file
      */
     private DateTimeFormatter formatterLoad() {
-        return DateTimeFormatter.ofPattern("d/M/yyyy, HH:mm", Locale.ENGLISH);
+        return DateTimeFormatter.ofPattern("d/M/yyyy, H:mm", Locale.ENGLISH);
     }
 }

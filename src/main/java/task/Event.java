@@ -1,4 +1,4 @@
-package classes;
+package task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,18 +21,12 @@ public class Event extends Task {
      */
     public Event(String description, String dateAndTime) throws DateTimeParseException {
         super(description);
+        this.symbol = "[E]";
         try {
             this.dateAndTime = LocalDateTime.parse(dateAndTime, formatter());
         } catch (DateTimeParseException e) {
             this.dateAndTime = LocalDateTime.parse(dateAndTime, formatterLoad());
         }
-    }
-
-    /**
-     * Sets the symbol of task to "[E]" to signify Event-subclass
-     */
-    public void setSymbol() {
-        symbol = "[E]";
     }
 
     /**
@@ -53,14 +47,17 @@ public class Event extends Task {
     /**
      * Date formatter used when adding events
      */
+    /**
+     * Date formatter used when adding deadlines
+     */
     private DateTimeFormatter formatter() {
-        return DateTimeFormatter.ofPattern("d/MM/yyyy HH:mm");
+        return DateTimeFormatter.ofPattern("d/M/yyyy H:mm");
     }
 
     /**
      * Date formatter used when loading from file
      */
     private DateTimeFormatter formatterLoad() {
-        return DateTimeFormatter.ofPattern("d/MM/yyyy, HH:mm", Locale.ENGLISH);
+        return DateTimeFormatter.ofPattern("d/M/yyyy, H:mm", Locale.ENGLISH);
     }
 }
