@@ -56,7 +56,7 @@ public class Duke {
 		}
 
 		String[] _userinput = userinput.split(" ", 2);
-		String input_type = (_userinput[0]).trim();
+		String input_type = (_userinput[0]).trim().toLowerCase();
 
 		switch (input_type) {
 			case "bye": {
@@ -75,6 +75,20 @@ public class Duke {
 						LocalDate d = processDate(_userinput[1]);
 						System.out.println(ln + "Here are the tasks in your list on "+_userinput[1]+":");
 						listALLwithDate(d);
+					} catch (NumberFormatException e) {
+						throw new DukeException("Invalid number");
+					}
+				}
+				System.out.println(ln);		
+			}
+				break;
+			case "find": {
+				//two ways: list & list+date. exp: list 2020-01-01
+				if(_userinput[1]=="") {
+					System.out.println(ln + "Key "+_userinput[1]+" not found.");
+				} else {
+					try {						
+						listALLwithKey(_userinput[1]);
 					} catch (NumberFormatException e) {
 						throw new DukeException("Invalid number");
 					}
@@ -176,6 +190,18 @@ public class Duke {
 		for (int a = 0; a < count; a++) {
 			LocalDate date=task.get(a).getDate();
 			if(date!=null && date.equals(d)) {
+				System.out.println(n+". "+task.get(a).printTask());
+				n++;
+			}
+		}
+		if(n==1) System.out.println("Oh you dont have a task on that day");
+	}
+
+	public static void listALLwithKey(String keyword) {
+		int n = 1;
+		for (int a = 0; a < count; a++) {
+			String title=task.get(a).getTitle();
+			if(title.toLowerCase().contains(keyword.toLowerCase())) {
 				System.out.println(n+". "+task.get(a).printTask());
 				n++;
 			}
