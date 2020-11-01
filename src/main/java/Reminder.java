@@ -2,20 +2,20 @@ import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
-public class Event extends Task {
+public class Reminder extends Task {
 
     protected LocalDateTime time;
 
-    public Event(String description, LocalDateTime time) {
+    public Reminder(String description, LocalDateTime time) {
         super(description);
         this.time = time;
     }
 
-    public Event(String description, Boolean status) {
+    public Reminder(String description, Boolean status) {
         super(description,status);
     }
 
-    public Event(String description,Boolean status, LocalDateTime time) {
+    public Reminder(String description,Boolean status, LocalDateTime time) {
         super(description,status);
         this.time = time;
     }
@@ -59,13 +59,16 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return ( "[E]" + super.toString() + " (at: " + generateDateAndTimeString() + ")");
+        return ( "[R]" + super.toString() + " (at: " + generateDateAndTimeString() + ")");
     }
 
     @Override
     public String toSaveString() {
-        return "E | " + super.toSaveString() + " | " + time;
+        return "R | " + super.toSaveString() + " | " + time;
     }
 
 
+    private void add(Reminder reminder) {
+
+    }
 }

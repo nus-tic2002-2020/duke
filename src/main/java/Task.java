@@ -27,6 +27,6 @@ public class Task {
 
     public String toSaveString() {
         assert !description.isEmpty() : "Description field is empty";
-       return  (isdone ? 1 : 0) + " | " + description;
+        return "T | " + (isdone ? 1 : 0) + " | " + description;
     }
 }

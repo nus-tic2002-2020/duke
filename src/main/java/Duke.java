@@ -48,7 +48,13 @@ public class Duke {
                     System.out.println("   Here are the tasks in your lists: ");
                     for (int i = 0; i < tasks.taskList.size(); i++) {
                         System.out.println(i + 1 + ". " + tasks.get(i).toString()); //shows tasklist
-                    }//printLine();
+                    }
+
+                } else if (line.equals("reminder")) {  //number of list
+                    System.out.println("   Here are the tasks in your reminder list: ");
+                    for (int i = 0; i < tasks.taskList.size(); i++) {
+                        System.out.println(i + 1 + ". " + tasks.get(i).toString()); //shows tasklist
+                    }
 
                 } else if (line.contains("done")) {
 
@@ -63,7 +69,6 @@ public class Duke {
                     int delete = Integer.parseInt(line.substring(7)) - 1; //delete
                     Task currenttask = tasks.taskList.get(delete);
                     tasks.removeTask(delete);
-                    System.out.println("Deleted!");
 
                     pointer++;
 
@@ -90,6 +95,21 @@ public class Duke {
                     System.out.println("Got it. I've added this task:");
                     System.out.println(tasks.get(tasks.taskList.size() - 1).toString());
                     System.out.println("Now you have " + (tasks.taskList.size()) + " tasks in the list.");
+                    pointer++;
+
+                } else if (line.contains("reminder")) {
+
+                    int separator = line.indexOf('/');
+
+                    String dateAndTime = line.substring(separator + 4);
+                    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+                    LocalDateTime dateTime = LocalDateTime.parse(dateAndTime, format);
+                    Task reminder = new Reminder(line.substring(9, separator - 1), dateTime);
+                    tasks.addTask(reminder);
+
+                    System.out.println("Got it. I've added this reminder:");
+                    System.out.println(tasks.get(tasks.taskList.size() - 1).toString());
+                    System.out.println("Now you have " + (tasks.taskList.size()) + " reminder in the list.");
                     pointer++;
 
 
