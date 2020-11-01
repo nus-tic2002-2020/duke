@@ -3,10 +3,17 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UI  {
+public class UI {
     /*Handling user input*/
+    public TaskList tasks;
+    public Storage storage;
 
-    public void readInput(TaskList tasks, Storage storage) {
+    public UI (TaskList tasks, Storage storage) {
+        this.tasks = tasks;
+        this.storage = storage;
+    }
+
+    public void readInput() {
         //reads in user input
         String userSentence;
         Scanner input = new Scanner(System.in);
@@ -14,15 +21,15 @@ public class UI  {
 
         //replies to user input
         try {
-            response(task, storage, userSentence);
+            response(userSentence);
         } catch (IllegalInputException e) {
             System.out.println(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
     }
 
-    public void response(ArrayList<Task> listOfThings, String userSentence)throws IllegalInputException {
+    public void response(String userSentence)throws IllegalInputException {
         Pattern pattern1 = Pattern.compile((".*" + "bye" + ".*"), Pattern.CASE_INSENSITIVE);
-        Matcher matcher1 = pattern1.matcher(userSentence)
+        Matcher matcher1 = pattern1.matcher(userSentence);
 
         Pattern pattern2 = Pattern.compile((".*" + "list" + ".*"), Pattern.CASE_INSENSITIVE);
         Matcher matcher2 = pattern2.matcher(userSentence);
@@ -42,7 +49,7 @@ public class UI  {
         }
         // when user inputs list
         if (matcher2.find()) {
-            TaskList.printListOfThings(listOfThings); //
+            tasks.printTasks(); //
         }
         //handling user input 'done'
         else if (matcher3.find()) {
@@ -50,8 +57,8 @@ public class UI  {
             String numberOnly = pattern.matcher(userSentence).replaceAll("");
             Duke.taskNumber = Integer.parseInt(numberOnly);
             System.out.println("\tNice! I've marked this task as done: ");
-            listOfThings.get(Duke.taskNumber - 1).isDone = true; // this might just access not modify
-            System.out.println(listOfThings.get(Duke.taskNumber - 1).getTag() + " [" + listOfThings.get(Duke.taskNumber - 1).getStatusIcon() + "] " + listOfThings.get(Duke.taskNumber - 1).description);
+            tasks.tasks.get(Duke.taskNumber - 1).isDone = true; // this might just access not modify
+            System.out.println(tasks.tasks.get(Duke.taskNumber - 1).getTag() + " [" + tasks.tasks.get(Duke.taskNumber - 1).getStatusIcon() + "] " + tasks.tasks.get(Duke.taskNumber - 1).description);
         }
         //handling user input delete
         else if (matcher4.find()) {
@@ -60,16 +67,16 @@ public class UI  {
             Duke.taskNumber = Integer.parseInt(numberOnly);
             Duke.numberOftask--;
             System.out.println("\tNoted. I've removed this task: ");
-            System.out.println(listOfThings.get(Duke.taskNumber - 1).getTag() + " [" + listOfThings.get(Duke.taskNumber - 1).getStatusIcon() + "] " + listOfThings.get(Duke.taskNumber - 1).description);
-            // add delete logic here by modifying listOfThings
-            listOfThings.remove(Duke.taskNumber - 1);
+            System.out.println(tasks.tasks.get(Duke.taskNumber - 1).getTag() + " [" + tasks.tasks.get(Duke.taskNumber - 1).getStatusIcon() + "] " + tasks.tasks.get(Duke.taskNumber - 1).description);
+            // add delete logic here by modifying tasks
+            tasks.tasks.remove(Duke.taskNumber - 1);
         }
         // all else will be added into tasklist
         else {
-            listOfThings = TaskList.storeList(listOfThings, userSentence);
+            tasks.storeList(userSentence);
 
         }
-        return listOfThings;
+       
     }
 
 

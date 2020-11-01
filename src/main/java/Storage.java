@@ -32,11 +32,11 @@ public class Storage  {
                         line_item = "event " + split_line_item[2].trim() + "/at " + split_line_item[3].trim();
                         break;
                 }
-                ui.response(newList, line_item);
+                ui.response(line_item);
                 //new_list.reader(line_item);
                 counter++;
                 if (split_line_item[1].trim().equals("1")) {
-                    ui.response(newList, "done " + counter);
+                    ui.response( "done " + counter);
                     //new_list.reader("done " + counter);
                 }
             }

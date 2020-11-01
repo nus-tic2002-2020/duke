@@ -16,7 +16,7 @@ public class Duke {
     private UI ui;
 
     public Duke(String filepath){
-        this.ui = new UI();
+        this.ui = new UI(tasks, storage);
         storage  = new Storage(filepath);
         tasks = new TaskList();
         storage.load(tasks, ui);
@@ -43,7 +43,7 @@ public class Duke {
         while (true) {
             //echoCommands();
             //List = echoCommands(List);
-            ui.readInput(tasks, storage);
+            ui.readInput();
         }
 
     }

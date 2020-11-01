@@ -3,10 +3,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Task {
-    protected String description;
-    protected boolean isDone;
-    protected String whatTag;
-    protected String timeDate;
+    public String description;
+    public boolean isDone;
+    public String whatTag;
+    public String timeDate;
 
 
 
