@@ -9,13 +9,24 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Storage {
-    //variable
+    /**Variable of Storage class*/
     private String pathname;
-    //constructor
+
+    /**
+     * Constructor of Storage
+     *
+     * @param path given path of the Storage
+     */
     public Storage(String path){
         this.pathname = path;
     }
-    //accessor and modifier
+
+    /**
+     * Load saved .txt file details Duke's TaskList
+     *
+     * @param new_list TaskList variable of Duke class
+     * @param ui Reader variable of Duke class
+     */
     public void load(TaskList new_list, UI ui) {
         File f = new File(pathname);
         try {
@@ -44,6 +55,12 @@ public class Storage {
         }
         catch (FileNotFoundException e) {}
     }
+
+    /**
+     * Save latest TaskList into .txt file of given path
+     *
+     * @param cur_list Latest Duke's TaskList
+     */
     public void save(TaskList cur_list){
         File taskFile = new File(pathname);
         if(taskFile.exists() == false){
@@ -64,6 +81,13 @@ public class Storage {
             }
         }
     }
+
+    /**
+     * Write all items of TaskList into .txt file into the path
+     *
+     * @param cur_list Latest Duke's TaskList
+     * @throws IOException if there is error writing to file
+     */
     private void saveList(TaskList cur_list) throws IOException{
         FileWriter fw = new FileWriter(pathname);
         for(int i = 1 ; i <= cur_list.getItem_count() ; i++){

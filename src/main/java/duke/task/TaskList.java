@@ -3,24 +3,43 @@ package duke.task;
 import java.util.ArrayList;
 
 public class TaskList{
-    //variable
+    /**Variables of TaskList class*/
     public ArrayList<Task> List;
     private static int item_count = 0;
 
-    //constructor
+    /**
+     * Constructor of TaskList
+     */
     public TaskList(){
         this.List = new ArrayList<Task>();
     }
 
     //getters
+
+    /**
+     * Method declared to include a top and bottom line for messaage printed by duke
+     * Will be used by other methods
+     *
+     * @param message Message to be printed by duke
+     */
     public void duke_echo(String message){
         System.out.println("\t____________________________________________________________");
         System.out.println("\t" + message);
         System.out.println("\t____________________________________________________________");
     }
+
+    /**
+     * Return amount of items in the TaskList
+     *
+     * @return Amount of items in the TaskList
+     */
     public int getItem_count(){
         return this.item_count;
     }
+
+    /**
+     * Print all items within the TaskList
+     */
     public void printList(){
         if(this.List.size() == 0){
             duke_echo("List is empty");
@@ -41,6 +60,12 @@ public class TaskList{
         }
         System.out.println("\t____________________________________________________________");
     }
+
+    /**
+     * Print item of the given index number
+     *
+     * @param index of the Task to be printed
+     */
     private void print_task(int index){
         String tick = (this.List.get(index - 1).getStatus()) ? "✓" : "✗";
         String to_print = "\t[" + this.List.get(index - 1).getCat() + "]" + "[" + tick + "] " + this.List.get(index - 1).getDesc();
@@ -50,6 +75,13 @@ public class TaskList{
         }
         System.out.println(to_print);
     }
+
+    /**
+     * Processing of task details to be saved into .txt file
+     *
+     * @param index of the Task details to be processed
+     * @return processed string of the Task
+     */
     public String convert_lineItem(int index){
         String status = (this.List.get(index - 1).getStatus())? "1" : "0";
         String item_line = this.List.get(index - 1).getCat() + " | " + status + " | "
@@ -61,6 +93,12 @@ public class TaskList{
     }
 
     //setters
+
+    /**
+     * Insertion of a task into TaskList
+     *
+     * @param input User input from UI class
+     */
     public void insert_item(String input){
         String[] task_split = input.split(" ", 2);
         String[] time_split;
@@ -87,6 +125,13 @@ public class TaskList{
         System.out.println("\tNow you have " + item_count + " tasks in the list.");
         System.out.println("\t____________________________________________________________");
     }
+
+    /**
+     * Removal of task of given index in the TaskList
+     *
+     * @param input User input from UI class that contains "delete"
+     * @throws IndexOutOfBoundsException if index given is out of range
+     */
     public void delete(String input) throws IndexOutOfBoundsException{
         String[] input_split = input.split(" ", 2);
         int index = Integer.parseInt(input_split[1]);
@@ -101,9 +146,15 @@ public class TaskList{
         System.out.println("\t____________________________________________________________");
         this.List.remove(index-1);
     }
-    public void mark_completion(String done_message){
+
+    /**
+     *Mark task of the given index in the TaskList as completed
+     *
+     * @param input User input from UI class that contains "done"
+     */
+    public void mark_completion(String input){
         /*Remove any unwanted characters that are not int*/
-        String number = done_message.substring(done_message.indexOf(" ") + 1);
+        String number = input.substring(input.indexOf(" ") + 1);
         for(int i = 0 ; i < number.length() ; i++){
             if(number.charAt(i) < 48 || number.charAt(i) > 57){
                 number = number.substring(0, i);
@@ -116,18 +167,20 @@ public class TaskList{
         if(index > item_count || index <= 0){
             duke_echo("There are only " + item_count + " items or the value is out of bound!");
         }
-        //else if(this.done.get(index - 1) == true){
         else if(this.List.get(index - 1).getStatus()){
             duke_echo("\"" + this.List.get(index - 1).getDesc() + "\" was already marked as done");
         }
         else{
-            //this.done.set(index - 1, true);
             this.List.get(index - 1).mark_completed();
             String tick = (this.List.get(index - 1).getStatus()) ? "✓" : "✗";
             duke_echo("Nice! I've marked this task as done:\n\t[" + this.List.get(index - 1).getCat() + "]"
                     + "[" + tick + "] " + this.List.get(index - 1).getDesc());
         }
     }
+
+    /**
+     * Mark all task in the TaskList as completed
+     */
     public void mark_all_complete(){
         if(item_count == 0){
             duke_echo("The list is empty!");

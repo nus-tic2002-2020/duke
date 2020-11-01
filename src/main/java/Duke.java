@@ -3,19 +3,26 @@ import duke.ui.*;
 import duke.storage.*;
 
 public class Duke {
-    //variables
+    /**Variables of Duke Class*/
     private Storage storage;
     private TaskList tasks;
     private UI ui;
 
-    //constructor
+    /**
+     * Constructor of Duke class
+     *
+     * @param filepath file path
+     */
     public Duke(String filepath){
         ui = new UI();
         storage  = new Storage(filepath);
         tasks = new TaskList();
         storage.load(tasks, ui);
     }
-    //accessors
+
+    /**
+     * Initialize Duke
+     */
     public void run(){
         //Duke header
         String logo = " ____        _        \n"
@@ -29,14 +36,24 @@ public class Duke {
         while(true){
             ui.reader(tasks, storage);
         }
-
     }
+
+    /**
+     * Message printed by Duke which include top and bottom line
+     *
+     * @param message to be printed
+     */
     public static void duke_says(String message){
         System.out.println("\t____________________________________________________________");
         System.out.println("\t" + message);
         System.out.println("\t____________________________________________________________");
     }//end duke_says
 
+    /**
+     * Main function
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         new Duke("duke.txt").run();
     }//end main
