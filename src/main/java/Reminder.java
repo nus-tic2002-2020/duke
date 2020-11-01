@@ -23,7 +23,6 @@ public class Reminder extends Task {
     private String generateDateAndTimeString() {
         String dateAndTime = "" + time.getDayOfMonth();
         int day = time.getDayOfMonth();
-
         if (day == 1 || day == 21 || day == 31) {
             dateAndTime += "st";
         } else if (day == 2 || day == 22) {
@@ -33,10 +32,8 @@ public class Reminder extends Task {
         } else {
             dateAndTime += "th";
         }
-
         dateAndTime += " of " + time.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH)
                 + " " + time.getYear() + ", ";
-
         if (time.getHour() > 12) {
             dateAndTime += (time.getHour() % 12) + ""
                     + (time.getMinute() == 0 ? "" : "." + (time.getMinute() < 10 ? "0" : "")
@@ -53,7 +50,6 @@ public class Reminder extends Task {
             dateAndTime += time.getHour() + ""
                     + (time.getMinute() == 0 ? "" : "." + (time.getMinute() < 10 ? "0" : "") + time.getMinute()) + "am";
         }
-
         return dateAndTime;
     }
 
@@ -69,6 +65,6 @@ public class Reminder extends Task {
 
 
     private void add(Reminder reminder) {
-
     }
+
 }

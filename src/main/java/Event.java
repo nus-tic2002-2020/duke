@@ -74,7 +74,8 @@ public class Event extends Task {
      * @return string to be store in txt file
      */
     @Override
-    public String toSaveString() { return "E | " + super.toSaveString() + " | " + time; }
-
+    public String toSaveString() {
+        return "E | " + super.toSaveString() + " | " + time;
+    }
 
 }

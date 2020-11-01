@@ -8,8 +8,7 @@ import java.util.Locale;
  * Todo class syntax format - todo
  */
 
-public class Deadline extends Task{
-
+    public class Deadline extends Task{
     protected LocalDateTime timecheck;
 
     public Deadline (String description, LocalDateTime timecheck) {
@@ -17,7 +16,7 @@ public class Deadline extends Task{
         this.timecheck = timecheck;
     }
 
-    public Deadline(String description, Boolean status) { //check
+    public Deadline(String description, Boolean status) {
         super(description, status);
     }
 

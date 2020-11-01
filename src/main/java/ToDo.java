@@ -4,17 +4,17 @@ public class ToDo extends Task{
      * Event class syntax format - event /at
      * Todo class syntax format - todo
      */
-    public ToDo(String description) { // description of Task description
+    public ToDo(String description) {
         super(description);
     }
 
     public ToDo(String description, Boolean status) {
-        super(description, status);
+         super(description, status);
     }
 
     @Override
     public String toString() {
-        return ( "[T]" + super.toString());
+         return ( "[T]" + super.toString());
     }
 
 
