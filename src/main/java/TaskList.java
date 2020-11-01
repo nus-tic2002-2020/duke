@@ -31,7 +31,7 @@ public class TaskList {
     public String convert_lineItem(int index){
         String status = (this.tasks.get(index - 1).getStatusIcon());
         String lineItem = this.tasks.get(index - 1).getTag() + " | " + status + " | " + this.tasks.get(index - 1).description;
-        if(this.tasks.get(index - 2).getTag() != 'T'){
+        if(this.tasks.get(index - 1).getTag() != "T"){
             lineItem += ("| " + this.tasks.get(index - 1).timeDate);
         }
         return lineItem;
