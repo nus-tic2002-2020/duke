@@ -1,5 +1,9 @@
-import java.util.Scanner;
+import duketask.*;
+import dukefile.*;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Duke {
 
@@ -23,6 +27,9 @@ public class Duke {
         line();
     }
 
+    /**
+     * To display a list of current tasks <code>Point</code>
+     */
     public static void dukeList(ArrayList<Task> tasks, int taskCounter){
         line();
         System.out.println(ANSI_YELLOW + "   Here are the tasks in your list:" + ANSI_RESET);
@@ -40,13 +47,24 @@ public class Duke {
         line();
     }
 
-    public static void dukeValidate(String[] s) throws DukeException{
+    public static void dukeSearchDate(String date){
+        
+    }
 
-
+    public static void dukeDelete(ArrayList<Task> tasks, String input){
+        int index = Integer.parseInt(input) - 1;
+        line();
+        System.out.println(ANSI_YELLOW + "   Noted. I've removed this task:\n"
+                + "     " + tasks.get(index)
+                + "\n   Now you have " + (tasks.size() - 1) + " tasks in the list." + ANSI_RESET);
+        line();
+        tasks.remove(index);
     }
 
     public static void main(String[] args) throws DukeException {
         int taskCounter = 0;
+        Dukelist taskList = new Dukelist("data\\duke.txt");
+
         ArrayList<String> validInput = new ArrayList<>();
         ArrayList<Task> tasks = new ArrayList<>();
         validInput.add("bye");
@@ -54,6 +72,7 @@ public class Duke {
         validInput.add("todo");
         validInput.add("deadline");
         validInput.add("event");
+        validInput.add("delete");
 
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -120,6 +139,12 @@ public class Duke {
                     tasks.add(new Event(userInput[1]));
                     dukeInput(tasks.get(tasks.size() - 1), tasks.size() - 1);
                     taskCounter++;
+                    taskList.writeTask(tasks.get(taskCounter - 1).toString());
+                    break;
+                case "delete":
+                    taskList.deleteTask(tasks.get(Integer.parseInt(userInput[1]) - 1).toString());
+                    dukeDelete(tasks, userInput[1]);
+                    taskCounter--;
                     break;
 
             }
