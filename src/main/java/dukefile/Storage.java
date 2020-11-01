@@ -5,12 +5,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class Dukelist {
+public class Storage {
 
     private File list;
     private Path path;
 
-    public Dukelist(String filepath) {
+    public Storage(String filepath) {
         path = Paths.get(filepath);
         list = new File(String.valueOf(path));
 

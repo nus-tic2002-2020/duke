@@ -2,42 +2,56 @@ package duketask;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 
 public class Deadline extends Todo {
-    protected String by;
     protected LocalDateTime byDateTime;
     protected String formattedDateTime;
     protected DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
     protected DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("dd MMM yyyy, hh:mma");
 
+    /**
+     * Constructor of <code>Deadline</code> class, initialize deadline task description and schedule.
+     *
+     * @param description the String received as description of the task
+     *
+     */
     public Deadline(String description) {
         super(description);
-        by = this.description[1].substring(2).trim();
-        byDateTime = LocalDateTime.parse(by, inputFormat);
-        formattedDateTime = byDateTime.format(outputFormat);
+        if(schedule[0].contains("by")) {
+            byDateTime = LocalDateTime.parse(schedule[1], inputFormat);
+            formattedDateTime = byDateTime.format(outputFormat);
+        }
     }
 
+    /**
+     * Set <code>datetime</code> of the deadline task.
+     *
+     * @param by the String of the new datetime
+     *
+     */
     public void setBy(String by) {
-        this.by = by;
+        schedule[1] = by;
         byDateTime = LocalDateTime.parse(by,inputFormat);
         formattedDateTime = byDateTime.format(outputFormat);
     }
 
-    public String getBy() {
-        return by;
-    }
-
+    /**
+     * Return deadline task <code>datetime</code> in "dd MMM yyyy, hh:mma" format.
+     *
+     * @return formatted datetime as a String
+     */
     public String getByDateTime() {
         return formattedDateTime;
     }
 
     /**
-     * Represents a location in a 2D space. A <code>Point</code> object corresponds to
-     * a coordinate represented by two integers e.g., <code>3,6</code>
+     * Convert and return the deadline task as a String.
+     *
+     * @return A String of the deadline task
      */
     @Override
     public String toString() {
+        if(isDuration) return String.format("[D][%s] %s (takes: %s)", this.getStatusIcon(), this.getDescription(), this.getSchedule());
         return String.format("[D][%s] %s (by: %s)", this.getStatusIcon(), this.getDescription(), formattedDateTime);
     }
 }
