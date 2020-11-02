@@ -61,15 +61,24 @@ public class Duke {
             }
             // add to do task
             else if (userInput.startsWith("todo")) {
-                String todoDescription = userInput.substring(5);
-                listItems[pointer] = new Todo(todoDescription);
-                printLine();
-                System.out.println("\tGot it. I've added this task:");
-                System.out.println("\t" + listItems[pointer].toString());
-                System.out.println("\tNow you have " + (pointer + 1) + " tasks in the list.");
-                printLine();
-                pointer++;
+                try{
+                    String todoDescription = userInput.substring(5);
+                    CheckEmpty(todoDescription);
+                    listItems[pointer] = new Todo(todoDescription);
+                    printLine();
+                    System.out.println("\tGot it. I've added this task:");
+                    System.out.println("\t" + listItems[pointer].toString());
+                    System.out.println("\tNow you have " + (pointer + 1) + " tasks in the list.");
+                    printLine();
+                    pointer++;
+                }
+                catch (StringIndexOutOfBoundsException e) {
+                    printLine();
+                    System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
+                    printLine();
+                    }
             }
+
           /*   else{
                 printLine();
                 listItems = storeUserList (listItems, userInput);
@@ -102,7 +111,7 @@ public class Duke {
         printLine();
 
         for (int i = 1 ; i <= listItems.length ; i++){
-            System.out.println("\t" + i + ". " + "[" + listItems[i-1].getStatusIcon() + "]" + listItems[i-1].description);
+            System.out.println("\t" + i + ". " + listItems[i-1].toString());
                 if(listItems[i] == null){
                     printLine();
                     return;
@@ -110,20 +119,38 @@ public class Duke {
             }
         }
 
-    public static Task[] doneMessage(Task[] listItems, String userInput){
 
 
-        int filteredNumber = Integer.parseInt(userInput.substring(5));
-        listItems[filteredNumber-1].markDone();
+    public static Task[] doneMessage(Task[] listItems, String userInput)   {
 
-        printLine();
-        System.out.println("\tNice! I've marked this task as done:");
-        System.out.println("\t" + listItems[filteredNumber-1].toString());
-        printLine();
+       try {
+           int filteredNumber = Integer.parseInt(userInput.substring(5));
+           listItems[filteredNumber - 1].markDone();
 
+           printLine();
+           System.out.println("\tNice! I've marked this task as done:");
+           System.out.println("\t" + listItems[filteredNumber - 1].toString());
+           printLine();
+
+       }
+        catch (NumberFormatException e){
+            printLine();
+            System.out.println("\t☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            printLine();
+        }
+       catch (NullPointerException e){
+           printLine();
+           System.out.println("\t☹ OOPS!!! Numbers out of range :-(");
+           printLine();
+       }
         return listItems;
     }
 
+    private static void CheckEmpty(String description) throws StringIndexOutOfBoundsException {
+        if (description.isEmpty()){
+            throw new StringIndexOutOfBoundsException ();
+        }
+    }
 
     public static void main(String[] args) {
       //  String [] ListofItems = new String[100];
