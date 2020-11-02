@@ -49,6 +49,7 @@ public class Ui {
         }
         // when user inputs list
         if (matcher2.find()) {
+            System.out.println(Duke.numberOftask);
             tasks.printTasks(); //
         }
         //handling user input 'done'
