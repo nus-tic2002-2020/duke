@@ -74,26 +74,20 @@ public class Storage {
 
             if(task instanceof Todo){
                 taskCommand = "T";
-            }
-            else if(task instanceof Event){
+            }else if(task instanceof Event){
                 taskCommand = "E";
                 when = ((Event)task).at;
-            }
-            else if(task instanceof Deadline){
+            }else if(task instanceof Deadline){
                 taskCommand = "D";
                 when = ((Deadline)task).by;
             }
-
             if (task.isDone){
                 done = true;
             }
-
             int val = (done) ? 1 : 0;
-
             if (when.equals("")){
                 output += taskCommand + " | " + val + " | " + description + "\n";
-            }
-            else {
+            }else {
                 output += taskCommand + " | " + val + " | " + description + " | " + when + "\n";
             }
         }

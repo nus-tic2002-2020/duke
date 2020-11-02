@@ -21,6 +21,10 @@ public class Parser {
                 return new DeleteCommand(false, commandLine);
             case "done":
                 return new DoneCommand(false, commandLine);
+            case "snooze":
+                return new SnoozeCommand(false,commandLine);
+            case "find":
+                return new FindCommand(false,commandLine);
             default:
                 throw new DukeException("I'm Sorry, but I don't know what that means :-(");
         }

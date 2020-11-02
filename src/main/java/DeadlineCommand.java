@@ -31,12 +31,7 @@ public class DeadlineCommand extends Command{
             if(word.equals("by")){
                 if(String.join(" ", Arrays.copyOfRange(commandLine.split(" "), index, commandLine.split(" ").length)).isEmpty()){
                     throw new DukeException("The date of a deadline cannot be empty.");
-                }
-                /*
-                String.join(" ", Arrays.copyOfRange(commandLine.split(" "), index, commandLine.split(" ").length)).isEmpty() -> checks for the second half of the input string.
-                need to convert from format dd-mm-yyyy to 2nd of december 2019 or something
-                 */
-                else {
+                }else {
                     String description = String.join(" ", Arrays.copyOfRange(commandLine.split(" "), 1, index-1));
                     String date = String.join(" ", Arrays.copyOfRange(commandLine.split(" "), index, commandLine.split(" ").length));
                     try{

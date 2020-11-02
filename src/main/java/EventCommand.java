@@ -28,8 +28,7 @@ public class EventCommand extends Command{
             if(command.equals("at")){
                 if(String.join(" ", Arrays.copyOfRange(commandLine.split(" "), index, commandLine.split(" ").length)).isEmpty()){
                     throw new DukeException("The date of a event cannot be empty.");
-                }
-                else {
+                }else {
                     event = new Event (String.join(" ", Arrays.copyOfRange(commandLine.split(" "), 1, index-1)), String.join(" ", Arrays.copyOfRange(commandLine.split(" "), index, commandLine.split(" ").length)));
                     taskList.addToTaskList(event);
                     ui.showOutput("Got it. I've added this task:\n\t  " + event.toString() + "\n\t Now you have " + taskList.getSize() + " tasks in the list.");

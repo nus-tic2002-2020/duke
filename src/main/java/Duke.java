@@ -6,6 +6,7 @@
 
 import java.io.*;
 import java.lang.*;
+import java.util.Scanner;
 
 public class Duke {
 
@@ -37,6 +38,15 @@ public class Duke {
         }
     }
     public static void main(String[] args) throws IOException, DukeException {
-        new Duke("E:\\_BackupNUS\\TIC2002\\duke\\src\\main\\java\\data\\duke.txt").run();
+        System.out.println("Please provide a valid file path in this format: C:\\Folder\\sample.txt");
+        Scanner sc = new Scanner(System.in);
+        String filePath = sc.nextLine();
+        //String filePath = "E:\\_BackupNUS\\TIC2002\\duke\\src\\main\\java\\data\\duke.txt";
+        try{
+            new Duke(filePath).run();
+        }catch(DukeException e){
+            new DukeException("Please provide a valid file path in this format: C:\\Folder\\sample.txt");
+        }
+
     }
 }

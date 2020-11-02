@@ -34,7 +34,7 @@ public class ListCommand extends Command{
 
     private static String newList(List<String> newTaskList) {
         int taskNumber = 0 + TASK_NUMBER;
-        output += " Here are the tasks in your list:";
+        output += "Here are the tasks in your list:";
         for (String item : newTaskList) {
             output += " \n\t" + getItem(taskNumber, item);
             taskNumber++;
