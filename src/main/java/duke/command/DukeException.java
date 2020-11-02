@@ -7,7 +7,8 @@ public class DukeException extends Exception {
         MISSING_ARGUMENT,
         MEMORY_FULL,
         TASK_NOT_FOUND,
-        UNKNOWN_COMMAND
+        UNKNOWN_COMMAND,
+        WRONG_DATA_FORMAT
     }
 
     private DukeError code;
