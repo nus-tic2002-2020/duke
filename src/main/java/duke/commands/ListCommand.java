@@ -300,63 +300,61 @@ public class ListCommand extends DukeCommand {
         DukeUI.printDivider();
 
         for(Note note : dukeNotes.getNotes()) {
-            if(filterByStatus(note)) {
-                if(filterByText(note)) {
-                    if(filterByStartTargetDate(note)) {
-                        if(filterByAddedDate(note)) {
-                            if (CmdType.getKey(this.cmdType.toString()).toString().equals("LISTBUDGETS")) {
-                                if (note.getBudgetObject() != null) {
-                                    notes.add(note);
-                                    selectionSortBudgets(notes);
-                                }
-                            } else {
-                                switch (NoteType.getCONSTRUCTOR(this.noteType.toString())) {
-                                    case "Bill" -> {
-                                        if (note instanceof Bill) {
-                                            notes.add(note);
-                                            selectionSortDates(notes);
-                                        }
-                                    }
-                                    case "Birthday" -> {
-                                        if (note instanceof Birthday) {
-                                            notes.add(note);
-                                            selectionSortDates(notes);
-                                        }
-                                    }
-                                    case "Deadline" -> {
-                                        if (note instanceof Deadline) {
-                                            notes.add(note);
-                                            selectionSortDates(notes);
-                                        }
-                                    }
-                                    case "Event" -> {
-                                        if (note instanceof Event) {
-                                            notes.add(note);
-                                            selectionSortDates(notes);
-                                        }
-                                    }
-                                    case "Shoplist" -> {
-                                        if (note instanceof Shoplist) {
-                                            notes.add(note);
-                                            selectionSortBudgets(notes);
-                                        }
-                                    }
-                                    case "Task" -> {
-                                        if (note instanceof Task) {
-                                            notes.add(note);
-                                        }
-                                    }
-                                    case "Wedding" -> {
-                                        if (note instanceof Wedding) {
-                                            notes.add(note);
-                                            selectionSortDates(notes);
-                                        }
-                                    }
-                                    case "Note" -> notes.add(note);
-                                }
-                            }
+
+            if(!filterByStatus(note)) { continue; }
+            if(!filterByText(note)) { continue; }
+            if(!filterByStartTargetDate(note)) { continue; }
+            if(!filterByAddedDate(note)) { continue; }
+
+            if (CmdType.getKey(this.cmdType.toString()).toString().equals("LISTBUDGETS")) {
+                if (note.getBudgetObject() != null) {
+                    notes.add(note);
+                    selectionSortBudgets(notes);
+                }
+            } else {
+                switch (NoteType.getCONSTRUCTOR(this.noteType.toString())) {
+                    case "Bill" -> {
+                        if (note instanceof Bill) {
+                            notes.add(note);
+                            selectionSortDates(notes);
                         }
                     }
+                    case "Birthday" -> {
+                        if (note instanceof Birthday) {
+                            notes.add(note);
+                            selectionSortDates(notes);
+                        }
+                    }
+                    case "Deadline" -> {
+                        if (note instanceof Deadline) {
+                            notes.add(note);
+                            selectionSortDates(notes);
+                        }
+                    }
+                    case "Event" -> {
+                        if (note instanceof Event) {
+                            notes.add(note);
+                            selectionSortDates(notes);
+                        }
+                    }
+                    case "Shoplist" -> {
+                        if (note instanceof Shoplist) {
+                            notes.add(note);
+                            selectionSortBudgets(notes);
+                        }
+                    }
+                    case "Task" -> {
+                        if (note instanceof Task) {
+                            notes.add(note);
+                        }
+                    }
+                    case "Wedding" -> {
+                        if (note instanceof Wedding) {
+                            notes.add(note);
+                            selectionSortDates(notes);
+                        }
+                    }
+                    case "Note" -> notes.add(note);
                 }
             }
         }

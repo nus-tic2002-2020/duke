@@ -50,6 +50,122 @@ public class EditDateCommand extends DukeCommand {
 
     //METHODS-------------------------------------------
     /**
+     * This method changes the Target Date of the {@code Note} object.
+     *
+     * @param dukeNotes The {@code DukeList} object that holds the notes managed by {@code Duke}.
+     * @param i The index of the {@code Note} object in the {@code DukeList} object to change.
+     * @return boolean Whether the change has been successful.
+     * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
+     */
+    private boolean changeTargetDate(DukeList dukeNotes, int i) throws DateException {
+        if(!(dukeNotes.getNotes().get(i) instanceof Deadline)) {
+            throw new DateException(this.newDate, "NoTarget");
+        }
+        if (dukeNotes.getNotes().get(i).getIsDone()) {
+            DukeUI.printDivider();
+            System.out.println("    The task had already been completed.");
+            System.out.println("    The date shouldn't be edited anymore.");
+            return false;
+        } else {
+            this.oldDate = ((Deadline) dukeNotes.getNotes().get(i)).getTargetDate();
+
+            NewNoteCommand.checkValidTargetDate(newDate);
+
+            ((Deadline) dukeNotes.getNotes().get(i)).setTargetDate(this.newDate);
+
+            DukeUI.printDivider();
+            System.out.println("    Target Date of Note #" + this.targetNote + " changed from...");
+            DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.oldDate), 66);
+            System.out.println("    to...");
+            DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.newDate), 66);
+            return true;
+        }
+    }
+
+    /**
+     * This method changes the Start Date of the {@code Note} object.
+     *
+     * @param dukeNotes The {@code DukeList} object that holds the notes managed by {@code Duke}.
+     * @param i The index of the {@code Note} object in the {@code DukeList} object to change.
+     * @return boolean Whether the change has been successful.
+     * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
+     */
+    private boolean changeStartDate(DukeList dukeNotes, int i) throws DateException {
+        if(!(dukeNotes.getNotes().get(i) instanceof Event)) {
+            throw new DateException(this.newDate, "NoStart");
+        }
+        if (dukeNotes.getNotes().get(i).getIsDone()) {
+            DukeUI.printDivider();
+            System.out.println("    The event had already concluded.");
+            System.out.println("    The date shouldn't be edited anymore.");
+            return false;
+        } else {
+            this.oldDate = ((Event) dukeNotes.getNotes().get(i)).getStartDate();
+            Date oldEnd = ((Event) dukeNotes.getNotes().get(i)).getEndDate();
+            long durationInMS = ((Event) dukeNotes.getNotes().get(i)).getDurationMinutes() * 60000;
+            Date newEnd = new Date(this.newDate.getTime() + durationInMS);
+
+            ArrayList<Note> notesLess_i = new ArrayList<>(dukeNotes.getNotes());
+            notesLess_i.remove(i);
+            NewNoteCommand.checkForClashes(notesLess_i, this.newDate, newEnd);
+
+            if(this.newDate.after(this.oldDate)) {
+                ((Event) dukeNotes.getNotes().get(i)).setEndDate(newEnd);
+                ((Event) dukeNotes.getNotes().get(i)).setStartDate(this.newDate);
+            } else {
+                ((Event) dukeNotes.getNotes().get(i)).setStartDate(this.newDate);
+                ((Event) dukeNotes.getNotes().get(i)).setEndDate(newEnd);
+            }
+
+            DukeUI.printDivider();
+            System.out.println("    Start and End Date of Note #" + this.targetNote +
+                    " changed from...");
+            DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.oldDate) + " ...and... " +
+                    DukeUI.NOTE_TIME.format(oldEnd), 66);
+            System.out.println("    to...");
+            DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.newDate) + " ...and... " +
+                    DukeUI.NOTE_TIME.format(newEnd), 66);
+            return true;
+        }
+    }
+
+    /**
+     * This method changes the End Date of the {@code Note} object.
+     *
+     * @param dukeNotes The {@code DukeList} object that holds the notes managed by {@code Duke}.
+     * @param i The index of the {@code Note} object in the {@code DukeList} object to change.
+     * @return boolean Whether the change has been successful.
+     * @exception DateException If there are errors in the formats or substance of {@code Date} objects.
+     */
+    private boolean changeEndDate(DukeList dukeNotes, int i) throws DateException {
+        if(!(dukeNotes.getNotes().get(i) instanceof Event)) {
+            throw new DateException(this.newDate, "NoEnd");
+        }
+        if (dukeNotes.getNotes().get(i).getIsDone()) {
+            DukeUI.printDivider();
+            System.out.println("    The event had already concluded.");
+            System.out.println("    The date shouldn't be edited anymore.");
+            return false;
+        } else {
+            this.oldDate = ((Event) dukeNotes.getNotes().get(i)).getEndDate();
+            Date oldStart = ((Event) dukeNotes.getNotes().get(i)).getStartDate();
+
+            ArrayList<Note> notesLess_i = new ArrayList<>(dukeNotes.getNotes());
+            notesLess_i.remove(i);
+            NewNoteCommand.checkForClashes(notesLess_i, oldStart, newDate);
+
+            ((Event) dukeNotes.getNotes().get(i)).setEndDate(this.newDate);
+
+            DukeUI.printDivider();
+            System.out.println("    End Date of Note #" + this.targetNote + " changed from...");
+            DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.oldDate), 66);
+            System.out.println("    to...");
+            DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.newDate), 66);
+            return true;
+        }
+    }
+
+    /**
      * This method executes the function of the {@code EditDateCommand} object.
      *
      * @param dukeNotes The {@code DukeList} object that holds the notes managed by {@code Duke}.
@@ -65,100 +181,25 @@ public class EditDateCommand extends DukeCommand {
             if(dukeNotes.getNotes().get(i).getSerialNum() == this.targetNote) {
 
                 switch (this.dateToChange) {
-                    case "target":
-                        if(dukeNotes.getNotes().get(i) instanceof Deadline) {
-                            if (dukeNotes.getNotes().get(i).getIsDone()) {
-                                DukeUI.printDivider();
-                                System.out.println("    The task had already been completed.");
-                                System.out.println("    The date shouldn't be edited anymore.");
-                            } else {
-                                this.oldDate = ((Deadline) dukeNotes.getNotes().get(i)).getTargetDate();
-
-                                NewNoteCommand.checkValidTargetDate(newDate);
-
-                                ((Deadline) dukeNotes.getNotes().get(i)).setTargetDate(this.newDate);
-
-                                DukeUI.printDivider();
-                                System.out.println("    Target Date of Note #" + this.targetNote + " changed from...");
-                                DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.oldDate), 66);
-                                System.out.println("    to...");
-                                DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.newDate), 66);
-                                DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
-                                DukeUI.suggestListNotes();
-                            }
-                        } else {
-                            throw new DateException(this.newDate, "NoTarget");
+                    case "target" -> {
+                        if (changeTargetDate(dukeNotes, i)) {
+                            DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
+                            DukeUI.suggestListNotes();
                         }
-                        break;
-                    case "start":
-                        if(dukeNotes.getNotes().get(i) instanceof Event) {
-                            if (dukeNotes.getNotes().get(i).getIsDone()) {
-                                DukeUI.printDivider();
-                                System.out.println("    The event had already concluded.");
-                                System.out.println("    The date shouldn't be edited anymore.");
-                            } else {
-                                this.oldDate = ((Event) dukeNotes.getNotes().get(i)).getStartDate();
-                                Date oldEnd = ((Event) dukeNotes.getNotes().get(i)).getEndDate();
-                                long durationInMS = ((Event) dukeNotes.getNotes().get(i)).getDurationMinutes() * 60000;
-                                Date newEnd = new Date(this.newDate.getTime() + durationInMS);
-
-                                ArrayList<Note> notesLess_i = new ArrayList<>(dukeNotes.getNotes());
-                                notesLess_i.remove(i);
-                                NewNoteCommand.checkForClashes(notesLess_i, this.newDate, newEnd);
-
-                                if(this.newDate.after(this.oldDate)) {
-                                    ((Event) dukeNotes.getNotes().get(i)).setEndDate(newEnd);
-                                    ((Event) dukeNotes.getNotes().get(i)).setStartDate(this.newDate);
-                                } else {
-                                    ((Event) dukeNotes.getNotes().get(i)).setStartDate(this.newDate);
-                                    ((Event) dukeNotes.getNotes().get(i)).setEndDate(newEnd);
-                                }
-
-                                DukeUI.printDivider();
-                                System.out.println("    Start and End Date of Note #" + this.targetNote +
-                                        " changed from...");
-                                DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.oldDate) + " ...and... " +
-                                        DukeUI.NOTE_TIME.format(oldEnd), 66);
-                                System.out.println("    to...");
-                                DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.newDate) + " ...and... " +
-                                        DukeUI.NOTE_TIME.format(newEnd), 66);
-                                DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
-                                DukeUI.suggestListNotes();
-                            }
-                        } else {
-                            throw new DateException(this.newDate, "NoStart");
+                    }
+                    case "start" -> {
+                        if (changeStartDate(dukeNotes, i)) {
+                            DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
+                            DukeUI.suggestListNotes();
                         }
-                        break;
-                    case "end":
-                        if(dukeNotes.getNotes().get(i) instanceof Event) {
-                            if (dukeNotes.getNotes().get(i).getIsDone()) {
-                                DukeUI.printDivider();
-                                System.out.println("    The event had already concluded.");
-                                System.out.println("    The date shouldn't be edited anymore.");
-                            } else {
-                                this.oldDate = ((Event) dukeNotes.getNotes().get(i)).getEndDate();
-                                Date oldStart = ((Event) dukeNotes.getNotes().get(i)).getStartDate();
-
-                                ArrayList<Note> notesLess_i = new ArrayList<>(dukeNotes.getNotes());
-                                notesLess_i.remove(i);
-                                NewNoteCommand.checkForClashes(notesLess_i, oldStart, newDate);
-
-                                ((Event) dukeNotes.getNotes().get(i)).setEndDate(this.newDate);
-
-                                DukeUI.printDivider();
-                                System.out.println("    End Date of Note #" + this.targetNote + " changed from...");
-                                DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.oldDate), 66);
-                                System.out.println("    to...");
-                                DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.newDate), 66);
-                                DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
-                                DukeUI.suggestListNotes();
-                            }
-                        } else {
-                            throw new DateException(this.newDate, "NoEnd");
+                    }
+                    case "end" -> {
+                        if (changeEndDate(dukeNotes, i)) {
+                            DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
+                            DukeUI.suggestListNotes();
                         }
-                        break;
-                    default:
-                        throw new CommandException("The type of date you are trying to edit does not exist.");
+                    }
+                    default -> throw new CommandException("The type of date you are trying to edit does not exist.");
                 }
                 DukeUI.printDivider();
                 break;
