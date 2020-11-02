@@ -1,33 +1,56 @@
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ *Handles Ui
+ *
+ * reads user input, and gives response
+ */
 public class Ui {
     /*Handling user input*/
     public TaskList tasks;
     public Storage storage;
+
 
     public Ui (TaskList tasks, Storage storage) {
         this.tasks = tasks;
         this.storage = storage;
     }
 
+    /**
+     * Read input from user and process.
+     * Error processing will be handle in this method.
+     * uses user input to get response.
+     *
+     */
+
     public void readInput() {
         //reads in user input
         String userSentence;
         Scanner input = new Scanner(System.in);
         userSentence = input.nextLine();
-
         //replies to user input
         try {
-            
             response(userSentence);
         } catch (IllegalInputException e) {
             System.out.println(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            System.out.print("Follow the correct syntax below:\n" +
+                    "\tlist\n"+
+                    "\tdone <task number>\n"+
+                    "\tdelete <task number>\n"+
+                    "\ttodo <description>\n"+
+                    "\tdeadline <description> /by <DD/MM/YYYY>\n" +
+                    "\tevent <description> /at <DD/MM/YYYY>\n" );
         }
     }
 
-    public void response(String userSentence)throws IllegalInputException {
+    /**
+     * Direct input to correct response/method
+     * handles bye,list,done deletion of task, addition of task
+     * @param userSentence read from scanner
+     * @throws IllegalInputException if input is invalid
+     */
+    public void response(String userSentence) throws IllegalInputException {
         Pattern pattern1 = Pattern.compile((".*" + "bye" + ".*"), Pattern.CASE_INSENSITIVE);
         Matcher matcher1 = pattern1.matcher(userSentence);
 
@@ -49,8 +72,7 @@ public class Ui {
         }
         // when user inputs list
         if (matcher2.find()) {
-            System.out.println(Duke.numberOftask);
-            tasks.printTasks(); //
+            tasks.printTasks();
         }
         //handling user input 'done'
         else if (matcher3.find()) {
@@ -75,10 +97,6 @@ public class Ui {
         // all else will be added into tasklist
         else {
             tasks.storeList(userSentence);
-
         }
-       
     }
-
-
 }

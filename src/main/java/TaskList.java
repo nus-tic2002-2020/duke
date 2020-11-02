@@ -1,22 +1,25 @@
 import java.util.ArrayList;
 
-
 public class TaskList {
 
     public ArrayList<Task> tasks;
-    //public int numberOftask = 0;
 
     public TaskList(){
         this.tasks = new ArrayList<Task>();
     }
 
+    /**
+     * Stores user input as taskList, categorisation is done by task.java
+     * Successful addition will output added task massage if not exception is thrown.
+     *
+     */
     public void storeList (String input) throws IllegalInputException { //tasks should be array class task?
 
         while (true) {
             // here task/categorization assignment is being done by task.java
             this.tasks.add(new Task(input));
             System.out.println("\tGot it. I've added this task: ");
-            System.out.println("\t" + tasks.get(Duke.numberOftask).getTag() + "[" + tasks.get(Duke.numberOftask).getStatusIcon() + "] " + tasks.get(Duke.numberOftask).description +  tasks.get(Duke.numberOftask).timeDate);
+            System.out.println("\t" + tasks.get(Duke.numberOftask).getTag() + "[" + tasks.get(Duke.numberOftask).getStatusIcon() + "] " + tasks.get(Duke.numberOftask).description +  tasks.get(Duke.numberOftask).getTimeDate());
             System.out.println("\tNow you have " + (Duke.numberOftask+1) +" task in the list ");
 
             Duke.numberOftask++;
@@ -27,7 +30,14 @@ public class TaskList {
 
     }
 
-    public String convert_lineItem(int index){
+    /**
+     * Processing of task details to save in text file
+     * used in storage.java
+     * @param index of the Task details to be processed
+     * @return string in format to be saved
+     */
+
+    public String processtoTextfile(int index){
         String status = (this.tasks.get(index - 1).getStatusIcon());
         String lineItem = this.tasks.get(index - 1).getTag() + " | " + status + " | " + this.tasks.get(index - 1).description;
         if(this.tasks.get(index - 1).getTag() != "T"){
@@ -35,6 +45,11 @@ public class TaskList {
         }
         return lineItem;
     }
+
+    /**
+     * Prints tasklist invoked when user inputs list in UI
+     * @return empty if list is empty, if not prints contents of list
+     */
 
     public void printTasks() {
         if(this.tasks.size() == 0) {

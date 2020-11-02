@@ -2,13 +2,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-
 public class Duke {
 
     public static String humanName;
     public static int taskNumber;
     public static int numberOftask = 0;
-    //public static String writetofile;
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
@@ -16,8 +14,8 @@ public class Duke {
     public Duke(String filepath) throws IllegalInputException {
         storage  = new Storage(filepath);
         tasks = new TaskList();
-        storage.load(tasks, ui);
         this.ui = new Ui(tasks, storage);
+        storage.load(tasks, ui);
     }
 
     public void run(){
@@ -29,14 +27,13 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         System.out.println("\tHello! I'm Duke\n\tWhat is your name?");
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+       /* DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         Scanner in = new Scanner(System.in);
-        System.out.println("What is your name?\n");
         humanName = in.nextLine();
 
         System.out.println(humanName + " today is: " + (dtf.format(now)));
-        System.out.println("What can I do for you?\n");
+        System.out.println("What can I do for you?\n"); */
 
         while (true) {
             //echoCommands();
@@ -45,8 +42,6 @@ public class Duke {
         }
 
     }
-
-
         public static void main(String[] args) throws IllegalInputException {
         new Duke("duke.txt").run();
     }//end main

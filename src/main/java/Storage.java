@@ -13,35 +13,41 @@ public class Storage  {
         this.pathname = path;
     }
     //accessor and modifier
-    public void load(TaskList newList, Ui ui) throws IllegalInputException {
+    public void load(TaskList newList, Ui ui) {
         File f = new File(pathname);
         try {
             Scanner s = new Scanner(f);
             int counter = 0;
             while (s.hasNext()) {
-                String line_item = s.nextLine();
-                String[] split_line_item = line_item.split("\\|", 4);
+                String userSentence = s.nextLine();
+                String[] split_line_item = userSentence.split("\\|", 4);
+
                 switch (split_line_item[0].trim()) {
                     case "T":
-                        line_item = "todo " + split_line_item[2].trim();
+                        userSentence = "todo " + split_line_item[2].trim();
+
                         break;
                     case "D":
-                        line_item = "deadline " + split_line_item[2].trim() + "/by " + split_line_item[3].trim();
+                        userSentence = "deadline " + split_line_item[2].trim() + "/by " + split_line_item[3].trim();
+
                         break;
                     case "E":
-                        line_item = "event " + split_line_item[2].trim() + "/at " + split_line_item[3].trim();
+                       userSentence = "event " + split_line_item[2].trim() + "/at " + split_line_item[3].trim();
+
                         break;
                 }
-                ui.response(line_item);
-                //new_list.reader(line_item);
+                ui.response(userSentence);
                 counter++;
-                if (split_line_item[1].trim().equals("1")) {
-                    ui.response( "done " + counter);
-                    //new_list.reader("done " + counter);
+                if (split_line_item[1].trim().equals("\u2713")) {
+                    userSentence = "done " + counter;
+                    ui.response(userSentence);
+
                 }
             }
         }
-        catch (FileNotFoundException e) {}
+        catch (FileNotFoundException | IllegalInputException e) {
+            System.out.println("Error loading saved file");
+        }
     }
     public void save(TaskList cur_list){
         File taskFile = new File(pathname);
@@ -66,7 +72,7 @@ public class Storage  {
     private void saveList(TaskList cur_list) throws IOException{
         FileWriter fw = new FileWriter(pathname);
         for(int i = 1 ; i <= Duke.numberOftask ; i++){
-            fw.write(cur_list.convert_lineItem(i) + System.lineSeparator());
+            fw.write(cur_list.processtoTextfile(i) + System.lineSeparator());
         }
         fw.close();
     }
