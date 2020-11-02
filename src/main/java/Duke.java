@@ -18,13 +18,19 @@ public class Duke {
         int flag = 0;
         while (flag == 0) {
             String line = in.nextLine();
-            flag = text(line.trim());
+            try {
+                flag = text(line.trim());
+            } catch (DukeException e) { //unknown input
+                System.out.println(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("☹ OOPS!!! The description of a " + line.trim() + " cannot be empty.");
+            }
         }
     }
 
-    public  static int text(String input) {
+    public  static int text(String input) throws DukeException{
         String[] num = input.split(" ");
-        if (num.length > 0 && !num[0].isBlank()) {
+        if (/*num.length > 0 && */!num[0].isBlank()) {
             String command = num[0];
             switch (command) {
                 case "list":
@@ -46,14 +52,14 @@ public class Duke {
                     System.out.print("Bye. Hope to see you again soon!");
                     return 1;
                 default:
-                    addTask(input);
+                    throw new DukeException();
             }
         }
         return 0;
     }
 
 
-    public static void addTask (String description) {
+    public static void addTask(String description) {
         Task t = new Task(description);
         store[count++] = t;
         System.out.println("added: " + t);
@@ -80,19 +86,19 @@ public class Duke {
     }
 
     public static void ToDoTask(String description){
-        System.out.println("Got it. I've added this task: : ");
         String[] td = description.split("todo "); //omit the first word
         Task t = new ToDo(td[1]);
         store[count++] = t;
+        System.out.println("Got it. I've added this task: : ");
         System.out.println(store[count-1]);
         System.out.println("Now you have " + count + " tasks in the list.");
     }
 
     public static void DeadlineTask(String description){
-        System.out.println("Got it. I've added this task: : ");
         String[] due = description.split("/by ");
         Task t = new Deadline(due[0],due[1]);
         store[count++] = t;
+        System.out.println("Got it. I've added this task: : ");
         System.out.println( store[count-1]);
         System.out.println("Now you have " + count + " tasks in the list.");
     }
@@ -102,6 +108,7 @@ public class Duke {
         String[] due = description.split("/at ");
         Task t = new Event(due[0],due[1]);
         store[count++] = t;
+        System.out.println("Got it. I've added this task: : ");
         System.out.println( store[count-1]);
         System.out.println("Now you have " + count + " tasks in the list.");
     }
