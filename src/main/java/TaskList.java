@@ -7,15 +7,14 @@ public class TaskList {
     public int numberOftask = 0;
 
     public TaskList(){
-       this.tasks = new ArrayList<Task>();
+        this.tasks = new ArrayList<Task>();
     }
 
     public void storeList (String input) throws IllegalInputException { //tasks should be array class task?
 
         while (true) {
             // here task/categorization assignment is being done by task.java
-
-            tasks.add(new Task(input));
+            this.tasks.add(new Task(input));
             System.out.println("\tGot it. I've added this task: ");
             System.out.println("\t" + tasks.get(numberOftask).getTag() + "[" + tasks.get(numberOftask).getStatusIcon() + "] " + tasks.get(numberOftask).description +  tasks.get(numberOftask).timeDate);
             System.out.println("\tNow you have " + (numberOftask+1) +" task in the list ");
@@ -38,14 +37,14 @@ public class TaskList {
     }
 
     public void printTasks() {
-        if(tasks.size() == 0) {
+        if(this.tasks.size() == 0) {
             System.out.println(Duke.humanName + "\tthe list is empty!");
             return;
         }
         System.out.println("\tHere are the tasks in your list: ");
 
         for(int i = 1 ; i <= numberOftask ; i++) {
-            System.out.println("\t" + i+". "  + tasks.get(i-1).getTag() + "[" + tasks.get(i-1).getStatusIcon() + "] " + tasks.get(i-1).description );
+            System.out.println("\t" + i+". "  + this.tasks.get(i-1).getTag() + "[" + this.tasks.get(i-1).getStatusIcon() + "] " + this.tasks.get(i-1).description );
 
         }
 

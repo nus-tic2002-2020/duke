@@ -1,14 +1,13 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UI {
+public class Ui {
     /*Handling user input*/
     public TaskList tasks;
     public Storage storage;
 
-    public UI (TaskList tasks, Storage storage) {
+    public Ui (TaskList tasks, Storage storage) {
         this.tasks = tasks;
         this.storage = storage;
     }
@@ -21,6 +20,7 @@ public class UI {
 
         //replies to user input
         try {
+            
             response(userSentence);
         } catch (IllegalInputException e) {
             System.out.println(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");

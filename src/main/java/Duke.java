@@ -1,9 +1,7 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.ArrayList;
+
 
 public class Duke {
 
@@ -13,13 +11,13 @@ public class Duke {
     //public static String writetofile;
     private Storage storage;
     private TaskList tasks;
-    private UI ui;
+    private Ui ui;
 
-    public Duke(String filepath){
-        this.ui = new UI(tasks, storage);
+    public Duke(String filepath) throws IllegalInputException {
         storage  = new Storage(filepath);
         tasks = new TaskList();
         storage.load(tasks, ui);
+        this.ui = new Ui(tasks, storage);
     }
 
     public void run(){
@@ -49,7 +47,7 @@ public class Duke {
     }
 
 
-        public static void main(String[] args) {
+        public static void main(String[] args) throws IllegalInputException {
         new Duke("duke.txt").run();
     }//end main
 
