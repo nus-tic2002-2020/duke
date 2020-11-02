@@ -14,11 +14,15 @@ public class TaskManager {
         this.tasks = new ArrayList<Task>();
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
 
-    public void setTasksFromRaw(List<String> rawList, String separator) throws DukeException{
+    public void setTasksFromRaw(List<String> rawList, String separator) throws DukeException {
         for (String raw: rawList) {
             String[] arrSplit = raw.split(separator);
 
@@ -49,13 +53,13 @@ public class TaskManager {
                     newTask = new Task();
                     newTask.fromSavableString(raw);
             }
-
+            this.add(newTask);
         }
     }
 
-    public void delete(String[] args) throws DukeException {
-        System.out.println("    ____________________________________________________________");
-        System.out.println("    Song la! Lim peh help you remove this task(s):");
+    public List<Task> delete(String[] args) throws DukeException {
+        //System.out.println("    ____________________________________________________________");
+        //System.out.println("    Song la! Lim peh help you remove this task(s):");
 
         ArrayList<Task> tasksToRemove = new ArrayList<Task>();
         ArrayList<Integer> errorIndices = new ArrayList<Integer>();
@@ -78,26 +82,29 @@ public class TaskManager {
         }
 
         // Print deleted task
-        for (Task t: tasksToRemove) {
-            System.out.printf("       %s\n", t.toString());
-        }
+        //for (Task t: tasksToRemove) {
+        //    System.out.printf("       %s\n", t.toString());
+        //}
 
         // Delete all tasks in collection
         tasks.removeAll(tasksToRemove);
 
-        System.out.printf("    Now you have %d tasks in the list.\n", tasks.size());
+        //System.out.printf("    Now you have %d tasks in the list.\n", tasks.size());
 
         if (errorIndices.size() > 0) { // raise exception for wrong index
             throw new DukeException(String.format("Err... cannot find these task(s) leh - %s", errorIndices.toString()),
                     DukeException.DukeError.TASK_NOT_FOUND);
         }
 
-        System.out.println("    ____________________________________________________________");
+        //System.out.println("    ____________________________________________________________");
+        return tasksToRemove;
     }
 
-    public void done(String[] args) {
+    public List<Task> done(String[] args) {
         //System.out.println("    ____________________________________________________________");
         //System.out.println("    Power la! I've marked this task(s) as done:");
+        ArrayList<Task> listDoneTasks = new ArrayList<Task>();
+
         for (int i = 1; i < args.length; i++) { // Skip first: command
 
             try {
@@ -110,7 +117,8 @@ public class TaskManager {
                     t.markAsDone();
 
                     // Print done task
-                    System.out.printf("       %s\n", t.toString()); //TODO: output print array
+                    //System.out.printf("       %s\n", t.toString());
+                    listDoneTasks.add(t);
                 }
 
             } catch (NumberFormatException ex) {
@@ -119,23 +127,24 @@ public class TaskManager {
 
         }
         //System.out.println("    ____________________________________________________________");
+        return listDoneTasks;
     }
 
     public void add(Task t) throws DukeException {
         //boolean ok = true;
-        int intCount = tasks.size();
+        //nt intCount = tasks.size();
         //System.out.println("    ____________________________________________________________");
-        System.out.println("    Got it. I've added this task:");
+        //System.out.println("    Got it. I've added this task:");
         //if (intCount < MAX_TASKS) {
         //tasks[countTasks++] = t;
         tasks.add(t);
-        intCount = tasks.size();
+        //intCount = tasks.size();
         //countTasks++;
-        System.out.printf("      %s\n", t);
+        //System.out.printf("      %s\n", t);
         //} else {
         //    ok = false;
         //}
-        System.out.printf("    Now you have %d tasks in the list.\n", intCount);
+        //System.out.printf("    Now you have %d tasks in the list.\n", intCount);
         //System.out.println("    ____________________________________________________________");
 
         //if (!ok) {

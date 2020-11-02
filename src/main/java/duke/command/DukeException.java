@@ -8,7 +8,8 @@ public class DukeException extends Exception {
         MEMORY_FULL,
         TASK_NOT_FOUND,
         UNKNOWN_COMMAND,
-        WRONG_DATA_FORMAT
+        WRONG_DATA_FORMAT,
+        WRITE_ERROR
     }
 
     private DukeError code;
@@ -23,9 +24,9 @@ public class DukeException extends Exception {
     }
 
     public void printError() {
-        System.out.println("    ____________________________________________________________");
+        //System.out.println("    ____________________________________________________________");
         System.out.printf("     ☹ OOPS!!! %s\n", super.getMessage());
-        System.out.println("    ____________________________________________________________");
+        //System.out.println("    ____________________________________________________________");
     }
 
     public DukeError getErrorCode() {

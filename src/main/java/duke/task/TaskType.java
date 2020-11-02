@@ -12,7 +12,7 @@ public enum TaskType {
 
     public static TaskType valueOfCode(String code) {
         for (TaskType t: values()) {
-            if (t.code.equals(code)) {
+            if (t.code.equals(code.toUpperCase())) {
                 return t;
             }
         }

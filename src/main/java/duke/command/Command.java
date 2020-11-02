@@ -7,13 +7,25 @@ import duke.task.Event;
 import duke.task.TaskManager;
 import duke.task.Todo;
 
+import java.io.IOException;
+
 public abstract class Command {
+
+    protected String[] args;
+
+    public Command() {
+
+    }
+
+    public Command(String[] args) {
+        this.args = args;
+    }
 
     public abstract CommandType getType();
 
     public abstract boolean isExit();
 
-    public abstract boolean execute(TaskManager taskManager, Ui ui, Storage storage);
+    public abstract boolean execute(TaskManager taskManager, Ui ui, Storage storage) throws DukeException;
 
     public static Command parse(String input) throws DukeException {
         Command command = null;
@@ -29,10 +41,11 @@ public abstract class Command {
                     break;
                 case "done":
                     //doneTasks(args);
-
+                    command = new DoneCommand(args);
                     break;
                 case "delete":
                     //deleteTasks(args);
+                    command = new DeleteCommand(args);
                     break;
                 case "todo":
                     text = readInputParameter(args, null);
@@ -41,6 +54,7 @@ public abstract class Command {
                                 DukeException.DukeError.MISSING_ARGUMENT);
                     }
                     //addTask(new Todo(text));
+                    command = new AddCommand(new Todo(text));
                     break;
                 case "deadline":
                     text = readInputParameter(args, "/by");
@@ -54,6 +68,7 @@ public abstract class Command {
                                 DukeException.DukeError.MISSING_ARGUMENT);
                     }
                     //addTask(new Deadline(text, by));
+                    command = new AddCommand(new Deadline(text, by));
                     break;
                 case "event":
                     text = readInputParameter(args, "/at");
@@ -67,10 +82,12 @@ public abstract class Command {
                                 DukeException.DukeError.MISSING_ARGUMENT);
                     }
                     //addTask(new Event(text, at));
+                    command = new AddCommand(new Event(text, at));
                     break;
                 case "bye":
                     //bye();
-
+                    command = new ExitCommand();
+                    break;
                 default:
                     throw new DukeException("Sorli, but I dunno what that means :-(",
                             DukeException.DukeError.UNKNOWN_COMMAND);

@@ -10,15 +10,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoneCommand extends Command{
+public class AddCommand extends Command{
 
-    public DoneCommand(String[] args) {
-        super(args);
+    protected Task task;
+
+    public AddCommand(Task task) {
+        this.task = task;
     }
 
     @Override
     public CommandType getType() {
-        return CommandType.DONE;
+        return CommandType.ADD;
     }
 
     @Override
@@ -28,21 +30,23 @@ public class DoneCommand extends Command{
 
     @Override
     public boolean execute(TaskManager taskManager, Ui ui, Storage storage) throws DukeException {
-        List<Task> doneTasks = taskManager.done(super.args);
+
+        ui.echo("Got it. I've added this task:");
+
+        taskManager.add(task);
+
+        //System.out.printf("      %s\n", t);
+        ui.echo("  " + task.toString());
 
         List<Task> tasks = taskManager.getTasks();
-        List<Savable> savables = new ArrayList<Savable>();
-        for (Task t: tasks) {
-            savables.add((Savable) t);
-        }
+        ui.echo(String.format("Now you have %d tasks in the list.", tasks.size()));
 
-        ui.echo("Power la! I've marked this task(s) as done:");
-        for (Task t: doneTasks) {
-            ui.echo("   " + t.toString());
-        }
+        // Convert to savable list
+        Savable s = (Savable) task;
 
+        // Write all to disk
         try {
-            storage.writeAll(savables);
+            storage.appendln(s);
         } catch (IOException ex) {
             throw new DukeException(ex.getMessage(), DukeException.DukeError.WRITE_ERROR);
         }

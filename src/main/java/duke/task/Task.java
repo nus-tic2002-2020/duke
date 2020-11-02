@@ -45,14 +45,15 @@ public class Task implements Savable {
 
     @Override
     public String toSavableString() {
-        return String.format("%s|%d|%s", this.type.getCode(), isDone, this.description);
+        return String.format("%s|%d|%s", this.type.getCode(), isDone ? 1 : 0, this.description);
     }
 
     @Override
     public void fromSavableString(String savableString) throws DukeException {
-        String[] arrString = savableString.split(separator);
+        String[] arrString = savableString.split("\\" + separator);
         if (arrString.length < 3) {
-            throw new DukeException("Rabak Sial, wrong data format!", DukeException.DukeError.WRONG_DATA_FORMAT);
+            throw new DukeException(String.format("Rabak Sial, wrong data format! Length is %d.", arrString.length),
+                    DukeException.DukeError.WRONG_DATA_FORMAT);
         }
 
         try {
@@ -62,6 +63,8 @@ public class Task implements Savable {
             throw new DukeException(String.format("Rabak Sial, wrong data format! %s", ex.getMessage()),
                     DukeException.DukeError.WRONG_DATA_FORMAT);
         }
+
+        this.description = arrString[2].strip();
 
     }
 }

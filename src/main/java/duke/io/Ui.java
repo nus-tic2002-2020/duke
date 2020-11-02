@@ -26,20 +26,18 @@ public class Ui {
                 + "| |_| | | |_| |  | | | | | | | |/ / _ \\\n"
                 + "|  _  | |  _  |  | |_| | |_| |   <  __/\n"
                 + "| | | | | | | |  |____/ \\__,_|_|\\_\\___|\n";
-        echo("Hello from\n" + logo);
+        System.out.println("Hello from\n" + logo);
     }
 
     public void greet() {
         echoLine();
-        echo("    Oei! I'm Ah Duke");
-        echo("    What can I do for you leh?");
+        echo("Oei! I'm Ah Duke");
+        echo("What can I do for you leh?");
         echoLine();
     }
 
     public void bye() {
-        echoLine();
         echo("    Bye bye. Hope to see you again soon!");
-        echoLine();
     }
 
     public void loadError() {
@@ -65,7 +63,7 @@ public class Ui {
     }
 
     public void echo(String message) {
-        System.out.printf("     %s\n", message);
+        System.out.printf("    %s\n", message);
     }
 
 }

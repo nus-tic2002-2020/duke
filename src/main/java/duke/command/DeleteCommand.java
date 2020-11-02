@@ -10,15 +10,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoneCommand extends Command{
+public class DeleteCommand extends Command{
 
-    public DoneCommand(String[] args) {
+    public DeleteCommand(String[] args) {
         super(args);
     }
 
     @Override
     public CommandType getType() {
-        return CommandType.DONE;
+        return CommandType.DELETE;
     }
 
     @Override
@@ -28,24 +28,31 @@ public class DoneCommand extends Command{
 
     @Override
     public boolean execute(TaskManager taskManager, Ui ui, Storage storage) throws DukeException {
-        List<Task> doneTasks = taskManager.done(super.args);
+        List<Task> removedTasks = taskManager.delete(super.args);
 
         List<Task> tasks = taskManager.getTasks();
+
+        // Convert to savable list
         List<Savable> savables = new ArrayList<Savable>();
         for (Task t: tasks) {
             savables.add((Savable) t);
         }
 
-        ui.echo("Power la! I've marked this task(s) as done:");
-        for (Task t: doneTasks) {
-            ui.echo("   " + t.toString());
-        }
-
+        // Write all to disk
         try {
             storage.writeAll(savables);
         } catch (IOException ex) {
             throw new DukeException(ex.getMessage(), DukeException.DukeError.WRITE_ERROR);
         }
+
+        ui.echo("Song la! Lim peh help you remove this task(s):");
+
+        int i = 1;
+        for (Task t: removedTasks) {
+            ui.echo(String.format("   %s", t));
+        }
+
+        ui.echo(String.format("Now you have %d tasks in the list.", tasks.size()));
 
         return true;
     }

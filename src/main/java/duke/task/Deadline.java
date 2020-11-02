@@ -30,7 +30,7 @@ public class Deadline extends Task {
     public void fromSavableString(String savableString) throws DukeException {
         super.fromSavableString(savableString);
 
-        String[] arrString = savableString.split(separator);
+        String[] arrString = savableString.split("\\" + separator);
         if (arrString.length < 4) {
             throw new DukeException("Rabak Sial, wrong data format for Deadline!", DukeException.DukeError.WRONG_DATA_FORMAT);
         }

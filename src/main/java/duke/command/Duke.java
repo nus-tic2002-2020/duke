@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 import duke.io.Savable;
@@ -25,9 +26,9 @@ public class Duke {
         ui = new Ui();
 
         try {
-            ArrayList<String> entries = storageTasks.readAll();
+            List<String> entries = storageTasks.load();
             taskManager = new TaskManager();
-            taskManager.setTasksFromRaw(entries,DATA_SEPARATOR);
+            taskManager.setTasksFromRaw(entries, DATA_SEPARATOR);
         } catch (DukeException | IOException e) {
             ui.loadError();
             taskManager = new TaskManager();
@@ -38,20 +39,31 @@ public class Duke {
         ui.welcome();
 
         boolean exit = false;
-
+        boolean printEndLine = false;
         ui.greet();
 
         while(!exit) { // If no error, continue
             try {
                 String fullCommand = ui.readCommand();
+
+                if (fullCommand == null || fullCommand.isBlank()) { // Do not parse command
+                    continue;
+                } else {
+                    printEndLine = true;
+                }
+
                 ui.echoLine();
                 Command command = Command.parse(fullCommand);
                 command.execute(taskManager, ui, storageTasks);
                 exit = command.isExit();
+
             } catch (DukeException e) {
                 e.printError();
             } finally {
-                ui.echoLine();
+                if (printEndLine) {
+                    ui.echoLine();
+                    printEndLine = false;
+                }
             }
         }
 

@@ -24,7 +24,7 @@ public class ListCommand extends Command{
 
         ui.echo("Here are the tasks in your list:");
         for (String t: tasks) {
-            ui.echo(t);
+            ui.echo(" " + t);
         }
 
         return true;
