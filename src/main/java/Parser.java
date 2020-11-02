@@ -1,3 +1,9 @@
+/*************************************************************
+ *
+ *         Public class by factionsypho
+ *
+ * *************************************************************/
+
 public class Parser {
     public static Command parse(String commandLine) throws DukeException{
         switch(commandLine.split(" ")[0]){

@@ -1,3 +1,9 @@
+/*************************************************************
+ *
+ *         Public class by factionsypho
+ *
+ * *************************************************************/
+
 public class Task {
     protected String description;
     protected boolean isDone;

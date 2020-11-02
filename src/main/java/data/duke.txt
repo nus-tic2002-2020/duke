@@ -1,2 +1,4 @@
 T | 0 | one more task
-D | 1 | finish level 7 | tonight
+D | 0 | level 8 | 02/11/2020 1900
+D | 0 | level 9 | 12/11/2020 1900
+D | 0 | finish level 7 | 02/11/2020 1800

@@ -1,3 +1,9 @@
+/*************************************************************
+ *
+ *         Public class by factionsypho
+ *
+ * *************************************************************/
+
 import java.io.IOException;
 import java.util.Arrays;
 

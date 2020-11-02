@@ -1,6 +1,11 @@
+/*************************************************************
+ *
+ *         Public class by factionsypho
+ *
+ * *************************************************************/
+
 import java.io.*;
 import java.lang.*;
-import java.util.*;
 
 public class Duke {
 

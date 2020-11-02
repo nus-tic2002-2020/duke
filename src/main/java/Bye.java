@@ -1,3 +1,9 @@
+/*************************************************************
+ *
+ *         Public class by factionsypho
+ *
+ * *************************************************************/
+
 public class Bye extends Command{
     public Bye(boolean isExit, String commandLine){
         super(isExit, commandLine);

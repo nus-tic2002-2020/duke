@@ -1,3 +1,9 @@
+/*************************************************************
+ *
+ *         Public class by factionsypho
+ *
+ * *************************************************************/
+
 import java.io.IOException;
 
 public class DeleteCommand extends Command{
