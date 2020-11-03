@@ -1,5 +1,6 @@
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
 
@@ -7,7 +8,7 @@ public class Duke {
 		System.out.println("\t____________________________________________________________");
     }
 
-    public static Task[] printUserInput(Task[] listItems) {
+    public static ArrayList<Task> printUserInput(ArrayList<Task> listItems) {
         //user input
         String userInput;
         Scanner input = new Scanner(System.in);
@@ -35,14 +36,14 @@ public class Duke {
                 int divPosition = userInput.indexOf("/");
                 String eventDescription = userInput.substring(6, divPosition-1);
                 String dateTime = userInput.substring(divPosition + 4);
-                listItems[pointer] = new Events(eventDescription, dateTime);
+                Task t = new Events(eventDescription, dateTime);
+                listItems.add(t);
 
                 printLine();
                 System.out.println("\tGot it. I've added this task:");
-                System.out.println("\t" + listItems[pointer].toString());
-                System.out.println("\tNow you have " + (pointer + 1) + " tasks in the list.");
+                System.out.println("\t" + listItems.get(listItems.size()-1).toString());
+                System.out.println("\tNow you have " + (listItems.size()) + " tasks in the list.");
                 printLine();
-                pointer++;
 
             }
             // add deadline task
@@ -50,27 +51,28 @@ public class Duke {
                 int divPosition = userInput.indexOf("/");
                 String deadlineDescription = userInput.substring(9,divPosition-1);
                 String filteredDate = userInput.substring(divPosition + 4);
-                listItems[pointer] = new Deadline(deadlineDescription, filteredDate);
+                Task t = new Deadline(deadlineDescription, filteredDate);
+                listItems.add(t);
 
                 printLine();
                 System.out.println("\tGot it. I've added this task:");
-                System.out.println("\t" + listItems[pointer].toString());
-                System.out.println("\tNow you have " + (pointer + 1) + " tasks in the list.");
+                System.out.println("\t" + listItems.get(listItems.size()-1).toString());
+                System.out.println("\tNow you have " + (listItems.size()) + " tasks in the list.");
                 printLine();
-                pointer++;
             }
             // add to do task
             else if (userInput.startsWith("todo")) {
                 try{
                     String todoDescription = userInput.substring(5);
                     CheckEmpty(todoDescription);
-                    listItems[pointer] = new Todo(todoDescription);
+                    Task t = new Todo(todoDescription);
+                    listItems.add(t);
+
                     printLine();
                     System.out.println("\tGot it. I've added this task:");
-                    System.out.println("\t" + listItems[pointer].toString());
-                    System.out.println("\tNow you have " + (pointer + 1) + " tasks in the list.");
+                    System.out.println("\t" + listItems.get(listItems.size()-1).toString());
+                    System.out.println("\tNow you have " + (listItems.size()) + " tasks in the list.");
                     printLine();
-                    pointer++;
                 }
                 catch (StringIndexOutOfBoundsException e) {
                     printLine();
@@ -78,7 +80,15 @@ public class Duke {
                     printLine();
                     }
             }
-
+            else if (userInput.startsWith("delete")) {
+                int numTask = Integer.valueOf(userInput.substring(7, userInput.length()));
+                Task t = listItems.get(numTask - 1);
+                listItems.remove(numTask - 1);
+                System.out.println("\tNoted. I've removed this task:");
+                System.out.println("\t" + t.toString());
+                System.out.println("\tNow you have " + (listItems.size()) + " tasks in the list.");
+                printLine();
+            }
           /*   else{
                 printLine();
                 listItems = storeUserList (listItems, userInput);
@@ -88,48 +98,44 @@ public class Duke {
     }
 
     //store items in list
-    public static Task[] storeUserList(Task[] listItems, String input) {
+    public static ArrayList<Task> storeUserList(ArrayList<Task> listItems, String input) {
         int counter = 0;
             while(true){
-                if(listItems[counter] == null){
-                    listItems[counter] = new Task(input);
-                    System.out.println ("\tadded: " + input);
-                    break;
-                }
-                counter++;
+                listItems.add(new Task (input));
+                System.out.println ("\tadded: " + input);
+                break;
+
             }
         return listItems;
     }
 
         //print items in list
-    public static void printUserList(Task[] listItems){
-        if(listItems[0] == null){
+    public static void printUserList(ArrayList<Task> listItems){
+        if(listItems.size() == 0){
             System.out.println("List is empty");
             return;
         }
-
         printLine();
 
-        for (int i = 1 ; i <= listItems.length ; i++){
-            System.out.println("\t" + i + ". " + listItems[i-1].toString());
-                if(listItems[i] == null){
-                    printLine();
-                    return;
-                }
-            }
+        for (int i = 0 ; i < listItems.size(); i++){
+            System.out.println("\t" + (i+1) + ". " + listItems.get(i).toString());
         }
 
+        printLine();
+        return;
+    }
 
 
-    public static Task[] doneMessage(Task[] listItems, String userInput)   {
+
+    public static ArrayList<Task> doneMessage(ArrayList<Task> listItems, String userInput)   {
 
        try {
            int filteredNumber = Integer.parseInt(userInput.substring(5));
-           listItems[filteredNumber - 1].markDone();
+           listItems.get(filteredNumber - 1).markDone();
 
            printLine();
            System.out.println("\tNice! I've marked this task as done:");
-           System.out.println("\t" + listItems[filteredNumber - 1].toString());
+           System.out.println("\t" + listItems.get(filteredNumber - 1).toString());
            printLine();
 
        }
@@ -154,7 +160,7 @@ public class Duke {
 
     public static void main(String[] args) {
       //  String [] ListofItems = new String[100];
-        Task[] listTask = new Task[100];
+        ArrayList<Task> listTask = new ArrayList<Task>();
 
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"

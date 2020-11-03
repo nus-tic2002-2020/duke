@@ -1,2 +1,2 @@
-package PACKAGE_NAME;public class IndexOutOfRangeException {
+public class IndexOutOfRangeException extends DukeException {
 }
