@@ -164,19 +164,18 @@ public class ListCommand extends DukeCommand {
 
         if(this.dateFilter == null) {
             return true;
-        }else {
-            long duration = this.timelineDays * 86400000;
-            Date start = this.dateFilter;
-            Date end = new Date(this.dateFilter.getTime() + duration);
-            if (note instanceof Deadline) {
-                return ((Deadline) note).getTargetDate().after(start) &&
-                        ((Deadline) note).getTargetDate().before(end);
-            } else if (note instanceof Event) {
-                return ((Event) note).getStartDate().after(start) &&
-                        ((Event) note).getStartDate().before(end);
-            } else {
-                return false;
-            }
+        }
+        long duration = this.timelineDays * 86400000;
+        Date start = this.dateFilter;
+        Date end = new Date(this.dateFilter.getTime() + duration);
+        if (note instanceof Deadline) {
+            return ((Deadline) note).getTargetDate().after(start) &&
+                    ((Deadline) note).getTargetDate().before(end);
+        } else if (note instanceof Event) {
+            return ((Event) note).getStartDate().after(start) &&
+                    ((Event) note).getStartDate().before(end);
+        } else {
+            return false;
         }
     }
 
@@ -190,12 +189,11 @@ public class ListCommand extends DukeCommand {
 
         if(this.addedFilter == null) {
             return true;
-        }else {
-            long duration = this.timelineDays * 86400000;
-            Date start = this.addedFilter;
-            Date end = new Date(this.addedFilter.getTime() + duration);
-            return note.getAddDate().after(start) && note.getAddDate().before(end);
         }
+        long duration = this.timelineDays * 86400000;
+        Date start = this.addedFilter;
+        Date end = new Date(this.addedFilter.getTime() + duration);
+        return note.getAddDate().after(start) && note.getAddDate().before(end);
     }
 
     /**
@@ -208,13 +206,12 @@ public class ListCommand extends DukeCommand {
 
         if(this.noteFilter == null) {
             return true;
-        } else {
-            return switch (this.noteFilter) {
-                case "O" -> !note.getIsDone();
-                case "C" -> note.getIsDone();
-                default -> false;
-            };
         }
+        return switch (this.noteFilter) {
+            case "O" -> !note.getIsDone();
+            case "C" -> note.getIsDone();
+            default -> false;
+        };
     }
 
     /**
@@ -227,11 +224,10 @@ public class ListCommand extends DukeCommand {
 
         if(this.textFilter == null) {
             return true;
-        } else {
-            String desc = note.getDescription().toUpperCase();
-            String text = this.textFilter.toUpperCase();
-            return desc.contains(text);
         }
+        String desc = note.getDescription().toUpperCase();
+        String text = this.textFilter.toUpperCase();
+        return desc.contains(text);
     }
 
     /**
@@ -313,48 +309,48 @@ public class ListCommand extends DukeCommand {
                 }
             } else {
                 switch (NoteType.getCONSTRUCTOR(this.noteType.toString())) {
-                    case "Bill" -> {
-                        if (note instanceof Bill) {
-                            notes.add(note);
-                            selectionSortDates(notes);
-                        }
+                case "Bill" -> {
+                    if (note instanceof Bill) {
+                        notes.add(note);
+                        selectionSortDates(notes);
                     }
-                    case "Birthday" -> {
-                        if (note instanceof Birthday) {
-                            notes.add(note);
-                            selectionSortDates(notes);
-                        }
+                }
+                case "Birthday" -> {
+                    if (note instanceof Birthday) {
+                        notes.add(note);
+                        selectionSortDates(notes);
                     }
-                    case "Deadline" -> {
-                        if (note instanceof Deadline) {
-                            notes.add(note);
-                            selectionSortDates(notes);
-                        }
+                }
+                case "Deadline" -> {
+                    if (note instanceof Deadline) {
+                        notes.add(note);
+                        selectionSortDates(notes);
                     }
-                    case "Event" -> {
-                        if (note instanceof Event) {
-                            notes.add(note);
-                            selectionSortDates(notes);
-                        }
+                }
+                case "Event" -> {
+                    if (note instanceof Event) {
+                        notes.add(note);
+                        selectionSortDates(notes);
                     }
-                    case "Shoplist" -> {
-                        if (note instanceof Shoplist) {
-                            notes.add(note);
-                            selectionSortBudgets(notes);
-                        }
+                }
+                case "Shoplist" -> {
+                    if (note instanceof Shoplist) {
+                        notes.add(note);
+                        selectionSortBudgets(notes);
                     }
-                    case "Task" -> {
-                        if (note instanceof Task) {
-                            notes.add(note);
-                        }
+                }
+                case "Task" -> {
+                    if (note instanceof Task) {
+                        notes.add(note);
                     }
-                    case "Wedding" -> {
-                        if (note instanceof Wedding) {
-                            notes.add(note);
-                            selectionSortDates(notes);
-                        }
+                }
+                case "Wedding" -> {
+                    if (note instanceof Wedding) {
+                        notes.add(note);
+                        selectionSortDates(notes);
                     }
-                    case "Note" -> notes.add(note);
+                }
+                case "Note" -> notes.add(note);
                 }
             }
         }

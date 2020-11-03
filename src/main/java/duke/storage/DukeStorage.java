@@ -260,148 +260,148 @@ public class DukeStorage {
             nextLine = decodeText(nextLine);
             String[] readIndexes = nextLine.split("/");
             switch (readIndexes[0]) {
-                case "Bill" -> {
-                    int serialNum = Integer.parseInt(readIndexes[1]);
-                    String description = readIndexes[2];
-                    Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
-                    boolean isDone = Boolean.parseBoolean(readIndexes[4]);
-                    Date targetDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
-                    boolean doneAhead = Boolean.parseBoolean(readIndexes[6]);
-                    double budgetSet = Double.parseDouble(readIndexes[7]);
-                    double budgetRevised = Double.parseDouble(readIndexes[8]);
-                    double budgetUsed = Double.parseDouble(readIndexes[9]);
-                    double budgetBalance = Double.parseDouble(readIndexes[10]);
-                    boolean isRevised = Boolean.parseBoolean(readIndexes[11]);
-                    boolean isOverBudget = Boolean.parseBoolean(readIndexes[12]);
-                    Budget itemBudget = new Budget(budgetSet, budgetRevised, budgetUsed,
-                            budgetBalance, isRevised, isOverBudget);
+            case "Bill" -> {
+                int serialNum = Integer.parseInt(readIndexes[1]);
+                String description = readIndexes[2];
+                Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
+                boolean isDone = Boolean.parseBoolean(readIndexes[4]);
+                Date targetDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
+                boolean doneAhead = Boolean.parseBoolean(readIndexes[6]);
+                double budgetSet = Double.parseDouble(readIndexes[7]);
+                double budgetRevised = Double.parseDouble(readIndexes[8]);
+                double budgetUsed = Double.parseDouble(readIndexes[9]);
+                double budgetBalance = Double.parseDouble(readIndexes[10]);
+                boolean isRevised = Boolean.parseBoolean(readIndexes[11]);
+                boolean isOverBudget = Boolean.parseBoolean(readIndexes[12]);
+                Budget itemBudget = new Budget(budgetSet, budgetRevised, budgetUsed,
+                        budgetBalance, isRevised, isOverBudget);
 
-                    if(isDone) {
-                        Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[13]);
-                        note = new Bill(serialNum, description, addDate, doneDate,
-                                true, targetDate, doneAhead, itemBudget);
-                    } else {
-                        note = new Bill(serialNum, description, addDate,
-                                false, targetDate, doneAhead, itemBudget);
-                    }
+                if(isDone) {
+                    Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[13]);
+                    note = new Bill(serialNum, description, addDate, doneDate,
+                            true, targetDate, doneAhead, itemBudget);
+                } else {
+                    note = new Bill(serialNum, description, addDate,
+                            false, targetDate, doneAhead, itemBudget);
                 }
-                case "Birthday" -> {
-                    int serialNum = Integer.parseInt(readIndexes[1]);
-                    String description = readIndexes[2];
-                    Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
-                    boolean isDone = Boolean.parseBoolean(readIndexes[4]);
-                    Date startDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
-                    Date endDate = DukeUI.INPUT_TIME.parse(readIndexes[6]);
-                    long durationMinutes = Long.parseLong(readIndexes[7]);
+            }
+            case "Birthday" -> {
+                int serialNum = Integer.parseInt(readIndexes[1]);
+                String description = readIndexes[2];
+                Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
+                boolean isDone = Boolean.parseBoolean(readIndexes[4]);
+                Date startDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
+                Date endDate = DukeUI.INPUT_TIME.parse(readIndexes[6]);
+                long durationMinutes = Long.parseLong(readIndexes[7]);
 
-                    if(isDone) {
-                        Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[8]);
-                        note = new Birthday(serialNum, description, addDate, doneDate,
-                                true, startDate, endDate, durationMinutes);
-                    } else {
-                        note = new Birthday(serialNum, description, addDate,
-                                false, startDate, endDate, durationMinutes);
-                    }
+                if(isDone) {
+                    Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[8]);
+                    note = new Birthday(serialNum, description, addDate, doneDate,
+                            true, startDate, endDate, durationMinutes);
+                } else {
+                    note = new Birthday(serialNum, description, addDate,
+                            false, startDate, endDate, durationMinutes);
                 }
-                case "Deadline" -> {
-                    int serialNum = Integer.parseInt(readIndexes[1]);
-                    String description = readIndexes[2];
-                    Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
-                    boolean isDone = Boolean.parseBoolean(readIndexes[4]);
-                    Date targetDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
-                    boolean doneAhead = Boolean.parseBoolean(readIndexes[6]);
+            }
+            case "Deadline" -> {
+                int serialNum = Integer.parseInt(readIndexes[1]);
+                String description = readIndexes[2];
+                Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
+                boolean isDone = Boolean.parseBoolean(readIndexes[4]);
+                Date targetDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
+                boolean doneAhead = Boolean.parseBoolean(readIndexes[6]);
 
-                    if(isDone) {
-                        Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[7]);
-                        note = new Deadline(serialNum, description, addDate, doneDate,
-                                true, targetDate, doneAhead);
-                    } else {
-                        note = new Deadline(serialNum, description, addDate,
-                                false, targetDate, doneAhead);
-                    }
+                if(isDone) {
+                    Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[7]);
+                    note = new Deadline(serialNum, description, addDate, doneDate,
+                            true, targetDate, doneAhead);
+                } else {
+                    note = new Deadline(serialNum, description, addDate,
+                            false, targetDate, doneAhead);
                 }
-                case "Event" -> {
-                    int serialNum = Integer.parseInt(readIndexes[1]);
-                    String description = readIndexes[2];
-                    Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
-                    boolean isDone = Boolean.parseBoolean(readIndexes[4]);
-                    Date startDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
-                    Date endDate = DukeUI.INPUT_TIME.parse(readIndexes[6]);
-                    long durationMinutes = Long.parseLong(readIndexes[7]);
+            }
+            case "Event" -> {
+                int serialNum = Integer.parseInt(readIndexes[1]);
+                String description = readIndexes[2];
+                Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
+                boolean isDone = Boolean.parseBoolean(readIndexes[4]);
+                Date startDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
+                Date endDate = DukeUI.INPUT_TIME.parse(readIndexes[6]);
+                long durationMinutes = Long.parseLong(readIndexes[7]);
 
-                    if(isDone) {
-                        Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[8]);
-                        note = new Event(serialNum, description, addDate, doneDate,
-                                true, startDate, endDate, durationMinutes);
-                    } else {
-                        note = new Event(serialNum, description, addDate,
-                                false, startDate, endDate, durationMinutes);
-                    }
+                if(isDone) {
+                    Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[8]);
+                    note = new Event(serialNum, description, addDate, doneDate,
+                            true, startDate, endDate, durationMinutes);
+                } else {
+                    note = new Event(serialNum, description, addDate,
+                            false, startDate, endDate, durationMinutes);
                 }
-                case "Shoplist" -> {
-                    int serialNum = Integer.parseInt(readIndexes[1]);
-                    String description = readIndexes[2];
-                    Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
-                    boolean isDone = Boolean.parseBoolean(readIndexes[4]);
-                    double budgetSet = Double.parseDouble(readIndexes[5]);
-                    double budgetRevised = Double.parseDouble(readIndexes[6]);
-                    double budgetUsed = Double.parseDouble(readIndexes[7]);
-                    double budgetBalance = Double.parseDouble(readIndexes[8]);
-                    boolean isRevised = Boolean.parseBoolean(readIndexes[9]);
-                    boolean isOverBudget = Boolean.parseBoolean(readIndexes[10]);
-                    Budget itemBudget = new Budget(budgetSet, budgetRevised, budgetUsed,
-                            budgetBalance, isRevised, isOverBudget);
+            }
+            case "Shoplist" -> {
+                int serialNum = Integer.parseInt(readIndexes[1]);
+                String description = readIndexes[2];
+                Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
+                boolean isDone = Boolean.parseBoolean(readIndexes[4]);
+                double budgetSet = Double.parseDouble(readIndexes[5]);
+                double budgetRevised = Double.parseDouble(readIndexes[6]);
+                double budgetUsed = Double.parseDouble(readIndexes[7]);
+                double budgetBalance = Double.parseDouble(readIndexes[8]);
+                boolean isRevised = Boolean.parseBoolean(readIndexes[9]);
+                boolean isOverBudget = Boolean.parseBoolean(readIndexes[10]);
+                Budget itemBudget = new Budget(budgetSet, budgetRevised, budgetUsed,
+                        budgetBalance, isRevised, isOverBudget);
 
-                    if(isDone) {
-                        Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[11]);
-                        note = new Shoplist(serialNum, description, addDate, doneDate,
-                                true, itemBudget);
-                    } else {
-                        note = new Shoplist(serialNum, description, addDate,
-                                false, itemBudget);
-                    }
+                if(isDone) {
+                    Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[11]);
+                    note = new Shoplist(serialNum, description, addDate, doneDate,
+                            true, itemBudget);
+                } else {
+                    note = new Shoplist(serialNum, description, addDate,
+                            false, itemBudget);
                 }
-                case "Task" -> {
-                    int serialNum = Integer.parseInt(readIndexes[1]);
-                    String description = readIndexes[2];
-                    Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
-                    boolean isDone = Boolean.parseBoolean(readIndexes[4]);
+            }
+            case "Task" -> {
+                int serialNum = Integer.parseInt(readIndexes[1]);
+                String description = readIndexes[2];
+                Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
+                boolean isDone = Boolean.parseBoolean(readIndexes[4]);
 
-                    if(isDone) {
-                        Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
-                        note = new Task(serialNum, description, addDate, doneDate,
-                                true);
-                    } else {
-                        note = new Task(serialNum, description, addDate,
-                                false);
-                    }
+                if(isDone) {
+                    Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
+                    note = new Task(serialNum, description, addDate, doneDate,
+                            true);
+                } else {
+                    note = new Task(serialNum, description, addDate,
+                            false);
                 }
-                case "Wedding" -> {
-                    int serialNum = Integer.parseInt(readIndexes[1]);
-                    String description = readIndexes[2];
-                    Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
-                    boolean isDone = Boolean.parseBoolean(readIndexes[4]);
-                    Date startDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
-                    Date endDate = DukeUI.INPUT_TIME.parse(readIndexes[6]);
-                    long durationMinutes = Long.parseLong(readIndexes[7]);
-                    double budgetSet = Double.parseDouble(readIndexes[8]);
-                    double budgetRevised = Double.parseDouble(readIndexes[9]);
-                    double budgetUsed = Double.parseDouble(readIndexes[10]);
-                    double budgetBalance = Double.parseDouble(readIndexes[11]);
-                    boolean isRevised = Boolean.parseBoolean(readIndexes[12]);
-                    boolean isOverBudget = Boolean.parseBoolean(readIndexes[13]);
-                    Budget itemBudget = new Budget(budgetSet, budgetRevised, budgetUsed,
-                            budgetBalance, isRevised, isOverBudget);
+            }
+            case "Wedding" -> {
+                int serialNum = Integer.parseInt(readIndexes[1]);
+                String description = readIndexes[2];
+                Date addDate = DukeUI.INPUT_TIME.parse(readIndexes[3]);
+                boolean isDone = Boolean.parseBoolean(readIndexes[4]);
+                Date startDate = DukeUI.INPUT_TIME.parse(readIndexes[5]);
+                Date endDate = DukeUI.INPUT_TIME.parse(readIndexes[6]);
+                long durationMinutes = Long.parseLong(readIndexes[7]);
+                double budgetSet = Double.parseDouble(readIndexes[8]);
+                double budgetRevised = Double.parseDouble(readIndexes[9]);
+                double budgetUsed = Double.parseDouble(readIndexes[10]);
+                double budgetBalance = Double.parseDouble(readIndexes[11]);
+                boolean isRevised = Boolean.parseBoolean(readIndexes[12]);
+                boolean isOverBudget = Boolean.parseBoolean(readIndexes[13]);
+                Budget itemBudget = new Budget(budgetSet, budgetRevised, budgetUsed,
+                        budgetBalance, isRevised, isOverBudget);
 
-                    if(isDone) {
-                        Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[14]);
-                        note = new Wedding(serialNum, description, addDate, doneDate,
-                                true, startDate, endDate, durationMinutes, itemBudget);
-                    } else {
-                        note = new Wedding(serialNum, description, addDate,
-                                false, startDate, endDate, durationMinutes, itemBudget);
-                    }
+                if(isDone) {
+                    Date doneDate = DukeUI.INPUT_TIME.parse(readIndexes[14]);
+                    note = new Wedding(serialNum, description, addDate, doneDate,
+                            true, startDate, endDate, durationMinutes, itemBudget);
+                } else {
+                    note = new Wedding(serialNum, description, addDate,
+                            false, startDate, endDate, durationMinutes, itemBudget);
                 }
+            }
             }
             notes.add(note);
         }

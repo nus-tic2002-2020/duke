@@ -69,20 +69,22 @@ public class NewNoteCommand extends DukeCommand {
         }
 
         for(Note note: notes){
-            if(note instanceof Event){
-                Date noteStart = ((Event) note).getStartDate();
-                Date noteEnd = ((Event) note).getEndDate();
-
-                if((start.after(noteStart) || start.equals(noteStart)) &&
-                        (start.before(noteEnd) || start.equals(noteEnd))) {
-                    throw new DateException(start, "EventsClash", (Event) note);
-                } else if((end.after(noteStart) || end.equals(noteStart)) &&
-                        (end.before(noteEnd) || end.equals(noteEnd))) {
-                    throw new DateException(end, "EventsClash", (Event) note);
-                } else if((start.before(noteStart) || start.equals(noteStart)) &&
-                        (end.after(noteEnd) || end.equals(noteEnd))) {
-                    throw new DateException(end, "EventsClash", (Event) note);
-                }
+            if(!(note instanceof Event)) {
+                continue;
+            }
+            Date noteStart = ((Event) note).getStartDate();
+            Date noteEnd = ((Event) note).getEndDate();
+            if((start.after(noteStart) || start.equals(noteStart)) &&
+                    (start.before(noteEnd) || start.equals(noteEnd))) {
+                throw new DateException(start, "EventsClash", (Event) note);
+            }
+            if((end.after(noteStart) || end.equals(noteStart)) &&
+                    (end.before(noteEnd) || end.equals(noteEnd))) {
+                throw new DateException(end, "EventsClash", (Event) note);
+            }
+            if((start.before(noteStart) || start.equals(noteStart)) &&
+                (end.after(noteEnd) || end.equals(noteEnd))) {
+                throw new DateException(end, "EventsClash", (Event) note);
             }
         }
     }
@@ -142,86 +144,86 @@ public class NewNoteCommand extends DukeCommand {
         int nextSerialNum = dukeNotes.getNotes().size() + 1;
         ArrayList<Note> notes = new ArrayList<>();
         switch (noteType.toString()) {
-            case "BILL" -> {
-                String description = inputs.get(1);
-                Date targetDate = DateParser.understandDateInput(inputs.get(2));
-                double itemBudget = Double.parseDouble(inputs.get(3));
+        case "BILL" -> {
+            String description = inputs.get(1);
+            Date targetDate = DateParser.understandDateInput(inputs.get(2));
+            double itemBudget = Double.parseDouble(inputs.get(3));
 
-                checkValidDescription(description);
-                checkValidTargetDate(targetDate);
-                checkValidAmount(itemBudget);
+            checkValidDescription(description);
+            checkValidTargetDate(targetDate);
+            checkValidAmount(itemBudget);
 
-                Note note1 = new Bill(nextSerialNum, description, targetDate, itemBudget, addDate);
-                notes.add(note1);
-            }
-            case "BIRTHDAY" -> {
-                String description = inputs.get(1);
-                String giftDescription = "Birthday gift for " + description;
-                Date startDate = DateParser.understandDateInput(inputs.get(2));
-                Date endDate = DateParser.understandDateInput(inputs.get(3));
-                double itemBudget = Double.parseDouble(inputs.get(4));
+            Note note1 = new Bill(nextSerialNum, description, targetDate, itemBudget, addDate);
+            notes.add(note1);
+        }
+        case "BIRTHDAY" -> {
+            String description = inputs.get(1);
+            String giftDescription = "Birthday gift for " + description;
+            Date startDate = DateParser.understandDateInput(inputs.get(2));
+            Date endDate = DateParser.understandDateInput(inputs.get(3));
+            double itemBudget = Double.parseDouble(inputs.get(4));
 
-                checkValidDescription(description);
-                checkForClashes(dukeNotes.getNotes(), startDate, endDate);
-                checkValidAmount(itemBudget);
+            checkValidDescription(description);
+            checkForClashes(dukeNotes.getNotes(), startDate, endDate);
+            checkValidAmount(itemBudget);
 
-                Note note1 = new Shoplist(nextSerialNum, giftDescription, itemBudget, addDate);
-                notes.add(note1);
-                Note note2 = new Birthday(nextSerialNum+1, description, startDate, endDate, addDate);
-                notes.add(note2);
-            }
-            case "DEADLINE" -> {
-                String description = inputs.get(1);
-                Date targetDate = DateParser.understandDateInput(inputs.get(2));
+            Note note1 = new Shoplist(nextSerialNum, giftDescription, itemBudget, addDate);
+            notes.add(note1);
+            Note note2 = new Birthday(nextSerialNum+1, description, startDate, endDate, addDate);
+            notes.add(note2);
+        }
+        case "DEADLINE" -> {
+            String description = inputs.get(1);
+            Date targetDate = DateParser.understandDateInput(inputs.get(2));
 
-                checkValidDescription(description);
-                checkValidTargetDate(targetDate);
+            checkValidDescription(description);
+            checkValidTargetDate(targetDate);
 
-                Note note1 = new Deadline(nextSerialNum, description, targetDate, addDate);
-                notes.add(note1);
-            }
-            case "EVENT" -> {
-                String description = inputs.get(1);
-                Date startDate = DateParser.understandDateInput(inputs.get(2));
-                Date endDate = DateParser.understandDateInput(inputs.get(3));
+            Note note1 = new Deadline(nextSerialNum, description, targetDate, addDate);
+            notes.add(note1);
+        }
+        case "EVENT" -> {
+            String description = inputs.get(1);
+            Date startDate = DateParser.understandDateInput(inputs.get(2));
+            Date endDate = DateParser.understandDateInput(inputs.get(3));
 
-                checkValidDescription(description);
-                checkForClashes(dukeNotes.getNotes(), startDate, endDate);
+            checkValidDescription(description);
+            checkForClashes(dukeNotes.getNotes(), startDate, endDate);
 
-                Note note1 = new Event(nextSerialNum, description, startDate, endDate, addDate);
-                notes.add(note1);
-            }
-            case "SHOPLIST" -> {
-                String description = inputs.get(1);
-                double itemBudget = Double.parseDouble(inputs.get(2));
+            Note note1 = new Event(nextSerialNum, description, startDate, endDate, addDate);
+            notes.add(note1);
+        }
+        case "SHOPLIST" -> {
+            String description = inputs.get(1);
+            double itemBudget = Double.parseDouble(inputs.get(2));
 
-                checkValidDescription(description);
-                checkValidAmount(itemBudget);
+            checkValidDescription(description);
+            checkValidAmount(itemBudget);
 
-                Note note1 = new Shoplist(nextSerialNum, description, itemBudget, addDate);
-                notes.add(note1);
-            }
-            case "TASK" -> {
-                String description = inputs.get(1);
+            Note note1 = new Shoplist(nextSerialNum, description, itemBudget, addDate);
+            notes.add(note1);
+        }
+        case "TASK" -> {
+            String description = inputs.get(1);
 
-                checkValidDescription(description);
+            checkValidDescription(description);
 
-                Note note1 = new Task(nextSerialNum, description, addDate);
-                notes.add(note1);
-            }
-            case "WEDDING" -> {
-                String description = inputs.get(1);
-                Date startDate = DateParser.understandDateInput(inputs.get(2));
-                Date endDate = DateParser.understandDateInput(inputs.get(3));
-                double itemBudget = Double.parseDouble(inputs.get(4));
+            Note note1 = new Task(nextSerialNum, description, addDate);
+            notes.add(note1);
+        }
+        case "WEDDING" -> {
+            String description = inputs.get(1);
+            Date startDate = DateParser.understandDateInput(inputs.get(2));
+            Date endDate = DateParser.understandDateInput(inputs.get(3));
+            double itemBudget = Double.parseDouble(inputs.get(4));
 
-                checkValidDescription(description);
-                checkForClashes(dukeNotes.getNotes(), startDate, endDate);
-                checkValidAmount(itemBudget);
+            checkValidDescription(description);
+            checkForClashes(dukeNotes.getNotes(), startDate, endDate);
+            checkValidAmount(itemBudget);
 
-                Note note1 = new Wedding(nextSerialNum, description, startDate, endDate, itemBudget, addDate);
-                notes.add(note1);
-            }
+            Note note1 = new Wedding(nextSerialNum, description, startDate, endDate, itemBudget, addDate);
+            notes.add(note1);
+        }
         }
         DukeUI.printDivider();
         for(int i=0; i < notes.size(); i++) {

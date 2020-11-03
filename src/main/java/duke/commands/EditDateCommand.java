@@ -181,25 +181,25 @@ public class EditDateCommand extends DukeCommand {
             if(dukeNotes.getNotes().get(i).getSerialNum() == this.targetNote) {
 
                 switch (this.dateToChange) {
-                    case "target" -> {
-                        if (changeTargetDate(dukeNotes, i)) {
-                            DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
-                            DukeUI.suggestListNotes();
-                        }
+                case "target" -> {
+                    if (changeTargetDate(dukeNotes, i)) {
+                        DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
+                        DukeUI.suggestListNotes();
                     }
-                    case "start" -> {
-                        if (changeStartDate(dukeNotes, i)) {
-                            DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
-                            DukeUI.suggestListNotes();
-                        }
+                }
+                case "start" -> {
+                    if (changeStartDate(dukeNotes, i)) {
+                        DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
+                        DukeUI.suggestListNotes();
                     }
-                    case "end" -> {
-                        if (changeEndDate(dukeNotes, i)) {
-                            DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
-                            DukeUI.suggestListNotes();
-                        }
+                }
+                case "end" -> {
+                    if (changeEndDate(dukeNotes, i)) {
+                        DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
+                        DukeUI.suggestListNotes();
                     }
-                    default -> throw new CommandException("The type of date you are trying to edit does not exist.");
+                }
+                default -> throw new CommandException("The type of date you are trying to edit does not exist.");
                 }
                 DukeUI.printDivider();
                 break;

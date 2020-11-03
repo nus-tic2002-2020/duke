@@ -97,7 +97,7 @@ public class Wedding extends Event {
      */
     @Override
     public boolean markAsDone(Date doneDate) throws CommandException, DateException, InterruptedException {
-        if (!this.isDone) {
+        if(!this.isDone) {
             this.itemBudget.setBudgetUsed(this.itemBudget.getBudgetRevised());
         }
         return super.markAsDone(doneDate);
@@ -128,11 +128,11 @@ public class Wedding extends Event {
                 DukeUI.NOTE_TIME.format(this.endDate));
         System.out.println("            Budget   : $" +
                 String.format("%,14.2f", this.getBudgetObject().getBUDGET_SET()));
-        if (this.itemBudget.getIsRevised()) {
+        if(this.itemBudget.getIsRevised()) {
             System.out.println("            Revised  : $" +
                     String.format("%,14.2f", this.getBudgetObject().getBudgetRevised()));
         }
-        if (this.isDone) {
+        if(this.isDone) {
             System.out.println("            Actual   : $" +
                     String.format("%,14.2f", this.getBudgetObject().getBudgetUsed()) +
                     " " + this.getBudgetObject().printWithinBudget());

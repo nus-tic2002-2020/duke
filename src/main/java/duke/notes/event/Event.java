@@ -119,7 +119,8 @@ public class Event extends Note {
     public boolean markAsDone(Date doneDate) throws CommandException, DateException, InterruptedException {
         if(doneDate.before(this.startDate)) {
             throw new DateException(doneDate, "DoneB4Start", this);
-        } else if(super.markAsDone(doneDate)) {
+        }
+        if(super.markAsDone(doneDate)) {
             eventsOutstanding--;
             eventsCompleted++;
             this.printList();
@@ -164,17 +165,15 @@ public class Event extends Note {
         Date now = new Date();
         if(startDate.before(now)){
             throw new DateException(startDate, "StartB4Now");
-        } else {
-            if(this.endDate != null) {
-                if(startDate.after(this.endDate)) {
-                    throw new DateException(startDate, "StartAFEnd");
-                } else {
-                    this.startDate = startDate;
-                    this.durationMinutes = (this.endDate.getTime() - startDate.getTime()) / 60000;
-                }
-            } else {
-                this.startDate = startDate;
+        }
+        if(this.endDate != null) {
+            if(startDate.after(this.endDate)) {
+                throw new DateException(startDate, "StartAFEnd");
             }
+            this.startDate = startDate;
+            this.durationMinutes = (this.endDate.getTime() - startDate.getTime()) / 60000;
+        } else {
+            this.startDate = startDate;
         }
     }
 
@@ -188,16 +187,15 @@ public class Event extends Note {
         Date now = new Date();
         if(this.startDate == null){
             throw new DateException(endDate, "NoStartDate");
-        } else {
-            if(endDate.before(this.startDate)){
-                throw new DateException(endDate, "EndB4Start");
-            } else if(endDate.before(now)) {
-                throw new DateException(endDate, "EndB4Now");
-            } else {
-                this.endDate = endDate;
-                this.durationMinutes = (endDate.getTime() - this.startDate.getTime()) / 60000;
-            }
         }
+        if(endDate.before(this.startDate)){
+            throw new DateException(endDate, "EndB4Start");
+        }
+        if(endDate.before(now)) {
+            throw new DateException(endDate, "EndB4Now");
+        }
+        this.endDate = endDate;
+        this.durationMinutes = (endDate.getTime() - this.startDate.getTime()) / 60000;
     }
 
 

@@ -116,10 +116,9 @@ public class Deadline extends Task {
         Date now = new Date();
         if(targetDate.before(now)){
             throw new DateException(targetDate, "TargetDate");
-        } else {
-            this.targetDate = targetDate;
-            this.timesExtended++;
         }
+        this.targetDate = targetDate;
+        this.timesExtended++;
     }
 
 

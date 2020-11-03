@@ -56,33 +56,34 @@ public class ExtendDeadlineCommand extends DukeCommand {
             throws CommandException, IndexOutOfBoundsException, DateException {
 
         for(int i=0; i<dukeNotes.getNotes().size(); i++) {
-            if(dukeNotes.getNotes().get(i).getSerialNum() == this.targetNote) {
-
-                DukeUI.printDivider();
-                if(!(dukeNotes.getNotes().get(i) instanceof Deadline)) {
-                    System.out.println("    The note selected is not a task with a deadline.");
-                    System.out.println("    The deadline shouldn't be edited anymore.");
-                } else if(dukeNotes.getNotes().get(i).getIsDone()) {
-                    System.out.println("    The task had already been completed.");
-                    System.out.println("    The deadline shouldn't be edited anymore.");
-                } else {
-                    System.out.println("    Deadline of Note #" + this.targetNote + ":");
-                    dukeNotes.getNotes().get(i).printList();
-
-                    this.oldDate = ((Deadline) dukeNotes.getNotes().get(i)).getTargetDate();
-                    this.newDate = new Date(this.oldDate.getTime() + millisecondsToExtend);
-                    ((Deadline) dukeNotes.getNotes().get(i)).setTargetDate(this.newDate);
-
-                    System.out.println("    extended from...");
-                    DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.oldDate), 66);
-                    System.out.println("    to...");
-                    DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.newDate), 66);
-                    DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
-                    DukeUI.suggestListNotes();
-                }
-                DukeUI.printDivider();
-                break;
+            if(dukeNotes.getNotes().get(i).getSerialNum() != this.targetNote) {
+                continue;
             }
+
+            DukeUI.printDivider();
+            if(!(dukeNotes.getNotes().get(i) instanceof Deadline)) {
+                System.out.println("    The note selected is not a task with a deadline.");
+                System.out.println("    The deadline shouldn't be edited anymore.");
+            } else if(dukeNotes.getNotes().get(i).getIsDone()) {
+                System.out.println("    The task had already been completed.");
+                System.out.println("    The deadline shouldn't be edited anymore.");
+            } else {
+                System.out.println("    Deadline of Note #" + this.targetNote + ":");
+                dukeNotes.getNotes().get(i).printList();
+
+                this.oldDate = ((Deadline) dukeNotes.getNotes().get(i)).getTargetDate();
+                this.newDate = new Date(this.oldDate.getTime() + millisecondsToExtend);
+                ((Deadline) dukeNotes.getNotes().get(i)).setTargetDate(this.newDate);
+
+                System.out.println("    extended from...");
+                DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.oldDate), 66);
+                System.out.println("    to...");
+                DukeUI.commandWrap(DukeUI.NOTE_TIME.format(this.newDate), 66);
+                DukeUI.autoSaveConfirmation(new SaveCommand().autoSave(dukeNotes, dukeStorage));
+                DukeUI.suggestListNotes();
+            }
+            DukeUI.printDivider();
+            break;
         }
     }
 }

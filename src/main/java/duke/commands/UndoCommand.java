@@ -75,19 +75,19 @@ public class UndoCommand extends DukeCommand {
         if(this.confirmUndo) {
 
             switch (dukeStorage.revertToLastSave(dukeNotes)) {
-                case -1 -> System.out.println("    I have undone the maximum number of times.\n");
-                case 0 -> {
-                    System.out.println("    I have undone the last save operation.");
-                    System.out.println("    You have no more opportunities to undo.\n");
-                }
-                case 1 -> {
-                    System.out.println("    I have undone the last save operation.");
-                    System.out.println("    You have 1 last opportunity to undo.\n");
-                }
-                case 2 -> {
-                    System.out.println("    I have undone the last save operation.");
-                    System.out.println("    You have 2 more opportunities to undo.\n");
-                }
+            case -1 -> System.out.println("    I have undone the maximum number of times.\n");
+            case 0 -> {
+                System.out.println("    I have undone the last save operation.");
+                System.out.println("    You have no more opportunities to undo.\n");
+            }
+            case 1 -> {
+                System.out.println("    I have undone the last save operation.");
+                System.out.println("    You have 1 last opportunity to undo.\n");
+            }
+            case 2 -> {
+                System.out.println("    I have undone the last save operation.");
+                System.out.println("    You have 2 more opportunities to undo.\n");
+            }
             }
         } else {
             System.out.println("    Undo last save aborted!");

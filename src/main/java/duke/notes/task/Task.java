@@ -100,10 +100,9 @@ public class Task extends Note {
 
             this.printList();
             return true;
-        } else {
-            this.printList();
-            return false;
         }
+        this.printList();
+        return false;
     }
 
     /**

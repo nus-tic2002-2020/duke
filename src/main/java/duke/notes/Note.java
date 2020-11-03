@@ -65,12 +65,11 @@ public abstract class Note {
         if(this.isDone) {
             System.out.println("    Note #" + this.serialNum + " was already done!");
             return false;
-        } else {
-            this.isDone = true;
-            this.doneDate = doneDate;
-            System.out.println("    Noted! I've marked Note #" + this.serialNum + " as done.");
-            return true;
         }
+        this.isDone = true;
+        this.doneDate = doneDate;
+        System.out.println("    Noted! I've marked Note #" + this.serialNum + " as done.");
+        return true;
     }
 
 
