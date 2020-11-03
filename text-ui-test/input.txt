@@ -1,0 +1,10 @@
+read book
+write story
+#listtask
+#markdone 1
+#commands
+#listtask
+#markdone 2
+#listtask
+#quitduke
+Y

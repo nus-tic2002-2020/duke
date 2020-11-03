@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<fx:root alignment="TOP_RIGHT" maxWidth="-Infinity" minHeight="120.0" minWidth="-Infinity" prefWidth="783.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label fx:id="text" alignment="TOP_LEFT" maxWidth="-Infinity" minHeight="100.0" minWidth="-Infinity" prefWidth="763.0" style="-fx-border-color: #e4b363; -fx-border-radius: 6px; -fx-background-color: #e9ecf5; -fx-border-width: 2px; -fx-background-radius: 6px;">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <font>
+            <Font name="Consolas" size="16.0" />
+         </font>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></Label>
+    </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</fx:root>
