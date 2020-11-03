@@ -106,7 +106,4 @@ public class Task {
         return (timeDate);
     }
 
-    //method to get indexes
-    //parse list in tasklist for date?
-
 }

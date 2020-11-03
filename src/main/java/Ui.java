@@ -41,7 +41,8 @@ public class Ui {
                     "\tdelete <task number>\n"+
                     "\ttodo <description>\n"+
                     "\tdeadline <description> /by <DD/MM/YYYY>\n" +
-                    "\tevent <description> /by <DD/MM/YYYY>\n" +
+                    "\tevent <description> /at <DD/MM/YYYY>\n" +
+                    "\tfind <description>\n" +
                     "\tcheck <DD/MM/YYYY>\n" );
         }
     }
