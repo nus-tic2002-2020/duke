@@ -1,6 +1,8 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TaskList {
 
@@ -73,11 +75,6 @@ public class TaskList {
      */
 
     public void printScheduledView(String scheduledDate) {
-        if(this.tasks.size() == 0) {
-            System.out.println(Duke.humanName + "\tthe list is empty! It seems you do not have anything that day!");
-            return;
-        }
-        System.out.println("\tHere are the tasks in your list planned that day: ");
 
         for(int i = 1 ; i <= Duke.numberOftask ; i++) {
             LocalDate formattedDate;
@@ -85,7 +82,32 @@ public class TaskList {
             formattedDate = LocalDate.parse(scheduledDate, formatter);
             scheduledDate = formattedDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
             if (this.tasks.get(i-1).getTimeDate().contains(scheduledDate)) {
+                System.out.println("\tHere are the tasks in your list planned that day: ");
                 System.out.println("\t" + i + ". " + this.tasks.get(i - 1).getTag() + "[" + this.tasks.get(i - 1).getStatusIcon() + "] " + this.tasks.get(i - 1).description + this.tasks.get(i - 1).getTimeDate());
+            }
+            else{
+                System.out.println(Duke.humanName + "\tthe list is empty! It seems you do not have anything that day!");
+            }
+        }
+    }
+    public void printMatchingTask(String matchTerm) {
+
+        System.out.println("\tHere are the matching tasks in your list: ");
+        for(int i = 1 ; i <= 1 ; i++) {
+            Pattern pattern = Pattern.compile(matchTerm, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(this.tasks.get(i - 1).description);
+            if (matcher.find()) {
+                System.out.println("\t" + i + ". " + this.tasks.get(i - 1).getTag() + "[" + this.tasks.get(i - 1).getStatusIcon() + "] " + this.tasks.get(i - 1).description + this.tasks.get(i - 1).getTimeDate());
+            }
+        }
+        for(int i = 2 ; i <= Duke.numberOftask ; i++) {
+            Pattern pattern2 = Pattern.compile(matchTerm, Pattern.CASE_INSENSITIVE);
+            Matcher matcher2 = pattern2.matcher(this.tasks.get(i - 1).description);
+            if (matcher2.find()){
+                System.out.println("\t" + i + ". " + this.tasks.get(i - 1).getTag() + "[" + this.tasks.get(i - 1).getStatusIcon() + "] " + this.tasks.get(i - 1).description + this.tasks.get(i - 1).getTimeDate());
+            }
+           else{
+                System.out.println(Duke.humanName + "\tthe list is empty! or It seems there is no matching item");
             }
         }
 

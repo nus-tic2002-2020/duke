@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
  */
 public class Ui {
     public String scheduledDate;
+    public String matchTerm;
     /*Handling user input*/
     public TaskList tasks;
     public Storage storage;
@@ -67,6 +68,8 @@ public class Ui {
         Pattern pattern5 = Pattern.compile((".*" + "check" + ".*"), Pattern.CASE_INSENSITIVE);
         Matcher matcher5 = pattern5.matcher(userSentence);
 
+        Pattern pattern6 = Pattern.compile((".*" + "find" + ".*"), Pattern.CASE_INSENSITIVE);
+        Matcher matcher6 = pattern6.matcher(userSentence);
 
         //when user inputs bye
         if (matcher1.find()) {
@@ -84,6 +87,13 @@ public class Ui {
             temp = userSentence.split("\\s",2);
             scheduledDate = temp[1];
             tasks.printScheduledView(scheduledDate);
+        }
+
+        else if (matcher6.find()) {
+            String[] temp;
+            temp = userSentence.split("\\s",2);
+            matchTerm = temp[1];
+            tasks.printMatchingTask(matchTerm);
         }
 
         //handling user input 'done'
