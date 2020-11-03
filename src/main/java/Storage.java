@@ -13,7 +13,7 @@ public class Storage  {
         this.pathname = path;
     }
     //accessor and modifier
-    public void load(TaskList newList, Ui ui) {
+    public void load(Ui ui) { //saved tasklist was not loaded.
         File f = new File(pathname);
         try {
             Scanner s = new Scanner(f);

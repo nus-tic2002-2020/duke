@@ -7,7 +7,7 @@ public class Task {
     public String description;
     public boolean isDone;
     public String whatTag;
-    public static String timeDate;
+    public String timeDate;
     public CharSequence charDate;
     public LocalDate formattedDate;
 
@@ -36,7 +36,8 @@ public class Task {
              }
              this.description = temp[1];
              this.whatTag = "[T]";
-             this.timeDate ="";
+             this.timeDate =" ";
+           ;
              if (this.description.isBlank() == true){
                  System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
                  throw new IllegalInputException();
@@ -67,10 +68,14 @@ public class Task {
              temp = this.description.split("/at",2);
              this.description = temp[0];
              this.timeDate=temp[1];
-             this.timeDate="(at:"+this.timeDate+")";
+            // this.timeDate="(at:"+this.timeDate+")";
+             charDate = this.timeDate;
+             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(" dd/MM/yyyy");
+             formattedDate = LocalDate.parse(charDate, formatter);
+             this.timeDate ="(at: "+formattedDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))+")";
          }
          else {
-             System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+             System.out.println("from task.java ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
              throw new IllegalInputException();
          }
     }
@@ -89,17 +94,19 @@ public class Task {
      * @return Completion time of deadline
      */
     public String getTag(){
-
         return (whatTag);
     }
 
     /**
-     *Return completion time of a deadline
+     *Return completion time of a for events
      *
-     * @return Completion time of deadline
+     * @return Completion time
      */
     public String getTimeDate(){
         return (timeDate);
     }
+
+    //method to get indexes
+    //parse list in tasklist for date?
 
 }

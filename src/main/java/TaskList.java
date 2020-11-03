@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -59,8 +61,32 @@ public class TaskList {
         System.out.println("\tHere are the tasks in your list: ");
 
         for(int i = 1 ; i <= Duke.numberOftask ; i++) {
-            System.out.println("\t" + i+". "  + this.tasks.get(i-1).getTag() + "[" + this.tasks.get(i-1).getStatusIcon() + "] " + this.tasks.get(i-1).description );
+            System.out.println("\t" + i+". "  + this.tasks.get(i-1).getTag() + "[" + this.tasks.get(i-1).getStatusIcon() + "] " + this.tasks.get(i-1).description  + this.tasks.get(i-1).getTimeDate());
 
+        }
+
+    }
+
+    /**
+     * Prints taskList of a specific date invoked when user inputs list in UI
+     * @return empty if list is empty, if not prints contents of list
+     */
+
+    public void printScheduledView(String scheduledDate) {
+        if(this.tasks.size() == 0) {
+            System.out.println(Duke.humanName + "\tthe list is empty! It seems you do not have anything that day!");
+            return;
+        }
+        System.out.println("\tHere are the tasks in your list planned that day: ");
+
+        for(int i = 1 ; i <= Duke.numberOftask ; i++) {
+            LocalDate formattedDate;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            formattedDate = LocalDate.parse(scheduledDate, formatter);
+            scheduledDate = formattedDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+            if (this.tasks.get(i-1).getTimeDate().contains(scheduledDate)) {
+                System.out.println("\t" + i + ". " + this.tasks.get(i - 1).getTag() + "[" + this.tasks.get(i - 1).getStatusIcon() + "] " + this.tasks.get(i - 1).description + this.tasks.get(i - 1).getTimeDate());
+            }
         }
 
     }

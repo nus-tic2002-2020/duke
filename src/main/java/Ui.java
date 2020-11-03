@@ -7,10 +7,10 @@ import java.util.regex.Pattern;
  * reads user input, and gives response
  */
 public class Ui {
+    public String scheduledDate;
     /*Handling user input*/
     public TaskList tasks;
     public Storage storage;
-
 
     public Ui (TaskList tasks, Storage storage) {
         this.tasks = tasks;
@@ -33,14 +33,15 @@ public class Ui {
         try {
             response(userSentence);
         } catch (IllegalInputException e) {
-            System.out.println(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             System.out.print("Follow the correct syntax below:\n" +
                     "\tlist\n"+
                     "\tdone <task number>\n"+
                     "\tdelete <task number>\n"+
                     "\ttodo <description>\n"+
                     "\tdeadline <description> /by <DD/MM/YYYY>\n" +
-                    "\tevent <description> /at <DD/MM/YYYY>\n" );
+                    "\tevent <description> /by <DD/MM/YYYY>\n" +
+                    "\tcheck <DD/MM/YYYY>\n" );
         }
     }
 
@@ -63,6 +64,9 @@ public class Ui {
         Pattern pattern4 = Pattern.compile((".*" + "delete" + ".*"), Pattern.CASE_INSENSITIVE);
         Matcher matcher4 = pattern4.matcher(userSentence);
 
+        Pattern pattern5 = Pattern.compile((".*" + "check" + ".*"), Pattern.CASE_INSENSITIVE);
+        Matcher matcher5 = pattern5.matcher(userSentence);
+
 
         //when user inputs bye
         if (matcher1.find()) {
@@ -74,6 +78,14 @@ public class Ui {
         if (matcher2.find()) {
             tasks.printTasks();
         }
+
+        else if (matcher5.find()) {
+            String[] temp;
+            temp = userSentence.split("\\s",2);
+            scheduledDate = temp[1];
+            tasks.printScheduledView(scheduledDate);
+        }
+
         //handling user input 'done'
         else if (matcher3.find()) {
             Pattern pattern = Pattern.compile("[^0-9]");

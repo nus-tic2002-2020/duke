@@ -11,11 +11,11 @@ public class Duke {
     private TaskList tasks;
     private Ui ui;
 
-    public Duke(String filepath) throws IllegalInputException {
+    public Duke(String filepath) {
         storage  = new Storage(filepath);
         tasks = new TaskList();
         this.ui = new Ui(tasks, storage);
-        storage.load(tasks, ui);
+        //storage.load(ui);
     }
 
     public void run(){
@@ -42,7 +42,7 @@ public class Duke {
         }
 
     }
-        public static void main(String[] args) throws IllegalInputException {
+        public static void main(String[] args) {
         new Duke("duke.txt").run();
     }//end main
 
