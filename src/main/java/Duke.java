@@ -1,11 +1,10 @@
-
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
 
-    public static void printLine(){
-		System.out.println("\t____________________________________________________________");
+    public static void printLine() {
+        System.out.println("\t____________________________________________________________");
     }
 
     public static ArrayList<Task> printUserInput(ArrayList<Task> listItems) {
@@ -34,35 +33,35 @@ public class Duke {
             // add event task
             else if (userInput.startsWith("event")) {
                 int divPosition = userInput.indexOf("/");
-                String eventDescription = userInput.substring(6, divPosition-1);
+                String eventDescription = userInput.substring(6, divPosition - 1);
                 String dateTime = userInput.substring(divPosition + 4);
                 Task t = new Events(eventDescription, dateTime);
                 listItems.add(t);
 
                 printLine();
                 System.out.println("\tGot it. I've added this task:");
-                System.out.println("\t" + listItems.get(listItems.size()-1).toString());
+                System.out.println("\t" + listItems.get(listItems.size() - 1).toString());
                 System.out.println("\tNow you have " + (listItems.size()) + " tasks in the list.");
                 printLine();
 
             }
             // add deadline task
-            else if (userInput.startsWith("deadline")){
+            else if (userInput.startsWith("deadline")) {
                 int divPosition = userInput.indexOf("/");
-                String deadlineDescription = userInput.substring(9,divPosition-1);
+                String deadlineDescription = userInput.substring(9, divPosition - 1);
                 String filteredDate = userInput.substring(divPosition + 4);
                 Task t = new Deadline(deadlineDescription, filteredDate);
                 listItems.add(t);
 
                 printLine();
                 System.out.println("\tGot it. I've added this task:");
-                System.out.println("\t" + listItems.get(listItems.size()-1).toString());
+                System.out.println("\t" + listItems.get(listItems.size() - 1).toString());
                 System.out.println("\tNow you have " + (listItems.size()) + " tasks in the list.");
                 printLine();
             }
             // add to do task
             else if (userInput.startsWith("todo")) {
-                try{
+                try {
                     String todoDescription = userInput.substring(5);
                     CheckEmpty(todoDescription);
                     Task t = new Todo(todoDescription);
@@ -70,17 +69,15 @@ public class Duke {
 
                     printLine();
                     System.out.println("\tGot it. I've added this task:");
-                    System.out.println("\t" + listItems.get(listItems.size()-1).toString());
+                    System.out.println("\t" + listItems.get(listItems.size() - 1).toString());
                     System.out.println("\tNow you have " + (listItems.size()) + " tasks in the list.");
                     printLine();
-                }
-                catch (StringIndexOutOfBoundsException e) {
+                } catch (StringIndexOutOfBoundsException e) {
                     printLine();
                     System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
                     printLine();
-                    }
-            }
-            else if (userInput.startsWith("delete")) {
+                }
+            } else if (userInput.startsWith("delete")) {
                 int numTask = Integer.valueOf(userInput.substring(7, userInput.length()));
                 Task t = listItems.get(numTask - 1);
                 listItems.remove(numTask - 1);
@@ -89,77 +86,68 @@ public class Duke {
                 System.out.println("\tNow you have " + (listItems.size()) + " tasks in the list.");
                 printLine();
             }
-          /*   else{
-                printLine();
-                listItems = storeUserList (listItems, userInput);
-                printLine();
-                } */
         }
     }
 
     //store items in list
     public static ArrayList<Task> storeUserList(ArrayList<Task> listItems, String input) {
         int counter = 0;
-            while(true){
-                listItems.add(new Task (input));
-                System.out.println ("\tadded: " + input);
-                break;
+        while (true) {
+            listItems.add(new Task(input));
+            System.out.println("\tadded: " + input);
+            break;
 
-            }
+        }
         return listItems;
     }
 
-        //print items in list
-    public static void printUserList(ArrayList<Task> listItems){
-        if(listItems.size() == 0){
+    //print items in list
+    public static void printUserList(ArrayList<Task> listItems) {
+        if (listItems.size() == 0) {
             System.out.println("List is empty");
             return;
         }
         printLine();
 
-        for (int i = 0 ; i < listItems.size(); i++){
-            System.out.println("\t" + (i+1) + ". " + listItems.get(i).toString());
+        for (int i = 0; i < listItems.size(); i++) {
+            System.out.println("\t" + (i + 1) + ". " + listItems.get(i).toString());
         }
 
         printLine();
-        return;
     }
 
 
+    public static ArrayList<Task> doneMessage(ArrayList<Task> listItems, String userInput) {
 
-    public static ArrayList<Task> doneMessage(ArrayList<Task> listItems, String userInput)   {
+        try {
+            int filteredNumber = Integer.parseInt(userInput.substring(5));
+            listItems.get(filteredNumber - 1).markDone();
 
-       try {
-           int filteredNumber = Integer.parseInt(userInput.substring(5));
-           listItems.get(filteredNumber - 1).markDone();
+            printLine();
+            System.out.println("\tNice! I've marked this task as done:");
+            System.out.println("\t" + listItems.get(filteredNumber - 1).toString());
+            printLine();
 
-           printLine();
-           System.out.println("\tNice! I've marked this task as done:");
-           System.out.println("\t" + listItems.get(filteredNumber - 1).toString());
-           printLine();
-
-       }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             printLine();
             System.out.println("\t☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             printLine();
+        } catch (NullPointerException e) {
+            printLine();
+            System.out.println("\t☹ OOPS!!! Numbers out of range :-(");
+            printLine();
         }
-       catch (NullPointerException e){
-           printLine();
-           System.out.println("\t☹ OOPS!!! Numbers out of range :-(");
-           printLine();
-       }
         return listItems;
     }
 
     private static void CheckEmpty(String description) throws StringIndexOutOfBoundsException {
-        if (description.isEmpty()){
-            throw new StringIndexOutOfBoundsException ();
+        if (description.isEmpty()) {
+            throw new StringIndexOutOfBoundsException();
         }
     }
 
     public static void main(String[] args) {
-      //  String [] ListofItems = new String[100];
+        //  String [] ListofItems = new String[100];
         ArrayList<Task> listTask = new ArrayList<Task>();
 
         String logo = " ____        _        \n"
@@ -173,7 +161,7 @@ public class Duke {
         System.out.println("\tHello! I'm Duke\n\tWhat can I do for you?");
         System.out.println("\t____________________________________________________________");
         while (true) {
-            listTask= printUserInput(listTask);
+            listTask = printUserInput(listTask);
 
         }
     }
