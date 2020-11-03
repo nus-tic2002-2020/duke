@@ -1,8 +1,14 @@
+package DukeTask;
+
 public class Task {
 
     protected String description;
     protected boolean isdone;
 
+    /**
+     *
+     * @param description task input by user
+     */
     public Task(String description) {
         this.description = description;
         this.isdone = false;

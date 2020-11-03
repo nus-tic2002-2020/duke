@@ -1,4 +1,4 @@
-diff a/src/main/java/Duke.java b/src/main/java/Duke.java	(rejected hunks)
+diff a/src/main/java/DukeUtils.Duke.java b/src/main/java/DukeUtils.Duke.java	(rejected hunks)
 @@ -106,7 +106,10 @@
               }
           }
@@ -6,7 +6,7 @@ diff a/src/main/java/Duke.java b/src/main/java/Duke.java	(rejected hunks)
 ++<<<<<<< HEAD
  +
 ++=======
-++>>>>>>> parent of 02d1133... Revert "Level - 5 DukeException"
+++>>>>>>> parent of 02d1133... Revert "Level - 5 DukeUtils.DukeException"
       public static void main(String[] args) {
           String logo = " ____        _        \n"
                   + "|  _ \\ _   _| | _____ \n"

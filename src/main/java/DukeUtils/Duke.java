@@ -1,13 +1,25 @@
-import java.util.ArrayList;
+package DukeUtils;
+
+import DukeTask.Deadline;
+import DukeTask.Event;
+import DukeTask.Task;
+import DukeTask.ToDo;
+import DukeUtils.Storage;
+import DukeUtils.TaskList;
+import DukeUtils.UI;
+
 import java.util.Scanner;
 import java.io.FileNotFoundException;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.format.DateTimeParseException;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
+
+/**
+ * Add new reminder, event, todo, deadline into list
+ * Ability to mark done and delete task from list
+ * Date printed out will be in localdatetime format when user input for e.g 12/12/2020
+ */
 public class Duke {
 
     protected static TaskList tasks;
@@ -44,13 +56,16 @@ public class Duke {
                     }
                 } else if (line.equals("reminder")) {
                     System.out.println("   Here are the tasks in your reminder list: ");
+                    char r = 'R';
                     for (int i = 0; i < tasks.taskList.size(); i++) {
-                        System.out.println(i + 1 + ". " + tasks.get(i).toString());
+                        System.out.println(tasks.get(i).toString().charAt(2));
+                        if (Character.compare(tasks.get(i).toString().charAt(1),r)==0){
+                            System.out.println(i + 1 + ". " + tasks.get(i).toString());
+                        }
+
                     }
                 } else if (line.contains("done")) {
-/**
- * //refers to list index is done and mark it
- */                 int i = Integer.parseInt(line.substring(5)) - 1;
+               int i = Integer.parseInt(line.substring(5)) - 1;
                     Task currentTask = tasks.taskList.get(i);
                     currentTask.markDone();
                     System.out.println("   Nice! I've marked this task as done:\n " + currentTask.toString());
@@ -89,9 +104,6 @@ public class Duke {
                     System.out.println("Now you have " + (tasks.taskList.size()) + " reminder in the list.");
                     pointer++;
                 } else if (line.contains("deadline")) {
-/**
- * Deadline class syntax where user inputs in format -  Deadline /by 12/12/2020 1230, return in localDateTime format
- */
                     int separator = line.indexOf("/");
                     String dateAndTime = line.substring(separator + 4);
                     DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
@@ -106,7 +118,7 @@ public class Duke {
                     save();
                 } else {
                     Task newtask = new Task(line);
-                    newtask.description = line;
+                    //newtask.description = line;
                     pointer++;
                 }
             } catch (StringIndexOutOfBoundsException e) {
@@ -119,6 +131,11 @@ public class Duke {
 
     }
 
+    /**
+     *
+     * @throws FileNotFoundException
+     * Save tasks to txt file in String for
+     */
     static void save() throws FileNotFoundException {
         String list = "";
         for (int i = 0; i < tasks.taskList.size(); i++) {

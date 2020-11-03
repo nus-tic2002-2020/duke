@@ -1,7 +1,9 @@
+package DukeTask;
+
 public class ToDo extends Task{
     /**
-     * Deadline class syntax format - deadline /by
-     * Event class syntax format - event /at
+     * DukeTask.Deadline class syntax format - deadline /by
+     * DukeTask.Event class syntax format - event /at
      * Todo class syntax format - todo
      */
     public ToDo(String description) {

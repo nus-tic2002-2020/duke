@@ -1,5 +1,8 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import DukeTask.Event;
+import DukeTask.Task;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

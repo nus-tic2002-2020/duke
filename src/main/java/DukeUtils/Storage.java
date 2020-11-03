@@ -1,10 +1,14 @@
+package DukeUtils;
+
+import DukeTask.Deadline;
+import DukeTask.Event;
+import DukeTask.Task;
+import DukeTask.ToDo;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Storage {
@@ -33,33 +37,34 @@ public class Storage {
     /****
      *
      * @param fileContent the tasks stored in the file
-     * Convert from LocalDate time format to string from txt file back to Duke
+     * Convert from LocalDate time format to string from txt file back to DukeUtils.Duke
      */
     static void loadFormat(String fileContent) {
-        System.out.println(fileContent);
         String str = fileContent;
         String[] storeArray = str.split(" \\| ");
+
+        for (String i : storeArray){
+            System.out.println(i);
+        }
+
         try {
             if (storeArray[0].equals("T")) {
                 Task t= new ToDo(storeArray[2], Boolean.valueOf(storeArray[1]));
                 Duke.tasks.addTask(t);
             } else if (storeArray[0].equals("D")) {
                 try {
-                    DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
-                    LocalDateTime date = LocalDateTime.of(2020, Month.APRIL,3,12,30);
-                    String formattedDate = date.format(inputFormatter);
-                    Task t= new Deadline(storeArray[2], Boolean.valueOf(storeArray[1]),date);
+                    LocalDateTime dateTime = LocalDateTime.parse(storeArray[3]);
+                    Task t= new Deadline(storeArray[2], Boolean.valueOf(storeArray[1]),dateTime);
                     Duke.tasks.taskList.add(t);
                 }catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("HelloWorldFROM HERE");
                     Task t= new Deadline(storeArray[2], Boolean.valueOf(storeArray[1]));
                     Duke.tasks.addTask(t);
                 }
             } else if (storeArray[0].equals("E")) {
                 try {
-                    DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
-                    LocalDateTime date = LocalDateTime.of(2020, Month.APRIL,3,12,30);
-                    String formattedDate = date.format(inputFormatter);
-                    Task t= new Event(storeArray[2], Boolean.valueOf(storeArray[1]),date);
+                    LocalDateTime dateTime = LocalDateTime.parse(storeArray[3]);
+                    Task t= new Event(storeArray[2], Boolean.valueOf(storeArray[1]),dateTime);
                     Duke.tasks.addTask(t);
                 }catch (ArrayIndexOutOfBoundsException e) {
                     Task t= new Event(storeArray[2], Boolean.valueOf(storeArray[1]));

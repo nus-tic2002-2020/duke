@@ -1,3 +1,4 @@
+package DukeUtils;
 
 public class UI{
     public void showLoadingError(){

@@ -1,10 +1,12 @@
+package DukeTask;
+
 import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
 /**
- * Deadline class syntax format - deadline /by
- * Event class syntax format - event /at
+ * DukeTask.Deadline class syntax format - deadline /by
+ * DukeTask.Event class syntax format - event /at
  * Todo class syntax format - todo
  */
 
@@ -19,7 +21,12 @@ import java.util.Locale;
     public Deadline(String description, Boolean status) {
         super(description, status);
     }
-
+    /**
+     *
+     * @param description task input by user
+     * @param status Check for whether task is completed using Boolean
+     * @param timecheck time task input by user
+     */
     public Deadline(String description, Boolean status, LocalDateTime timecheck) {
         super(description, status);
         this.timecheck = timecheck;
@@ -32,7 +39,7 @@ import java.util.Locale;
 
     private String generateDateAndTimeString() {
         String dateAndTime = "" + timecheck.getDayOfMonth();
-    int day = timecheck.getDayOfMonth();
+        int day = timecheck.getDayOfMonth();
 
         if (day == 1 || day == 21 || day == 31) {
         dateAndTime += "st";
@@ -44,7 +51,7 @@ import java.util.Locale;
         dateAndTime += "th";
     }
 
-    dateAndTime += " of " + timecheck.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH)
+        dateAndTime += " of " + timecheck.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH)
                 + " " + timecheck.getYear() + ", ";
 
         if (timecheck.getHour() > 12) {
