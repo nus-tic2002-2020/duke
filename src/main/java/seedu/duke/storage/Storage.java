@@ -53,36 +53,35 @@ public class Storage {
 
     public ArrayList<Task> load() throws DukeException {
         ArrayList<Task> taskList = new ArrayList<>();
-        if (!file.exists() || !file.isFile()){
-            return new ArrayList<Task>();
-        }else{
-            while (s.hasNextLine()){
+        if (!file.exists() || !file.isFile()) {
+            return taskList;
+        }
+            while (s.hasNextLine()) {
                 String line = s.nextLine();
                 String[] splitLine = line.split(" \\| ");
-                switch (splitLine[0]){
-                    case "T ":
+                switch (splitLine[0]) {
+                    case "T":
                         Todo newTodo = new Todo(splitLine[2]);
-                        if(splitLine[1].equals("1")){
+                        if (splitLine[1].equals("1")) {
                             newTodo.setDone();
                         }
                         taskList.add(newTodo);
-                    case "E ":
+                    case "E":
                         Event newEvent = new Event(splitLine[2], stringToDate(splitLine[3]));
-                        if(splitLine[1].equals("1")){
+                        if (splitLine[1].equals("1")) {
                             newEvent.setDone();
                         }
                         taskList.add(newEvent);
                         break;
-                    case "D ":
+                    case "D":
                         Deadline newDeadline = new Deadline(splitLine[2], stringToDate(splitLine[3]));
-                        if(splitLine[1].equals("1")){
+                        if (splitLine[1].equals("1")) {
                             newDeadline.setDone();
                         }
                         taskList.add(newDeadline);
-                        //break;
+                        break;
                 }
             }
-        }
         return taskList;
     }
 
