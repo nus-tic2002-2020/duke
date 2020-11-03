@@ -1,9 +1,10 @@
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.ArrayList;
+
 
 public class Duke {
-    private static Task [] store = new Task [100];
-    private static int count =0;
+    private static ArrayList<Task> store = new ArrayList<Task>();
 
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -28,7 +29,7 @@ public class Duke {
         }
     }
 
-    public  static int text(String input) throws DukeException{
+    public static int text(String input) throws DukeException {
         String[] num = input.split(" ");
         if (/*num.length > 0 && */!num[0].isBlank()) {
             String command = num[0];
@@ -48,6 +49,9 @@ public class Duke {
                 case "event":
                     EventTask(input);
                     break;
+                case "delete":
+                    deleteTask(num);
+                    break;
                 case "bye":
                     System.out.print("Bye. Hope to see you again soon!");
                     return 1;
@@ -58,59 +62,73 @@ public class Duke {
         return 0;
     }
 
-
+    /*
     public static void addTask(String description) {
         Task t = new Task(description);
         store[count++] = t;
         System.out.println("added: " + t);
-    }
+    }*/
 
     public static void listTask() {
         System.out.println("Here are the tasks in your list: ");
+        int count = store.size();
         for (int a = 0; a < count; a++) {
-            Task t = store[a];
-            System.out.println(a + 1 + ". " + store[a]);
+            Task t = store.get(a);
+            System.out.println(a + 1 + ". " + t);
         }
     }
 
-    public static void Taskdone(String[] num){
+    public static void Taskdone(String[] num) {
         System.out.println("Nice! I've marked this task as done: ");
-        for (int i = 1; i < num.length; i++){ //skip 0 as text, looking for the number
-            int TaskNo = Integer.parseInt(num[i]); //change string to No
-            if (store[TaskNo-1] != null ){ //to check that input is in list
-                Task t = store[TaskNo-1];
+        for (int i = 1; i < num.length; i++) { //skip 0 as text, looking for the number
+            int TaskNo = Integer.parseInt(num[i])-1; //change string to No
+            if (store.size() > TaskNo) { //to check that input is in list
+                Task t = store.get(TaskNo);
                 t.markAsDone();
-                System.out.println( store[TaskNo-1]);
+                System.out.println(t);
             }
         }
     }
 
-    public static void ToDoTask(String description){
+    public static void ToDoTask(String description) {
         String[] td = description.split("todo "); //omit the first word
         Task t = new ToDo(td[1]);
-        store[count++] = t;
+        store.add(t);
         System.out.println("Got it. I've added this task: : ");
-        System.out.println(store[count-1]);
-        System.out.println("Now you have " + count + " tasks in the list.");
+        System.out.println(t);
+        System.out.println("Now you have " + store.size() + " tasks in the list.");
     }
 
-    public static void DeadlineTask(String description){
+    public static void DeadlineTask(String description) {
         String[] due = description.split("/by ");
-        Task t = new Deadline(due[0],due[1]);
-        store[count++] = t;
+        Task t = new Deadline(due[0], due[1]);
+        store.add(t);
         System.out.println("Got it. I've added this task: : ");
-        System.out.println( store[count-1]);
-        System.out.println("Now you have " + count + " tasks in the list.");
+        System.out.println(t);
+        System.out.println("Now you have " + store.size() + " tasks in the list.");
     }
 
-    public static void EventTask(String description){
+    public static void EventTask(String description) {
         System.out.println("Got it. I've added this task: : ");
         String[] due = description.split("/at ");
-        Task t = new Event(due[0],due[1]);
-        store[count++] = t;
+        Task t = new Event(due[0], due[1]);
+        store.add(t);
         System.out.println("Got it. I've added this task: : ");
-        System.out.println( store[count-1]);
-        System.out.println("Now you have " + count + " tasks in the list.");
+        System.out.println(t);
+        System.out.println("Now you have " + store.size() + " tasks in the list.");
+    }
+
+    public static void deleteTask(String[] num) {
+        System.out.println("Noted. I've removed this task: ");
+        for (int i = 1; i < num.length; i++) { //skip 0 as text, looking for the number
+            int deleteTaskNo = Integer.parseInt(num[i])-1; //change string to No
+            if (store.size() > deleteTaskNo ) { //to check that input is in list
+                Task t = store.get(deleteTaskNo); //get the item to be deleted
+                System.out.println(t); //print out task to be deleted
+                store.remove(deleteTaskNo);
+                System.out.println("Now you have " + store.size() + " tasks in the list.");
+            }
+        }
     }
 }
 
