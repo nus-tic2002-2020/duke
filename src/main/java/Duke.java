@@ -36,8 +36,6 @@ public class Duke {
         System.out.println("What can I do for you?\n"); */
 
         while (true) {
-            //echoCommands();
-            //List = echoCommands(List);
             ui.readInput();
         }
 
