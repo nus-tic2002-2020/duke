@@ -1,14 +1,24 @@
 package seedu.duke.commands;
 
-public class Deadline extends Task {
-    protected String by;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
-    public Deadline(String description, String by) {
+public class Deadline extends Task {
+    protected LocalDateTime by;
+
+    public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
     }
     @Override
     public String getDescription() {
-        return "[D]" + super.getDescription() + " (by: " + by + ")";
+        return "[D]" + super.getDescription() + " (by: " + dateToString(by) + ")";
+    }
+
+    public String dateToString(LocalDateTime dateTime){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("DD/MM/YYY HHmm");
+        return dateTime.format(formatter);
     }
 }

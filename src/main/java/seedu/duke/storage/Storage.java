@@ -9,38 +9,25 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import seedu.duke.commands.*;
 import seedu.duke.exception.*;
 
 public class Storage {
-    public static final String DEFAULT_STORAGE_FILEPATH = "data/taskList.txt";
-    //public final Path path;
-
     private String filePath;
     private File file;
-    Scanner s;
+    private Scanner s;
 
-    public Storage () throws InvalidStorageFilePathException {
-        this(DEFAULT_STORAGE_FILEPATH);
-    }
-
-    public Storage(String filePath) {//throws InvalidStorageFilePathException{
-        try {
-            if (!isValidPath(filePath)) {
-                //createFileAndDirectory();
-                //throw new InvalidStorageFilePathException("New file is created.\n Storage file should end with '.txt'");
-            } else {
-                this.filePath = filePath;
-                this.file = new File(filePath);
-                s = new Scanner(file);
-            }
-        }catch(FileNotFoundException e){
+    public Storage (String filePath){
+        try{
+        this.filePath = filePath;
+        this.file = new File(filePath);
+        s = new Scanner(file);
+        }catch (FileNotFoundException e){
             createFileAndDirectory();
         }
-    }
-
-    private static boolean isValidPath(String filePath) {
-        return filePath.toString().endsWith(".txt");
     }
 
     public void createFileAndDirectory(){
@@ -59,24 +46,59 @@ public class Storage {
                 fw.write(TaskList.getATask(i) + System.lineSeparator());
             }
             fw.close();
-            //throw new IOException();
         }catch (IOException ioe) {
             System.out.println("\t☹ OOPS!!! Error saving the file.");
-        }//catch (StorageOperationException ioe) {
-        //    System.out.println("\t☹ OOPS!!! Error writing the file.");
-        //}
+        }
     }
 
-    public ArrayList<Task> load() {//throws StorageOperationException {
+    public ArrayList<Task> load() throws DukeException {
         ArrayList<Task> taskList = new ArrayList<>();
-        if (!file.exists() || !file.isFile()) {
+        if (!file.exists() || !file.isFile()){
             return new ArrayList<Task>();
         }else{
-            while (s.hasNext()){
-                System.out.println(s.nextLine());
+            while (s.hasNextLine()){
+                String line = s.nextLine();
+                String[] splitLine = line.split(" \\| ");
+                switch (splitLine[0]){
+                    case "T ":
+                        Todo newTodo = new Todo(splitLine[2]);
+                        if(splitLine[1].equals("1")){
+                            newTodo.setDone();
+                        }
+                        taskList.add(newTodo);
+                    case "E ":
+                        Event newEvent = new Event(splitLine[2], stringToDate(splitLine[3]));
+                        if(splitLine[1].equals("1")){
+                            newEvent.setDone();
+                        }
+                        taskList.add(newEvent);
+                        break;
+                    case "D ":
+                        Deadline newDeadline = new Deadline(splitLine[2], stringToDate(splitLine[3]));
+                        if(splitLine[1].equals("1")){
+                            newDeadline.setDone();
+                        }
+                        taskList.add(newDeadline);
+                        //break;
+                }
             }
         }
         return taskList;
+    }
+
+    private LocalDateTime stringToDate(String date) throws DukeException{
+        try{
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("DD/MM/YYY HHmm");
+            return LocalDateTime.parse(date, formatter);
+        }
+        catch (DateTimeParseException e){
+            throw new DukeException("The date " + date + " loaded from the file is invalid.");
+        }
+    }
+
+    public String dateToString(LocalDateTime dateTime){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("DD/MM/YYY HHmm");
+        return dateTime.format(formatter);
     }
 
     public static class InvalidStorageFilePathException extends IllegalValueException {

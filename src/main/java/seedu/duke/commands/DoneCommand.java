@@ -14,20 +14,14 @@ public class DoneCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
+    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException , Storage.StorageOperationException{
         int index = 0;
-        try {
-            if (description.substring(4).equals("")){ //if after keywords is empty
-                throw new DukeException("\t☹ OOPS!!! The description of todo cannot be empty.\n");
-            }
-            index = Integer.parseInt(description.substring(5))-1;
-            (taskList.getATask(index)).setDone();
-            ui.showOutputToUser(DONE_MSG + taskList.getATask(index));
-            storage.save();
-        }catch (DukeException | Storage.StorageOperationException e){
-            System.out.println("\t____________________________________________________________");
-            System.out.println("\t☹ OOPS!!! The number of task cannot be empty.2");
-            System.out.println("\t____________________________________________________________");
+        if (description.substring(4).equals("")){
+            throw new DukeException("\t☹ OOPS!!! The description of todo cannot be empty.\n");
         }
+        index = Integer.parseInt(description.substring(5))-1;
+        (taskList.getATask(index)).setDone();
+        ui.showOutputToUser(DONE_MSG + taskList.getATask(index).getDescription());
+        storage.save();
     }
 }

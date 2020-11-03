@@ -11,7 +11,6 @@ public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
     public static final String LIST_MSG = "Here are the tasks in your list:\n\t";
-    //private static ArrayList<Task> taskList = new ArrayList<Task>(100);
 
     public ListCommand(boolean isExit, String description) {
         super(isExit, description);
@@ -29,7 +28,7 @@ public class ListCommand extends Command {
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException{
         if(TaskList.length() == 0){
-            throw new DukeException("The task list cannot be displayed.");
+            throw new DukeException("The task list is empty!");
         }
         getTaskList();
     }

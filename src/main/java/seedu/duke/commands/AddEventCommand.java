@@ -3,11 +3,15 @@ package seedu.duke.commands;
 import seedu.duke.exception.DukeException;
 import seedu.duke.storage.Storage;
 import seedu.duke.ui.Ui;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class AddEventCommand extends Command {
     public static final String COMMAND_WORD = "event";
     public static final String EVENT_MSG = "Got it. I've added this task:\n\t";
-    public static final String EVENT_MSG1 = "Now you have ";
+    public static final String EVENT_MSG1 = "\n\tNow you have ";
     public static final String EVENT_MSG2 = " in task list.";
     protected Event event;
 
@@ -16,21 +20,26 @@ public class AddEventCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
-        try {
-            if (description.substring(5).equals("")){ //if after keywords is empty
-                throw new DukeException("\t☹ OOPS!!! The description of event cannot be empty.\n");
-            }else if (description.contains("at  ")){ //if after keywords is empty
-                throw new DukeException("\t☹ OOPS!!! The event date cannot be empty.\n");
-            }
-            event = new Event(description.substring(6, description.indexOf("at")-2), description.substring(description.indexOf("at")+3));
-            taskList.setTaskList(event);
-            ui.showOutputToUser(EVENT_MSG  + EVENT_MSG1 + taskList.length() + EVENT_MSG2);
-            storage.save();
-        }catch (DukeException | Storage.StorageOperationException e){
-            System.out.println("\t____________________________________________________________");
-            System.out.println("\t☹ OOPS!!! The description of event cannot be empty.2");
-            System.out.println("\t____________________________________________________________");
+    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException, Storage.StorageOperationException{
+        if (description.substring(5).equals("")){
+            throw new DukeException("\t☹ OOPS!!! The description of event cannot be empty.\n");
+        }else if (description.contains("at  ")){
+            throw new DukeException("\t☹ OOPS!!! The event date cannot be empty.\n");
+        }
+        String taskDescription = description.substring(6, description.indexOf("at")-1);
+        String taskDate = description.substring(description.indexOf("at")+3);
+        event = new Event(taskDescription, stringToDate(taskDate));
+        TaskList.setTaskList(event);
+        ui.showOutputToUser(EVENT_MSG  + event.getDescription() + EVENT_MSG1 + TaskList.length() + EVENT_MSG2);
+        storage.save();
+    }
+
+    private LocalDateTime stringToDate(String date) throws DukeException{
+        try{
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("DD/MM/YYY HHmm");
+            return LocalDateTime.parse(date, formatter);
+        }catch (DateTimeParseException e){
+            throw new DukeException("The format of the date and time must be in this format: DD/MM/YYY HHmm");
         }
     }
 }

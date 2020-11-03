@@ -17,8 +17,7 @@ public class Command{
         return isExit;
     }
 
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
+    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException, Storage.StorageOperationException {
         throw new DukeException("No such function yet.");
-    };
-
+    }
 }
