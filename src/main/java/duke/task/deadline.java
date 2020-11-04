@@ -26,6 +26,11 @@ public class deadline extends Task{
         //System.out.println("Year: " + date.getYear() + " Month: " + date.getMonthValue() + " Day: " + date.getDayOfMonth());
     }
 
+    public void updateTime(String new_date){
+        String[] timeParse = new_date.split("/", 3);
+        this.date = LocalDate.of(Integer.parseInt(timeParse[2]), Integer.parseInt(timeParse[1]), Integer.parseInt(timeParse[0]));
+    }
+
     /**
      *Return completion time of a deadline
      *

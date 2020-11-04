@@ -15,6 +15,10 @@ public abstract class Task {
         Completed = false;
     }
 
+    public void updateDesc(String new_entry){
+        this.Description = new_entry;
+    }
+
     /**
      * Return description variable task parent class
      *
@@ -42,4 +46,5 @@ public abstract class Task {
     /**Abstract class of task parent class*/
     public abstract char getCat();
     public abstract String getTime();
+    public abstract void updateTime(String new_date);
 }

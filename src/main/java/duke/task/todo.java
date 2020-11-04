@@ -14,6 +14,10 @@ public class todo extends Task{
         this.category = 'T';
     }
 
+    public void updateTime(String new_date){
+        return;
+    }
+
     /**
      * Return category of the class
      *

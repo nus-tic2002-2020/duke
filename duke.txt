@@ -1,5 +1,5 @@
 D | 1 | dinner| 22/12/2020
-D | 1 | go run| 22/12/2020
+D | 1 | run at stadium| 11/11/2020
 D | 1 | go gym| 31/12/2020
 E | 1 | convention| 15/11/2020
 T | 1 | cook lunch

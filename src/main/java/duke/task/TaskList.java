@@ -92,6 +92,61 @@ public class TaskList{
         return item_line;
     }
 
+    public void find(String input){
+        String keyword = input.split(" ", 2)[1].trim();
+        ArrayList<Integer> match = new ArrayList<Integer>();
+        for(int i = 1 ; i <= this.getItem_count() ; i++){
+            if(this.List.get(i - 1).getDesc().contains(keyword)){
+                match.add(i);
+            }
+        }
+        if(match.size() == 0){
+            duke_echo("No match found!");
+            return;
+        }
+        System.out.println("\t____________________________________________________________");
+        System.out.println("\tHere are the matching tasks in your list:");
+        for(int i = 0 ; i < match.size() ; i++){
+            String tick = (this.List.get(match.get(i) - 1).getStatus()) ? "✓" : "✗";
+            String to_print = "[" + this.List.get(match.get(i) - 1).getCat() + "]" + "[" + tick + "] " + this.List.get(match.get(i) - 1).getDesc();
+            System.out.print("\t" + (i + 1) + ". " + to_print);
+            if(this.List.get(match.get(i) - 1).getCat() != 'T'){
+                String print_line = (this.List.get(match.get(i) - 1).getCat() == 'D') ? "(by: " : "(at: ";
+                print_line = print_line + this.List.get(match.get(i) - 1).getTime() + ")";
+                System.out.print(print_line);
+            }
+            System.out.print("\n");
+        }
+        System.out.println("\t____________________________________________________________");
+    }
+
+    public void update(String input){
+        String[] input_split = input.trim().split(" ", 4);
+        int index = Integer.parseInt(input_split[1].trim());
+        if(input.contains("desc")){
+            this.List.get(index - 1).updateDesc(input_split[3].trim());
+            System.out.println("\t____________________________________________________________");
+            System.out.print("\tGot it. I've updated this task:\n\t");
+            print_task(index);
+            System.out.println("\t____________________________________________________________");
+        }
+        else if(input.contains("date")){
+            this.List.get(index - 1).updateTime(input_split[3].trim());
+            if(this.List.get(index).getCat() == 'T'){
+                duke_echo("todo do not have date/time!");
+            }
+            else{
+                System.out.println("\t____________________________________________________________");
+                System.out.print("\tGot it. I've updated this task:\n\t");
+                print_task(index);
+                System.out.println("\t____________________________________________________________");
+            }
+        }
+        else{
+            duke_echo("Incorrect input. Follow this syntax for update: update <index> <desc/date> <new entry>");
+        }
+    }
+
     //setters
 
     /**

@@ -28,11 +28,12 @@ public class UI {
             System.out.println(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
         catch(ArrayIndexOutOfBoundsException e){ //todo, event & deadline
-            System.out.println("☹ OOPS!!! The description of a " + user_input.trim() + " is invalid.");
+            System.out.println("☹ OOPS!!! The description of " + user_input.trim() + " is invalid.");
             System.out.print("Follow the correct syntax below:\n" +
                     "\ttodo <description>\n"+
                     "\tdeadline <description> /by <DD/MM/YYYY>\n" +
-                    "\tevent <description> /at <DD/MM/YYYY>\n" );
+                    "\tevent <description> /at <DD/MM/YYYY>\n" +
+                    "\tupdate <index> <desc/date> <new entry>\n");
         }
         catch(NumberFormatException e){ //done
             System.out.println("☹ OOPS!!! The description of a " + user_input.trim() + " cannot be empty.");
@@ -75,6 +76,12 @@ public class UI {
         }//end else if
         else if(user_input.contains("delete")){
             tasks.delete(user_input);
+        }
+        else if(user_input.contains("find")){
+            tasks.find(user_input);
+        }
+        else if(user_input.contains("update")){
+            tasks.update(user_input);
         }
         else{
             throw new IllegalInputException();
