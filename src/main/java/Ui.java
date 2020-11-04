@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 public class Ui {
     public String scheduledDate;
     public String matchTerm;
-    /*Handling user input*/
     public TaskList tasks;
     public Storage storage;
 
@@ -32,6 +31,7 @@ public class Ui {
         userSentence = input.nextLine();
         //replies to user input
         try {
+            System.out.println(userSentence);
             response(userSentence);
         } catch (IllegalInputException e) {
             System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");

@@ -17,7 +17,7 @@ public class TaskList {
      * Successful addition will output added task massage if not exception is thrown.
      *
      */
-    public void storeList (String input) throws IllegalInputException { //tasks should be array class task?
+    public void storeList (String input) throws IllegalInputException {
 
         while (true) {
             // here task/categorization assignment is being done by task.java

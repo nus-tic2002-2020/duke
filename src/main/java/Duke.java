@@ -15,7 +15,7 @@ public class Duke {
         storage  = new Storage(filepath);
         tasks = new TaskList();
         this.ui = new Ui(tasks, storage);
-        //storage.load(ui);
+        storage.load(ui);
     }
 
     public void run(){
@@ -27,13 +27,13 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         System.out.println("\tHello! I'm Duke\n\tWhat is your name?");
-       /* DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         Scanner in = new Scanner(System.in);
         humanName = in.nextLine();
 
         System.out.println(humanName + " today is: " + (dtf.format(now)));
-        System.out.println("What can I do for you?\n"); */
+        System.out.println("What can I do for you?\n");
 
         while (true) {
             ui.readInput();

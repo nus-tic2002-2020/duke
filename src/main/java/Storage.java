@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Storage  {
     //variable
     private String pathname;
+    public String userSentence;
     //constructor
     public Storage(String path){
         this.pathname = path;
@@ -19,7 +20,7 @@ public class Storage  {
             Scanner s = new Scanner(f);
             int counter = 0;
             while (s.hasNext()) {
-                String userSentence = s.nextLine();
+                 userSentence = s.nextLine();
                 String[] split_line_item = userSentence.split("\\|", 4);
 
                 switch (split_line_item[0].trim()) {
