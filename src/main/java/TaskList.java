@@ -25,8 +25,8 @@ public class TaskList {
             System.out.println("\tGot it. I've added this task: ");
             System.out.println("\t" + tasks.get(Duke.numberOftask).getTag() + "[" + tasks.get(Duke.numberOftask).getStatusIcon() + "] " + tasks.get(Duke.numberOftask).description +  tasks.get(Duke.numberOftask).getTimeDate());
             System.out.println("\tNow you have " + (Duke.numberOftask+1) +" task in the list ");
-
             Duke.numberOftask++;
+            assert Duke.numberOftask >= 0 : "number of task must be more than 0";
             break;
 
         }//end while loop
@@ -61,7 +61,7 @@ public class TaskList {
             return;
         }
         System.out.println("\tHere are the tasks in your list: ");
-
+        assert Duke.numberOftask <= -1 : "number of task cannot be less than 0";
         for(int i = 1 ; i <= Duke.numberOftask ; i++) {
             System.out.println("\t" + i+". "  + this.tasks.get(i-1).getTag() + "[" + this.tasks.get(i-1).getStatusIcon() + "] " + this.tasks.get(i-1).description  + this.tasks.get(i-1).getTimeDate());
 

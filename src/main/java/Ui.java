@@ -102,6 +102,7 @@ public class Ui {
             Pattern pattern = Pattern.compile("[^0-9]");
             String numberOnly = pattern.matcher(userSentence).replaceAll("");
             Duke.taskNumber = Integer.parseInt(numberOnly);
+            assert Duke.taskNumber <= 0 : "number of task cannot be less than 1";
             System.out.println("\tNice! I've marked this task as done: ");
             tasks.tasks.get(Duke.taskNumber - 1).isDone = true; // this might just access not modify
             System.out.println(tasks.tasks.get(Duke.taskNumber - 1).getTag() + " [" + tasks.tasks.get(Duke.taskNumber - 1).getStatusIcon() + "] " + tasks.tasks.get(Duke.taskNumber - 1).description);
@@ -112,6 +113,8 @@ public class Ui {
             String numberOnly = pattern.matcher(userSentence).replaceAll("");
             Duke.taskNumber = Integer.parseInt(numberOnly);
             Duke.numberOftask--;
+            assert Duke.taskNumber <= 0 : "number of task cannot be less than 1";
+            assert Duke.numberOftask <= -1 : "number of task cannot be less than 0";
             System.out.println("\tNoted. I've removed this task: ");
             System.out.println(tasks.tasks.get(Duke.taskNumber - 1).getTag() + " [" + tasks.tasks.get(Duke.taskNumber - 1).getStatusIcon() + "] " + tasks.tasks.get(Duke.taskNumber - 1).description);
             // add delete logic here by modifying tasks
