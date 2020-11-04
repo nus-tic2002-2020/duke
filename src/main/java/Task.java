@@ -26,7 +26,4 @@ public class Task {
         return "Nice! I've marked this task as done: \n\t [\u2713] " + this.description;
     }
 
-    public void snoozeTask(int index, String newDate, String newTime) {
-
-    }
 }

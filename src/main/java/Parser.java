@@ -28,6 +28,8 @@ public class Parser {
                 return new SnoozeCommand(false,commandLine);
             case "find":
                 return new FindCommand(false,commandLine);
+            case "help":
+                return new HelpCommand(false,commandLine);
             default:
                 throw new DukeException("I'm Sorry, but I don't know what that means :-(");
         }
