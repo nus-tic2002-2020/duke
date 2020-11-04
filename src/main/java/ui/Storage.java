@@ -1,8 +1,12 @@
+package ui;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
+
+import duke.Duke;
+import tasks.Task;
 
 public class Storage extends Duke{
 	private static String path = "F:/NUS/duke_new/data/";
@@ -14,6 +18,11 @@ public class Storage extends Duke{
 		readFile();	
 	}
 	
+	/**
+	* This method checks if duke.txt is there.
+	* If its not there, it will create folder and file automatically.
+	*/
+	
 	public static void checkFile() throws IOException {
 		File dir = new File(path);
 		if (dir.exists() == false) {
@@ -24,7 +33,11 @@ public class Storage extends Duke{
 		if (!file.exists())
 			file.createNewFile();
 	}
-
+	
+	/**
+	* This method reads duke.txt, load and prints previous tasks.
+	*/
+	
 	public static void readFile() throws Exception {
 		try {
 			Scanner in = new Scanner(new File(filePath));
@@ -37,7 +50,7 @@ public class Storage extends Duke{
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
+		if(Chat.count==0) return;
 		System.out.println("=========Existing List=========");
 		Chat.listALL();
 		System.out.println("=========Existing List=========\n");

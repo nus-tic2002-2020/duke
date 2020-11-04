@@ -1,13 +1,29 @@
+package ui;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
+import duke.Duke;
+import exceptions.DukeException;
+import exceptions.MissDescException;
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Task;
+
+/**
+* This is the major class.
+* It initializes chat, read commands and process storage.
+*/
 
 public class Chat extends Duke {
 	protected static ArrayList<Task> task = new ArrayList<Task>();
 	protected static int count = 0;
 	private static String ln = "____________________________________________________________\n";
 	protected static boolean going = true;
-	
+
+	/**
+	* @param going decides whether Duke will still scan user input. If user says 'bye' then, bye. 
+	*/
+
 	public static void main() throws Exception {
 		System.out.println("Hello! I'm Duke\nWhat can I do for you?");
 		while (going) {
@@ -18,6 +34,12 @@ public class Chat extends Duke {
 		}
 	}
 	
+	public static void chat() throws Exception {
+		Scanner scan = new Scanner(System.in); // Create a Scanner object
+		String userinput = (scan.nextLine()).trim();
+		processScanner(userinput,true);
+	}
+	
 	public static void printAdded(String content) {
 		int a = count + 1;
 		System.out.println(ln + " Got it. I've added this task: ");
@@ -26,12 +48,6 @@ public class Chat extends Duke {
 		System.out.println(ln);
 	}
 
-	public static void chat() throws Exception {
-		Scanner scan = new Scanner(System.in); // Create a Scanner object
-		String userinput = (scan.nextLine()).trim();
-		processScanner(userinput,true);
-	}
-	
 	public static void processScanner(String userinput, boolean print) throws Exception {
 
 		if (userinput.length() == 0) {
@@ -49,7 +65,13 @@ public class Chat extends Duke {
 			}
 				break;
 			case "list": {
-				//two ways: list & list+date. exp: list 2020-01-01
+				
+				/**
+				* Two ways: list & list+date. 
+				* Example: list.
+				* Example: list 2020-01-01.
+				*/
+				
 				if(_userinput[1]=="") {
 					System.out.println(ln + "Here are the tasks in your list:");
 					listALL();			
@@ -66,7 +88,6 @@ public class Chat extends Duke {
 			}
 				break;
 			case "find": {
-				//two ways: list & list+date. exp: list 2020-01-01
 				if(_userinput[1]=="") {
 					System.out.println(ln + "Key "+_userinput[1]+" not found.");
 				} else {
@@ -159,17 +180,28 @@ public class Chat extends Duke {
 			}
 		}
 	}
+	
+	 /**
+     * The following three methods provides list of tasks with conditions.
+     * @throws DukeException Throws an error if the list is empty.
+     */
 
-	public static void listALL() {
+	public static void listALL() throws DukeException {
 		int n = 1;
+		if (count == 0) {
+            throw new DukeException("There are no items currently in the list");
+        }
 		for (int a = 0; a < count; a++) {
 			System.out.println(n+". "+task.get(a).printTask());
 			n++;
 		}
 	}
 
-	public static void listALLwithDate(LocalDate d) {
+	public static void listALLwithDate(LocalDate d) throws DukeException {
 		int n = 1;
+		if (count == 0) {
+            throw new DukeException("There are no items currently in the list");
+        }
 		for (int a = 0; a < count; a++) {
 			LocalDate date=task.get(a).getDate();
 			if(date!=null && date.equals(d)) {
@@ -180,8 +212,11 @@ public class Chat extends Duke {
 		if(n==1) System.out.println("Oh you dont have a task on that day");
 	}
 
-	public static void listALLwithKey(String keyword) {
+	public static void listALLwithKey(String keyword) throws DukeException {
 		int n = 1;
+		if (count == 0) {
+            throw new DukeException("There are no items currently in the list");
+        }
 		for (int a = 0; a < count; a++) {
 			String title=task.get(a).getTitle();
 			if(title.toLowerCase().contains(keyword.toLowerCase())) {
