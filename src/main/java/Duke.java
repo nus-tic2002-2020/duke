@@ -1,5 +1,9 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 
 public class Duke {
 
@@ -20,10 +24,16 @@ public class Duke {
 
         System.out.println("Hello,\n" + logo + "I'm Pi,\n" + "What can I do for you?");
 
+        ArrayList<Task> tasks = new ArrayList<Task>();
+
+        try {
+            loadFile(tasks);
+        } catch (FileNotFoundException exception) {
+            System.out.println("File not found");
+        }
 
         String input;
         Scanner in = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<Task>();
         input = in.nextLine();
 
         while (!input.equals("bye")) {
@@ -38,6 +48,12 @@ public class Duke {
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println(" " + tasks.get(finishedTask - 1).getTaskListInfo());
 
+                try {
+                    updateFile(tasks);
+                } catch (IOException exception) {
+                    System.out.println("☹ OOPS: " + exception.getMessage());
+                }
+
             } else if (input.contains("delete")) {
                 int removedTask = Integer.valueOf(inputs[1]);
                 System.out.println("Noted. I've removed this task:");
@@ -47,11 +63,23 @@ public class Duke {
 
                 System.out.println("Now you have " + tasks.size() + " task(s) in the list.");
 
+                try {
+                    updateFile(tasks);
+                } catch (IOException exception) {
+                    System.out.println("☹ OOPS: " + exception.getMessage());
+                }
+
             } else {
                 try {
                     addTask(input, inputs, tasks);
 
                     System.out.println("Now you have " + tasks.size() + " task(s) in the list.");
+
+                    try {
+                        updateFile(tasks);
+                    } catch (IOException exception) {
+                        System.out.println("☹ OOPS: " + exception.getMessage());
+                    }
 
                 } catch (DukeException exception) {
                     System.out.println(exception);
@@ -62,6 +90,78 @@ public class Duke {
         System.out.println("Bye. Hope to see you again soon!");
 
     }
+
+
+
+    public static void updateFile(ArrayList<Task> tasks) throws IOException {
+            FileWriter writer = new FileWriter("tasks.txt");
+            writer.write(tasks.get(0).getTaskListInfo());
+            writer.close();
+
+            FileWriter appender = new FileWriter("tasks.txt", true);
+
+            for (int i = 1; i < tasks.size(); i++) {
+                appender.write(System.lineSeparator() + tasks.get(i).getTaskListInfo());
+            }
+
+            appender.close();
+
+    }
+
+    public static void loadFile (ArrayList<Task> tasks) throws FileNotFoundException {
+        File file = new File ("tasks.txt");
+        Scanner readFile = new Scanner (file);
+
+        while (readFile.hasNext()) {
+            String fileInput = readFile.nextLine();
+            String inputs[] = fileInput.split(" \\| ");
+            String taskType = inputs[0];
+            String isDone = inputs[1];
+            String description = inputs[2];
+
+
+            switch (taskType){
+            case "E":
+                String timing = inputs[3];
+                if (isDone.equals("0")) {
+                    tasks.add(new Event(description, taskType, timing, false));
+                } else {
+                    tasks.add(new Event(description, taskType, timing, true));
+                }
+
+                break;
+            case "D":
+                String timeBy = inputs[3];
+                if (isDone.equals("0")) {
+                    tasks.add(new Deadline(description, taskType, timeBy, false));
+                } else {
+                    tasks.add(new Deadline(description, taskType, timeBy, true));
+                }
+
+                break;
+            case "T":
+                if (isDone.equals("0")) {
+                    tasks.add(new ToDo(description, taskType, false));
+                } else {
+                    tasks.add(new ToDo(description, taskType, true));
+                }
+                break;
+            }
+
+            /*if (taskType.equals("D") || taskType.equals("E")) {
+                String dateAndTime = inputs[3];
+                if (taskType.equals("D")) {
+                    tasks.add(new Deadline(description, dateAndTime));
+                } else {
+                    tasks.add(new Event(description, dateAndTime));
+                }
+
+            }*/
+
+        }
+
+    }
+
 
 
     /*Add new Task*/
@@ -82,7 +182,7 @@ public class Duke {
 //            if (taskTime.equals(" ")) {
 //                throw new DukeException("  ☹ OOPS!!! Please input a timing for this task");
 //            }
-            tasks.add(new Deadline(taskName, taskTime));
+            tasks.add(new Deadline(taskName, "D", taskTime));
 
         } else if (inputs[0].startsWith("event")) {
             if (inputs.length == 1){
@@ -98,14 +198,14 @@ public class Duke {
             String taskName = userInput.substring(6, findPosition);
             String taskTime = userInput.substring(findPosition + 4, userInput.length());
 
-            tasks.add(new Event(taskName, taskTime));
+            tasks.add(new Event(taskName, "E", taskTime));
 
         } else if (inputs[0].startsWith("todo")) {
             if (inputs.length == 1) {
                 throw new DukeException(userInput);
             }
             String taskName = userInput.substring(5);
-            tasks.add(new ToDo(taskName));
+            tasks.add(new ToDo(taskName,"T"));
         } else {
             throw new DukeException(userInput);
         }
