@@ -1,0 +1,5 @@
+T | 0 | one more task
+D | 1 | finish level 9 | 22/11/2020 1900
+T | 0 | level 10
+E | 0 | karaoke | manekineko
+D | 0 | return book | 04/11/2020 1900
