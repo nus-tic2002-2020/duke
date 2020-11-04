@@ -1,7 +1,10 @@
-/*************************************************************
+/****************************************************************
  *
- *         Public class by factionsypho
+ *         This class takes in the full commandline and searches
+ *         for its respective command class to be called.
  *
+ * @param commandLine is the user input passed in from Duke.java.
+ * @return Command executions based on the user input.
  * *************************************************************/
 
 public class Parser {

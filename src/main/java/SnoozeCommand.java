@@ -1,7 +1,15 @@
-/*************************************************************
+/***************************************************************
  *
- *         Public class by factionsypho
+ *         Allows user to postpone their deadlines.
  *
+ * @param index                 Used to split the commandline for
+ *                              the date and timing.
+ * @param taskIndex             Used to indicate the selected
+ *                              task
+ * @param taskList              ArrayList storing our tasks.
+ * @param DateTimeFormatter     To verify the date/time format
+ * @param storage               To store values to the arraylist
+ * @throws DukeException        Catching errors
  * *************************************************************/
 
 import java.io.IOException;

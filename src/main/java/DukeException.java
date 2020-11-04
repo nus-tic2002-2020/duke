@@ -1,7 +1,8 @@
-/*************************************************************
+/***************************************************************
  *
- *         Public class by factionsypho
+ *         Custom error handling class.
  *
+ * @throws DukeException        Catching errors
  * *************************************************************/
 
 public class DukeException extends Exception{

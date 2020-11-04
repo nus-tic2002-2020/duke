@@ -1,7 +1,12 @@
-/*************************************************************
+/***************************************************************
  *
- *         Public class by factionsypho
+ *         Allows user to mark their tasks as completed.
  *
+ * @param index                 Used to indicate the selected
+ *                              task
+ * @param taskList              ArrayList storing our tasks.
+ * @param storage               To store values to the arraylist
+ * @throws DukeException        Catching errors
  * *************************************************************/
 
 import java.io.IOException;

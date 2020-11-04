@@ -1,3 +1,19 @@
+/***************************************************************
+ *
+ *         Allows user to add deadlines tasks.
+ *
+ * @param output                To print our tasks
+ * @param index                 Used to split the commandline for
+ *                              the date and timing.
+ * @param taskNumber            Used to indicate the selected
+ *                              task
+ * @param taskList              ArrayList storing our tasks.
+ * @param dtf                   To format the date/time
+ *
+ * @param storage               To store values to the arraylist
+ * @throws DukeException        Catching errors
+ * *************************************************************/
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

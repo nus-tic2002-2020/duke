@@ -1,6 +1,6 @@
 /*************************************************************
  *
- *         Public class by factionsypho
+ *         Class to end the program.
  *
  * *************************************************************/
 
@@ -9,7 +9,7 @@ public class Bye extends Command{
         super(isExit, commandLine);
     }
     @Override
-    public void execute(TaskList taskList, UI ui, Storage storage) throws DukeException{
+    public void execute(TaskList taskList, UI ui, Storage storage){
         ui.showGoodbye();
     }
 }

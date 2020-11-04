@@ -1,7 +1,16 @@
-/*************************************************************
+/***************************************************************
  *
- *         Public class by factionsypho
+ *         Allows user to list all the tasks stored.
  *
+ * @param output                To print our tasks
+ * @param index                 Used to split the commandline for
+ *                              the date and timing.
+ * @param taskNumber            Used to indicate the selected
+ *                              task
+ * @param taskList              ArrayList storing our tasks.
+ * @param newtaskList           ArrayList to store retrieved tasks.
+ * @param storage               To store values to the arraylist
+ * @throws DukeException        Catching errors
  * *************************************************************/
 
 import java.util.ArrayList;
