@@ -4,8 +4,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+
+/**
+ * This represents a Deadline Task. It has a LocalDateTime by object.
+ * The "by" object will represent the time which the Deadline is supposed to finish.
+ */
+
 public class Deadline extends Task {
-    protected LocalDateTime by;
+    private LocalDateTime by;
 
     public Deadline(String description, String by) throws DateTimeParseException {
         super(description);

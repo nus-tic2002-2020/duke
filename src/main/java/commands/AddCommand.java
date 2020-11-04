@@ -1,9 +1,14 @@
 package commands;
 
+import exceptions.DukeException;
 import storage.Storage;
 import ui.Ui;
 import tasks.*;
 
+/**
+ * This represents the AddCommand class which adds a specific task to the task list.
+ *
+ */
 public class AddCommand extends Command{
     String taskType;
     String taskDescription;
@@ -17,14 +22,16 @@ public class AddCommand extends Command{
 
 
     @Override
-    public void execute(TaskList list, Ui ui, Storage storage){
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
         int size = 0;
-        list.addToList(taskType,taskDescription,taskSecondPart);
-        size = list.getSize();
-        System.out.println(System.lineSeparator() + "Got it. I've added this task:" +
-                System.lineSeparator() + list.get(size - 1).toString());
+        tasks.addToList(taskType,taskDescription,taskSecondPart);
 
-        list.get(size - 1).printTotalTasks();
+        size = tasks.getSize();
+        System.out.println(System.lineSeparator() + "Got it. I've added this task:" +
+                System.lineSeparator() + tasks.get(size - 1).toString());
+
+
+        tasks.printTotalTasks();
     }
 
 }

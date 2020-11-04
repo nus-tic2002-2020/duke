@@ -1,20 +1,28 @@
 package tasks;
 
+
+/**
+ * Represents the Parent Class Task. It has a String for the description of the task.
+ * The boolean is meant to indicate if the task is done.
+ * The cumulatedTasksAdded is meant to count total number of tasks added throughout the session
+ *
+ */
+
 public class Task {
 
     private String description;
     private boolean isDone;
-    private static int totalTasks = 0;
+    private static int cumulatedTasksAdded = 0;
 
 
 
     public Task(String description){
         this.description = description;
         this.isDone = false;
-        totalTasks++;
+        cumulatedTasksAdded++;
     }
 
-    public void changeCompletedTo(boolean value){
+    public void changeDoneTo(boolean value){
         this.isDone = value;
     }
 
@@ -36,8 +44,8 @@ public class Task {
         return ("["+ symbol + "] " + getDescription());
     }
 
-    public void printTotalTasks(){
-        System.out.println("Now you have " + totalTasks + " tasks in the list.");
+    public int getCumulatedTasksAdded(){
+        return cumulatedTasksAdded;
     }
 
 

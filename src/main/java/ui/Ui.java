@@ -3,6 +3,10 @@ package ui;
 
 import java.util.Scanner;
 
+
+/** Represents the Ui. It is meant to scan for new input and
+ *  print the various Strings
+ */
 public class Ui {
     protected String intro = "Hello from\n"
             + " ____        _        \n"
@@ -42,6 +46,9 @@ public class Ui {
         System.out.println(errorMessage);
     }
 
+    public void showLoadingError(){
+        System.out.println("Did not load Task List from File");
+    }
 
 
 }

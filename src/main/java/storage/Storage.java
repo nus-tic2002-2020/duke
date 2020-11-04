@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import tasks.*;
 
 
-//deals with loading tasks from the file and saving tasks in the file
+/**
+ * This represents the Files access. The various objects are used to access the file/directory
+ * location for either writing or reading on the file.
+ */
 public class Storage {
 
     private File directory;
@@ -37,14 +40,13 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    public void writeToFile(TaskList list) throws IOException {
-        System.out.println("Loading from File to List");
+    public void save(TaskList list) throws IOException {
 
         FileWriter fw = new FileWriter(this.filePath);
 
         int size = list.getSize();
         if(size == 0){
-            System.out.println(System.lineSeparator() + "tasks.Task List is empty.");
+            System.out.println("Task List is empty. Nothing to save.");
             return;
         }
 
@@ -54,7 +56,6 @@ public class Storage {
         String secPart = "";
         int done = 0;
 
-        System.out.println(System.lineSeparator() + "Writing Tasks List from Memo to File");
         for(int i = 0; i < size; i ++){
             temp = list.get(i).getClass().toString();
             switch(temp){
@@ -73,12 +74,12 @@ public class Storage {
                     secPart = " | " + ((Event)list.get(i)).getAt();
                     break;
                 default:
-                    System.out.println("Can't get Class from tasks.Task Array");
+                    System.out.println("Can't get Class from Task List");
                     return;
             }
 
             done = (list.get(i).getIsDone()) ? 1:0;
-            text = firstPart + String.valueOf(done) + " | " + list.get(i).getDescription() + secPart;
+            text = firstPart + done + " | " + list.get(i).getDescription() + secPart;
             fw.write(text + System.lineSeparator());
             text = "";
             secPart = "";
@@ -91,6 +92,7 @@ public class Storage {
         this.f = new File(this.filePath);
         this.fr =new FileReader(this.f);
         this.br = new BufferedReader(this.fr);
+        this.parsedFile =  new ArrayList<String[]> ();
         String line;
 
         while((line = this.br.readLine())!=null){
