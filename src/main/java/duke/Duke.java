@@ -1,3 +1,4 @@
+package duke;
 import duke.task.*;
 import duke.ui.*;
 import duke.storage.*;

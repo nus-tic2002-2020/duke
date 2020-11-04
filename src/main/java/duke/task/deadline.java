@@ -23,7 +23,7 @@ public class deadline extends Task{
         }
         String timeParse[] = time_input[1].split("/", 3);
         date = LocalDate.of(Integer.parseInt(timeParse[2]), Integer.parseInt(timeParse[1]), Integer.parseInt(timeParse[0]));
-        System.out.println("Year: " + date.getYear() + " Month: " + date.getMonthValue() + " Day: " + date.getDayOfMonth());
+        //System.out.println("Year: " + date.getYear() + " Month: " + date.getMonthValue() + " Day: " + date.getDayOfMonth());
     }
 
     /**
