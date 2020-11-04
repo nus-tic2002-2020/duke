@@ -22,7 +22,7 @@ public class Parser {
                 return new ByeCommand(true, userInput);
             default:
                 System.out.println("\t☹ OOPS!!! I'm sorry, but I don't know what that means.");
-                return new Command (false, userInput);
+                return new Command(false, userInput);
         }
     }
 }

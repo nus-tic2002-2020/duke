@@ -4,16 +4,16 @@ import seedu.duke.exception.DukeException;
 import seedu.duke.storage.Storage;
 import seedu.duke.ui.Ui;
 
-public class Command{
+public class Command {
     boolean isExit = false;
     protected String description;
 
-    public Command(boolean isExit, String description){
+    public Command(boolean isExit, String description) {
         this.isExit = isExit;
         this.description = description;
     }
 
-    public boolean isExit (){
+    public boolean isExit() {
         return isExit;
     }
 

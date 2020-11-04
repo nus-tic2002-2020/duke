@@ -1,8 +1,8 @@
 package seedu.duke.commands;
 
 public class Task {
-    protected String description;
-    protected boolean isDone;
+    public String description;
+    public boolean isDone;
 
     public Task(String description) {
         this.description = description;
@@ -17,7 +17,7 @@ public class Task {
         return "[" + getStatusIcon() + "] " + this.description;
     }
 
-    public void setDone(){
+    public void setDone() {
         isDone = true;
     }
 }

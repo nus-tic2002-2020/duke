@@ -3,8 +3,7 @@ package seedu.duke.ui;
 import java.io.InputStream;
 import java.util.Scanner;
 
-public class Ui{
-
+public class Ui {
     private static final String LS = System.lineSeparator();
     private static final String DIVIDER = "\n\t____________________________________________________________\n";
     private final Scanner input;
@@ -49,7 +48,7 @@ public class Ui{
         System.out.println(DIVIDER + "\t" + output + DIVIDER);
     }
 
-    public static void showLoadingError(String errorMessage){
+    public static void showLoadingError(String errorMessage) {
         System.out.println(DIVIDER + "\t☹ OOPS!!! " + "\t" + errorMessage + DIVIDER);
     }
 }

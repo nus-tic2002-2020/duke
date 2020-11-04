@@ -1,4 +1,2 @@
-T | 1 | read book
-D | 0 | return book | 06/06/2020 1234
-E | 0 | project meeting | 05/08/2020 2359
-T | 1 | join sports club
+E | 0 | abcd | 1/01/2020 1234
+T | 0 | 123

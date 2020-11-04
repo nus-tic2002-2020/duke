@@ -18,7 +18,7 @@ public class AddTodoCommand extends Command {
 
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException, Storage.StorageOperationException {
-        if (description.substring(4).equals("")){
+        if (description.substring(4).equals("")) {
             throw new DukeException("\t☹ OOPS!!! The description of todo cannot be empty.\n");
         }
         todo = new Todo(description.substring(5));

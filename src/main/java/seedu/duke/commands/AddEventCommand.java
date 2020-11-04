@@ -20,26 +20,26 @@ public class AddEventCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException, Storage.StorageOperationException{
-        if (description.substring(5).equals("")){
+    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException, Storage.StorageOperationException {
+        if (description.substring(5).equals("")) {
             throw new DukeException("\t☹ OOPS!!! The description of event cannot be empty.\n");
-        }else if (description.contains("at  ")){
+        } else if (description.contains("at  ")) {
             throw new DukeException("\t☹ OOPS!!! The event date cannot be empty.\n");
         }
-        String taskDescription = description.substring(6, description.indexOf("at")-1);
-        String taskDate = description.substring(description.indexOf("at")+3);
+        String taskDescription = description.substring(6, description.indexOf("at") - 1);
+        String taskDate = description.substring(description.indexOf("at") + 3);
         event = new Event(taskDescription, stringToDate(taskDate));
         TaskList.setTaskList(event);
-        ui.showOutputToUser(EVENT_MSG  + event.getDescription() + EVENT_MSG1 + TaskList.length() + EVENT_MSG2);
+        ui.showOutputToUser(EVENT_MSG + event.getDescription() + EVENT_MSG1 + TaskList.length() + EVENT_MSG2);
         storage.save();
     }
 
-    private LocalDateTime stringToDate(String date) throws DukeException{
-        try{
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("DD/MM/YYY HHmm");
+    private LocalDateTime stringToDate(String date) throws DukeException {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
             return LocalDateTime.parse(date, formatter);
-        }catch (DateTimeParseException e){
-            throw new DukeException("The format of the date and time must be in this format: DD/MM/YYY HHmm");
+        } catch (DateTimeParseException e) {
+            throw new DukeException("The format of the date and time must be in this format: DD/MM/YYYY HHmm");
         }
     }
 }
