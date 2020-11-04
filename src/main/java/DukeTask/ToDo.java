@@ -19,5 +19,9 @@ public class ToDo extends Task{
          return ( "[T]" + super.toString());
     }
 
+    @Override
+    public String toSaveString() {
+        return "T | " + super.toSaveString();
+    }
 
 }

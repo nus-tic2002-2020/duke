@@ -32,6 +32,7 @@ public class Task {
     }
 
     public String toString() {
+        assert !description.isBlank() : "No Description";
         return ( "[" + this.symbols() + "]" + description);
     }
 

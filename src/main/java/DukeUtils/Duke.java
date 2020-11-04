@@ -8,6 +8,7 @@ import DukeUtils.Storage;
 import DukeUtils.TaskList;
 import DukeUtils.UI;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.time.format.DateTimeParseException;
@@ -34,52 +35,56 @@ public class Duke {
         ui = new UI();
         ui.showWelcome();
         Scanner scn = new Scanner(System.in);
-
-        String[] list = new String[10];
         int pointer = 0;
 
         Scanner in = new Scanner(System.in);
         String line;
-        String endconvo = "bye";
+        String endConvo = "bye";
 
         while (true) {
             try {
                 line = in.nextLine();
-                if (line.equals(endconvo)) {
+                if (line.equals(endConvo)) {
                     ui.showClosing();
-                    //printLine();
                     return;
                 } else if (line.equals("list")) {
                     System.out.println("   Here are the tasks in your lists: ");
                     for (int i = 0; i < tasks.taskList.size(); i++) {
                         System.out.println(i + 1 + ". " + tasks.get(i).toString());
+                        //System.out.print("------------------------------" + "\n");
                     }
+                    System.out.print("------------------------------" + "\n");
                 } else if (line.equals("reminder")) {
                     System.out.println("   Here are the tasks in your reminder list: ");
                     char r = 'R';
                     for (int i = 0; i < tasks.taskList.size(); i++) {
-                        System.out.println(tasks.get(i).toString().charAt(2));
+                         //     System.out.println(tasks.get(i).toString().charAt(2));
                         if (Character.compare(tasks.get(i).toString().charAt(1),r)==0){
-                            System.out.println(i + 1 + ". " + tasks.get(i).toString());
+                            System.out.println("1. " + tasks.get(i).toString());
+                            System.out.print("------------------------------" + "\n");
                         }
-
                     }
                 } else if (line.contains("done")) {
                int i = Integer.parseInt(line.substring(5)) - 1;
                     Task currentTask = tasks.taskList.get(i);
                     currentTask.markDone();
                     System.out.println("   Nice! I've marked this task as done:\n " + currentTask.toString());
+                    System.out.print("------------------------------" + "\n");
                 } else if (line.contains("delete")) {
                     int delete = Integer.parseInt(line.substring(7)) - 1;
                     Task currentTask = tasks.taskList.get(delete);
                     tasks.removeTask(delete);
+                    System.out.print("Task deleted!" + "\n");
+                    System.out.print("------------------------------" + "\n");
                     pointer++;
                 } else if (line.contains("todo")) {
                     Task todo = new ToDo(line.substring(5));
+                    assert todo != null: "todo should not be null";
                     tasks.addTask(todo);
                     System.out.println("Got it. I've added this task:");
                     System.out.println(tasks.get(tasks.taskList.size() - 1).toString());
                     System.out.println("Now you have " + (tasks.taskList.size()) + " tasks in the list.");
+                    System.out.print("------------------------------" + "\n");
                     pointer++;
                 } else if (line.contains("event")) {
                     int separator = line.indexOf('/');
@@ -91,8 +96,9 @@ public class Duke {
                     System.out.println("Got it. I've added this task:");
                     System.out.println(tasks.get(tasks.taskList.size() - 1).toString());
                     System.out.println("Now you have " + (tasks.taskList.size()) + " tasks in the list.");
+                    System.out.print("------------------------------" + "\n");
                     pointer++;
-                } else if (line.contains("reminder")) {
+                } else if (line.contains("remind")) {
                     int separator = line.indexOf('/');
                     String dateAndTime = line.substring(separator + 4);
                     DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
@@ -102,6 +108,7 @@ public class Duke {
                     System.out.println("Got it. I've added this reminder:");
                     System.out.println(tasks.get(tasks.taskList.size() - 1).toString());
                     System.out.println("Now you have " + (tasks.taskList.size()) + " reminder in the list.");
+                    System.out.print("------------------------------" + "\n");
                     pointer++;
                 } else if (line.contains("deadline")) {
                     int separator = line.indexOf("/");
@@ -113,12 +120,26 @@ public class Duke {
                     System.out.println("Got it. I've added this task:");
                     System.out.println(tasks.get(tasks.taskList.size() - 1).toString());
                     System.out.println("Now you have " + (tasks.taskList.size()) + " tasks in the list.");
+                    System.out.print("------------------------------" + "\n");
+                    pointer++;
+                } else if (line.contains("find")) {
+                  String b = "book";
+                    ArrayList<String> findList = new ArrayList<String>();
+                    int index = 0;
+                  for ( Task t : tasks.taskList) {
+                      String find = t.toString();
+                      if (find.contains(b)) {
+                          findList.add(find);
+                      }
+                  }
+                    System.out.println("Here are the matching tasks in your list:");
+                    System.out.println((index + 1) + "." + findList);
+
                     pointer++;
                 } else if (line.equals("save")) {
                     save();
+                    System.out.print("------------------------------" + "\n");
                 } else {
-                    Task newtask = new Task(line);
-                    //newtask.description = line;
                     pointer++;
                 }
             } catch (StringIndexOutOfBoundsException e) {

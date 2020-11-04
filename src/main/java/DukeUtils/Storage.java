@@ -40,12 +40,9 @@ public class Storage {
      * Convert from LocalDate time format to string from txt file back to DukeUtils.Duke
      */
     static void loadFormat(String fileContent) {
+        System.out.println(fileContent);
         String str = fileContent;
         String[] storeArray = str.split(" \\| ");
-
-        for (String i : storeArray){
-            System.out.println(i);
-        }
 
         try {
             if (storeArray[0].equals("T")) {
@@ -57,14 +54,13 @@ public class Storage {
                     Task t= new Deadline(storeArray[2], Boolean.valueOf(storeArray[1]),dateTime);
                     Duke.tasks.taskList.add(t);
                 }catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("HelloWorldFROM HERE");
                     Task t= new Deadline(storeArray[2], Boolean.valueOf(storeArray[1]));
                     Duke.tasks.addTask(t);
                 }
             } else if (storeArray[0].equals("E")) {
                 try {
                     LocalDateTime dateTime = LocalDateTime.parse(storeArray[3]);
-                    Task t= new Event(storeArray[2], Boolean.valueOf(storeArray[1]),dateTime);
+                    Task t= new Event(storeArray[2], Boolean.valueOf(storeArray[1]),dateTime   );
                     Duke.tasks.addTask(t);
                 }catch (ArrayIndexOutOfBoundsException e) {
                     Task t= new Event(storeArray[2], Boolean.valueOf(storeArray[1]));
