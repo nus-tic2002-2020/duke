@@ -14,6 +14,12 @@ public class UI {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         System.out.println("What can I do for you?");
+        System.out.println("To add a new todo task, please input: todo <taskname>");
+        System.out.println("To add a new deadline task, please input : deadline <taskname> /by yyyy-mm-dd");
+        System.out.println("To add a new event task, please input: event <taskname> /at yyyy-mm-dd");
+        System.out.println("To add a recurring event task, please input: event <taskname> /at yyyy-mm-dd /repeat <no. of days in between> /times <no. of times>");
+        System.out.println("To print out task list, please input: list ");
+        System.out.println("To delete, please input: delete <task number> e.g. delete 2");
     }
 
     public void printTaskList(int count, TaskList line) {
@@ -84,5 +90,9 @@ public class UI {
     public String getUserInput() {
         String input = sc.nextLine();
         return input;
+    }
+
+    public void printDateTimeExceptionMessage() {
+        System.out.println("date not recognized. Please input in this format: yyyy-mm-dd ");
     }
 }

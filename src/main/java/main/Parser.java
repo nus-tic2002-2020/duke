@@ -124,8 +124,9 @@ public class Parser {
         } catch (EmptyDescriptionException e) {
             System.out.println(e.getMessage());
         } catch (DateTimeParseException e) {
-            System.out.println("date not recognized. Please input in this format: yyyy-mm-dd ");
+            ui.printDateTimeExceptionMessage();
         }
+
     }
 
 

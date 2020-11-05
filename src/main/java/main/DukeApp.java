@@ -19,8 +19,8 @@ public class DukeApp {
         String input = "";
         TaskList line = new TaskList();
         storage.load("listData.txt", line);
-
-        while (!input.equals("bye")) //if string doesn't equal to bye
+        //if string doesn't equal to bye
+        while (!input.equals("bye"))
         {
             input = ui.getUserInput();
             parser.parseCommand(input, ui, line, storage);

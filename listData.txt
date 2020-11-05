@@ -4,3 +4,9 @@ false
 T
 study
 false
+T
+study math
+false
+T
+study programming
+false
