@@ -10,7 +10,8 @@ public enum CommandType {
     LIST(new String[] {"list"}),
     DONE(new String[] {"done"}),
     DELETE(new String[] {"delete"}),
-    EXIT(new String[] {"bye"});
+    EXIT(new String[] {"bye"}),
+    FIND(new String[] {"find"});
 
     private String[] commands;
 

@@ -63,6 +63,13 @@ Hello from
     Now you have 8 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
+    OK, this is what I found:
+    1.[T][✓] read book
+    2.[D][✘] return book (by: 6 Jun 2020 06:00 PM)
+    3.[T][✘] borrow book
+    4.[D][✘] return book (by: 8 Dec 2020 11:59 PM)
+    ____________________________________________________________
+    ____________________________________________________________
     Song la! Lim peh help you remove this task(s):
        [E][✓] project meeting (at: 6 Aug 2020 02:00 PM)
     Now you have 7 tasks in the list.

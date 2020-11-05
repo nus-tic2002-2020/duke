@@ -151,6 +151,17 @@ public class TaskManager {
         //    throw new DukeException("Peiseh, my task list is full!", DukeException.DukeError.MEMORY_FULL);
         //}
     }
+
+    public List<Task> findTasks(String keyword) {
+        ArrayList<Task> foundTasks = new ArrayList<Task>();
+        for (Task t: this.tasks) {
+            if (t.getDescription().toUpperCase().contains(keyword.toUpperCase())) {
+                foundTasks.add(t);
+            }
+        }
+        return foundTasks;
+    }
+
     public List<String> getPrintableTasks() {
         //System.out.println("    ____________________________________________________________");
         ArrayList<String> listString = new ArrayList<String>();

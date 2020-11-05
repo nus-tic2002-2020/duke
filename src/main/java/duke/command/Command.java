@@ -84,6 +84,9 @@ public abstract class Command {
                     //addTask(new Event(text, at));
                     command = new AddCommand(new Event(text, at));
                     break;
+                case "find":
+                    command = new FindCommand(args);
+                    break;
                 case "bye":
                     //bye();
                     command = new ExitCommand();
