@@ -6,49 +6,59 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 //contains the task list e.g., it has operations to add/delete tasks in the list
-public class TaskList implements Serializable{
+public class TaskList implements Serializable {
     //new arraylist
     ArrayList<Task> task = new ArrayList<Task>();
     int count = 0;
+
     public int getCount() {
         return count;
     }
-    public Task get(int index)
-    {
+
+    public Task get(int index) {
         return task.get(index);
     }
-    public void add(Task t)
-    {
+
+    public void add(Task t) {
         task.add(t);
     }
+
+    //create new task
     public void newTodoTask(String x, boolean done) {
         ToDo t = new ToDo(x, done);
         task.add(t);
         count++;
     }
+
+    //create new deadline task
     public void newDeadlineTask(String name, boolean done, String by) {
         Deadline d = new Deadline(name, false, by);
         task.add(d);
         count++;
     }
-    public void newEventTask(String name, boolean done, String at)
-    {
+
+    //create new event task
+    public void newEventTask(String name, boolean done, String at) {
         Event e = new Event(name, false, at);
         task.add(e);
-        count ++;
+        count++;
     }
+
+    //remove task from task list
     public Task removeTask(int index) {
-        count --;
-        return task.remove(index-1);
+        count--;
+        return task.remove(index - 1);
     }
+
+    //add task list into storage
     @Override
     public void write(FileWriter storage) throws IOException {
-        for(int i=0; i<task.size(); i++)
-        {
+        for (int i = 0; i < task.size(); i++) {
             task.get(i).write(storage); //write entire task list to storage
         }
     }
 
+    //read task list
     @Override
     public void read(BufferedReader fileRead) throws IOException {
         String type = null;

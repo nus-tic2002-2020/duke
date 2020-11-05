@@ -1,4 +1,5 @@
 package main;
+
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -6,8 +7,8 @@ import java.io.IOException;
 public class Task implements Serializable {
     protected String taskName;
     protected boolean taskDone;
-    public Task (String taskName, boolean taskDone)
-    {
+
+    public Task(String taskName, boolean taskDone) {
         this.taskName = taskName;
         this.taskDone = taskDone;
     }
@@ -16,59 +17,64 @@ public class Task implements Serializable {
 
     }
 
-    public String getTaskName()
-    {
-        return taskName;
-    }
-    public void setTaskName(String taskName)
-    {
+    public Task(String taskName, boolean taskDone, String frequency) {
         this.taskName = taskName;
-    }
-    public boolean getTaskDone()
-    {
-        return taskDone;
-    }
-    public void setTaskDone(boolean taskDone)
-    {
         this.taskDone = taskDone;
     }
-    public String toString()
-    {
-        return "[" + getStatusIcon() + "] " + taskName;}
-    public String getStatusIcon()
-    {
+
+    //method to get taskname
+    public String getTaskName() {
+
+        return taskName;
+    }
+
+    //method to set taskname
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
+    //method to get taskdone
+    public boolean getTaskDone() {
+        return taskDone;
+    }
+
+    public void setTaskDone(boolean taskDone) {
+        this.taskDone = taskDone;
+    }
+
+    //return input as a converted string output
+    public String toString() {
+        String s = "[" + getStatusIcon() + "] " + taskName;
+        return s;
+    }
+
+    //method to get status icon
+    public String getStatusIcon() {
         return (taskDone ? "\u2713" : "\u2718"); //return tick or X symbols
     }
-    public void markAsDone()
-    {
+
+    // set task done to true
+    public void markAsDone() {
         taskDone = true;
     }
+
+    //write tasks into storage
     @Override
     public void write(FileWriter storage) throws IOException {
         storage.write(taskName + "\n");
-        if(taskDone)
-        {
+        if (taskDone) {
             storage.write("true\n");
-        }
-        else
-        {
+        } else {
             storage.write("false\n");
         }
 
     }
 
+    //read tasks from storage
     @Override
-    public void read(BufferedReader fileRead) throws IOException
-    {
+    public void read(BufferedReader fileRead) throws IOException {
         taskName = fileRead.readLine();
         String done = fileRead.readLine();
-        if(done.equals("true"))
-        {
-            taskDone = true;
-        }
-        else
-        {
-            taskDone = false;
-        }
+        taskDone = done.equals("true");
     }
 }

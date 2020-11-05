@@ -1,6 +1,5 @@
 package main;
-import java.util.ArrayList;
-import java.util.Scanner;
+
 //new branch named addintro 20200920
 
 public class Duke {

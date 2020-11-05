@@ -1,34 +1,44 @@
 package main;
+
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-public class Deadline extends Task{
-    protected String by;
-    public Deadline (String taskName, boolean taskDone, String by)
-    {
+public class Deadline extends Task {
+
+    protected LocalDate by;
+
+    public Deadline(String taskName, boolean taskDone, String by) {
         super(taskName, taskDone); // calls the parent constructor
-        this.by = by;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
+        this.by = LocalDate.parse(by, formatter);
     }
 
     public Deadline() {
         super();
     }
 
-    public String toString()
-    {
-        return "[D]" + super.toString() + " (by: "+ by + ")";
+    //return input as a converted string output
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy");
+        return "[D]" + super.toString() + " (by: " + by.format(formatter) + ")";
     }
+
+    //write deadline task into storage
     public void write(FileWriter storage) throws IOException {
         storage.write("D\n"); //to represent as todo
         super.write(storage);
         storage.write(by + "\n");
     }
 
-    public void read(BufferedReader fileRead) throws IOException
-    {
+    //read deadline task from storage file
+    public void read(BufferedReader fileRead) throws IOException {
         super.read(fileRead);
-        by = fileRead.readLine();
+        String date = fileRead.readLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
+        this.by = LocalDate.parse(date, formatter);
     }
 
 }
