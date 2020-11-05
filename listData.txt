@@ -1,4 +1,6 @@
-E
- study
+T
+eat
 false
-2020-12-01
+T
+study
+false

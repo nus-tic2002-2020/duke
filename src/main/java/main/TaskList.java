@@ -24,6 +24,7 @@ public class TaskList implements Serializable {
 
     public void add(Task t) {
         task.add(t);
+        count++;
     }
 
     /***
@@ -124,5 +125,25 @@ public class TaskList implements Serializable {
                 count++;
             }
         }
+    }
+
+    /***
+     * find keyword in task list
+     * @param keyword word that user wants to find
+     * @throws IOException
+     */
+    public TaskList find(String keyword)
+    {
+        System.out.println(keyword);
+        TaskList results = new TaskList();
+        for(int i= 0; i<task.size(); i++)
+        {
+            if(task.get(i).contains(keyword))
+            {
+                results.add(task.get(i));
+            }
+
+        }
+        return results;
     }
 }

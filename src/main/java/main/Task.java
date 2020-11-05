@@ -108,4 +108,14 @@ public class Task implements Serializable {
         String done = fileRead.readLine();
         taskDone = done.equals("true");
     }
+
+    /***
+     * method to search keyword
+     * @param keyword
+     * @return
+     */
+    public boolean contains(String keyword)
+    {
+        return taskName.contains(keyword);
+    }
 }

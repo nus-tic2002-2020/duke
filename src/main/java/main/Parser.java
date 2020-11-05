@@ -108,7 +108,14 @@ public class Parser {
                 Task t = task.removeTask(index);
                 ui.printDelete(t, task.getCount() + 1, index);
                 storage.save("listData.txt", task);
-            } else if (!arrValue[0].equals("bye")) {
+
+            }
+            else if (arrValue[0].equals("find"))
+            {
+                TaskList results = task.find(input.replace("find", "").trim());
+                ui.printTaskList(results.getCount(), results);
+            }
+            else if (!arrValue[0].equals("bye")) {
                 throw new InvalidCommandException("Whoops!!!");
             }
 
