@@ -1,9 +1,18 @@
 package main;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Parser {
 
-    //parse command to Duke Main app
-    //parameters such as input, ui, task and storage
+    /***
+     * to parse command into dukeapp
+     * @param input
+     * @param ui
+     * @param task
+     * @param storage
+     */
     public void parseCommand(String input, UI ui, TaskList task, Storage storage) {
 
         try {
@@ -58,9 +67,39 @@ public class Parser {
                 if (splitAt.length < 2) {
                     throw new EmptyDescriptionException("Oops. The date of a event cannot be empty");
                 }
-                task.newEventTask(splitAt[0], false, splitAt[1]);
-                ui.printEvent(task, task.getCount() - 1);
-                storage.save("listData.txt", task);
+                String[] repeatChunk = splitAt[1].split("/repeat");
+                if (repeatChunk.length == 1)
+                {
+                    if (replaceString.contains("/repeat"))
+                    {
+                        throw new EmptyDescriptionException("Oops. Please place the amount of days between each repeated event. e.g. /repeat");
+                    }
+                    task.newEventTask(splitAt[0], false, splitAt[1]);
+                    ui.printEvent(task, task.getCount() - 1);
+                    storage.save("listData.txt", task);
+                }
+                else
+                {
+                    String[] timesChunk = repeatChunk[1].split("/times");
+                    if (timesChunk.length == 1)
+                    {
+                        throw new EmptyDescriptionException("Oops. Please place number of times event is to be repeated. e.g. /times");
+                    }
+                    String daysString = timesChunk[0].trim();
+                    int days = Integer.parseInt(daysString); // get number of days
+                    String timesString = timesChunk[1].trim();
+                    int times = Integer.parseInt(timesString);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
+                    LocalDate date = LocalDate.parse(repeatChunk[0].trim(), formatter);
+                    for(int i =0; i<times; i++)
+                    {
+                        task.newEventTask(splitAt[0], false, date);
+                        date= date.plusDays(days);
+                        ui.printEvent(task, task.getCount() - 1);
+                    }
+                    storage.save("listData.txt", task);
+
+                }
             } else if (arrValue[0].equals("delete")) {
                 if (arrValue.length < 2) {
                     throw new EmptyDescriptionException("Oops. The description of a delete cannot be empty");
@@ -77,8 +116,9 @@ public class Parser {
             ui.printInvalidCommandMessage();
         } catch (EmptyDescriptionException e) {
             System.out.println(e.getMessage());
+        } catch (DateTimeParseException e) {
+            System.out.println("date not recognized. Please input in this format: yyyy-mm-dd ");
         }
-
     }
 
 

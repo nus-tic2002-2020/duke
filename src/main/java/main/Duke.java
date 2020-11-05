@@ -1,7 +1,8 @@
 package main;
 
-//new branch named addintro 20200920
-
+/***
+ * Trigger duke app to run
+ */
 public class Duke {
     //private static final String OUTPUT_DELIMITER = "\\|";
     //private static final String INPUT_DELIMITER = " ";

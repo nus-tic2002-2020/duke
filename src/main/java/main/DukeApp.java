@@ -10,6 +10,9 @@ public class DukeApp {
         ui = new UI();
     }
 
+    /***
+     * run the application
+     */
     public void run() {
         ui.printWelcomeMessage();
         Parser parser = new Parser();

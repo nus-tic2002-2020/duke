@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/***
+ * class created to store deadline tasks
+ */
 public class Deadline extends Task {
 
     protected LocalDate by;
@@ -16,24 +19,38 @@ public class Deadline extends Task {
         this.by = LocalDate.parse(by, formatter);
     }
 
+    /***
+     * default constructor
+     */
     public Deadline() {
         super();
     }
 
-    //return input as a converted string output
+    /***
+     * to return input as a converted string output
+     * @return
+     */
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy");
         return "[D]" + super.toString() + " (by: " + by.format(formatter) + ")";
     }
 
-    //write deadline task into storage
+    /***
+     * write deadline task into storage
+     * @param storage
+     * @throws IOException
+     */
     public void write(FileWriter storage) throws IOException {
         storage.write("D\n"); //to represent as todo
         super.write(storage);
         storage.write(by + "\n");
     }
 
-    //read deadline task from storage file
+    /***
+     * to read deadline task from storage file
+     * @param fileRead
+     * @throws IOException
+     */
     public void read(BufferedReader fileRead) throws IOException {
         super.read(fileRead);
         String date = fileRead.readLine();

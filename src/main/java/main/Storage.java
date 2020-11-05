@@ -2,9 +2,13 @@ package main;
 
 import java.io.*;
 
-//for loading tasks from the file and saving tasks in the file
 public class Storage {
 
+    /***
+     * method to initalize storage saving
+     * @param filename
+     * @param serializable
+     */
     public void save(String filename, Serializable serializable) {
         FileWriter storage = null;
         try {
@@ -22,7 +26,11 @@ public class Storage {
 
     }
 
-    //load the file in storage
+    /***
+     * method to initialize loading the file in storage
+     * @param filename
+     * @param serializable
+     */
     public void load(String filename, Serializable serializable) {
         BufferedReader r = null;
         File file = new File(filename);
@@ -45,5 +53,4 @@ public class Storage {
             }
         }
     }
-
 }

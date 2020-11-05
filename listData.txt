@@ -1,16 +1,4 @@
-T
-read books
-true
-T
-cycling
-false
-T
-study
-false
 E
- project meeting
+ study
 false
-Mon 2-4PM
-T
-hi
-false
+2020-12-01
