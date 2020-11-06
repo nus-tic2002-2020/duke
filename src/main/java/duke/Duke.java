@@ -1,5 +1,12 @@
 package duke;
+import java.io.IOException;
+
+import javax.swing.text.BadLocationException;
+
+import exceptions.DukeException;
+import exceptions.MissDescException;
 import ui.Chat;
+import ui.GUI;
 import ui.Storage;
 
 /**
@@ -16,7 +23,22 @@ import ui.Storage;
 public class Duke {
 	
 	public static void main(String[] args) throws Exception {
+		GUI.main();
+
+new java.util.Timer().schedule( 
+        new java.util.TimerTask() {
+            @Override
+            public void run() {
+        		try {
 		Storage.main();
-		Chat.main();
+					Chat.main();
+				} catch (DukeException | BadLocationException | IOException | MissDescException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        }, 
+        500 
+);
 	}
 }

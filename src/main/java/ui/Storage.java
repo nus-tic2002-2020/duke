@@ -1,11 +1,16 @@
 package ui;
+import ui.GUI;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import javax.swing.text.BadLocationException;
+
 import duke.Duke;
+import exceptions.DukeException;
+import exceptions.MissDescException;
 import tasks.Task;
 
 public class Storage extends Duke{
@@ -13,7 +18,7 @@ public class Storage extends Duke{
 	private static String filename = "duke.txt";
 	private static String filePath = path + filename;
 	
-	public static void main() throws Exception {
+	public static void main() throws DukeException, IOException, MissDescException, BadLocationException {
 		checkFile();
 		readFile();	
 	}
@@ -21,9 +26,10 @@ public class Storage extends Duke{
 	/**
 	* This method checks if duke.txt is there.
 	* If its not there, it will create folder and file automatically.
+	 * @throws IOException 
 	*/
 	
-	public static void checkFile() throws IOException {
+	public static void checkFile() throws DukeException, IOException {
 		File dir = new File(path);
 		if (dir.exists() == false) {
 			dir.mkdirs();
@@ -36,9 +42,12 @@ public class Storage extends Duke{
 	
 	/**
 	* This method reads duke.txt, load and prints previous tasks.
+	 * @throws MissDescException 
+	 * @throws IOException 
+	 * @throws BadLocationException 
 	*/
 	
-	public static void readFile() throws Exception {
+	public static void readFile() throws DukeException, IOException, MissDescException, BadLocationException {
 		try {
 			Scanner in = new Scanner(new File(filePath));
 			while (in.hasNext()) {
@@ -51,9 +60,9 @@ public class Storage extends Duke{
 			e.printStackTrace();
 		}
 		if(Chat.count==0) return;
-		System.out.println("=========Existing List=========");
+		GUI.guiOutput("=========Existing List=========");
 		Chat.listALL();
-		System.out.println("=========Existing List=========\n");
+		GUI.guiOutput("=========Existing List=========");
 	}
 	
 	public static void saveFile() throws Exception {
