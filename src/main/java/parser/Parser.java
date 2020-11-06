@@ -13,10 +13,24 @@ import exceptions.DukeException;
 public class Parser {
     String parsedInput;
 
+    /**
+     *
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public Parser(){
         this.parsedInput = "";
     }
 
+    /**
+     *
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public static Command parse(String input) throws DukeException {
         String description = "";
         String secPart = "";

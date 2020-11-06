@@ -13,7 +13,12 @@ import java.time.format.DateTimeParseException;
 public class Deadline extends Task {
     private LocalDateTime by;
 
-    public Deadline(String description, String by) throws DateTimeParseException {
+    /**
+     * This is a constructor for the Deadline class
+     * @param description This describe the task for the deadline
+     * @param by This represents the date and time of the deadline
+     */
+    public Deadline(String description, String by) {
         super(description);
         try{
             this.by = LocalDateTime.parse(by);
@@ -24,12 +29,20 @@ public class Deadline extends Task {
 
     }
 
-    public String getByDeadline(){
+    /**
+     * This is an accessor of the "by" object which represents the date and time of the dateline
+     * @return the dateline of the task
+     */
+    public String getBy(){
         return this.by.format(DateTimeFormatter.ofPattern("d MMM yyyy H:m:s"));
     }
 
 
+    /**
+     * This converts the Deadline to a String object for printing.
+     * @return the deadline written as a String
+     */
     public String toString(){
-        return "[D]" + super.toString() + " (by: " + this.getByDeadline() + ")";
+        return "[D]" + super.toString() + " (by: " + this.getBy() + ")";
     }
 }

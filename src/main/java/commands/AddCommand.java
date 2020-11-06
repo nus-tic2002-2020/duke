@@ -14,6 +14,12 @@ public class AddCommand extends Command{
     String taskDescription;
     String taskSecondPart;
 
+    /**
+     * This is a constructor for the AddCommand
+     * @param type This indicates the type or subclass of Task
+     * @param description This describes the activity of the Task
+     * @param secPart This is mainly for deadlines or events whereby they have a /at or /by. The time or location.
+     */
     public AddCommand(String type, String description, String secPart){
         this.taskType = type;
         this.taskDescription = description;
@@ -21,12 +27,19 @@ public class AddCommand extends Command{
     }
 
 
+    /**
+     * This executes the AddCommand. It will add the Task to the TaskList by calling the
+     * addToList method.
+     * @param tasks This is the Task List that contains the list of tasks.
+     * @param ui This is the ui, to be used for scanning and printing
+     * @param storage This is the storage, used to read and write over the file.
+     * @throws DukeException When the taskType is not a Task or its subclasses.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
-        int size = 0;
         tasks.addToList(taskType,taskDescription,taskSecondPart);
 
-        size = tasks.getSize();
+        int size = tasks.getSize();
         System.out.println(System.lineSeparator() + "Got it. I've added this task:" +
                 System.lineSeparator() + tasks.get(size - 1).toString());
 

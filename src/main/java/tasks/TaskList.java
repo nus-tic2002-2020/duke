@@ -18,10 +18,23 @@ public class TaskList {
     protected ArrayList<Task> tasks;
 
 
+    /**
+     * This is the constructor of the TaskList. It initialises the ArrayList for tasks.
+     *
+     */
     public TaskList(){
         this.tasks = new ArrayList<Task>();
     }
 
+
+    /**
+     * This is another constructor of the TaskList. This constructor loads from
+     * the storage file. It has been parsed to an ArrayList of strings for loading.
+     *
+     * @param parsedFile This is the ArrayList of Strings
+     * @throws DukeException This is thrown when the parsedFile does not follow the expected format
+     * for the class Type section.
+     */
     public TaskList(ArrayList<String[]> parsedFile) throws DukeException{
         this.tasks = new ArrayList<Task>();
         int size = 0;
@@ -59,22 +72,47 @@ public class TaskList {
     }
 
 
+    /**
+     * This is used to get the size of the Task List.
+     * @return size of Task List
+     */
     public int getSize(){
         return this.tasks.size();
     }
 
+    /**
+     * This method returns the Task Object at the TaskList index
+     *
+     * @param index Starts from 0 till (size - 1).  Meant to indicate the Task's index to return
+     * @return Task at the specific index of the ArrayList
+     */
+    //Maybe throw exception
     public Task get(int index){
         return this.tasks.get(index);
     }
 
+
+    /**
+     * Delete the Task from Task List at the specific index.
+     * @param index tarts from 0 till (size - 1).  Meant to indicate the Task's index to delete.
+     */
     //throws exceptions.DukeException
-    public void deleteFromList(int option)  {
-        this.tasks.remove(option - 1);
+    public void deleteFromList(int index) throws IndexOutOfBoundsException {
+        if(index < 0 || index >= tasks.size()){
+            throw new IndexOutOfBoundsException();
+        }
+        this.tasks.remove(index);
     }
 
+    /**
+     * This is to add a Task to the Task List. The type of task will depend on the taskType parameter
+     *
+     * @param taskType This is meant for the different task subclasses
+     * @param description This is meant for the description/activity of the task
+     * @param secondPart This is meant for Deadlines and Events tasks.
+     * @throws DukeException This happens when the taskType is not one of the subclasses.
+     */
     //TODO: Need to check for copies
-    //option 1 for tasks.Task, 2 for Todos, 3 for Events, 4 for Deadlines
-    //throws exceptions.DukeException
     public void addToList(String taskType, String description, String secondPart) throws DukeException {
         int index = 0;
         int size = 0;
@@ -107,6 +145,11 @@ public class TaskList {
 
     }
 
+
+    /**
+     * This is to find Tasks that contain the keyword from the Task List
+     * @param keyword This is the keyword which the Task List will search for containing the keyword
+     */
     public void findList(String keyword){
         int size = this.tasks.size();
         int total = 0;
@@ -121,6 +164,11 @@ public class TaskList {
         }
     }
 
+
+    /**
+     *  This prints the Tasks in the Task List
+     *
+     */
     public void printList() {
         int size = 0;
         size = this.tasks.size();
@@ -136,6 +184,11 @@ public class TaskList {
 
     }
 
+
+    /**
+     * This prints the total number of tasks in the task list
+     *
+     */
     public void printTotalTasks(){
         int total = tasks.size();
         String ending;

@@ -22,7 +22,11 @@ public class Storage {
     ArrayList<String[]> parsedFile;
 
 
-    public Storage(String filePath) throws IOException {
+    /**
+     * This is the constructor for the Storage Class.
+     * @param filePath This is the filePath of the text file.
+     */
+    public Storage(String filePath) {
 
         this.directory = new File("data");
         if(this.directory.isDirectory() == false || this.directory.exists() == false){
@@ -40,11 +44,15 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    public void save(TaskList list) throws IOException {
+    /**
+     * This is a mutator. It writes the Task List details into a file.
+     * @param tasks This is the list of tasks that the user has entered.
+     */
+    public void save(TaskList tasks) throws IOException {
 
         FileWriter fw = new FileWriter(this.filePath);
 
-        int size = list.getSize();
+        int size = tasks.getSize();
         if(size == 0){
             System.out.println("Task List is empty. Nothing to save.");
             return;
@@ -57,7 +65,7 @@ public class Storage {
         int done = 0;
 
         for(int i = 0; i < size; i ++){
-            temp = list.get(i).getClass().toString();
+            temp = tasks.get(i).getClass().toString();
             switch(temp){
                 case "class tasks.Task":
                     firstPart = "O | ";
@@ -67,19 +75,19 @@ public class Storage {
                     break;
                 case "class tasks.Deadline":
                     firstPart = "D | ";
-                    secPart = " | " + ((Deadline)list.get(i)).getByDeadline();
+                    secPart = " | " + ((Deadline)tasks.get(i)).getBy();
                     break;
                 case "class tasks.Event":
                     firstPart = "E | ";
-                    secPart = " | " + ((Event)list.get(i)).getAt();
+                    secPart = " | " + ((Event)tasks.get(i)).getAt();
                     break;
                 default:
                     System.out.println("Can't get Class from Task List");
                     return;
             }
 
-            done = (list.get(i).getIsDone()) ? 1:0;
-            text = firstPart + done + " | " + list.get(i).getDescription() + secPart;
+            done = (tasks.get(i).getIsDone()) ? 1:0;
+            text = firstPart + done + " | " + tasks.get(i).getDescription() + secPart;
             fw.write(text + System.lineSeparator());
             text = "";
             secPart = "";
@@ -88,6 +96,12 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * This is a mutator that loads the task lists from the file.
+     * It will return a list of tasks in form of an ArrayList of Strings. These Strings will be used for
+     * the initialisation of Task List
+     * @return a list of tasks that are written as strings
+     */
     public ArrayList<String[]> load() throws IOException{
         this.f = new File(this.filePath);
         this.fr =new FileReader(this.f);

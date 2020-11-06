@@ -12,7 +12,7 @@ import java.io.IOException;
 //TODO: Exceptions - Probably could double check more
 //TODO: Nice to Have: AddTask(Check for copies),
 
-//TODO: JavaDoc and JUnit Testing from level 8
+//TODO: JUnit Testing from level 8
 //TODO: Level 9 Individual Feature 1 and 2, Coding Standard and Coding Quality
 //TODO: Better Search - e.g., find items even if the keyword matches the item only partially.
 //TODO: Snooze - Provide a way to easily snooze/postpone/reschedule tasks.
@@ -28,6 +28,7 @@ public class Duke {
     /**
      * Used to create a new Duke Instance. Initialise the ui,storage and tasks.
      * tasks will load from the storage. If there is an error, it will initialise on its own.
+     * @param filePath The String filePath to storage
      * @throws DukeException, IOException
      */
 
@@ -45,7 +46,7 @@ public class Duke {
 
 
     /**
-     * Used to keep the Duke Chatbot running. Scan for input then Parse the input into a command
+     * Used to keep the Duke Chat bot running. Scan for input then Parse the input into a command
      * Afterwards, execute the command. The process will keep running until the user types "bye"
      * @throws IOException
      */

@@ -15,8 +15,19 @@ public abstract class Command {
 
     protected static boolean running = true;
 
-    public abstract void execute(TaskList list, Ui ui, Storage storage) throws IOException, DukeException;
+    /**
+     * This is the abstract method for execute.
+     *
+     * @param tasks This is the Task List that contains the list of tasks.
+     * @param ui This is the ui, to be used for scanning and printing
+     * @param storage This is the storage, used to read and write over the file.
+     */
+    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException;
 
+    /**
+     * This method is an accessor. It returns the boolean value of running.
+     * @return running This indicates if Duke is to continue to run or not
+     */
     public boolean isRunning(){
         return this.running;
     }
