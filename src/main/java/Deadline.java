@@ -1,22 +1,41 @@
-public class Deadline extends Task {
-    private String by;
+import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-    public Deadline(String description, String taskType, String by) {
+public class Deadline extends Task {
+    //private String by;
+    private LocalDate date;
+    private LocalTime timing;
+
+    public Deadline(String description, String taskType, LocalDate date, LocalTime timing) {
         super(description, taskType);
-        this.by = by;
+        this.date = date;
+        this.timing = timing;
+        //this.by = by;
     }
 
-    public Deadline(String description, String taskType, String by, boolean isDone) {
+    public Deadline(String description, String taskType, LocalDate date, LocalTime timing, boolean isDone) {
         super(description, taskType, isDone);
-        this.by = by;
+        this.date = date;
+        this.timing = timing;
+        //this.by = by;
+    }
+
+    public String getDate() {
+        return date.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+    }
+
+    public String getTiming() {
+        return timing.format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
     @Override
     public String getTaskListInfo() {
-        return "[D]" + super.getTaskListInfo() + " (by: " + by + ")";
+        return "[D]" + super.getTaskListInfo() + " by " + this.getDate() + " " + getTiming();
+        //return "[D]" + super.getTaskListInfo() + " (by: " + by + ")";
     }
 
-    public String formatForFile() {
+/*    public String formatForFile() {
         return "D" + super.formatForFile() + super.getDescription();
-    }
+    }*/
 }

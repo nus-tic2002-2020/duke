@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Duke {
 
@@ -122,20 +125,37 @@ public class Duke {
 
             switch (taskType){
             case "E":
-                String timing = inputs[3];
+                String eventDate = inputs[3];
+                String eventTime = inputs[4];
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy");
+                LocalDate localDate = LocalDate.parse(eventDate, formatter);
+
+                formatter = DateTimeFormatter.ofPattern("hh:mm");
+                LocalTime localTime = LocalTime.parse(eventTime, formatter);
+
                 if (isDone.equals("0")) {
-                    tasks.add(new Event(description, taskType, timing, false));
+                    tasks.add(new Event(description, taskType, localDate, localTime, false));
                 } else {
-                    tasks.add(new Event(description, taskType, timing, true));
+                    tasks.add(new Event(description, taskType, localDate, localTime, true));
                 }
 
                 break;
             case "D":
-                String timeBy = inputs[3];
+                String deadlineDate = inputs[3];
+                String deadlineTime = inputs[4];
+
+                DateTimeFormatter deadlineFormatter = DateTimeFormatter.ofPattern("MMM d yyyy");
+                LocalDate deadlineLocalDate = LocalDate.parse(deadlineDate, deadlineFormatter);
+
+                deadlineFormatter = DateTimeFormatter.ofPattern("hh:mm");
+                LocalTime deadlineLocalTime = LocalTime.parse(deadlineTime, deadlineFormatter);
+
+
                 if (isDone.equals("0")) {
-                    tasks.add(new Deadline(description, taskType, timeBy, false));
+                    tasks.add(new Deadline(description, taskType, deadlineLocalDate, deadlineLocalTime,false));
                 } else {
-                    tasks.add(new Deadline(description, taskType, timeBy, true));
+                    tasks.add(new Deadline(description, taskType, deadlineLocalDate, deadlineLocalTime, true));
                 }
 
                 break;
@@ -179,10 +199,18 @@ public class Duke {
             int findPosition = userInput.indexOf("/by");
             String taskName = userInput.substring(9, findPosition);
             String taskTime = userInput.substring(findPosition + 4, userInput.length());
+
+            String deadlineDate = taskTime.substring(0, 10);
+            String deadlineTime = taskTime.substring(11, 16);
+
+
+            LocalDate date = LocalDate.parse(deadlineDate);
+            LocalTime timing = LocalTime.parse(deadlineTime);
+
 //            if (taskTime.equals(" ")) {
 //                throw new DukeException("  ☹ OOPS!!! Please input a timing for this task");
 //            }
-            tasks.add(new Deadline(taskName, "D", taskTime));
+            tasks.add(new Deadline(taskName, "D", date, timing));
 
         } else if (inputs[0].startsWith("event")) {
             if (inputs.length == 1){
@@ -198,7 +226,13 @@ public class Duke {
             String taskName = userInput.substring(6, findPosition);
             String taskTime = userInput.substring(findPosition + 4, userInput.length());
 
-            tasks.add(new Event(taskName, "E", taskTime));
+            String eventDate = taskTime.substring(0, 10);
+            String eventTime = taskTime.substring(11, 16);
+
+            LocalDate date = LocalDate.parse(eventDate);
+            LocalTime timing = LocalTime.parse(eventTime);
+
+            tasks.add(new Event(taskName, "E", date, timing));
 
         } else if (inputs[0].startsWith("todo")) {
             if (inputs.length == 1) {
