@@ -42,7 +42,7 @@ public class UI {
             System.out.println("☹ OOPS!!! Delete is out of bound. ");
         }
         catch(DateTimeException e){
-            System.out.println("☹ OOPS!!! Date format is incorrect. ");
+            System.out.println("☹ OOPS!!! Date format is incorrect or is in the past. ");
         }
     }
     /**

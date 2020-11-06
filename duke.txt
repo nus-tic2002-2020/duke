@@ -5,3 +5,4 @@ E | 1 | convention| 15/11/2020
 T | 1 | cook lunch
 E | 0 | print documents| 15/11/2020
 E | 1 | do something| 16/11/2020
+E | 0 | monthly meeting| 8/12/2020

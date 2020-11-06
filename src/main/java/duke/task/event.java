@@ -47,4 +47,14 @@ public class event extends Task{
     public char getCat(){
         return this.category;
     }
+    public void incrementTime(int days){
+        if(days == 30){
+            this.date = this.date.plusMonths(1);
+            return;
+        }
+        this.date = this.date.plusDays(days);
+    }
+    public LocalDate getDate(){
+        return date;
+    }
 }

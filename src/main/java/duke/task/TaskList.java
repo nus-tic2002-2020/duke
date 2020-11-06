@@ -1,6 +1,11 @@
 package duke.task;
 
+import duke.command.IllegalInputException;
+
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TaskList{
     /**Variables of TaskList class*/
@@ -45,6 +50,7 @@ public class TaskList{
             duke_echo("List is empty");
             return;
         }//if end
+        recurring_checker();
         System.out.println("\t____________________________________________________________");
         System.out.println("\tHere are the tasks in your list:");
         for(int i = 1 ; i <= item_count ; i++){
@@ -159,7 +165,15 @@ public class TaskList{
         String[] time_split;
         if(task_split[0].equals("deadline") || task_split[0].equals("event")){
             time_split = task_split[1].split("/", 2);
+            time_split = time_split[1].split(" ", 2);
+            String[] date_split = time_split[1].split("/", 3);
+            LocalDate input_date = LocalDate.of(Integer.parseInt(date_split[2]), Integer.parseInt(date_split[1]), Integer.parseInt(date_split[0]));
+            if (input_date.compareTo(LocalDate.now()) < 0){
+                duke_echo("Task date shall not be in the past!");
+                return;
+            }
         }
+
         switch(task_split[0]){
             case "todo":
                 List.add(new todo(task_split[1]));
@@ -246,4 +260,37 @@ public class TaskList{
         }
         duke_echo("All tasks(" + item_count + ") are marked as done");
     }
+    private void recurring_task(int index){
+        String[] freq_list = {"daily", "weekly", "monthly"};
+        for(int i = 0 ; i < freq_list.length ; i++){
+            if(!this.List.get(index).getDesc().contains(freq_list[i])){
+                continue;
+            }
+            int date_diff = this.List.get(index).getDate().compareTo(LocalDate.now());
+            if(date_diff > 0){
+                System.out.println("Increment of date will occur");
+                return;
+            }
+            switch (freq_list[i]){
+                case "daily":
+                    this.List.get(index).incrementTime(1);
+                    break;
+                case "weekly":
+                    this.List.get(index).incrementTime(7);
+                    break;
+                case "monthly":
+                    this.List.get(index).incrementTime(30);
+                    break;
+            }//end case
+        }//end for loop
+    }
+
+    private void recurring_checker(){
+        for(int i = 0 ; i < item_count ; i++){
+            if(this.List.get(i).getCat() != 'T'){
+                recurring_task(i);
+            }
+        }
+    }
+
 }

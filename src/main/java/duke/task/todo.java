@@ -1,5 +1,8 @@
 package duke.task;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class todo extends Task{
     /**Variables of todo class*/
     private char category;
@@ -33,5 +36,12 @@ public class todo extends Task{
      */
     public String getTime(){
         return "";
+    }
+    public void incrementTime(int days){
+        return;
+    };
+    public LocalDate getDate(){
+        LocalDate date = LocalDate.now();
+        return date;
     }
 }

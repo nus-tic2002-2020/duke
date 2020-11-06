@@ -1,5 +1,8 @@
 package duke.task;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public abstract class Task {
     /**Variables of task parent class*/
     protected String Description;
@@ -46,5 +49,7 @@ public abstract class Task {
     /**Abstract class of task parent class*/
     public abstract char getCat();
     public abstract String getTime();
+    public abstract LocalDate getDate();
     public abstract void updateTime(String new_date);
+    public abstract void incrementTime(int days);
 }
