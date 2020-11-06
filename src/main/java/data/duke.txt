@@ -1,0 +1,5 @@
+T|1|read
+T|0|write
+E|1|project meeting|Mon 2-4pm
+D|0|return book|Monday
+

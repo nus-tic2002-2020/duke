@@ -1,10 +1,25 @@
+import ui.UI;
+import tasklist.Task;
+import tasklist.Todo;
+import tasklist.Events;
+import tasklist.Deadline;
+
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.FileNotFoundException;
 
 public class Duke {
 
-    public static void printLine() {
-        System.out.println("\t____________________________________________________________");
+    public static void main(String[] args) {
+
+        ArrayList<Task> listTask = new ArrayList<Task>();
+
+        UI.showWelcome();
+
+        while (true) {
+            listTask = printUserInput(listTask);
+
+        }
     }
 
     public static ArrayList<Task> printUserInput(ArrayList<Task> listItems) {
@@ -17,9 +32,7 @@ public class Duke {
             userInput = input.nextLine();
             //bye to exit
             if (userInput.equals("bye")) {
-                printLine();
-                System.out.println("\tBye. Hope to see you again soon!");
-                printLine();
+                UI.bye();
                 System.exit(0);
             }
             //when type list
@@ -38,11 +51,11 @@ public class Duke {
                 Task t = new Events(eventDescription, dateTime);
                 listItems.add(t);
 
-                printLine();
+                UI.printLine();
                 System.out.println("\tGot it. I've added this task:");
                 System.out.println("\t" + listItems.get(listItems.size() - 1).toString());
                 System.out.println("\tNow you have " + (listItems.size()) + " tasks in the list.");
-                printLine();
+                UI.printLine();
 
             }
             // add deadline task
@@ -53,11 +66,11 @@ public class Duke {
                 Task t = new Deadline(deadlineDescription, filteredDate);
                 listItems.add(t);
 
-                printLine();
+                UI.printLine();
                 System.out.println("\tGot it. I've added this task:");
                 System.out.println("\t" + listItems.get(listItems.size() - 1).toString());
                 System.out.println("\tNow you have " + (listItems.size()) + " tasks in the list.");
-                printLine();
+                UI.printLine();
             }
             // add to do task
             else if (userInput.startsWith("todo")) {
@@ -67,15 +80,13 @@ public class Duke {
                     Task t = new Todo(todoDescription);
                     listItems.add(t);
 
-                    printLine();
+                    UI.printLine();
                     System.out.println("\tGot it. I've added this task:");
                     System.out.println("\t" + listItems.get(listItems.size() - 1).toString());
                     System.out.println("\tNow you have " + (listItems.size()) + " tasks in the list.");
-                    printLine();
+                    UI.printLine();
                 } catch (StringIndexOutOfBoundsException e) {
-                    printLine();
-                    System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
-                    printLine();
+                    UI.printEmptyToDoException();
                 }
             } else if (userInput.startsWith("delete")) {
                 int numTask = Integer.valueOf(userInput.substring(7, userInput.length()));
@@ -84,36 +95,34 @@ public class Duke {
                 System.out.println("\tNoted. I've removed this task:");
                 System.out.println("\t" + t.toString());
                 System.out.println("\tNow you have " + (listItems.size()) + " tasks in the list.");
-                printLine();
+                UI.printLine();
+            }  else if (userInput.startsWith("save")) {
+                save(listItems);
             }
         }
     }
 
-    //store items in list
-    public static ArrayList<Task> storeUserList(ArrayList<Task> listItems, String input) {
-        int counter = 0;
-        while (true) {
-            listItems.add(new Task(input));
-            System.out.println("\tadded: " + input);
-            break;
-
+    static void save(ArrayList<Task> listItems){
+        String list = "";
+        for (int i = 0; i < listItems.size(); i++) {
+            list += listItems.get(i).saveFormat() + "\n";
         }
-        return listItems;
+        Storage.writeToFile(list);
     }
 
     //print items in list
     public static void printUserList(ArrayList<Task> listItems) {
         if (listItems.size() == 0) {
-            System.out.println("List is empty");
+            UI.printListEmpty();
             return;
         }
-        printLine();
+        UI.printLine();
 
         for (int i = 0; i < listItems.size(); i++) {
             System.out.println("\t" + (i + 1) + ". " + listItems.get(i).toString());
         }
 
-        printLine();
+        UI.printLine();
     }
 
 
@@ -123,19 +132,19 @@ public class Duke {
             int filteredNumber = Integer.parseInt(userInput.substring(5));
             listItems.get(filteredNumber - 1).markDone();
 
-            printLine();
+            UI.printLine();
             System.out.println("\tNice! I've marked this task as done:");
             System.out.println("\t" + listItems.get(filteredNumber - 1).toString());
-            printLine();
+            UI.printLine();
 
         } catch (NumberFormatException e) {
-            printLine();
+            UI.printLine();
             System.out.println("\t☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-            printLine();
+            UI.printLine();
         } catch (NullPointerException e) {
-            printLine();
+            UI.printLine();
             System.out.println("\t☹ OOPS!!! Numbers out of range :-(");
-            printLine();
+            UI.printLine();
         }
         return listItems;
     }
@@ -146,23 +155,5 @@ public class Duke {
         }
     }
 
-    public static void main(String[] args) {
-        //  String [] ListofItems = new String[100];
-        ArrayList<Task> listTask = new ArrayList<Task>();
 
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
-
-        System.out.println("\t____________________________________________________________");
-        System.out.println("\tHello! I'm Duke\n\tWhat can I do for you?");
-        System.out.println("\t____________________________________________________________");
-        while (true) {
-            listTask = printUserInput(listTask);
-
-        }
-    }
 }
