@@ -31,7 +31,6 @@ public class Ui {
         userSentence = input.nextLine();
         //replies to user input
         try {
-            System.out.println(userSentence);
             response(userSentence);
         } catch (IllegalInputException e) {
             System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");

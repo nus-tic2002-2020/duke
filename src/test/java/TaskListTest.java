@@ -19,8 +19,9 @@ public class TaskListTest {
         Task expectedItem = new Task("todo buy book");
         tasksExpectedValue.add(expectedItem);
         // Execute the function to test
-        taskListCreatedByCode.storeList("todo buy book");
+        taskListCreatedByCode.storeList("todo sell book");
         assertEquals(taskListCreatedByCode.tasks, tasksExpectedValue);
     }
+
 
 }

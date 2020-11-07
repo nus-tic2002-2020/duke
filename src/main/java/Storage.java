@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Storage  {
     //variable
     private String pathname;
-    public String userSentence;
+    private String userSentence;
     //constructor
     public Storage(String path){
         this.pathname = path;
@@ -20,26 +20,22 @@ public class Storage  {
             Scanner s = new Scanner(f);
             int counter = 0;
             while (s.hasNext()) {
-                 userSentence = s.nextLine();
-                String[] split_line_item = userSentence.split("\\|", 4);
-
-                switch (split_line_item[0].trim()) {
-                    case "T":
-                        userSentence = "todo " + split_line_item[2].trim();
-
+                userSentence = s.nextLine();
+                String[] splitSentence = userSentence.split("\\|", 4);
+                switch (splitSentence[0].trim()) {
+                    case "[T]":
+                        userSentence = "todo " + splitSentence[2].trim();
                         break;
-                    case "D":
-                        userSentence = "deadline " + split_line_item[2].trim() + "/by " + split_line_item[3].trim();
-
+                    case "[D]":
+                        userSentence = "deadline " + splitSentence[2].trim() + "/by " + splitSentence[3].trim();
                         break;
-                    case "E":
-                       userSentence = "event " + split_line_item[2].trim() + "/at " + split_line_item[3].trim();
-
+                    case "[E]":
+                       userSentence = "event " + splitSentence[2].trim() + "/at " + splitSentence[3].trim();
                         break;
                 }
                 ui.response(userSentence);
                 counter++;
-                if (split_line_item[1].trim().equals("\u2713")) {
+                if (splitSentence[1].trim().equals("\u2713")) {
                     userSentence = "done " + counter;
                     ui.response(userSentence);
 
@@ -50,12 +46,12 @@ public class Storage  {
             System.out.println("Error loading saved file");
         }
     }
-    public void save(TaskList cur_list){
+    public void save(TaskList currentList){
         File taskFile = new File(pathname);
         if(taskFile.exists() == false){
             try{
                 taskFile.createNewFile();
-                saveList(cur_list);
+                saveList(currentList);
             }
             catch(IOException e){
                 System.out.println("Error creating file");
@@ -63,17 +59,17 @@ public class Storage  {
         }
         else{
             try{
-                saveList(cur_list);
+                saveList(currentList);
             }
             catch(IOException e){
                 System.out.println("Error writing to file");
             }
         }
     }
-    private void saveList(TaskList cur_list) throws IOException{
+    private void saveList(TaskList currentList) throws IOException{
         FileWriter fw = new FileWriter(pathname);
         for(int i = 1 ; i <= Duke.numberOftask ; i++){
-            fw.write(cur_list.processtoTextfile(i) + System.lineSeparator());
+            fw.write(currentList.processtoTextfile(i) + System.lineSeparator());
         }
         fw.close();
     }

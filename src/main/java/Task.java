@@ -37,8 +37,8 @@ public class Task {
              this.description = temp[1];
              this.whatTag = "[T]";
              this.timeDate =" ";
-           ;
-             if (this.description.isBlank() == true){
+
+             if (this.description.isBlank()){
                  System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
                  throw new IllegalInputException();
              }
