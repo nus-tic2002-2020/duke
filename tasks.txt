@@ -1,3 +1,5 @@
-[E][✓] new year  at Dec 31 2020 23:59
-[T][✘] swimming
-[D][✘] testing  by Jan 2 2020 12:00
+E|✘|New Year |Dec 31 2020|23:59
+D|✘|exam is coming |Dec 1 2020|09:00
+T|✓|study
+E|✘|go to city |Oct 11 2000|12:10
+D|✓|closing |Jan 1 2000|01:10

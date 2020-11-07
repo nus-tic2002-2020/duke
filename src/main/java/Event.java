@@ -31,12 +31,12 @@ public class Event extends Task {
 
     @Override
     public String getTaskListInfo(){
-        return "[E]" + super.getTaskListInfo() + " at " + this.getDate() + " " + getTiming();
+        return super.getTaskListInfo() + " at " + this.getDate() + " " + this.getTiming();
         //return "[E]" + super.getTaskListInfo() + " (at: " + time + ")";
     }
 
-   /* public String formatForFile() {
-        return "E" + super.formatForFile() + super.getDescription();
-    }*/
+    public String formatForFile() {
+        return super.formatForFile() + "|" + this.getDate() + "|" + this.getTiming();
+    }
 
 }

@@ -35,13 +35,10 @@ public class Task {
     }
 
     public String getTaskListInfo() {
-
-        return "[" + this.getStatusIcon() + "] " + getDescription();
+        return "[" + this.getTaskType() + "][" + this.getStatusIcon() + "] " + this.getDescription();
     }
 
     public String formatForFile() {
-        Integer intIsDone = isDone ? 1 : 0;
-        return " | " + intIsDone + " | ";
-        //return "|" + this.getStatusIcon() + "|" + this.getDescription();
+        return this.getTaskType() + "|" + this.getStatusIcon() + "|" + this.getDescription();
     }
 }

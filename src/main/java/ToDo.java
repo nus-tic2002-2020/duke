@@ -7,13 +7,13 @@ public class ToDo extends Task{
         super(description, taskType, isDone);
     }
 
-    @Override
+    //@Override
     public String getTaskListInfo() {
-        return "[T]" + super.getTaskListInfo();
+        return super.getTaskListInfo();
     }
 
-    public String formatForFile() {
+    /*public String formatForFile() {
         return "T" + super.formatForFile() + super.getDescription();
     }
-
+*/
 }

@@ -97,17 +97,16 @@ public class Duke {
 
 
     public static void updateFile(ArrayList<Task> tasks) throws IOException {
-            FileWriter writer = new FileWriter("tasks.txt");
-            writer.write(tasks.get(0).getTaskListInfo());
-            writer.close();
+        FileWriter writer = new FileWriter("tasks.txt",false);
 
-            FileWriter appender = new FileWriter("tasks.txt", true);
-
+        if (tasks.size() != 0) {
+            writer.write(tasks.get(0).formatForFile());
             for (int i = 1; i < tasks.size(); i++) {
-                appender.write(System.lineSeparator() + tasks.get(i).getTaskListInfo());
+                writer.write(System.lineSeparator() + tasks.get(i).formatForFile());
             }
+        }
 
-            appender.close();
+        writer.close();
 
     }
 
@@ -117,7 +116,7 @@ public class Duke {
 
         while (readFile.hasNext()) {
             String fileInput = readFile.nextLine();
-            String inputs[] = fileInput.split(" \\| ");
+            String inputs[] = fileInput.split("\\|");
             String taskType = inputs[0];
             String isDone = inputs[1];
             String description = inputs[2];
@@ -131,10 +130,10 @@ public class Duke {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy");
                 LocalDate localDate = LocalDate.parse(eventDate, formatter);
 
-                formatter = DateTimeFormatter.ofPattern("hh:mm");
+                formatter = DateTimeFormatter.ofPattern("HH:mm");
                 LocalTime localTime = LocalTime.parse(eventTime, formatter);
 
-                if (isDone.equals("0")) {
+                if (isDone.equals("✘")) {
                     tasks.add(new Event(description, taskType, localDate, localTime, false));
                 } else {
                     tasks.add(new Event(description, taskType, localDate, localTime, true));
@@ -148,11 +147,11 @@ public class Duke {
                 DateTimeFormatter deadlineFormatter = DateTimeFormatter.ofPattern("MMM d yyyy");
                 LocalDate deadlineLocalDate = LocalDate.parse(deadlineDate, deadlineFormatter);
 
-                deadlineFormatter = DateTimeFormatter.ofPattern("hh:mm");
+                deadlineFormatter = DateTimeFormatter.ofPattern("HH:mm");
                 LocalTime deadlineLocalTime = LocalTime.parse(deadlineTime, deadlineFormatter);
 
 
-                if (isDone.equals("0")) {
+                if (isDone.equals("✘")) {
                     tasks.add(new Deadline(description, taskType, deadlineLocalDate, deadlineLocalTime,false));
                 } else {
                     tasks.add(new Deadline(description, taskType, deadlineLocalDate, deadlineLocalTime, true));
@@ -160,23 +159,13 @@ public class Duke {
 
                 break;
             case "T":
-                if (isDone.equals("0")) {
+                if (isDone.equals("✘")) {
                     tasks.add(new ToDo(description, taskType, false));
                 } else {
                     tasks.add(new ToDo(description, taskType, true));
                 }
                 break;
             }
-
-            /*if (taskType.equals("D") || taskType.equals("E")) {
-                String dateAndTime = inputs[3];
-                if (taskType.equals("D")) {
-                    tasks.add(new Deadline(description, dateAndTime));
-                } else {
-                    tasks.add(new Event(description, dateAndTime));
-                }
-
-            }*/
 
         }
 

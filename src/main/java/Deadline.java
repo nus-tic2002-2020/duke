@@ -31,11 +31,12 @@ public class Deadline extends Task {
 
     @Override
     public String getTaskListInfo() {
-        return "[D]" + super.getTaskListInfo() + " by " + this.getDate() + " " + getTiming();
+        return super.getTaskListInfo() + " by " + this.getDate() + " " + this.getTiming();
         //return "[D]" + super.getTaskListInfo() + " (by: " + by + ")";
     }
 
-/*    public String formatForFile() {
-        return "D" + super.formatForFile() + super.getDescription();
-    }*/
+    public String formatForFile() {
+        return super.formatForFile() + "|" + this.getDate() + "|" + this.getTiming();
+    }
+
 }
