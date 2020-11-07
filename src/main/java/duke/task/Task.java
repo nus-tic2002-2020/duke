@@ -20,6 +20,10 @@ public class Task implements Savable {
         this.description = description;
     }
 
+    public TaskType getType() {
+        return type;
+    }
+
     public String getDescription() {
         return description;
     }

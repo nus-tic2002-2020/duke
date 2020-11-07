@@ -5,6 +5,7 @@ public class DukeException extends Exception {
     public enum DukeError {
         NONE,
         MISSING_ARGUMENT,
+        ANOMALY_ARGUMENT,
         MEMORY_FULL,
         TASK_NOT_FOUND,
         UNKNOWN_COMMAND,

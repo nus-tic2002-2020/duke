@@ -11,5 +11,9 @@ deadline do homework /by 2020-11-15 23:59
 find book
 delete 3
 delete 1 2 3 4 5 6 7
+event party /at 2020-12-01 06:00 PM
+event tic2002 final exam /at 2020-12-01 13:00 /end 2020-12-01 15:00
+schedule 2020-12-01
+delete 1 2
 list
 bye

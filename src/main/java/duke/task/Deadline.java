@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
-public class Deadline extends Task {
+public class Deadline extends Task implements DatedTask {
 
     protected LocalDateTime by;
 
@@ -28,6 +28,10 @@ public class Deadline extends Task {
         super(description);
         this.setBy(by);
         this.type = TaskType.DEADLINE;
+    }
+
+    public LocalDateTime getBy() {
+        return by;
     }
 
     public void setBy(LocalDateTime by) {
@@ -79,5 +83,10 @@ public class Deadline extends Task {
             throw new DukeException("Rabak Sial, wrong data format for Deadline! " + ex.getMessage(),
                     DukeException.DukeError.WRONG_DATA_FORMAT);
         }
+    }
+
+    @Override
+    public LocalDateTime getComparableDateTime() {
+        return this.by;
     }
 }

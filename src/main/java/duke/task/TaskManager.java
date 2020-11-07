@@ -3,6 +3,7 @@ package duke.task;
 import duke.command.DukeException;
 import duke.io.Savable;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,6 +158,32 @@ public class TaskManager {
         for (Task t: this.tasks) {
             if (t.getDescription().toUpperCase().contains(keyword.toUpperCase())) {
                 foundTasks.add(t);
+            }
+        }
+        return foundTasks;
+    }
+
+    public List<DatedTask> findTasks(LocalDate date) {
+        ArrayList<DatedTask> foundTasks = new ArrayList<DatedTask>();
+        for (Task t: this.tasks) {
+
+            LocalDate taskDate;
+
+            switch (t.getType()) {
+                case DEADLINE:
+                    Deadline deadline = (Deadline) t;
+                    taskDate = deadline.getBy().toLocalDate();
+                    break;
+                case EVENT:
+                    Event event = (Event) t;
+                    taskDate = event.getAt().toLocalDate();
+                    break;
+                default:
+                    continue;
+            }
+
+            if (date.isEqual(taskDate)) {
+                foundTasks.add((DatedTask) t);
             }
         }
         return foundTasks;

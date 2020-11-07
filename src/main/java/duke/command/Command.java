@@ -2,10 +2,7 @@ package duke.command;
 
 import duke.io.Storage;
 import duke.io.Ui;
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.TaskManager;
-import duke.task.Todo;
+import duke.task.*;
 
 import java.io.IOException;
 
@@ -62,7 +59,7 @@ public abstract class Command {
                         throw new DukeException("The description of a todo cannot be empty.",
                                 DukeException.DukeError.MISSING_ARGUMENT);
                     }
-                    String by = readSlashParameter(args, "/by");
+                    String by = readSlashParameter(args, "/by", true);
                     if (by.isBlank()) {
                         throw new DukeException("The argument for /by cannot be empty.",
                                 DukeException.DukeError.MISSING_ARGUMENT);
@@ -76,16 +73,22 @@ public abstract class Command {
                         throw new DukeException("The description of an event cannot be empty.",
                                 DukeException.DukeError.MISSING_ARGUMENT);
                     }
-                    String at = readSlashParameter(args, "/at");
+                    String at = readSlashParameter(args, "/at", true);
                     if (at.isBlank()) {
                         throw new DukeException("The argument for /by cannot be empty.",
                                 DukeException.DukeError.MISSING_ARGUMENT);
                     }
+                    String end = readSlashParameter(args, "/end", false);
                     //addTask(new Event(text, at));
-                    command = new AddCommand(new Event(text, at));
+                    Event event = new Event(text);
+                    event.setDuration(at, end);
+                    command = new AddCommand(event);
                     break;
                 case "find":
                     command = new FindCommand(args);
+                    break;
+                case "schedule":
+                    command = new ScheduleCommand(args);
                     break;
                 case "bye":
                     //bye();
@@ -106,20 +109,35 @@ public abstract class Command {
             int new_index = indexOf(args, until);
             index = new_index >= 0 ? new_index : index; // If new_index is negative, revert to use args length
         }
-        for(int i = 1; i < args.length && i < index; i++) { // add strings between command to until
+        for(int i = 1; i < args.length && i < index; i++) { // add strings between command to
+
+            if (args[i].strip().startsWith("/")) { // Exit once hit next slash character
+                break;
+            }
+
             value +=  args[i] + " ";
         }
         return value.trim();
     }
 
-    private static String readSlashParameter(String[] args, String param) throws DukeException {
+    private static String readSlashParameter(String[] args, String param, boolean isRequired) throws DukeException {
         String value = "";
         int index = indexOf(args, param);
+
         if (index < 0) {
-            throw new DukeException(String.format("Cannot find required %s in args. (index = %d)!", param, index),
-                    DukeException.DukeError.MISSING_ARGUMENT);
+            if (isRequired) {
+                throw new DukeException(String.format("Cannot find required %s in args. (index = %d)!", param, index),
+                        DukeException.DukeError.MISSING_ARGUMENT);
+            }
+            return null; // Early exit if missing but not required
         }
+
         for(int i = index+1; i < args.length; i++) { // add strings between slash to end of args
+
+            if (args[i].strip().startsWith("/")) { // Exit once hit next slash character
+                break;
+            }
+
             value +=  args[i] + " ";
         }
         return value.trim();
