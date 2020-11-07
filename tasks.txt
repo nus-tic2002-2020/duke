@@ -3,3 +3,5 @@ D|✘|exam is coming |Dec 1 2020|09:00
 T|✓|study
 E|✘|go to city |Oct 11 2000|12:10
 D|✓|closing |Jan 1 2000|01:10
+T|✘|study math
+E|✘|math test |Dec 12 2019|12:00

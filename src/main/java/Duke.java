@@ -72,6 +72,12 @@ public class Duke {
                     System.out.println("☹ OOPS: " + exception.getMessage());
                 }
 
+            } else if (input.contains("find")){
+                String findKeyword = input.substring(5);
+
+                //ArrayList<String> targets = tasks.findTask(findKeyword);
+                findTask(tasks,findKeyword);
+
             } else {
                 try {
                     addTask(input, inputs, tasks);
@@ -236,6 +242,30 @@ public class Duke {
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + tasks.get(tasks.size() - 1).getTaskListInfo());
 
+    }
+
+    public static void findTask(ArrayList<Task> tasks, String keyword) {
+        ArrayList<Task> results = new ArrayList<Task>();
+        for (Task task: tasks) {
+            if (task.getDescription().contains(keyword)) {
+                results.add(task);
+            }
+        }
+        printFoundKeyword(results);
+
+    }
+
+    public static void printFoundKeyword(ArrayList<Task> results) {
+        System.out.println("Here are the matching tasks in your list:");
+        if (results.size() == 0){
+            System.out.println("☹ OOPS!!!, No record found!");
+        }
+
+        for (int i = 0; i < results.size(); i++) {
+            if (results.get(i) != null) {
+                System.out.println((i + 1) + ". " + results.get(i).getTaskListInfo());
+            }
+        }
     }
 
 
