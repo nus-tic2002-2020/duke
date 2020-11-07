@@ -23,7 +23,7 @@ import ui.Storage;
 public class Duke {
 	
 	public static void main(String[] args) throws Exception {
-		GUI.main();
+		GUI.main(null);
 
 new java.util.Timer().schedule( 
         new java.util.TimerTask() {
@@ -38,7 +38,7 @@ new java.util.Timer().schedule(
 				}
             }
         }, 
-        500 
+        1000 
 );
 	}
 }

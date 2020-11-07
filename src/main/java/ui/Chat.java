@@ -33,19 +33,7 @@ public class Chat extends Duke {
 
 	public static void main() throws DukeException, BadLocationException, IOException, MissDescException {
 		GUI.guiOutput("Hello! I'm Duke. What can I do for you?");
-//		while (going) {
-//			try {
-//				chat();
-//			} catch (Exception e) {
-//			}
-//		}
 	}
-	
-//	public static void chat() throws DukeException, IOException, MissDescException {
-//		Scanner scan = new Scanner(System.in); // Create a Scanner object
-//		String userinput = (scan.nextLine()).trim();
-//		processScanner(userinput,true);
-//	}
 	
 	public static void printAdded(String content) throws DukeException, BadLocationException, IOException, MissDescException {
 		int a = count + 1;
@@ -68,7 +56,6 @@ public class Chat extends Duke {
 				try {
 					Storage.saveFile();
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				GUI.guiOutput( "   Current tasks are saved. Bye. Hope to see you again soon!\n");
