@@ -25,7 +25,6 @@ public class ExitCommand extends Command{
      * @param tasks This is the Task List that contains the list of tasks.
      * @param ui This is the ui, to be used for scanning and printing
      * @param storage This is the storage, used to read and write over the file.
-     * @throws IOException It will throw the IOException when the save method throws an IOException
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws IOException {

@@ -44,7 +44,6 @@ public class TaskList {
             System.out.println("Task List is loading empty storage");
         }
 
-
         for(int i = 0; i < size; i++){
             switch(parsedFile.get(i)[0]){
                 case "O":
@@ -54,7 +53,7 @@ public class TaskList {
                     this.tasks.add(new ToDo(parsedFile.get(i)[2]));
                     break;
                 case "D":
-                    this.tasks.add(new Deadline(parsedFile.get(i)[2], LocalDateTime.parse(parsedFile.get(i)[3], DateTimeFormatter.ofPattern("d MMM yyyy H:m:s")).toString() ) );
+                    this.tasks.add(new Deadline(parsedFile.get(i)[2], parsedFile.get(i)[3]  ));
                     break;
                 case "E":
                     this.tasks.add(new Event(parsedFile.get(i)[2],parsedFile.get(i)[3]) );
@@ -113,7 +112,7 @@ public class TaskList {
      * @throws DukeException This happens when the taskType is not one of the subclasses.
      */
     //TODO: Need to check for copies
-    public void addToList(String taskType, String description, String secondPart) throws DukeException {
+    public void addTask(String taskType, String description, String secondPart) throws DukeException {
         int index = 0;
         int size = 0;
 

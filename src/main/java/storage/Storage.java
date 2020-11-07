@@ -26,7 +26,7 @@ public class Storage {
      * This is the constructor for the Storage Class.
      * @param filePath This is the filePath of the text file.
      */
-    public Storage(String filePath) {
+    public Storage(String filePath) throws IOException {
 
         this.directory = new File("data");
         if(this.directory.isDirectory() == false || this.directory.exists() == false){
