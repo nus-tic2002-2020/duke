@@ -13,6 +13,6 @@ public class DukeException extends Exception {
 	public DukeException(String msg) throws DukeException, BadLocationException {
 		
 		if(msg=="") msg="OOPS!!! I'm sorry, but I don't know what that means :-(";
-		GUI.guiOutput (msg);
-	    }
+		GUI.guiOutputWarning(msg);
+    }
 }

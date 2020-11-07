@@ -37,7 +37,7 @@ public class Chat extends Duke {
 	
 	public static void printAdded(String content) throws DukeException, BadLocationException, IOException, MissDescException {
 		int a = count + 1;
-		GUI.guiOutput(" Got it. I've added this task: ");
+		GUI.guiOutput("Got it. I've added this task: ");
 		GUI.guiOutput(content);
 		GUI.guiOutput("Now you have " + a + " tasks in the list.");
 	}
@@ -58,7 +58,7 @@ public class Chat extends Duke {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				GUI.guiOutput( "   Current tasks are saved. Bye. Hope to see you again soon!\n");
+				GUI.guiOutput( "Current tasks are saved. Bye. Hope to see you again soon!\n");
 				going = false;
 			}
 				break;
@@ -67,7 +67,7 @@ public class Chat extends Duke {
 				/**
 				* Two ways: list & list+date. 
 				* Example: list.
-				* Example: list 2020-01-01.
+				* Example: list 2020-01-01 1800.
 				*/
 				
 				if(arr_userinputSplit.length==1) {
@@ -127,32 +127,30 @@ public class Chat extends Duke {
 				GUI.guiOutput("Now you have " + count + " tasks in the list.");
 			}
 				break;
+			case "event":
 			case "deadline": {
 				try {
-					String[] dl = arr_userinputSplit[1].split("/");
-					String by[] = (dl[1].split(" ", 2));
-					task.add(count, new Deadline((dl[0]).trim(), processDate(by[1]),userinput));
+					String[] content = arr_userinputSplit[1].split("/");
+					String datetime[] = content[1].split(" ", 3);
+					LocalDate date= processDate(datetime[1]);
+					int time=Integer.parseInt(datetime[2]);
+					if(!chkDateTime(date,time)) return;
+					switch(input_type) {
+						case "event":
+							task.add(count, new Event(content[0].trim(), date, time, userinput));
+							break;
+						case "deadline":
+							task.add(count, new Deadline(content[0].trim(), date, time, userinput));
+							break;
+						default: return;
+					}
+					
 					if(print) {
-						printAdded(task.get(count).toString());
+						printAdded(task.get(count).printTask());
 					}
 					count++;
 				} catch (RuntimeException e) {
-					throw new MissDescException(input_type);
-				}
-	
-			}
-				break;
-			case "event": {
-				try {
-					String[] dl = arr_userinputSplit[1].split("/");
-					String at[] = (dl[1].split(" ", 2));
-					task.add(count, new Event((dl[0]).trim(), processDate(at[1]),userinput));
-					if(print) {
-						printAdded(task.get(count).toString());
-					}
-					count++;
-				} catch (RuntimeException e) {
-					throw new MissDescException(input_type);
+					throw new DukeException("Please input datetime in correct format. Example: 2020-01-01 1300");
 				}
 	
 			}
@@ -171,7 +169,7 @@ public class Chat extends Duke {
 			}
 				break;
 			default: {
-				throw new DukeException("");
+				throw new DukeException("Sorry I cannot understand you.");
 			}
 		}
 	}
@@ -226,8 +224,22 @@ public class Chat extends Duke {
 	}
 	
 	
-	public static LocalDate processDate(String msg) {
-		LocalDate d=LocalDate.parse(msg.trim());;
+	public static LocalDate processDate(String date) {
+		LocalDate d=LocalDate.parse(date.trim());
 		return d;
+	}
+	
+	
+	public static boolean chkDateTime(LocalDate date, int time) throws DukeException, BadLocationException {
+		if(count==0||time==0) return true;
+		for (int a = 0; a < count; a++) {
+			Task t=task.get(a);
+			if(t.getTime()==0 || t.getDate()==null) return true;
+			if(t.getDate().isEqual(date) && t.getTime()==time) {				
+				GUI.guiOutputWarning("New task was not added because it corrupt with "+t.printTask());
+				return false;
+			}
+		}
+		return true;
 	}
 }

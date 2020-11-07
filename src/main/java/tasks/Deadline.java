@@ -9,20 +9,27 @@ import java.time.format.DateTimeFormatter;
 public class Deadline extends Task{
 	
 	  protected LocalDate date;
+	  protected int time;
 
-	    public Deadline(String description, LocalDate by, String userInput) {
+	    public Deadline(String description, LocalDate date, int time, String userInput) {
 	        super(description, userInput);
-	        this.date = by;
+	        this.date = date;
+	        this.time=time;
 	    }
 
 	    @Override
 		public LocalDate getDate() {
 			return this.date;
 		}
-		
+	    
+	    @Override
+		public int getTime() {
+			return this.time;
+		}
+	    
 	    @Override
 	    public String printTask() {
-	        return "[D]" + "["+icon()+"] "+getTitle() + " (by: " + date.format(DateTimeFormatter.ofPattern("MMM/dd/yyyy")) + ")";
+ 	        return "[D]" + "["+icon()+"] "+getTitle() + " (by: " + date.format(DateTimeFormatter.ofPattern("MMM/dd/yyyy")) +" "+ time + ")";
 	    }
 
 }

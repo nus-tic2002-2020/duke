@@ -169,4 +169,13 @@ public class GUI extends JFrame {
 		}
 		doc.insertString(doc.getLength(), "\n"+ output, null);
 	}
+	
+	public static void guiOutputWarning(String output) throws  DukeException, BadLocationException{
+		Style attributeSet = txtChatRecord.addStyle("", null);
+		StyleConstants.setBold(attributeSet, true);
+		doc.insertString(doc.getLength(), "\nDuke: ", attributeSet);		
+		Style attributeSet2 = txtChatRecord.addStyle("", null);
+	    StyleConstants.setForeground(attributeSet2, Color.red);
+		doc.insertString(doc.getLength(), "\n"+ output, attributeSet2);
+	}
 }

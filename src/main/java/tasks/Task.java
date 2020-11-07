@@ -33,6 +33,9 @@ public class Task {
 		return null;
 	}
 	
+	public int getTime() {
+		return 0;
+	}
 	public String icon() {
 		 return (isDone ? "¡Ì" : "X");
 	}
