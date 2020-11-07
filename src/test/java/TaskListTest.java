@@ -18,9 +18,28 @@ public class TaskListTest {
         // This is an expected value 
         Task expectedItem = new Task("todo buy book");
         tasksExpectedValue.add(expectedItem);
+        String expectedValue = expectedItem.description;
+
         // Execute the function to test
-        taskListCreatedByCode.storeList("todo sell book");
-        assertEquals(taskListCreatedByCode.tasks, tasksExpectedValue);
+        taskListCreatedByCode.storeList("todo buy book");
+        assertEquals(taskListCreatedByCode.tasks.get(0).description , expectedValue);
+
+        Task expectedItem2 = new Task("deadline ppt /by 23/11/2020");
+        tasksExpectedValue.add(expectedItem2);
+        String expectedValue2 = expectedItem2.getTag();
+
+        // Execute the function to test
+        taskListCreatedByCode.storeList("deadline ppt /by 23/11/2020");
+        assertEquals(taskListCreatedByCode.tasks.get(1).getTag() , expectedValue2);
+
+        Task expectedItem3 = new Task("event sports meet /at 23/11/2020");
+        tasksExpectedValue.add(expectedItem2);
+        String expectedValue3 = expectedItem2.getTimeDate();
+
+        // Execute the function to test
+        taskListCreatedByCode.storeList("deadline ppt /by 23/11/2020");
+        assertEquals(taskListCreatedByCode.tasks.get(2).getTimeDate() , expectedValue3);
+
     }
 
 
