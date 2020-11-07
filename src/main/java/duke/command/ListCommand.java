@@ -23,8 +23,10 @@ public class ListCommand extends Command{
         List<String> tasks = taskManager.getPrintableTasks();
 
         ui.echo("Here are the tasks in your list:");
+        outputs.add("Here are the tasks in your list:");
         for (String t: tasks) {
             ui.echo(" " + t);
+            outputs.add(t);
         }
 
         return true;

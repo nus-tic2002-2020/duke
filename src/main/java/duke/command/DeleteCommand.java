@@ -46,13 +46,16 @@ public class DeleteCommand extends Command{
         }
 
         ui.echo("Song la! Lim peh help you remove this task(s):");
+        outputs.add("Song la! Lim peh help you remove this task(s):");
 
         int i = 1;
         for (Task t: removedTasks) {
             ui.echo(String.format("   %s", t));
+            outputs.add(String.format("   %s", t));
         }
 
         ui.echo(String.format("Now you have %d tasks in the list.", tasks.size()));
+        outputs.add(String.format("Now you have %d tasks in the list.", tasks.size()));
 
         return true;
     }

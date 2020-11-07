@@ -37,8 +37,10 @@ public class DoneCommand extends Command{
         }
 
         ui.echo("Power la! I've marked this task(s) as done:");
+        outputs.add("Power la! I've marked this task(s) as done:");
         for (Task t: doneTasks) {
             ui.echo("   " + t.toString());
+            outputs.add(t.toString());
         }
 
         try {

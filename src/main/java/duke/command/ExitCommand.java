@@ -20,7 +20,7 @@ public class ExitCommand extends Command{
 
     @Override
     public boolean execute(TaskManager taskManager, Ui ui, Storage storage) throws DukeException {
-        ui.bye();
+        outputs.add(ui.bye());
         return true;
     }
 }

@@ -36,9 +36,11 @@ public class FindCommand extends Command{
         List<Task> tasks = taskManager.findTasks(keyword);
 
         ui.echo("OK, this is what I found:");
+        outputs.add("OK, this is what I found:");
         int i = 0;
         for (Task t: tasks) {
             ui.echo(String.format("%d.%s", ++i, t.toString()));
+            outputs.add(String.format("%d.%s", ++i, t.toString()));
         }
 
         return true;

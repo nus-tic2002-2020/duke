@@ -5,10 +5,13 @@ import duke.io.Ui;
 import duke.task.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Command {
 
     protected String[] args;
+    protected List<String> outputs = new ArrayList<String>();
 
     public Command() {
 
@@ -23,6 +26,10 @@ public abstract class Command {
     public abstract boolean isExit();
 
     public abstract boolean execute(TaskManager taskManager, Ui ui, Storage storage) throws DukeException;
+
+    public List<String> getOutputs() {
+        return outputs;
+    }
 
     public static Command parse(String input) throws DukeException {
         Command command = null;

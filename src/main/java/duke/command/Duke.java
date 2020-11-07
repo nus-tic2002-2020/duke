@@ -218,6 +218,23 @@ public class Duke extends Application {
      * Replace this stub with your completed method.
      */
     private String getResponse(String input) {
-        return "Duke heard: " + input;
+        //return "Duke heard: " + input;
+
+        List<String> outputList = new ArrayList<String>();
+
+        try {
+            Command command = Command.parse(input);
+            command.execute(taskManager, ui, storageTasks);
+            outputList = command.getOutputs();
+        } catch (DukeException e) {
+            return e.printError();
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for (String s: outputList) {
+            builder.append(s + "\n");
+        }
+
+        return builder.toString();
     }
 }

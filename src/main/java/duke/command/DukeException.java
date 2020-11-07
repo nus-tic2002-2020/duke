@@ -24,10 +24,11 @@ public class DukeException extends Exception {
         this.code = code;
     }
 
-    public void printError() {
+    public String printError() {
         //System.out.println("    ____________________________________________________________");
         System.out.printf("     ☹ OOPS!!! %s\n", super.getMessage());
         //System.out.println("    ____________________________________________________________");
+        return String.format("☹ OOPS!!! %s", super.getMessage());
     }
 
     public DukeError getErrorCode() {

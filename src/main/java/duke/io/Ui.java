@@ -20,36 +20,41 @@ public class Ui {
         return null;
     }
 
-    public void welcome() {
+    public String welcome() {
         String logo = "  ___    *   *    ____        *\n"
                 + "|  _  | | | | |  |  _ \\ _   _| | _____\n"
                 + "| |_| | | |_| |  | | | | | | | |/ / _ \\\n"
                 + "|  _  | |  _  |  | |_| | |_| |   <  __/\n"
                 + "| | | | | | | |  |____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
+        return "Hello from\n" + logo;
     }
 
-    public void greet() {
+    public String greet() {
         echoLine();
         echo("Oei! I'm Ah Duke");
         echo("What can I do for you leh?");
         echoLine();
+        return "Oei! I'm Ah Duke\nWhat can I do for you leh?";
     }
 
-    public void bye() {
+    public String bye() {
         echo("    Bye bye. Hope to see you again soon!");
+        return "Bye bye. Hope to see you again soon!";
     }
 
-    public void loadError() {
+    public String loadError() {
         echoLine();
         echo("    Cannot load leh!");
         echoLine();
+        return "Cannot load leh!";
     }
 
-    public void errorTaskFull() {
+    public String errorTaskFull() {
         echoLine();
         echo("    Peiseh, my task list is full!");
         echoLine();
+        return "Peiseh, my task list is full!";
     }
 
     public void echoLine() {

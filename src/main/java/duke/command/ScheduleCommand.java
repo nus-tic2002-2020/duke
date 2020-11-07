@@ -55,10 +55,14 @@ public class ScheduleCommand extends Command{
             }
         });
 
-        ui.echo(String.format("Your schedule for %s:", localDate.format(DateTimeFormatter.ofPattern("d MMM yyyy"))));
+        String output = String.format("Your schedule for %s:", localDate.format(DateTimeFormatter.ofPattern("d MMM yyyy")));
+        ui.echo(output);
+        outputs.add(output);
+
         int i = 0;
         for (DatedTask t: tasks) {
             ui.echo(String.format("%d.%s", ++i, t.toString()));
+            outputs.add(String.format("%d.%s", ++i, t.toString()));
         }
 
         return true;

@@ -32,14 +32,17 @@ public class AddCommand extends Command{
     public boolean execute(TaskManager taskManager, Ui ui, Storage storage) throws DukeException {
 
         ui.echo("Got it. I've added this task:");
+        outputs.add("Got it. I've added this task:");
 
         taskManager.add(task);
 
         //System.out.printf("      %s\n", t);
         ui.echo("  " + task.toString());
+        outputs.add(task.toString());
 
         List<Task> tasks = taskManager.getTasks();
         ui.echo(String.format("Now you have %d tasks in the list.", tasks.size()));
+        outputs.add(String.format("Now you have %d tasks in the list.", tasks.size()));
 
         // Convert to savable list
         Savable s = (Savable) task;
