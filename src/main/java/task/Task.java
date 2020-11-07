@@ -1,11 +1,13 @@
 package task;
 
+import enumerations.PriorityEnum;
 import java.time.LocalDateTime;
 
 /**
  * Task-superclass. Has 3 subclass -> Todo, Deadline & Event
  */
 public abstract class Task {
+    protected PriorityEnum priority;
     protected String description;
     protected boolean isDone;
     protected String symbol;
@@ -18,6 +20,15 @@ public abstract class Task {
     public Task(String description) {
         setDescription(description);
         this.isDone = false;
+        priority = PriorityEnum.valueOf("NA");
+    }
+
+    public void setPriority(String priority) {
+        this.priority = PriorityEnum.valueOf(priority.toUpperCase());
+    }
+
+    public PriorityEnum getPriority() {
+        return this.priority;
     }
 
     /**

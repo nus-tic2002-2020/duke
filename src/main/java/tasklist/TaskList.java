@@ -28,17 +28,24 @@ public class TaskList {
             switch(function) {
                 case "T":
                     store.add(new ToDo(splitSections[2].trim()));
+                    store.get(store.size()-1).setPriority(splitSections[3].trim());
                     break;
                 case "D":
                     store.add(new Deadline(splitSections[2].trim(), splitSections[3].trim()));
+                    store.get(store.size()-1).setPriority(splitSections[4].trim());
                     break;
                 case "E":
                     store.add(new Event(splitSections[2].trim(), splitSections[3].trim()));
+                    store.get(store.size()-1).setPriority(splitSections[4].trim());
                     break;
                 case "W":
                     String[] startEnd = splitSections[3].split("-");
                     store.add(new Within(splitSections[2].trim(), startEnd[0].trim(), startEnd[1].trim()));
+                    store.get(store.size()-1).setPriority(splitSections[4].trim());
                     break;
+            }
+            if (splitSections[1].trim().equals("✓")) {
+                store.get(store.size()-1).setDone();
             }
         }
     }
@@ -66,13 +73,22 @@ public class TaskList {
      *
      * @param input User-input
      */
-    public void setDone(String input) throws TooManySpacesException{
+    public void setDone(String input) throws TooManySpacesException {
         if (input.contains("  ")) {
             throw new TooManySpacesException();
         }
         String[] splitIndex = input.split(" ");
         int index = Integer.parseInt(splitIndex[1]) - 1;
         store.get(index).setDone();
+    }
+
+    public void setPriority(String input) throws TooManySpacesException {
+        if (input.contains("  ")) {
+            throw new TooManySpacesException();
+        }
+        String[] splitIndex = input.split(" ");
+        int index = Integer.parseInt(splitIndex[1]) - 1;
+        store.get(index).setPriority(splitIndex[2]);
     }
 
     /**

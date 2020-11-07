@@ -60,7 +60,57 @@ public class Storage {
             if (counter == index ) {
                 scanner.nextLine();
             }
-            if (scanner.hasNextLine()) {
+            else {
+                fw.write(scanner.nextLine() + "\n");
+            }
+            counter++;
+        }
+        fw.close();
+        scanner.close();
+        Files.delete(Paths.get("data/temp.txt"));
+    }
+
+    public void setDone(String input) throws IOException {
+        int index = Integer.parseInt(input.substring(5));
+        int counter = 1;
+        Files.copy(Paths.get("data/task_list.txt"), Paths.get("data/temp.txt"));
+        FileWriter fw = new FileWriter("data/task_list.txt");
+        Scanner scanner = new Scanner(new File("data/temp.txt"));
+        while (scanner.hasNextLine()) {
+            if (counter == index ) {
+                fw.write(scanner.nextLine().replaceAll("✗", "✓") + "\n");
+            }
+            else {
+                fw.write(scanner.nextLine() + "\n");
+            }
+            counter++;
+        }
+        fw.close();
+        scanner.close();
+        Files.delete(Paths.get("data/temp.txt"));
+    }
+
+    public void setPriority(String input) throws IOException {
+        int index = Integer.parseInt(input.substring(9, 10));
+        int counter = 1;
+        int counter2 = 0;
+        Files.copy(Paths.get("data/task_list.txt"), Paths.get("data/temp.txt"));
+        FileWriter fw = new FileWriter("data/task_list.txt");
+        Scanner scanner = new Scanner(new File("data/temp.txt"));
+        while (scanner.hasNextLine()) {
+            if (counter == index ) {
+                String editLine[] = scanner.nextLine().split("\\|");
+                editLine[editLine.length - 1]  = " " + input.substring(11).toUpperCase();
+                for (String part : editLine) {
+                    fw.write(part);
+                    counter2++;
+                    if (counter2 != editLine.length) {
+                        fw.write("|");
+                    }
+                }
+                fw.write("\n");
+            }
+            else {
                 fw.write(scanner.nextLine() + "\n");
             }
             counter++;
@@ -81,24 +131,27 @@ public class Storage {
         String function = task.getSymbol();
         switch (function) {
             case "[T]":
-                fw.write("T | X | " + task.getDescription() + "\n");
+                fw.write("T | ✗ | " + task.getDescription() + " | " + task.getPriority() + "\n");
                 break;
             case "[D]":
-                fw.write("D | X | " + task.getDescription() + " | " + task.getDateAndTime().getDayOfMonth()
+                fw.write("D | ✗ | " + task.getDescription() + " | " + task.getDateAndTime().getDayOfMonth()
                         + "/" + task.getDateAndTime().getMonthValue() + "/" + task.getDateAndTime().getYear() + ", "
-                        + task.getDateAndTime().getHour() + ":" + task.getDateAndTime().getMinute() + "\n");
+                        + task.getDateAndTime().getHour() + ":" + task.getDateAndTime().getMinute()
+                        + " | " + task.getPriority() + "\n");
                 break;
             case "[E]":
-                fw.write("E | X | " + task.getDescription() + " | " + task.getDateAndTime().getDayOfMonth()
+                fw.write("E | ✗ | " + task.getDescription() + " | " + task.getDateAndTime().getDayOfMonth()
                         + "/" + task.getDateAndTime().getMonthValue() + "/" + task.getDateAndTime().getYear() + ", "
-                        + task.getDateAndTime().getHour() + ":" + task.getDateAndTime().getMinute() + "\n");
+                        + task.getDateAndTime().getHour() + ":" + task.getDateAndTime().getMinute()
+                        + " | " + task.getPriority() + "\n");
                 break;
             case "[W]":
-                fw.write("W | X | " + task.getDescription() + " | " + task.getStart().getDayOfMonth()
+                fw.write("W | ✗ | " + task.getDescription() + " | " + task.getStart().getDayOfMonth()
                         + "/" + task.getStart().getMonthValue() + "/" + task.getStart().getYear() + ", "
                         + task.getStart().getHour() + ":" + task.getStart().getMinute() + " - " + task.getEnd().getDayOfMonth()
                         + "/" + task.getEnd().getMonthValue() + "/" + task.getEnd().getYear() + ", "
-                        + task.getEnd().getHour() + ":" + task.getEnd().getMinute() + "\n");
+                        + task.getEnd().getHour() + ":" + task.getEnd().getMinute()
+                        + " | " + task.getPriority() + "\n");
                 break;
         }
         fw.close();

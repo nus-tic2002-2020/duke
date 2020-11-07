@@ -49,7 +49,7 @@ public class Lisa {
                     case TODO:
                     case DEADLINE:
                     case EVENT:
-                    case WITHIN: {
+                    case WITHIN:
                         try {
                             tasks.add(input);
                             storage.insert(tasks.getStore().get(tasks.getStore().size() - 1));
@@ -66,20 +66,20 @@ public class Lisa {
                             ui.showDateFormatError1();
                         }
                         break;
-                    }
-                    case LIST: {
+
+                    case LIST:
                         ui.list(tasks);
                         break;
-                    }
-                    case FIND: {
+
+                    case FIND:
                         try {
                             ui.find(input, tasks);
                         } catch (TooManySpacesException e) {
                             ui.showTooManySpacesError();
                         }
                         break;
-                    }
-                    case DAY: {
+
+                    case DAY:
                         try {
                             ui.listByDay(input, tasks);
                         } catch (DateTimeParseException e) {
@@ -88,8 +88,8 @@ public class Lisa {
                             ui.showTooManySpacesError();
                         }
                         break;
-                    }
-                    case MONTH: {
+
+                    case MONTH:
                         try {
                             ui.listByMonth(input, tasks);
                         } catch (DateTimeParseException e) {
@@ -98,8 +98,8 @@ public class Lisa {
                             ui.showTooManySpacesError();
                         }
                         break;
-                    }
-                    case YEAR: {
+
+                    case YEAR:
                         try {
                             ui.listByYear(input, tasks);
                         } catch (DateTimeParseException e) {
@@ -108,8 +108,8 @@ public class Lisa {
                             ui.showTooManySpacesError();
                         }
                         break;
-                    }
-                    case DELETE: {
+
+                    case DELETE:
                         try {
                             if (tasks.getStore().size() == 0) {
                                 ui.printEmptyListMessage();
@@ -124,10 +124,15 @@ public class Lisa {
                             ui.showTooManySpacesError();
                         }
                         break;
-                    }
-                    case DONE: {
+
+                    case DONE:
                         try {
+                            if (tasks.getStore().size() == 0) {
+                                ui.printEmptyListMessage();
+                                break;
+                            }
                             tasks.setDone(input);
+                            storage.setDone(input);
                             ui.printDoneMessage();
                         } catch (NumberFormatException | NullPointerException | IndexOutOfBoundsException e) {
                             ui.showInvalidNumberError();
@@ -135,15 +140,30 @@ public class Lisa {
                             ui.showTooManySpacesError();
                         }
                         break;
-                    }
-                    case HELP: {
+
+                    case PRIORITY:
+                        try {
+                            if (tasks.getStore().size() == 0) {
+                                ui.printEmptyListMessage();
+                                break;
+                            }
+                            tasks.setPriority(input);
+                            storage.setPriority(input);
+                            ui.printPriorityMessage();
+                        } catch (IllegalArgumentException e) {
+                            ui.showIncorrectPriorityError();
+                        } catch (TooManySpacesException e) {
+                            ui.showTooManySpacesError();
+                        }
+                        break;
+
+                    case HELP:
                         ui.printCmdList();
                         break;
-                    }
-                    case BYE: {
+
+                    case BYE:
                         ui.printByeMessage();
                         break;
-                    }
                 }
             } catch (IllegalArgumentException e) {
                 ui.showIllegalArgumentError();

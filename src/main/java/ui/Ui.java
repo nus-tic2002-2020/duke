@@ -79,6 +79,10 @@ public class Ui {
         System.out.println("Nice! I've marked this task as done.");
     }
 
+    public void printPriorityMessage() {
+        System.out.println("Roger. I've set the priority of this task as such.");
+    }
+
     /**
      * Prints error message when marker "/by" or "/at" is incorrectly inputted. Relevant methods will not work
      * in this case
@@ -114,6 +118,10 @@ public class Ui {
         System.out.println("Date format is wrong. Use yyyy");
     }
 
+    public void showIncorrectPriorityError() {
+        System.out.println("Invalid priority setting. Use either NA, LOW, MEDIUM or HIGH");
+    }
+
     public void printCmdList() {
         System.out.println("-ToDo description\n" +
                 "-Deadline description /by dd/mm/yyyy hh:mm\n" +
@@ -125,6 +133,7 @@ public class Ui {
                 "-Year yyyy\n" +
                 "-Delete (item number)\n" +
                 "-Done (item number)\n" +
+                "-Priority (item number) (priority level)\n" +
                 "-Bye");
     }
 
@@ -137,21 +146,21 @@ public class Ui {
     }
 
     private void printTodo(Task task) {
-        System.out.println("[T]" + task.getDone() + " " + task.getDescription());
+        System.out.println("[T]" + task.getDone() + " " + task.getDescription() + " (Priority: " + task.getPriority() + ")");
     }
 
     private void printDeadline(Task task) {
         System.out.println("[D]" + task.getDone() + " " + task.getDescription() + " (by: " +
                 task.getDateAndTime().getDayOfMonth() + " " + task.getDateAndTime().getMonth() + " "
                 + task.getDateAndTime().getYear() + ", " + task.getDateAndTime().getHour() + ":"
-                + task.getDateAndTime().getMinute() + ")");
+                + task.getDateAndTime().getMinute() + ") (Priority: " + task.getPriority() + ")");
     }
 
     private void printEvent(Task task) {
         System.out.println("[E]" + task.getDone() + " " + task.getDescription() + " (at: " +
                 task.getDateAndTime().getDayOfMonth() + " " + task.getDateAndTime().getMonth() + " "
                 + task.getDateAndTime().getYear() + ", " + task.getDateAndTime().getHour() + ":"
-                + task.getDateAndTime().getMinute() + ")");
+                + task.getDateAndTime().getMinute() + ") (Priority: " + task.getPriority() + ")");
     }
 
     private void printWithin(Task task) {
@@ -159,7 +168,7 @@ public class Ui {
                 + task.getStart().getDayOfMonth() + " " + task.getStart().getMonth() + " "
                 + task.getStart().getYear() + ", " + task.getStart().getHour() + ":" + task.getStart().getMinute()
                 + " to " + task.getEnd().getDayOfMonth() + " " + task.getEnd().getMonth() + " "
-                + task.getEnd().getYear() + ", " + task.getEnd().getHour() + ":" + task.getEnd().getMinute() + ")");
+                + task.getEnd().getYear() + ", " + task.getEnd().getHour() + ":" + task.getEnd().getMinute() + ") (Priority: " + task.getPriority() + ")");
     }
 
     /**
@@ -330,8 +339,10 @@ public class Ui {
                     }
                     break;
                 case "[W]":
-                    if (task.getDateAndTime().getDayOfYear() == date.getDayOfYear()
-                            && task.getDateAndTime().getYear() == date.getYear()) {
+                    if (task.getStart().getDayOfYear() <= date.getDayOfYear()
+                            && task.getEnd().getDayOfYear() >= date.getDayOfYear()
+                            && task.getStart().getYear() == date.getYear()
+                            && task.getEnd().getYear() == date.getYear()) {
                         if (index == 1) {
                             System.out.println (headers[1]);
                         }
