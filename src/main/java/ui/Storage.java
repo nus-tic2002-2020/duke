@@ -1,5 +1,5 @@
 package ui;
-import ui.GUI;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -53,7 +53,7 @@ public class Storage extends Duke{
 			while (in.hasNext()) {
 				String str=in.nextLine();
 				if(str.length()>0) {
-					Chat.processScanner(str,false);
+					Chat.processChat(str,false);
 				}
 			}
 		} catch (FileNotFoundException e) {

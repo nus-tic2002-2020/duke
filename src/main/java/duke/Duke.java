@@ -36,6 +36,6 @@ public class Duke {
 					e.printStackTrace();
 				}
 			}
-		}, 800);
+		}, 1000);
 	}
 }

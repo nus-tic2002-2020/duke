@@ -1,13 +1,8 @@
 package ui;
 
-import ui.Chat;
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import exceptions.DukeException;
 import exceptions.MissDescException;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -16,31 +11,17 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Color;
-import javax.swing.JScrollBar;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.border.SoftBevelBorder;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultCaret;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
-import javax.swing.border.EtchedBorder;
-import javax.swing.SwingConstants;
-import java.awt.ScrollPane;
-import java.awt.Component;
-import java.awt.TextArea;
 import javax.swing.ScrollPaneConstants;
-import java.awt.Rectangle;
 import java.awt.Insets;
 
 public class GUI extends JFrame {
@@ -49,10 +30,8 @@ public class GUI extends JFrame {
 	private JTextField txtSend;
 	private static JTextPane txtChatRecord;
 	private static StyledDocument doc;
-	private static boolean isYourTurn=false;
-	/**
-	 * Launch the application.
-	 */
+	private static boolean isYourTurn = false;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -68,7 +47,8 @@ public class GUI extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @throws DukeException 
+	 * 
+	 * @throws DukeException
 	 */
 	public GUI() throws DukeException {
 		setTitle("Duke Chatting System");
@@ -79,7 +59,7 @@ public class GUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JButton btnSend = new JButton("Send");
 		btnSend.setBorder(new LineBorder(new Color(255, 255, 255), 3, true));
 		btnSend.setContentAreaFilled(false);
@@ -102,25 +82,15 @@ public class GUI extends JFrame {
 		});
 		btnSend.setBounds(287, 411, 66, 39);
 		contentPane.add(btnSend);
-		
+
 		txtSend = new JTextField();
 		txtSend.setForeground(Color.BLUE);
-		txtSend.setText("list");
 		txtSend.setBackground(new Color(255, 255, 255));
 		txtSend.setBorder(new LineBorder(new Color(255, 240, 245), 3));
 		txtSend.setBounds(10, 411, 270, 39);
 		contentPane.add(txtSend);
 		txtSend.setColumns(10);
-		
-		txtSend.addKeyListener
-	      (new KeyAdapter() {
-	         public void keyPressed(KeyEvent e) throws DukeException, IOException, MissDescException, BadLocationException {
-	           KeyCode k = e.getCode();
-	           if (k.equals(KeyCode.ENTER)) {
-	        	   guiInput(txtSend.getText().trim());
-	            }
-	         }
-	      });
+
 		JLabel lblNewLabel = new JLabel("Chat with Duke");
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Corbel", Font.BOLD, 21));
@@ -131,51 +101,58 @@ public class GUI extends JFrame {
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setBounds(287, 8, 66, 34);
 		contentPane.add(lblNewLabel_1);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(10, 47, 343, 338);
 		contentPane.add(scrollPane);
-		
+
 		txtChatRecord = new JTextPane();
 		txtChatRecord.setEditable(false);
 		txtChatRecord.setDisabledTextColor(Color.BLACK);
 		txtChatRecord.setMargin(new Insets(10, 10, 10, 10));
 		scrollPane.setViewportView(txtChatRecord);
-		
+
 		doc = txtChatRecord.getStyledDocument();
-		
-	}
-	public static void guiInput(String input) throws DukeException, IOException, MissDescException, BadLocationException {
-		if(isYourTurn) {
-			Style attributeSet = txtChatRecord.addStyle("", null);
-		    StyleConstants.setForeground(attributeSet, Color.blue);
-			StyleConstants.setBold(attributeSet, true);
-			doc.insertString(doc.getLength(), "\n\nYou: ", attributeSet);
-			isYourTurn=false;
-		}
-		Style attributeSet2 = txtChatRecord.addStyle("", null);
-	    StyleConstants.setForeground(attributeSet2, Color.blue);
-		doc.insertString(doc.getLength(), input+"\n", attributeSet2);
-		Chat.processScanner(input, true);
+
 	}
 
-	public static void guiOutput(String output) throws DukeException, BadLocationException {	
-		if(!isYourTurn) {
-			Style attributeSet = txtChatRecord.addStyle("", null);
-			StyleConstants.setBold(attributeSet, true);
-			doc.insertString(doc.getLength(), "\nDuke: ", attributeSet);
-			isYourTurn=true;
+	public static void guiInput(String input)
+			throws DukeException, IOException, MissDescException, BadLocationException {
+		if (isYourTurn) {
+			Style styleYou = txtChatRecord.addStyle("", null);
+			StyleConstants.setForeground(styleYou, Color.blue);
+			StyleConstants.setBold(styleYou, true);
+			StyleConstants.setAlignment(styleYou, StyleConstants.ALIGN_RIGHT);
+			doc.insertString(doc.getLength(), "\n\nYou: ", styleYou);
+			isYourTurn = false;
 		}
-		doc.insertString(doc.getLength(), "\n"+ output, null);
+		Style style = txtChatRecord.addStyle("", null);
+		StyleConstants.setForeground(style, Color.blue);
+		StyleConstants.setAlignment(style, StyleConstants.ALIGN_RIGHT);
+		doc.insertString(doc.getLength(), input + "\n", style);
+		Chat.processChat(input, true);
 	}
-	
-	public static void guiOutputWarning(String output) throws  DukeException, BadLocationException{
-		Style attributeSet = txtChatRecord.addStyle("", null);
-		StyleConstants.setBold(attributeSet, true);
-		doc.insertString(doc.getLength(), "\nDuke: ", attributeSet);		
-		Style attributeSet2 = txtChatRecord.addStyle("", null);
-	    StyleConstants.setForeground(attributeSet2, Color.red);
-		doc.insertString(doc.getLength(), "\n"+ output, attributeSet2);
+
+	public static void guiOutput(String output) throws DukeException, BadLocationException {
+		if (!isYourTurn) {
+			Style style = txtChatRecord.addStyle("", null);
+			StyleConstants.setBold(style, true);
+			doc.insertString(doc.getLength(), "\nDuke: ", style);
+			isYourTurn = true;
+		}
+		doc.insertString(doc.getLength(), "\n" + output, null);
+	}
+
+	public static void guiOutputWarning(String output) throws DukeException, BadLocationException {
+		if (!isYourTurn) {
+			Style styleDuke = txtChatRecord.addStyle("", null);
+			StyleConstants.setForeground(styleDuke, Color.red);
+			StyleConstants.setBold(styleDuke, true);
+			doc.insertString(doc.getLength(), "\nDuke: ", styleDuke);
+		}
+		Style style = txtChatRecord.addStyle("", null);
+		StyleConstants.setForeground(style, Color.red);
+		doc.insertString(doc.getLength(), "\n" + output, style);
 	}
 }

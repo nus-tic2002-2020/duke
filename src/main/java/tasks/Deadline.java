@@ -1,35 +1,37 @@
 package tasks;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
-* Task type: Deadline. 
-*/
+ * Task type: Deadline.
+ */
 
-public class Deadline extends Task{
-	
-	  protected LocalDate date;
-	  protected int time;
+public class Deadline extends Task {
 
-	    public Deadline(String description, LocalDate date, int time, String userInput) {
-	        super(description, userInput);
-	        this.date = date;
-	        this.time=time;
-	    }
+	protected LocalDate date;
+	protected int time;
 
-	    @Override
-		public LocalDate getDate() {
-			return this.date;
-		}
-	    
-	    @Override
-		public int getTime() {
-			return this.time;
-		}
-	    
-	    @Override
-	    public String printTask() {
- 	        return "[D]" + "["+icon()+"] "+getTitle() + " (by: " + date.format(DateTimeFormatter.ofPattern("MMM/dd/yyyy")) +" "+ time + ")";
-	    }
+	public Deadline(String description, LocalDate date, int time, String userInput) {
+		super(description, userInput);
+		this.date = date;
+		this.time = time;
+	}
+
+	@Override
+	public LocalDate getDate() {
+		return this.date;
+	}
+
+	@Override
+	public int getTime() {
+		return this.time;
+	}
+
+	@Override
+	public String printTask() {
+		return "[D]" + "[" + icon() + "] " + getTitle() + " (by: "
+				+ date.format(DateTimeFormatter.ofPattern("MMM/dd/yyyy")) + " " + time + ")";
+	}
 
 }
