@@ -4,16 +4,23 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.time.*;
+import java.time.format.*;
 
 public class Storage  {
     //variable
     private String pathname;
     private String userSentence;
+    private CharSequence charDate;
+    private LocalDate formattedDate;
     //constructor
     public Storage(String path){
         this.pathname = path;
     }
     //accessor and modifier
+    /**
+     * loads saved task list
+     */
     public void load(Ui ui) { //saved tasklist was not loaded.
         File f = new File(pathname);
         try {
@@ -27,10 +34,37 @@ public class Storage  {
                         userSentence = "todo " + splitSentence[2].trim();
                         break;
                     case "[D]":
-                        userSentence = "deadline " + splitSentence[2].trim() + "/by " + splitSentence[3].trim();
+                        String temp;
+                        String[] tempArray;
+                        temp = splitSentence[3];
+                        tempArray = temp.split("by:",2);
+                        temp=tempArray[1];
+                        tempArray = temp.split("\\)",2);
+                        temp = tempArray[0];
+                        charDate = temp;
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(" MMM dd yyyy");
+                        formattedDate = LocalDate.parse(charDate, formatter);
+                        temp = formattedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                        userSentence = "deadline " + splitSentence[2].trim() + " /by "+temp;
                         break;
                     case "[E]":
-                       userSentence = "event " + splitSentence[2].trim() + "/at " + splitSentence[3].trim();
+                        System.out.println(splitSentence[2] + "one");
+                        String temp2;
+                        String[] tempArray2;
+                        temp2 = splitSentence[3];
+                        System.out.println(temp2 + "two");
+                        tempArray2 = temp2.split("at:",2);
+                        temp2=tempArray2[1];
+                        System.out.println(temp2 + "three");
+                        tempArray2 = temp2.split("\\)",2);
+                        temp2 = tempArray2[0];
+                        System.out.println(temp2 + "four");
+                        charDate = temp2;
+                        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern(" MMM dd yyyy");
+                        formattedDate = LocalDate.parse(charDate, formatter2);
+                        temp = formattedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                        System.out.println(temp + "five");
+                        userSentence = "event " + splitSentence[2].trim() + " /at "+temp;
                         break;
                 }
                 ui.response(userSentence);
@@ -46,6 +80,11 @@ public class Storage  {
             System.out.println("Error loading saved file");
         }
     }
+
+    /**
+     * invokes saving call
+     * If unable to save it will throw exception
+     */
     public void save(TaskList currentList){
         File taskFile = new File(pathname);
         if(taskFile.exists() == false){
@@ -66,6 +105,10 @@ public class Storage  {
             }
         }
     }
+
+    /**
+     * Does the write to file
+     */
     private void saveList(TaskList currentList) throws IOException{
         FileWriter fw = new FileWriter(pathname);
         for(int i = 1 ; i <= Duke.numberOftask ; i++){
