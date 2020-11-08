@@ -20,7 +20,11 @@ public class Chat extends Duke {
 	protected static ArrayList<Task> task = new ArrayList<Task>();
 	protected static int count = 0;
 	protected static int TIME_NULL=0;
+	protected static int MAX_ARRSIZE=100;
 	protected static boolean isOngoing = true;
+	private enum ServiceType{
+		bye,list,find,done,delete,todo,event,deadline
+	}
 
 	/**
 	 * @param going decides whether Duke will still scan user input. If user says
@@ -49,10 +53,20 @@ public class Chat extends Duke {
 		}
 
 		String[] userInputSplit = userInput.split(" ", 2);
-		String inputType = (userInputSplit[0]).trim().toLowerCase();
+		String input = (userInputSplit[0]).trim().toLowerCase();
+		String data =null;
+		ServiceType serviceType = null;
+		if(userInputSplit.length>1) {
+			data = (userInputSplit[1]);
+		}
+		try {
+			serviceType= ServiceType.valueOf(input);
+		} catch (Exception e) {
+			throw new DukeException("Sorry I cannot understand you.");
+		}
 
-		switch (inputType) {
-		case "bye": {
+		switch (serviceType) {
+		case bye: {
 			try {
 				Storage.saveFile();
 				GUI.guiOutput("Current tasks are saved. Bye. Hope to see you again soon!\n");
@@ -62,7 +76,7 @@ public class Chat extends Duke {
 			}
 		}
 			break;
-		case "list": {
+		case list: {
 
 			/**
 			 * Two ways: list & list+date. Example: list. Example: list 2020-01-01 1800.
@@ -70,31 +84,31 @@ public class Chat extends Duke {
 
 			if (userInputSplit.length == 1) {
 				GUI.guiOutput("Here are the tasks in your list:");
-				listALL();
+				listAll();
 			} else {
 				try {
 					LocalDate d = processDate(userInputSplit[1]);
 					GUI.guiOutput("Here are the tasks in your list on " + userInputSplit[1] + ":");
-					listALLwithDate(d);
+					listAllwithDate(d);
 				} catch (NumberFormatException e) {
 					throw new DukeException("Invalid date");
 				}
 			}
 		}
 			break;
-		case "find": {
-			if (userInputSplit[1] == "") {
+		case find: {
+			if (data == "") {
 				GUI.guiOutput("Key " + userInputSplit[1] + " not found.");
 			} else {
 				try {
-					listALLwithKey(userInputSplit[1]);
+					listAllwithKey(userInputSplit[1]);
 				} catch (NumberFormatException e) {
 					throw new DukeException("Invalid number");
 				}
 			}
 		}
 			break;
-		case "done": {
+		case done: {
 			int taskID = 0;
 			try {
 				taskID = Integer.parseInt(userInputSplit[1]);
@@ -109,26 +123,33 @@ public class Chat extends Duke {
 					+ task.get(taskID - 1).getTitle() + "\n");
 		}
 			break;
-		case "delete": {
-			int Tasknum = 0;
-			try {
-				Tasknum = Integer.parseInt(userInputSplit[1]);
-			} catch (NumberFormatException e) {
-				throw new DukeException("Invalid number");
+		case delete: {
+			String[] deleteArrStr = data.split(",");
+			int[] deleteArr = new int[deleteArrStr.length];
+			for(int a=0;a<deleteArr.length;a++) {
+				int taskNum = 0;//delete 1,2
+				try {
+					taskNum = Integer.parseInt(deleteArrStr[a].trim());
+					deleteArr[a]=taskNum;
+				} catch (NumberFormatException e) {
+					throw new DukeException("Sorry, I didn;t recognize this task number: "+deleteArr[a]);
+				}
+				if (taskNum > count) {
+					throw new DukeException("Invalid task number");
+				}
 			}
-			if (Tasknum > count) {
-				throw new DukeException("Invalid task number");
-			}
-			GUI.guiOutput("Noted. I've removed this task: \n[" + task.get(Tasknum - 1).icon() + "] "
-					+ task.get(Tasknum - 1).getTitle());
-			task.remove(Tasknum - 1);
-			count--;
-			listALL();
+			
+			for(int a=deleteArr.length-1;a>=0;a--) {
+				task.remove(deleteArr[a] - 1);
+				count--;
+			}			
+			GUI.guiOutput("Noted. I've removed task "+data+" from your list.");
 			GUI.guiOutput("Now you have " + count + " tasks in the list.");
+			listAll();
 		}
 			break;
-		case "event":
-		case "deadline": {
+		case event:
+		case deadline: {
 			try {
 				String[] content = userInputSplit[1].split("/");
 				String[] datetime = content[1].split(" ", 3);
@@ -137,11 +158,11 @@ public class Chat extends Duke {
 				boolean isAnomoly=DetectAnomalies(date, time);
 				if (!isAnomoly)
 					return;
-				switch (inputType) {
-				case "event":
+				switch (serviceType) {
+				case event:
 					task.add(count, new Event(content[0].trim(), date, time, userInput));
 					break;
-				case "deadline":
+				case deadline:
 					task.add(count, new Deadline(content[0].trim(), date, time, userInput));
 					break;
 				default:
@@ -158,7 +179,7 @@ public class Chat extends Duke {
 
 		}
 			break;
-		case "todo": {
+		case todo: {
 			try {
 				task.add(count, new Task(userInputSplit[1], userInput));
 				if (print) {
@@ -166,7 +187,7 @@ public class Chat extends Duke {
 				}
 				count++;
 			} catch (RuntimeException e) {
-				throw new MissDescException(inputType);
+				throw new MissDescException(input);
 			}
 
 		}
@@ -186,7 +207,7 @@ public class Chat extends Duke {
 	 * @throws BadLocationException
 	 */
 
-	public static void listALL() throws DukeException, BadLocationException, IOException, MissDescException {
+	public static void listAll() throws DukeException, BadLocationException, IOException, MissDescException {
 		int n = 1;
 		if (count == 0) {
 			throw new DukeException("There are no items currently in the list");
@@ -197,7 +218,7 @@ public class Chat extends Duke {
 		}
 	}
 
-	public static void listALLwithDate(LocalDate d)
+	public static void listAllwithDate(LocalDate d)
 			throws DukeException, BadLocationException, IOException, MissDescException {
 		int n = 1;
 		if (count == 0) {
@@ -214,7 +235,7 @@ public class Chat extends Duke {
 			GUI.guiOutput("Oh you dont have a task on that day");
 	}
 
-	public static void listALLwithKey(String keyword)
+	public static void listAllwithKey(String keyword)
 			throws DukeException, BadLocationException, IOException, MissDescException {
 		int n = 1;
 		if (count == 0) {

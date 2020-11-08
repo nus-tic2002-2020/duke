@@ -61,7 +61,7 @@ public class Storage extends Duke{
 		}
 		if(Chat.count==0) return;
 		GUI.guiOutput("=========Existing List=========");
-		Chat.listALL();
+		Chat.listAll();
 		GUI.guiOutput("=========Existing List=========");
 	}
 	

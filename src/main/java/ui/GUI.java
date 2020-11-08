@@ -71,6 +71,7 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					guiInput(txtSend.getText().trim());
+					txtSend.setText("");
 				} catch (DukeException | IOException | MissDescException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
