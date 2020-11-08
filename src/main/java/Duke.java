@@ -1,14 +1,10 @@
 import dukecommand.Command;
-import dukeexceeption.*;
-import dukelist.*;
-import dukefile.*;
-import dukeui.*;
+import dukeexception.DukeException;
+import dukefile.Storage;
+import dukelist.TaskList;
+import dukeui.Ui;
 
 public class Duke {
-
-    /*public static void dukeSearchDate(String date){
-        
-    }}*/
 
     private Storage storage;
     private TaskList tasks;
@@ -19,36 +15,39 @@ public class Duke {
      * Constructor of <code>Duke</code> class, initialize task list, user ui, user list file path and value of exit.
      *
      * @param filePath the file path to save the task list file
-     *
      */
     public Duke(String filePath) {
-        ui = new Ui();
-        storage = new Storage(filePath);
-        tasks = new TaskList();
-        exit = false;
-        /*try {
+
+        try {
+            ui = new Ui();
+            storage = new Storage(filePath);
             tasks = new TaskList();
+            exit = false;
         } catch (DukeException e) {
-            //ui.showLoadingError();
-        }*/
-    }
-
-    /**
-     * Method to start the Duke program.
-     *
-     */
-    public void run() {
-        ui.welcomeMessage();
-
-        while (!exit) {
-                String[] command = ui.readCommand();
-                Command cmd = new Command(command);
-                cmd.execute(tasks, ui);
-                exit = cmd.isExit();
+            ui.showError(e.getMessage());
         }
     }
 
     public static void main(String[] args) {
         new Duke("data/tasks.txt").run();
+    }
+
+    /**
+     * Method to start the Duke program.
+     */
+    public void run() {
+        ui.welcomeMessage();
+
+        while (!exit) {
+            try {
+                String[] command = ui.readCommand();
+                Command cmd = new Command(command);
+                cmd.checkCommand(tasks);
+                cmd.execute(tasks, ui, storage);
+                exit = cmd.isExit();
+            } catch (DukeException e) {
+                ui.showError(e.getMessage());
+            }
+        }
     }
 }

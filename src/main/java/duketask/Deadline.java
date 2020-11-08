@@ -10,48 +10,84 @@ public class Deadline extends Todo {
     protected DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("dd MMM yyyy, hh:mma");
 
     /**
-     * Constructor of <code>Deadline</code> class, initialize deadline task description and schedule.
+     * Constructor of <code>Deadline</code> class, initialize Deadline task description and schedule.
      *
-     * @param description the String received as description of the task
-     *
+     * @param taskData the String received as description of the task
      */
-    public Deadline(String description) {
-        super(description);
-        if(schedule[0].contains("by")) {
-            byDateTime = LocalDateTime.parse(schedule[1], inputFormat);
+    public Deadline(String taskData) {
+        super(taskData);
+        if (buffer[1].contains("by")) {
+            byDateTime = LocalDateTime.parse(schedule, inputFormat);
             formattedDateTime = byDateTime.format(outputFormat);
         }
     }
 
     /**
-     * Set <code>datetime</code> of the deadline task.
-     *
-     * @param by the String of the new datetime
-     *
+     * Format Deadline <code>datetime</code> to the "dd MMM yyyy, hh:mma" format.
      */
-    public void setBy(String by) {
-        schedule[1] = by;
-        byDateTime = LocalDateTime.parse(by,inputFormat);
+    private void formatDateTime() {
+        byDateTime = LocalDateTime.parse(schedule, inputFormat);
         formattedDateTime = byDateTime.format(outputFormat);
     }
 
     /**
-     * Return deadline task <code>datetime</code> in "dd MMM yyyy, hh:mma" format.
+     * Return Deadline task <code>datetime</code> in "dd MMM yyyy, hh:mma" format.
      *
      * @return formatted datetime as a String
      */
-    public String getByDateTime() {
+    private String getFormattedDateTime() {
         return formattedDateTime;
     }
 
     /**
-     * Convert and return the deadline task as a String.
+     * Change the task <code>schedule</code>.
      *
-     * @return A String of the deadline task
+     * @param schedule A String of the new schedule
+     */
+    @Override
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+        formatDateTime();
+    }
+
+    /**
+     * Change the task <code>schedule</code>.
+     *
+     * @param input a String of the new schedule
+     */
+    @Override
+    public void reset(String input) {
+        buffer = input.split("\\s", 2);
+        if (buffer[1].equals("/takes")) {
+            isDuration = true;
+        }
+        description = buffer[0];
+        schedule = buffer[1].split("\\s", 2)[1].trim();
+        formatDateTime();
+    }
+
+    /**
+     * Copy the Event task <code>information</code>.
+     *
+     * @return the String of the Event task information
+     */
+    public String copy() {
+        if(isDuration = true){
+            return description + " /takes " + schedule;
+        }
+        return description + " /by " + schedule;
+    }
+
+    /**
+     * Convert and return the Deadline task as a String.
+     *
+     * @return A String of the Deadline task
      */
     @Override
     public String toString() {
-        if(isDuration) return String.format("[D][%s] %s (takes: %s)", this.getStatusIcon(), this.getDescription(), this.getSchedule());
-        return String.format("[D][%s] %s (by: %s)", this.getStatusIcon(), this.getDescription(), formattedDateTime);
+        if (isDuration) {
+            return String.format("[D][%s] %s (takes: %s)", getStatusIcon(), getDescription(), getSchedule());
+        }
+        return String.format("[D][%s] %s (by: %s)", getStatusIcon(), getDescription(), getFormattedDateTime());
     }
 }

@@ -1,6 +1,13 @@
 package dukefile;
 
-import java.io.*;
+import dukeexception.DukeException;
+import dukelist.TaskList;
+import duketask.Task;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -10,7 +17,7 @@ public class Storage {
     private File list;
     private Path path;
 
-    public Storage(String filepath) {
+    public Storage(String filepath) throws DukeException {
         path = Paths.get(filepath);
         list = new File(String.valueOf(path));
 
@@ -26,11 +33,11 @@ public class Storage {
             try {
                 list.createNewFile();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new DukeException(e.getMessage());
             }
             System.out.println("   File did not exist in the directory, creating file\n"
                     + "     " + list.getName());
-        }else {
+        } else {
             FileWriter fw = null;
             try {
                 fw = new FileWriter(String.valueOf(path));
@@ -41,10 +48,10 @@ public class Storage {
         }
     }
 
-    public void writeTask (String task) {
+    public void writeTask(Task task) {
         try {
             FileWriter fw = new FileWriter(String.valueOf(path), true);
-            fw.write(task);
+            fw.write(String.valueOf(task));
             fw.write("\n");
             fw.close();
         } catch (IOException e) {
@@ -53,30 +60,22 @@ public class Storage {
 
     }
 
-    public void deleteTask (String taskString) {
+    public void updateTasks(TaskList tasks) {
         try {
-            BufferedReader br1 = new BufferedReader(new FileReader(String.valueOf(path)));
-
-            String line1 = br1.readLine();
             ArrayList<String> text = new ArrayList<>();
 
-            while (line1 != null){
-                if(!line1.equals(taskString)) text.add(line1);
-                line1 = br1.readLine();
+            for (int i = 0; i < tasks.size(); i++) text.add(tasks.getTask(i).toString());
+
+            FileWriter fw = new FileWriter(list);
+            BufferedWriter wr1 = new BufferedWriter(fw);
+
+            for (int i = 0; i < text.size(); i++) {
+                wr1.write(text.get(i));
+                wr1.write("\n");
             }
 
-            br1.close();
-
-            FileWriter fd = new FileWriter(String.valueOf(path));
-            fd.close();
-
-            FileWriter fw = new FileWriter(String.valueOf(path), true);
-
-            for(int i = 0; i < text.size(); i++){
-                fw.write(text.get(i));
-                fw.write("\n");
-            }
-
+            wr1.flush();
+            wr1.close();
             fw.close();
 
         } catch (IOException e) {

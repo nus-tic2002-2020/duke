@@ -3,53 +3,91 @@ package duketask;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Event extends Todo{
+public class Event extends Todo {
     protected LocalDateTime atDateTime;
     protected String formattedDateTime;
     protected DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
     protected DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("dd MMM yyyy, hh:mma");
 
     /**
-     * Constructor of <code>Event</code> class, initialize event task description and schedule.
+     * Constructor of <code>Event</code> class, initialize Event task description and schedule.
      *
-     * @param description the String received as description of the task
-     *
+     * @param taskData the String received as description of the task
      */
-    public Event(String description) {
-        super(description);
-        if(schedule[0].contains("at")) {
-            atDateTime = LocalDateTime.parse(schedule[1], inputFormat);
+    public Event(String taskData) {
+        super(taskData);
+        if (buffer[1].contains("at")) {
+            atDateTime = LocalDateTime.parse(schedule, inputFormat);
             formattedDateTime = atDateTime.format(outputFormat);
         }
     }
 
     /**
-     * Set <code>datetime</code> of the event task.
-     *
-     * @param at the String of the new datetime
-     *
+     * Format Event <code>datetime</code> to the "dd MMM yyyy, hh:mma" format.
      */
-    public void setAt(String at) {
-        schedule[1] = at;
+    private void formatDateTime() {
+        atDateTime = LocalDateTime.parse(schedule, inputFormat);
+        formattedDateTime = atDateTime.format(outputFormat);
     }
 
     /**
-     * Return event task <code>datetime</code> in "dd MMM yyyy, hh:mma" format.
+     * Return Event task <code>datetime</code> in "dd MMM yyyy, hh:mma" format.
      *
      * @return formatted datetime as a String
      */
-    public String getAtDateTime() {
+    private String getFormattedDateTime() {
         return formattedDateTime;
     }
 
     /**
-     * Convert and return the event task as a String.
+     * Change the task <code>schedule</code>.
      *
-     * @return A String of the event task
+     * @param schedule A String of the new schedule
+     */
+    @Override
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+        formatDateTime();
+    }
+
+    /**
+     * Change the task <code>schedule</code>.
+     *
+     * @param input a String of the new schedule
+     */
+    @Override
+    public void reset(String input) {
+        buffer = input.split("\\s", 2);
+        if (buffer[1].equals("/takes")) {
+            isDuration = true;
+        }
+        description = buffer[0];
+        schedule = buffer[1].split("\\s", 2)[1].trim();
+        formatDateTime();
+    }
+
+    /**
+     * Copy the Event task <code>information</code>.
+     *
+     * @return the String of the Event task information
+     */
+    public String copy() {
+        if(isDuration = true){
+            return description + " /takes " + schedule;
+        }
+        return description + " /at " + schedule;
+    }
+
+    /**
+     * Convert and return the Event task as a String.
+     *
+     * @return A String of the Event task
      */
     @Override
     public String toString() {
-        if(isDuration) return String.format("[E][%s] %s (takes: %s)", this.getStatusIcon(), this.getDescription(), this.getSchedule());
-        return String.format("[E][%s] %s (at: %s)", this.getStatusIcon(), this.getDescription(), formattedDateTime);
+        if (isDuration) {
+            return String.format("[E][%s] %s (takes: %s)", getStatusIcon(), getDescription(), getSchedule());
+        }
+        return String.format("[E][%s] %s (at: %s)", getStatusIcon(), getDescription(), getFormattedDateTime());
     }
 }

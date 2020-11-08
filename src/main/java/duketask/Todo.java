@@ -1,22 +1,19 @@
 package duketask;
 
 public class Todo extends Task {
-    protected String[] schedule;
+    protected String schedule;
     protected boolean isDuration;
 
     /**
-     * Constructor of <code>Todo</code> class, initialize task description of schedule.
+     * Constructor of <code>Todo</code> class, initialize task description and schedule.
      *
-     * @param description the String received as description of the task
-     *
+     * @param taskData the String received as description of the task
      */
-    public Todo(String description) {
-        super(description);
-        isDuration = false;
-        if(description.contains("/at") || description.contains("/by") || description.contains("/takes")) {
-            schedule = this.description[1].split("\\s", 2);
-            schedule[1].trim();
-            if(description.contains("/takes")) isDuration = true;
+    public Todo(String taskData) {
+        super(taskData);
+        if (taskData.contains("/at") || taskData.contains("/by") || taskData.contains("/takes")) {
+            schedule = buffer[1].split("\\s", 2)[1].trim();
+            if (taskData.contains("/takes")) isDuration = true;
         }
     }
 
@@ -26,7 +23,44 @@ public class Todo extends Task {
      * @return A String of the schedule in the description
      */
     public String getSchedule() {
-        return schedule[1];
+        return schedule;
+    }
+
+    /**
+     * Change the task <code>schedule</code>.
+     *
+     * @param schedule A String of the new schedule
+     */
+    @Override
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
+    /**
+     * Change the Todo task <code>schedule</code>.
+     *
+     * @param input A String of the new schedule
+     */
+    @Override
+    public void reset(String input) {
+        buffer = input.split("\\/", 2);
+        description = buffer[0];
+        if (!buffer[1].isEmpty()) {
+            schedule = buffer[1].split("\\s", 2)[1].trim();
+            isDuration = true;
+        }
+    }
+
+    /**
+     * Copy the task <code>information</code>.
+     *
+     * @return the String of the Todo task information
+     */
+    public String copy() {
+        if (isDuration) {
+            return description + " /takes " + schedule;
+        }
+        return description;
     }
 
     /**
@@ -36,7 +70,9 @@ public class Todo extends Task {
      */
     @Override
     public String toString() {
-        if(isDuration) return String.format("[T][%s] %s (takes: %s)", this.getStatusIcon(), this.getDescription(), this.getSchedule());
-        else return String.format("[T][%s] %s", this.getStatusIcon(), this.getDescription());
+        if (isDuration) {
+            return String.format("[T][%s] %s (takes: %s)", getStatusIcon(), getDescription(), getSchedule());
+        }
+        return String.format("[T][%s] %s", getStatusIcon(), getDescription());
     }
 }

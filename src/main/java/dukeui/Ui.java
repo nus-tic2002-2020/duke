@@ -1,8 +1,8 @@
 package dukeui;
 
-import dukeexceeption.DukeException;
-import dukelist.*;
-import duketask.*;
+import dukeexception.DukeException;
+import dukelist.TaskList;
+import duketask.Task;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -18,9 +18,8 @@ public class Ui {
 
     /**
      * Constructor of <code>Ui</code> class, initialize user input String Array and valid input String Array.
-     *
      */
-    public Ui(){
+    public Ui() {
         userInput = new String[2];
         validInput = new ArrayList<>();
         validInput.add("bye");
@@ -32,14 +31,15 @@ public class Ui {
         validInput.add("done");
         validInput.add("update");
         validInput.add("find");
+        validInput.add("copy");
     }
 
     /**
      * To display a <code>horizontal line</code> in user UI.
      */
-    public static void line(){
+    private static void line() {
         System.out.print(ANSI_BLUE);
-        for(int i = 0; i < 50; i++) System.out.print("_");
+        for (int i = 0; i < 50; i++) System.out.print("_");
         System.out.print(ANSI_RESET);
         System.out.print("\n");
     }
@@ -61,41 +61,25 @@ public class Ui {
      * return the <code>command</code> if it is valid,
      * otherwise it will show error.
      */
-    public String[] readCommand (){
-        while(true) {
+    public String[] readCommand() throws DukeException {
+        while (true) {
             Scanner input = new Scanner(System.in);
             userInput = input.nextLine().split("\\s", 2);
             userInput[0].toLowerCase();
 
-            try {
-                if (!validInput.contains(userInput[0])) {
-                    line();
-                    System.out.println(ANSI_RED + "   Invalid Input." + ANSI_RESET);
-                    line();
-                    throw new DukeException();
-                } else if (userInput.length < 2 && !userInput[0].equals("bye") && !userInput[0].equals("list")) {
-                    line();
-                    System.out.println(ANSI_RED + "   Description cannot be empty." + ANSI_RESET);
-                    line();
-                    throw new DukeException();
-                } else if (userInput[0].equals("deadline") && !userInput[1].contains("/by") && !userInput[1].contains("/takes")) {
-                    line();
-                    System.out.println(ANSI_RED + "   Missing /by or /takes schedule." + ANSI_RESET);
-                    line();
-                    throw new DukeException();
-                } else if (userInput[0].equals("event") && !userInput[1].contains("/at") && !userInput[1].contains("/takes")) {
-                    line();
-                    System.out.println(ANSI_RED + "   Missing /at or /takes schedule." + ANSI_RESET);
-                    line();
-                    throw new DukeException();
-                }
-            }
-            catch (DukeException d){
-                continue;
-            }
-
             return userInput;
         }
+    }
+
+    /**
+     * To display the <code>error</code> while checking.
+     *
+     * @param error detail of the error
+     */
+    public void showError(String error) {
+        line();
+        System.out.println(ANSI_RED + "   " + error + ANSI_RESET);
+        line();
     }
 
     /**
@@ -106,8 +90,8 @@ public class Ui {
     public void showList(TaskList tasks) {
         line();
         System.out.println(ANSI_YELLOW + "   Here are the tasks in your list:" + ANSI_RESET);
-        for(int i = 0; i < tasks.size(); i++){
-            System.out.println(ANSI_YELLOW + "   " + String.valueOf(i+1) + "." + tasks.getTask(i) + ANSI_RESET);
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(ANSI_YELLOW + "   " + String.valueOf(i + 1) + "." + tasks.getTask(i) + ANSI_RESET);
         }
         line();
     }
@@ -117,11 +101,11 @@ public class Ui {
      *
      * @param tasks the task list with the find result
      */
-    public void findList(TaskList tasks) {
+    public void findTask(TaskList tasks) {
         line();
         System.out.println(ANSI_YELLOW + "   Here are the matching tasks in your list:" + ANSI_RESET);
-        for(int i = 0; i < tasks.size(); i++){
-            System.out.println(ANSI_YELLOW + "   " + String.valueOf(i+1) + "." + tasks.getTask(i) + ANSI_RESET);
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(ANSI_YELLOW + "   " + String.valueOf(i + 1) + "." + tasks.getTask(i) + ANSI_RESET);
         }
         line();
     }
@@ -129,16 +113,26 @@ public class Ui {
     /**
      * To display a <code>bye message</code> to user UI.
      */
-    public void bye(){
+    public void bye() {
         line();
         System.out.println(ANSI_YELLOW + "   Bye. Hope to see you again soon!" + ANSI_RESET);
         line();
     }
 
     /**
+     * To display a <code>bye message</code> to user UI.
+     */
+    public void help() {
+        line();
+        System.out.println(ANSI_YELLOW + "   The valid commands are:\n" +
+                "   todo, deadline, event, delete, done, update, find,\ncopy, bye" + ANSI_RESET);
+        line();
+    }
+
+    /**
      * When user <code>add</code> a task, display a <code>message</code> to user UI.
      *
-     * @param task the task added to the list
+     * @param task      the task added to the list
      * @param tasksSize the size of the task list
      */
     public void addTask(Task task, int tasksSize) {
@@ -152,7 +146,7 @@ public class Ui {
     /**
      * When user <code>delete</code> a task, display a <code>message</code> to user UI.
      *
-     * @param task the task deleted from the list
+     * @param task      the task deleted from the list
      * @param tasksSize the size of the task list
      */
     public void deleteTask(Task task, int tasksSize) {
@@ -172,6 +166,32 @@ public class Ui {
         line();
         System.out.println(ANSI_YELLOW + "   This task's status has been updated:\n"
                 + "   " + task + ANSI_RESET);
+        line();
+    }
+
+    /**
+     * When user <code>updates</code> a task information, display a <code>message</code> of the task has been updated.
+     *
+     * @param task the task has been updated
+     */
+    public void updateTask(Task task) {
+        line();
+        System.out.println(ANSI_YELLOW + "   This task's information has been updated:\n"
+                + "   " + task + ANSI_RESET);
+        line();
+    }
+
+    /**
+     * When user <code>copies</code> a task information, display a <code>message</code> of the task has been copied and added.
+     *
+     * @param task      the task which is copied and added
+     * @param tasksSize the size of the task list after copy
+     */
+    public void copyTask(Task task, int tasksSize) {
+        line();
+        System.out.println(ANSI_YELLOW + "   This task has been copied:\n"
+                + "     " + task
+                + "\n   Now you have " + tasksSize + " tasks in the list." + ANSI_RESET);
         line();
     }
 

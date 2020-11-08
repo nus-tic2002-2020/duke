@@ -1,23 +1,24 @@
 package duketask;
 
 public class Task {
-    protected String description[];
+    protected String[] buffer;
+    protected String description;
     protected boolean isDone;
 
     /**
      * Constructor of <code>Task</code> class, initialize task description and stats of done.
      *
-     * @param description the String received as description of the task
-     *
+     * @param taskData the String received as description of the task
      */
-    public Task(String description) {
-        this.description = description.split("\\/", 2);
-        this.isDone = false;
+    public Task(String taskData) {
+        buffer = taskData.split("\\/", 2);
+        description = this.buffer[0].trim();
+        isDone = false;
     }
+
 
     /**
      * Change task status to <code>done</code>.
-     *
      */
     public void markAsDone() {
         isDone = true;
@@ -38,7 +39,16 @@ public class Task {
      * @return A String of the description
      */
     public String getDescription() {
-        return description[0].trim();
+        return description;
+    }
+
+    /**
+     * Change the task <code>description</code>.
+     *
+     * @param description the new description of the task
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
@@ -47,11 +57,36 @@ public class Task {
      * @return true if found, otherwise false
      */
     public boolean find(String key) {
-        if(description[0].contains(key)){
+        if (description.contains(key)) {
             return true;
-        }else{
+        } else {
             return false;
         }
+    }
+
+    /**
+     * Change the task <code>schedule</code>.
+     *
+     * @param schedule A String of the new schedule
+     */
+    public void setSchedule(String schedule) {
+
+    }
+
+    /**
+     * Change the task <code>schedule</code>.
+     *
+     * @param input A String of the new schedule
+     */
+    public void reset(String input) {
+
+    }
+
+    /**
+     * Copy the task <code>information</code>.
+     */
+    public String copy() {
+        return null;
     }
 
     /**
@@ -61,6 +96,6 @@ public class Task {
      */
     @Override
     public String toString() {
-        return String.format("[%s] %s", this.getStatusIcon(), this.getDescription());
+        return String.format("[%s] %s", getStatusIcon(), getDescription());
     }
 }
