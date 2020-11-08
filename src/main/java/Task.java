@@ -51,12 +51,11 @@ public class Task {
              temp = this.description.split("/by",2);
              this.description = temp[0];
              this.timeDate=temp[1];
-             //timeDate prints 25/11/2020
              charDate = this.timeDate;
              DateTimeFormatter formatter = DateTimeFormatter.ofPattern(" dd/MM/yyyy");
              formattedDate = LocalDate.parse(charDate, formatter);
              this.timeDate ="(by: "+formattedDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))+")";
-             //this.timeDate="(by:"+this.timeDate+")";
+
          }
          else if (matcher3.find()) { //event
              String[] temp;
@@ -66,7 +65,6 @@ public class Task {
              temp = this.description.split("/at",2);
              this.description = temp[0];
              this.timeDate=temp[1];
-            // this.timeDate="(at:"+this.timeDate+")";
              charDate = this.timeDate;
              DateTimeFormatter formatter = DateTimeFormatter.ofPattern(" dd/MM/yyyy");
              formattedDate = LocalDate.parse(charDate, formatter);
