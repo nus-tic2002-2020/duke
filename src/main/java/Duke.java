@@ -9,14 +9,16 @@ import ui.Ui;
 
 import java.io.IOException;
 
-//TODO: Exceptions - Probably could double check more, Add more JUnit Testing
-//TODO: Nice to Have: AddTask(Check for copies),
-
-//TODO: Level 9 Individual Feature 1 and 2, Coding Standard and Coding Quality
-//TODO: Better Search - e.g., find items even if the keyword matches the item only partially.
-//TODO: Snooze - Provide a way to easily snooze/postpone/reschedule tasks.
-//TODO: Maybe JavaFX?
 //TODO: JAssertion
+//TODO: Exceptions - Probably could double check more, Add more JUnit Testing, Work on Individual Features
+//TODO: Nice to Have: AddTask(Check for copies),
+//
+
+// Individual Features:
+//Better Search - e.g., find items even if the keyword matches the item only partially.
+// Snooze - Provide a way to easily snooze/postpone/reschedule tasks.
+// 'Do within a period' task - Provide support for managing tasks that need to be done within a certain period e.g., collect certificate between Jan 15 and 25th.
+
 
 public class Duke {
 

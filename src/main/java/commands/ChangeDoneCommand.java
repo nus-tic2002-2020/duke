@@ -11,13 +11,16 @@ import tasks.*;
  * done "state".
  */
 
-public class DoneCommand extends Command{
+public class ChangeDoneCommand extends Command{
     private int option = 0;
+    private boolean isDone = false;
+
     /**
      * This is the constructor of the DoneCommand.
      * @param option indicates the Task option that the user wants to change
+     *
      */
-    public DoneCommand(int option){
+    public ChangeDoneCommand(int option, boolean isDone){
         this.option = option;
     }
 
@@ -31,7 +34,7 @@ public class DoneCommand extends Command{
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
         if(option <= tasks.getSize() && option >= 1){
-            tasks.get(option - 1).changeDoneTo(true);
+            tasks.get(option - 1).changeDoneTo(isDone);
             System.out.println(System.lineSeparator() + "Nice! I've marked this task as done:" + System.lineSeparator() + tasks.get(option - 1).toString());
 
         }else{

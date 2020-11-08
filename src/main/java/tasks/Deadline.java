@@ -1,5 +1,7 @@
 package tasks;
 
+import exceptions.DukeException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -39,6 +41,16 @@ public class Deadline extends Task {
         return this.by.format(DateTimeFormatter.ofPattern("dd MMM yyyy H:m:s"));
     }
 
+
+    public void rescheduleBy(String by){
+        try{
+            this.by = LocalDateTime.parse(by, DateTimeFormatter.ofPattern("dd MMM yyyy H:m:s"));
+        }catch(DateTimeParseException e){
+            this.by = LocalDateTime.now();
+            System.out.println("Invalid Date Time set for /by. It will be set to the current " +
+                    "time. Format should be \"dd MMM yyyy H:m:s\" ");
+        }
+    }
 
     /**
      * This converts the Deadline to a String object for printing.

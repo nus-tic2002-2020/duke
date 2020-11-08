@@ -31,7 +31,7 @@ public class Parser {
      * @return
      * @throws
      */
-    public static Command parse(String input) throws DukeException {
+    public static Command parse(String input) throws DukeException, NumberFormatException {
         String description = "";
         String secPart = "";
         String keyword;
@@ -55,8 +55,12 @@ public class Parser {
                 return new ExitCommand();
 
             case "done":
-                option = Integer.parseInt(input.replace("done", "").trim());
-                return new DoneCommand(option);
+                option = Integer.parseInt(input.replaceFirst("done", "").trim());
+                return new ChangeDoneCommand(option, true);
+
+            case "undone":
+                option = Integer.parseInt(input.replaceFirst("undone", "").trim());
+                return new ChangeDoneCommand(option,false);
 
             case "todo":
                 description = input.replaceFirst("todo", "").stripLeading();
@@ -90,6 +94,15 @@ public class Parser {
             case "find":
                 keyword = input.replaceFirst( "find", "").stripLeading();
                 return new FindCommand(keyword);
+
+            case "reschedule":
+                index = input.indexOf("/by");
+                secPart = input.substring(index);
+                secPart = secPart.replaceFirst( "/by", "").stripLeading();
+
+                option = Integer.parseInt
+                        (input.substring(0,index - 1).replaceFirst("reschedule", "").trim());
+                return new RescheduleCommand(option,secPart);
 
             default:
                 description = input;
