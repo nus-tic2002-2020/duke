@@ -120,6 +120,7 @@ public class GUI extends JFrame {
 
 	public static void guiInput(String input)
 			throws DukeException, IOException, MissDescException, BadLocationException {
+		assert (input!=null):"blank input!";
 		if (isYourTurn) {
 			Style styleYou = txtChatRecord.addStyle("", null);
 			StyleConstants.setForeground(styleYou, Color.blue);
