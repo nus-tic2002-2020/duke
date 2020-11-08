@@ -46,9 +46,7 @@ public class Task {
         else if (matcher2.find()) { //deadline
              String[] temp;
              temp = description.split("\\s",2);
-             System.out.println(temp);
              this.description = temp[1];
-             System.out.println(temp[1]);
              this.whatTag = "[D]";
              temp = this.description.split("/by",2);
              this.description = temp[0];
