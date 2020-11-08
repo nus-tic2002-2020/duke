@@ -48,22 +48,17 @@ public class Storage  {
                         userSentence = "deadline " + splitSentence[2].trim() + " /by "+temp;
                         break;
                     case "[E]":
-                        System.out.println(splitSentence[2] + "one");
                         String temp2;
                         String[] tempArray2;
                         temp2 = splitSentence[3];
-                        System.out.println(temp2 + "two");
                         tempArray2 = temp2.split("at:",2);
                         temp2=tempArray2[1];
-                        System.out.println(temp2 + "three");
                         tempArray2 = temp2.split("\\)",2);
                         temp2 = tempArray2[0];
-                        System.out.println(temp2 + "four");
                         charDate = temp2;
                         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern(" MMM dd yyyy");
                         formattedDate = LocalDate.parse(charDate, formatter2);
                         temp = formattedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                        System.out.println(temp + "five");
                         userSentence = "event " + splitSentence[2].trim() + " /at "+temp;
                         break;
                 }

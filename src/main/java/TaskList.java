@@ -77,7 +77,6 @@ public class TaskList {
         for(int i = 1 ; i <= Duke.numberOftask ; i++) {
             String scheduledDate2;
             LocalDate formattedDate;
-            System.out.println(scheduledDate + "zero");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             formattedDate = LocalDate.parse(scheduledDate, formatter);
             scheduledDate2 = formattedDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
