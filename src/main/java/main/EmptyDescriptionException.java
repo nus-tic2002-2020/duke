@@ -6,7 +6,7 @@ public class EmptyDescriptionException extends Exception {
      * @param message
      */
 
-        public EmptyDescriptionException(String message) {
-            super(message);
-        }
+    public EmptyDescriptionException(String message) {
+        super(message);
+    }
 }

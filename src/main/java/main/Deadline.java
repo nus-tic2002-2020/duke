@@ -17,6 +17,7 @@ public class Deadline extends Task {
         super(taskName, taskDone); // calls the parent constructor
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
         this.by = LocalDate.parse(by, formatter);
+        assert this.by.compareTo(LocalDate.now()) > 0 : "Deadline must not be before today's date.";
     }
 
     /***

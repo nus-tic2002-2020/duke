@@ -55,9 +55,18 @@ public class Parser {
                 if (splitBy.length < 2) {
                     throw new EmptyDescriptionException("Oops. The date of a event cannot be empty");
                 }
-                task.newDeadlineTask(splitBy[0], false, splitBy[1]);
-                ui.printDeadline(task, task.getCount() - 1);
-                storage.save("listData.txt", task);
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate deadlineDate = LocalDate.parse(splitBy[1], formatter);
+                //Don't allow user to input date earlier than today's today
+                if(deadlineDate.isBefore(LocalDate.now())){
+                    System.out.println("Deadline must not be before today's date!!");
+                }
+                else {
+                    task.newDeadlineTask(splitBy[0], false, splitBy[1]);
+                    ui.printDeadline(task, task.getCount() - 1);
+                    storage.save("listData.txt", task);
+                }
             } else if (arrValue[0].equals("event")) {
                 if (arrValue.length < 2) {
                     throw new EmptyDescriptionException("Oops. The description of a event cannot be empty");
@@ -68,33 +77,35 @@ public class Parser {
                     throw new EmptyDescriptionException("Oops. The date of a event cannot be empty");
                 }
                 String[] repeatChunk = splitAt[1].split("/repeat");
-                if (repeatChunk.length == 1)
-                {
-                    if (replaceString.contains("/repeat"))
-                    {
+                //compare
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate eventDate = LocalDate.parse(splitAt[1], formatter);
+                //Don't allow user to input date earlier than today's today
+                if(eventDate.isBefore(LocalDate.now())){
+                    System.out.println("Event must not be before today's date!!");
+                }
+                else
+                if (repeatChunk.length == 1) {
+                    if (replaceString.contains("/repeat")) {
                         throw new EmptyDescriptionException("Oops. Please place the amount of days between each repeated event. e.g. /repeat");
                     }
                     task.newEventTask(splitAt[0], false, splitAt[1]);
                     ui.printEvent(task, task.getCount() - 1);
                     storage.save("listData.txt", task);
-                }
-                else
-                {
+                } else {
                     String[] timesChunk = repeatChunk[1].split("/times");
-                    if (timesChunk.length == 1)
-                    {
+                    if (timesChunk.length == 1) {
                         throw new EmptyDescriptionException("Oops. Please place number of times event is to be repeated. e.g. /times");
                     }
                     String daysString = timesChunk[0].trim();
                     int days = Integer.parseInt(daysString); // get number of days
                     String timesString = timesChunk[1].trim();
                     int times = Integer.parseInt(timesString);
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
+                   // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
                     LocalDate date = LocalDate.parse(repeatChunk[0].trim(), formatter);
-                    for(int i =0; i<times; i++)
-                    {
+                    for (int i = 0; i < times; i++) {
                         task.newEventTask(splitAt[0], false, date);
-                        date= date.plusDays(days);
+                        date = date.plusDays(days);
                         ui.printEvent(task, task.getCount() - 1);
                     }
                     storage.save("listData.txt", task);
@@ -109,13 +120,10 @@ public class Parser {
                 ui.printDelete(t, task.getCount() + 1, index);
                 storage.save("listData.txt", task);
 
-            }
-            else if (arrValue[0].equals("find"))
-            {
+            } else if (arrValue[0].equals("find")) {
                 TaskList results = task.find(input.replace("find", "").trim());
                 ui.printTaskList(results.getCount(), results);
-            }
-            else if (!arrValue[0].equals("bye")) {
+            } else if (!arrValue[0].equals("bye")) {
                 throw new InvalidCommandException("Whoops!!!");
             }
 
@@ -125,6 +133,8 @@ public class Parser {
             System.out.println(e.getMessage());
         } catch (DateTimeParseException e) {
             ui.printDateTimeExceptionMessage();
+        } catch (IndexOutOfBoundsException e) {
+            ui.printInvalidIndex();
         }
 
     }

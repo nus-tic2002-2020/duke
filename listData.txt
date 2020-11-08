@@ -1,12 +1,52 @@
 T
-eat
-false
-T
-study
-false
-T
 study math
 false
 T
 study programming
 false
+T
+walk the dog
+false
+D
+programming quiz
+false
+2020-01-01
+D
+math quiz
+false
+2010-01-01
+T
+eat 
+false
+T
+@!212
+false
+T
+(*@&^!%@
+false
+T
+a
+false
+D
+buffet
+false
+2020-01-01
+T
+sleep
+false
+D
+drink tehbing
+false
+2020-01-01
+D
+krav maga
+false
+2020-01-01
+D
+softtess
+false
+2021-01-01
+D
+return book
+false
+2020-11-08

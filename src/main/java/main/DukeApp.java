@@ -4,6 +4,7 @@ public class DukeApp {
 
     //start the interaction
     UI ui;
+    testDuke testDuke;
     Storage storage = new Storage();
 
     public DukeApp() {
@@ -19,9 +20,10 @@ public class DukeApp {
         String input = "";
         TaskList line = new TaskList();
         storage.load("listData.txt", line);
+        //Junit testing
+        //testDuke.addOneTaskTest();
         //if string doesn't equal to bye
-        while (!input.equals("bye"))
-        {
+        while (!input.equals("bye")) {
             input = ui.getUserInput();
             parser.parseCommand(input, ui, line, storage);
 

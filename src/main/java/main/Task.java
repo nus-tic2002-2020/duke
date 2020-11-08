@@ -66,7 +66,7 @@ public class Task implements Serializable {
 
     /***
      * method to get status icon
-     * @return
+     * @return task done
      */
     public String getStatusIcon() {
         return (taskDone ? "\u2713" : "\u2718"); //return tick or X symbols
@@ -114,8 +114,7 @@ public class Task implements Serializable {
      * @param keyword
      * @return
      */
-    public boolean contains(String keyword)
-    {
+    public boolean contains(String keyword) {
         return taskName.contains(keyword);
     }
 }

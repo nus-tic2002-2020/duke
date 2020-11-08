@@ -68,21 +68,22 @@ public class TaskList implements Serializable {
      * @param done
      * @param date
      */
-    public void newEventTask(String name, boolean done, LocalDate date)
-    {
+    public void newEventTask(String name, boolean done, LocalDate date) {
         Event e = new Event(name, false, date);
         task.add(e);
-        count ++;
+        count++;
     }
 
     /***
      * remove task from task list
      * @param index
-     * @return
      */
     public Task removeTask(int index) {
-        count--;
-        return task.remove(index - 1);
+            //to ensure that the event date is in the future
+            assert index > 0 : "Cannot delete negative index";
+            assert index <= count : "Cannot choose a number more than number of tasks";
+            count--;
+            return task.remove(index - 1);
     }
 
     /***
@@ -132,14 +133,11 @@ public class TaskList implements Serializable {
      * @param keyword word that user wants to find
      * @throws IOException
      */
-    public TaskList find(String keyword)
-    {
+    public TaskList find(String keyword) {
         System.out.println(keyword);
         TaskList results = new TaskList();
-        for(int i= 0; i<task.size(); i++)
-        {
-            if(task.get(i).contains(keyword))
-            {
+        for (int i = 0; i < task.size(); i++) {
+            if (task.get(i).contains(keyword)) {
                 results.add(task.get(i));
             }
 

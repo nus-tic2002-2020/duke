@@ -15,6 +15,7 @@ public class UI {
         System.out.println("Hello from\n" + logo);
         System.out.println("What can I do for you?");
         System.out.println("To add a new todo task, please input: todo <taskname>");
+        System.out.println("To mark a task as completed, please input : done <task number>");
         System.out.println("To add a new deadline task, please input : deadline <taskname> /by yyyy-mm-dd");
         System.out.println("To add a new event task, please input: event <taskname> /at yyyy-mm-dd");
         System.out.println("To add a recurring event task, please input: event <taskname> /at yyyy-mm-dd /repeat <no. of days in between> /times <no. of times>");
@@ -94,5 +95,9 @@ public class UI {
 
     public void printDateTimeExceptionMessage() {
         System.out.println("date not recognized. Please input in this format: yyyy-mm-dd ");
+    }
+
+    public void printInvalidIndex(){
+        System.out.println("It doesn't exist. Please enter a valid selection!!!");
     }
 }
