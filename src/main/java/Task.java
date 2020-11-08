@@ -73,7 +73,7 @@ public class Task {
              this.timeDate ="(at: "+formattedDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))+")";
          }
          else {
-             System.out.println("from task.java ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+             System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
              throw new IllegalInputException();
          }
     }
