@@ -17,7 +17,7 @@ public abstract class Task {
      */
     protected PriorityEnum priority;
     protected String description;
-    protected boolean isDone;
+    public boolean isDone;
     protected SymbolEnum symbol;
 
     /**

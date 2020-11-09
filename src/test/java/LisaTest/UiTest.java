@@ -1,4 +1,4 @@
-package ui;
+package LisaTest;
 
 import task.*;
 
@@ -6,6 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import org.junit.Test;
+import ui.Ui;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -13,7 +15,7 @@ import static org.junit.Assert.assertEquals;
  * This class tests the Ui class.
  *
  * @author Aloysius Wong
- * @Version 1.0
+ * @version 1.0
  * @since 08-11-2020
  */
 public class UiTest {

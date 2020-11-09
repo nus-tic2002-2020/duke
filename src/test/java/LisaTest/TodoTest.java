@@ -1,20 +1,23 @@
-package task;
+package LisaTest;
 
 import enumerations.PriorityEnum;
 import enumerations.SymbolEnum;
+import task.Task;
+import task.ToDo;
 
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 /**
- * This class tests the Within class.
+ * This class tests the ToDo class.
  *
  * @author Aloysius Wong
- * @Version 1.0
+ * @version 1.0
  * @since 08-11-2020
  */
-public class WithinTest {
+public class TodoTest {
 
     /**
      * Tests:
@@ -23,23 +26,15 @@ public class WithinTest {
      * 3) getSymbol
      * 4) getDone
      * 5) getPriority
-     * 6) Start LocalDateTime
-     * 7) End LocalDateTime
      */
     @Test
     public void constructorTest() {
-        Task test = new Within("tEsT cAsE", "10/10/2020 10:10", "23/8/2025 03:20");
-        assertEquals("tEsT cAsE", test.getDescription());
-        assertEquals(SymbolEnum.W, test.getSymbol());
+        Task test = new ToDo("test case");
+        assertEquals("test case", test.getDescription());
+        assertEquals(SymbolEnum.T, test.getSymbol());
         assertEquals("[✗]", test.getDone());
         assertFalse(test.isDone);
         assertEquals(PriorityEnum.NA, test.getPriority());
-        assertEquals(10, test.getStart().getDayOfMonth());
-        assertEquals(10, test.getStart().getMonthValue());
-        assertEquals(2020, test.getStart().getYear());
-        assertEquals(23, test.getEnd().getDayOfMonth());
-        assertEquals(8, test.getEnd().getMonthValue());
-        assertEquals(2025, test.getEnd().getYear());
     }
 
     /**
@@ -48,7 +43,7 @@ public class WithinTest {
      */
     @Test
     public void setDoneTest() {
-        Task test = new Within("tEsT cAsE", "10/10/2020 10:10", "23/8/2025 03:20");
+        Task test = new ToDo("test case");
         test.setDone();
         assertEquals("[✓]", test.getDone());
     }
@@ -59,7 +54,7 @@ public class WithinTest {
      */
     @Test
     public void setPriorityTest() {
-        Task test = new Within("tEsT cAsE", "10/10/2020 10:10", "23/8/2025 03:20");
+        Task test = new ToDo("test case");
         test.setPriority("hiGh");
         assertEquals(PriorityEnum.HIGH, test.getPriority());
         test.setPriority("MEDIUM");

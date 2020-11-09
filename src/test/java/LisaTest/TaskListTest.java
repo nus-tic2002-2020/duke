@@ -1,11 +1,13 @@
-package tasklist;
+package LisaTest;
 
 import enumerations.PriorityEnum;
 import enumerations.SymbolEnum;
+import tasklist.TaskList;
 
 import java.util.ArrayList;
 
 import org.junit.Test;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -14,7 +16,7 @@ import static org.junit.Assert.assertEquals;
  * This class tests the TaskList class.
  *
  * @author Aloysius Wong
- * @Version 1.0
+ * @version 1.0
  * @since 08-11-2020
  */
 public class TaskListTest {

@@ -1,9 +1,12 @@
-package task;
+package LisaTest;
 
 import enumerations.PriorityEnum;
 import enumerations.SymbolEnum;
+import task.Deadline;
+import task.Task;
 
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -11,7 +14,7 @@ import static org.junit.Assert.assertFalse;
  * This class tests the Deadline class.
  *
  * @author Aloysius Wong
- * @Version 1.0
+ * @version 1.0
  * @since 08-11-2020
  */
 public class DeadlineTest {
