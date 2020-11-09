@@ -8,6 +8,7 @@ public class TaskList {
 
     public ArrayList<Task> tasks;
 
+
     public TaskList(){
         this.tasks = new ArrayList<Task>();
     }
@@ -82,7 +83,6 @@ public class TaskList {
             scheduledDate2 = formattedDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
 
             if (this.tasks.get(i-1).getTimeDate().contains(scheduledDate2)) {
-
                 countForNotEmptyList++;
                 if(countForNotEmptyList == 1){
                     System.out.println("\tHere are the tasks in your list planned that day: ");
@@ -92,7 +92,6 @@ public class TaskList {
                 j++;
             }
             else {
-
                 countForEmptyList++;
                 if (countForEmptyList == Duke.numberOftask)
                 System.out.println(Duke.humanName + "\tthe list is empty! It seems you do not have anything that day!");

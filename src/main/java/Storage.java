@@ -17,11 +17,11 @@ public class Storage  {
     public Storage(String path){
         this.pathname = path;
     }
-    //accessor and modifier
+
     /**
      * loads saved task list
      */
-    public void load(Ui ui) { //saved tasklist was not loaded.
+    public void load(Ui ui) { 
         File f = new File(pathname);
         try {
             Scanner s = new Scanner(f);
@@ -67,7 +67,6 @@ public class Storage  {
                 if (splitSentence[1].trim().equals("\u2713")) {
                     userSentence = "done " + counter;
                     ui.response(userSentence);
-
                 }
             }
         }

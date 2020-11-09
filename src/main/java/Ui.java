@@ -103,7 +103,7 @@ public class Ui {
             Duke.taskNumber = Integer.parseInt(numberOnly);
             assert Duke.taskNumber <= 0 : "number of task cannot be less than 1";
             System.out.println("\tNice! I've marked this task as done: ");
-            tasks.tasks.get(Duke.taskNumber - 1).isDone = true; // this might just access not modify
+            tasks.tasks.get(Duke.taskNumber - 1).isDone = true;
             System.out.println(tasks.tasks.get(Duke.taskNumber - 1).getTag() + " [" + tasks.tasks.get(Duke.taskNumber - 1).getStatusIcon() + "] " + tasks.tasks.get(Duke.taskNumber - 1).description);
         }
         //handling user input delete
