@@ -1,7 +1,7 @@
 package exceptions;
 
 /**
- * Exception when too many spaces inputted by user. Will mess up other methods
+ * Exception when double spaces input by user is detected.
  */
 public class TooManySpacesException extends Exception {
 }

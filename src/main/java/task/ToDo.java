@@ -1,24 +1,29 @@
 package task;
 
+import enumerations.SymbolEnum;
+
 /**
- * Todo-subclass of Task-superclass
+ * This is the ToDo-class. It is a subclass of Task.
  */
 public class ToDo extends Task {
+
     /**
-     * Constructs Todo-class object
+     * This creates the Todo-class object. It calls the superclass constructor, as well as sets the symbol of the object
+     * to "T".
      *
-     * @param description Description of task
+     * @param description This is the description of the task as input by user in string format.
      */
     public ToDo(String description) {
         super(description);
-        this.symbol = "[T]";
+        this.symbol = SymbolEnum.valueOf("T");
     }
 
     /**
+     *This method returns the symbol of the task.
      *
-     * @return Returns symbol of task
+     * @return Returns symbol of task.
      */
-    public String getSymbol() {
+    public SymbolEnum getSymbol() {
         return symbol;
     }
 }

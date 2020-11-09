@@ -1,8 +1,12 @@
 package tasklist;
 
-import exceptions.*;
-import exceptions.Exception;
 import java.util.ArrayList;
+
+import enumerations.SymbolEnum;
+import exceptions.TooManySpacesException;
+import exceptions.NoTimeframeException;
+import exceptions.NoDescriptionException;
+import exceptions.Exception;
 import task.Task;
 import task.ToDo;
 import task.Deadline;
@@ -10,40 +14,58 @@ import task.Event;
 import task.Within;
 
 /**
- * Class which holds a list of tasks stored as string in ArrayList, and related methods
+ * This is the TaskList class for handling interactions with the ArrayList of tasks. Available functions include
+ * getting the ArrayList, changing the status of a task to 'done' (from [✗] -> [✓]), editing the priority of the task,
+ * deletion and insertion of tasks into the ArrayList.
+ *
+ * @author Aloysius Wong
+ * @version 1.0
+ * @since 08-11-2020
  */
 public class TaskList {
-    private ArrayList<Task> store;
 
     /**
-     * Constructor. Loads task data from txt file and stores them to an ArrayList
+     * This is the ArrayList of tasks contained by the TaskList class.
+     */
+    private final ArrayList<Task> store;
+
+    /**
+     * This creates the TaskList-class object. It receives another ArrayList of string as the task list loaded from the
+     * text file. Any tasks in the ArrayList from the text file is then loaded to the new ArrayList in a new format.
      *
-     * @param taskArray ArrayList of string which makes up the tasks
+     * @param taskArray The ArrayList of strings (task list) loaded from the text file.
      */
     public TaskList(ArrayList<String> taskArray) {
         this.store = new ArrayList<>();
         for (String task : taskArray) {
             String[] splitSections = task.split("\\|");
-            String function = splitSections[0].trim();
-            switch(function) {
-                case "T":
+            SymbolEnum symbol = SymbolEnum.valueOf(splitSections[0].trim());
+            assert symbol == SymbolEnum.T || symbol == SymbolEnum.D || symbol == SymbolEnum.E || symbol == SymbolEnum.W
+                    : "Symbol is invalid during loading from text file to ArrayList.";
+
+            switch(symbol) {
+                case T:
                     store.add(new ToDo(splitSections[2].trim()));
                     store.get(store.size()-1).setPriority(splitSections[3].trim());
                     break;
-                case "D":
+
+                case D:
                     store.add(new Deadline(splitSections[2].trim(), splitSections[3].trim()));
                     store.get(store.size()-1).setPriority(splitSections[4].trim());
                     break;
-                case "E":
+
+                case E:
                     store.add(new Event(splitSections[2].trim(), splitSections[3].trim()));
                     store.get(store.size()-1).setPriority(splitSections[4].trim());
                     break;
-                case "W":
+
+                case W:
                     String[] startEnd = splitSections[3].split("-");
                     store.add(new Within(splitSections[2].trim(), startEnd[0].trim(), startEnd[1].trim()));
                     store.get(store.size()-1).setPriority(splitSections[4].trim());
                     break;
             }
+
             if (splitSections[1].trim().equals("✓")) {
                 store.get(store.size()-1).setDone();
             }
@@ -51,27 +73,32 @@ public class TaskList {
     }
 
     /**
-     * @return Returns the ArrayList
+     * This method returns the ArrayList of tasks.
+     *
+     * @return Returns the ArrayList.
      */
     public ArrayList<Task> getStore() {
         return store;
     }
 
     /**
-     * Helper method, used by add-method to identify user-input errors.
+     * This is a helper method, used by the add method to identify user-input error where the description of the task
+     * is missing.
      *
-     * @param input User-input
-     * @return
+     * @param input This is the input by the user, to be tested for error.
+     * @return Returns true if the description is missing, false if a description is present.
      */
-    public static boolean catcher(String input) { // exception helper method
+    public boolean catcher(String input) {
         String[] splitDescription = input.split(" ");
         return input.trim().length() == splitDescription[0].length();
     }
 
     /**
-     * Sets the done status of the selected task to true by calling method in task-class
+     * This method sets the status of the selected task to 'done'.
      *
-     * @param input User-input
+     * @param input This is the input by the user in the form of "done (index)".
+     * @throws TooManySpacesException This exception is thrown when double spacing is detected. Double spacing leads to
+     *                                many errors.
      */
     public void setDone(String input) throws TooManySpacesException {
         if (input.contains("  ")) {
@@ -80,22 +107,33 @@ public class TaskList {
         String[] splitIndex = input.split(" ");
         int index = Integer.parseInt(splitIndex[1]) - 1;
         store.get(index).setDone();
+        assert store.get(index).getDone().equals("[✓]") : "Failed to set task to done status properly.";
     }
 
+    /**
+     * This method changes the priority of the selected task.
+     *
+     * @param input This is the input by the user in the form of "priority (index) (priority-level)".
+     * @throws TooManySpacesException This exception is thrown when double spacing is detected. Double spacing leads to
+     * many errors.
+     */
     public void setPriority(String input) throws TooManySpacesException {
         if (input.contains("  ")) {
             throw new TooManySpacesException();
         }
         String[] splitIndex = input.split(" ");
         int index = Integer.parseInt(splitIndex[1]) - 1;
-        store.get(index).setPriority(splitIndex[2]);
+        store.get(index).setPriority(splitIndex[2].trim());
+        assert store.get(index).getPriority().toString().equals(splitIndex[2].toUpperCase())
+                : "Setting of priority was incorrect.";
     }
 
     /**
-     * Deletes the selected task from the ArrayList
+     * This method deletes a task from the ArrayList.
      *
-     * @param input User-input
-     * @throws Exception Error when invalid task index number is inputted or when input format is wrong
+     * @param input This is the input by the user in the form of "delete (index)".
+     * @throws TooManySpacesException This exception is thrown when double spacing is detected. Double spacing leads to
+     * many errors.
      */
     public void delete(String input) throws TooManySpacesException {
         if (input.contains("  ")) {
@@ -106,20 +144,24 @@ public class TaskList {
     }
 
     /**
-     * Adds the task to the ArrayList. Catches the first alphabet of the input to determine type of task. Calls
-     * constructor of that task
+     * This method adds a task to the ArrayList. It detects what the type of the task to be added is based on the
+     * starting character of the user-input.
      *
-     * @param input User-input
-     * @throws Exception Error when input format is wrong or missing information
+     * @param input This is the user input. The form differs based on what the type of task is. E.g
+     *              ToDo: ToDo shopping
+     *              Deadline: Deadline homework /by 10/10/2020 10:10
+     *              Event: Event concert /at 10/10/2020 10:10
+     *              Within: Within semester /from 1/1/2020 10:10 /to 1/4/2020 10:10
+     * @throws Exception This exception-superclass is thrown whenever any of it's subclass is thrown (refer to Exception
+     *                   class for details).
      */
     public void add(String input) throws Exception {
-        int function = 0;
-        if (input.toLowerCase().startsWith("t")) { function = 1; }
-        if (input.toLowerCase().startsWith("d")) { function = 2; }
-        if (input.toLowerCase().startsWith("e")) { function = 3; }
-        if (input.toLowerCase().startsWith("w")) { function = 4; }
-        switch (function) {
-            case 1:
+        SymbolEnum symbol = SymbolEnum.valueOf(input.substring(0, 1).toUpperCase());
+        assert symbol == SymbolEnum.T || symbol == SymbolEnum.D || symbol == SymbolEnum.E || symbol == SymbolEnum.W
+                : "Symbol is invalid during loading addition of task to ArrayList.";
+
+        switch (symbol) {
+            case T:
                 if (catcher(input)) {
                     throw new NoDescriptionException();
                 }
@@ -128,7 +170,8 @@ public class TaskList {
                 }
                 store.add(new ToDo(input.substring(4).trim()));
                 break;
-            case 2:
+
+            case D:
                 if (catcher(input)) {
                     throw new NoDescriptionException();
                 }
@@ -141,7 +184,8 @@ public class TaskList {
                 }
                 store.add(new Deadline(splitBy[0].substring(8).trim(), splitBy[1].trim()));
                 break;
-            case 3:
+
+            case E:
                 if (catcher(input)) {
                     throw new NoDescriptionException();
                 }
@@ -154,7 +198,8 @@ public class TaskList {
                 }
                 store.add(new Event(splitAt[0].substring(5).trim(), splitAt[1].trim()));
                 break;
-            case 4:
+
+            case W:
                 if (catcher(input)) {
                     throw new NoDescriptionException();
                 }
