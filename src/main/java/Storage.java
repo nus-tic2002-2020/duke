@@ -21,7 +21,7 @@ public class Storage  {
     /**
      * loads saved task list
      */
-    public void load(Ui ui) { 
+    public void load(Ui ui) {
         File f = new File(pathname);
         try {
             Scanner s = new Scanner(f);
