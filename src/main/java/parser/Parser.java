@@ -39,6 +39,8 @@ public class Parser {
         int index = 0;
         String commandWord = input.stripLeading().split(" ")[0];
 
+        assert !(commandWord.equals(null)) : "commandWord should not be null";
+
         if(input.equals("blah")){
             throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }

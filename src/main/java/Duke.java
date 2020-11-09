@@ -10,8 +10,9 @@ import ui.Ui;
 import java.io.IOException;
 
 //TODO: JAssertion
-//TODO: Exceptions - Probably could double check more, Add more JUnit Testing, Work on Individual Features
-//TODO: Nice to Have: AddTask(Check for copies),
+//TODO: Exceptions - Probably could double check more, Add more JUnit Testing, Work on Individual Features more
+
+//TODO: Nice to Have: AddTask(Check for copies)?, add help command
 //
 
 // Individual Features:

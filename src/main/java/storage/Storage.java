@@ -82,8 +82,8 @@ public class Storage {
                     secPart = " | " + ((Event)tasks.get(i)).getAt();
                     break;
                 default:
-                    System.out.println("Can't get Class from Task List");
-                    return;
+                    System.out.println("Did not get Class from Task List:" + tasks.get(i).toString());
+                    continue;
             }
 
             done = (tasks.get(i).getIsDone()) ? 1:0;

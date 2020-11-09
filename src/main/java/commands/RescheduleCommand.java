@@ -32,7 +32,7 @@ public class RescheduleCommand extends Command{
                     "time. Format should be \"dd MMM yyyy H:m:s\" ");
             throw e;
         }catch(IndexOutOfBoundsException e){
-            System.out.println("Index out of bounds");
+            System.out.println("Index out of bounds error");
             throw e;
         }
 
