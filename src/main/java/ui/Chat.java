@@ -20,7 +20,6 @@ public class Chat extends Duke {
 	protected static ArrayList<Task> task = new ArrayList<Task>();
 	protected static int count = 0;
 	protected static int TIME_NULL=0;
-	protected static int MAX_ARRSIZE=100;
 	protected static boolean isOngoing = true;
 	private enum ServiceType{
 		bye,list,find,done,delete,todo,event,deadline
@@ -67,10 +66,15 @@ public class Chat extends Duke {
 
 		switch (serviceType) {
 		case bye: {
+			
+			/**
+			 * Only when user input bye duke will save user tasks.
+			 */
+			
 			try {
 				Storage.saveFile();
-				GUI.guiOutput("Current tasks are saved. Bye. Hope to see you again soon!\n");
 				isOngoing = false;
+				GUI.guiOutput("Current tasks are saved. Bye. Hope to see you again soon!\n");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -79,7 +83,7 @@ public class Chat extends Duke {
 		case list: {
 
 			/**
-			 * Two ways: list & list+date. Example: list. Example: list 2020-01-01 1800.
+			 * Two ways: list & list+date. Example: list. Example: list 2020-01-01.
 			 */
 
 			if (userInputSplit.length == 1) {
@@ -119,8 +123,7 @@ public class Chat extends Duke {
 				throw new DukeException("Invalid task number");
 			}
 			task.get(taskID - 1).markDone();
-			GUI.guiOutput(" Nice! I've marked this task as done:\n" + "[" + task.get(taskID - 1).icon() + "] "
-					+ task.get(taskID - 1).getTitle() + "\n");
+			GUI.guiOutput(" Nice! I've marked this task as done:\n" + task.get(taskID - 1).printTask());
 		}
 			break;
 		case delete: {
@@ -156,7 +159,7 @@ public class Chat extends Duke {
 		case event:
 		case deadline: {
 			try {
-				String[] content = data.split("/");
+				String[] content = data.split("/",2);
 				String[] datetime = content[1].split(" ", 3);
 				LocalDate date = processDate(datetime[1]);
 				int time = Integer.parseInt(datetime[2]);

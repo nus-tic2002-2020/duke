@@ -18,19 +18,10 @@ public class Event extends Task {
 		this.time = time;
 	}
 
-	@Override
-	public LocalDate getDate() {
-		return this.date;
-	}
-
-	@Override
-	public int getTime() {
-		return this.time;
-	}
 
 	@Override
 	public String printTask() {
-		return "[E]" + "[" + icon() + "] " + getTitle() + " (at: "
+		return "[E]" + "[" + getIcon() + "] " + getTitle() + " (at: "
 				+ date.format(DateTimeFormatter.ofPattern("MMM/dd/yyyy")) + " " + time + ")";
 	}
 

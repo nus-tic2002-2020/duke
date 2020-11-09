@@ -38,12 +38,12 @@ public class Task {
 		return 0;
 	}
 
-	public String icon() {
-		return (isDone ? "¡Ì" : "X");
+	public String getIcon() {
+		return (isDone ? "Done" : "X");
 	}
 
 	public String printTask() {
-		return "[T]" + "[" + icon() + "] " + getTitle();
+		return "[T]" + "[" + getIcon() + "] " + getTitle();
 	}
 
 }

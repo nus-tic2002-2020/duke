@@ -29,6 +29,7 @@ public class GUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtSend;
 	private static JTextPane txtChatRecord;
+	private static JButton btnSend;
 	private static StyledDocument doc;
 	private static boolean isYourTurn = false;
 
@@ -60,7 +61,7 @@ public class GUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JButton btnSend = new JButton("Send");
+		btnSend = new JButton("Send");
 		btnSend.setBorder(new LineBorder(new Color(255, 255, 255), 3, true));
 		btnSend.setContentAreaFilled(false);
 		btnSend.setOpaque(false);
@@ -70,8 +71,9 @@ public class GUI extends JFrame {
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					guiInput(txtSend.getText().trim());
+					String input =txtSend.getText().trim();
 					txtSend.setText("");
+					guiInput(input);
 				} catch (DukeException | IOException | MissDescException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -144,6 +146,9 @@ public class GUI extends JFrame {
 			isYourTurn = true;
 		}
 		doc.insertString(doc.getLength(), "\n" + output, null);
+		if(!Chat.isOngoing) {
+			btnSend.setEnabled(false);
+		}
 	}
 
 	public static void guiOutputWarning(String output) throws DukeException, BadLocationException {
@@ -152,6 +157,7 @@ public class GUI extends JFrame {
 			StyleConstants.setForeground(styleDuke, Color.red);
 			StyleConstants.setBold(styleDuke, true);
 			doc.insertString(doc.getLength(), "\nDuke: ", styleDuke);
+			isYourTurn = true;
 		}
 		Style style = txtChatRecord.addStyle("", null);
 		StyleConstants.setForeground(style, Color.red);
