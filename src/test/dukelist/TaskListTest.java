@@ -45,6 +45,16 @@ class TaskListTest {
         assertEquals("\u2713",test.getTask(0).getStatusIcon());
     }
 
+
+    @Test
+    void unDoneTask() {
+        TaskList test = new TaskList();
+        test.addTask(new Todo("testTodo"));
+        test.getTask(0).markAsDone();
+        test.getTask(0).markNotDone();
+        assertEquals("\u2718",test.getTask(0).getStatusIcon());
+    }
+
     @Test
     void findTask() {
         TaskList test = new TaskList();
@@ -68,4 +78,5 @@ class TaskListTest {
         test.copyTask(0);
         assertEquals("[T][\u2718] testTodo",test.getTask(1).toString());
     }
+
 }

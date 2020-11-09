@@ -39,7 +39,7 @@ public class Ui {
      */
     private static void line() {
         System.out.print(ANSI_BLUE);
-        for (int i = 0; i < 50; i++) System.out.print("_");
+        for (int i = 0; i < 50; i++) System.out.print("─");
         System.out.print(ANSI_RESET);
         System.out.print("\n");
     }
@@ -53,15 +53,19 @@ public class Ui {
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
+
+        line();
         System.out.println(ANSI_YELLOW + logo + "Hello! I'm Duke\n" + "What can I do for you?" + ANSI_RESET);
+        line();
     }
 
     /**
      * To read a <code>command</code> input by user to user UI,
-     * return the <code>command</code> if it is valid,
-     * otherwise it will show error.
+     * separate the command and content and return them.
+     *
+     * @return the String Array of the command
      */
-    public String[] readCommand() throws DukeException {
+    public String[] readCommand() {
         while (true) {
             Scanner input = new Scanner(System.in);
             userInput = input.nextLine().split("\\s", 2);

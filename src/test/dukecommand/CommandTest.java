@@ -6,7 +6,6 @@ import dukelist.TaskList;
 import dukeui.Ui;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CommandTest {
@@ -41,7 +40,7 @@ class CommandTest {
         String[] command = {"tobe", "testTodo"};
         Command test = new Command(command);
         try {
-            test.checkCommand(tasks);
+            test.check(tasks);
         }catch (DukeException e){
             assertEquals("   Invalid command, issue 'help' for valid commands.", e.getMessage());
         }

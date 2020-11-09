@@ -37,14 +37,14 @@ public class Todo extends Task {
     }
 
     /**
-     * Change the Todo task <code>schedule</code>.
+     * Change both description and schedule of the Todo task.
      *
-     * @param input A String of the new schedule
+     * @param input a String of the new task information
      */
     @Override
     public void reset(String input) {
         buffer = input.split("\\/", 2);
-        description = buffer[0];
+        description = buffer[0].trim();
         if (!buffer[1].isEmpty()) {
             schedule = buffer[1].split("\\s", 2)[1].trim();
             isDuration = true;

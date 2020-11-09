@@ -32,6 +32,7 @@ public class Command {
         validCommand.add("event");
         validCommand.add("delete");
         validCommand.add("done");
+        validCommand.add("undone");
         validCommand.add("update");
         validCommand.add("find");
         validCommand.add("copy");
@@ -70,7 +71,9 @@ public class Command {
             return false;
         }
 
-        if (i > range && i < 1) throw new AssertionError("Index check failed");
+        if (i > range && i < 1) {
+            throw new AssertionError("Index check failed");
+        }
 
         return true;
     }
@@ -79,7 +82,7 @@ public class Command {
      * Check if the command is <code>valid</code>.
      * If it is invalid, an Exception would be generated.
      */
-    public void checkCommand(TaskList tasks) throws DukeException {
+    public void check(TaskList tasks) throws DukeException {
         if (!validCommand.contains(command[0])) {
             throw new DukeException("   Invalid command, issue 'help' for valid commands.");
         } else if (!command[0].equals("bye") && !command[0].equals("list") && !command[0].equals("help") && command.length < 2) {
@@ -92,13 +95,15 @@ public class Command {
             throw new DukeException("   Missing /by or /takes schedule.");
         } else if (command[0].equals("event") && !command[1].contains("/at") && !command[1].contains("/takes")) {
             throw new DukeException("   Missing /at or /takes schedule.");
-        } else if (command[0].equals("delete") && isIndex(command[1], tasks.size())) {
+        } else if (command[0].equals("delete") && !isIndex(command[1], tasks.size())) {
             throw new DukeException("   Invalid index number of the task, issue 'list' to check the task's index");
-        } else if (command[0].equals("done") && isIndex(command[1], tasks.size())) {
+        } else if (command[0].equals("done") && !isIndex(command[1], tasks.size())) {
             throw new DukeException("   Invalid index number of the task, issue 'list' to check the task's index");
-        } else if (command[0].equals("find") && isIndex(command[1], tasks.size())) {
+        } else if (command[0].equals("find") && command.length < 2) {
+            throw new DukeException("   Provide the key word to find the task");
+        } else if (command[0].equals("copy") && !isIndex(command[1], tasks.size())) {
             throw new DukeException("   Invalid index number of the task, issue 'list' to check the task's index");
-        } else if (command[0].equals("copy") && isIndex(command[1], tasks.size())) {
+        }else if (command[0].equals("update") && !isIndex(command[1].split("\\s", 2)[0], tasks.size())) {
             throw new DukeException("   Invalid index number of the task, issue 'list' to check the task's index");
         }
     }
@@ -123,6 +128,11 @@ public class Command {
                 break;
             case "done":
                 tasks.doneTask(Integer.parseInt(command[1]) - 1);
+                ui.doneTask(tasks.getTask(Integer.parseInt(command[1]) - 1));
+                storage.updateTasks(tasks);
+                break;
+            case "undone":
+                tasks.unDoneTask(Integer.parseInt(command[1]) - 1);
                 ui.doneTask(tasks.getTask(Integer.parseInt(command[1]) - 1));
                 storage.updateTasks(tasks);
                 break;

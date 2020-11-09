@@ -7,8 +7,8 @@ import dukeui.Ui;
 public class Duke {
 
     private Storage storage;
-    private TaskList tasks;
     private Ui ui;
+    private TaskList tasks;
     private boolean exit;
 
     /**
@@ -42,7 +42,7 @@ public class Duke {
             try {
                 String[] command = ui.readCommand();
                 Command cmd = new Command(command);
-                cmd.checkCommand(tasks);
+                cmd.check(tasks);
                 cmd.execute(tasks, ui, storage);
                 exit = cmd.isExit();
             } catch (DukeException e) {

@@ -62,6 +62,15 @@ public class TaskList {
     }
 
     /**
+     * Change the <code>task</code> status to not done.
+     *
+     * @param taskIndex the index of the task in the task list
+     */
+    public void unDoneTask(int taskIndex) {
+        tasks.get(taskIndex).markNotDone();
+    }
+
+    /**
      * Find the tasks contains the <code>keyword</code> in the task list.
      *
      * @param key the String of the find keyword

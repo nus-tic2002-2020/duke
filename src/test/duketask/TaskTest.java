@@ -14,6 +14,14 @@ class TaskTest {
     }
 
     @Test
+    void markNotDone() {
+        Task testTask = new Task("testTask");
+        testTask.markAsDone();
+        testTask.markNotDone();
+        assertEquals("\u2718",testTask.getStatusIcon());
+    }
+
+    @Test
     void getStatusIcon() {
         Task testTask = new Task("testTask");
         testTask.markAsDone();
@@ -44,4 +52,5 @@ class TaskTest {
         Task testTask = new Task("testTask");
         assertEquals("[\u2718] testTask",testTask.toString());
     }
+
 }

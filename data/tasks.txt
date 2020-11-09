@@ -1,1 +1,6 @@
-[E][✘] b bc d (at: 11 Nov 1990, 03:00PM)
+[T][✘] clear kitchen
+[D][✘] pay rent (by: 11 Nov 2020, 11:00AM)
+[E][✘] meet Kevin (at: 09 Sep 2020, 01:00PM)
+[D][✘] finish report (takes: 1 day)
+[E][✘] submit report (takes: 2 hour)
+[E][✘] web meeting (takes: 1 hour)

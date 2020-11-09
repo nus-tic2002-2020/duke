@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Todo {
-    protected LocalDateTime byDateTime;
-    protected String formattedDateTime;
-    protected DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
-    protected DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("dd MMM yyyy, hh:mma");
+    private LocalDateTime byDateTime;
+    private String formattedDateTime;
+    private DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+    private DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("dd MMM yyyy, hh:mma");
 
     /**
      * Constructor of <code>Deadline</code> class, initialize Deadline task description and schedule.
@@ -16,7 +16,10 @@ public class Deadline extends Todo {
      */
     public Deadline(String taskData) {
         super(taskData);
-        if (buffer[1].contains("by")) {
+
+        assert !schedule.isEmpty() : "Schedule is not provided";
+
+        if (taskData.contains("/by")) {
             byDateTime = LocalDateTime.parse(schedule, inputFormat);
             formattedDateTime = byDateTime.format(outputFormat);
         }
@@ -47,23 +50,27 @@ public class Deadline extends Todo {
     @Override
     public void setSchedule(String schedule) {
         this.schedule = schedule;
-        formatDateTime();
+        if(!isDuration) {
+            formatDateTime();
+        }
     }
 
     /**
-     * Change the task <code>schedule</code>.
+     * Change both description and schedule of the Deadline task.
      *
-     * @param input a String of the new schedule
+     * @param input a String of the new task information
      */
     @Override
     public void reset(String input) {
-        buffer = input.split("\\s", 2);
-        if (buffer[1].equals("/takes")) {
+        buffer = input.split("\\/", 2);
+        if (input.contains("/takes")) {
             isDuration = true;
         }
-        description = buffer[0];
+        description = buffer[0].trim();
         schedule = buffer[1].split("\\s", 2)[1].trim();
-        formatDateTime();
+        if(!isDuration) {
+            formatDateTime();
+        }
     }
 
     /**

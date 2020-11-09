@@ -25,6 +25,13 @@ public class Task {
     }
 
     /**
+     * Change task status to <code>Not Done</code>.
+     */
+    public void markNotDone() {
+        isDone = false;
+    }
+
+    /**
      * Return task <code>done</code> status as tick or cross.
      *
      * @return tick or cross based on the value of isDone

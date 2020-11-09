@@ -17,6 +17,11 @@ public class Storage {
     private File list;
     private Path path;
 
+    /**
+     * Constructor of <code>Storage</code> class, initialize Storage with the file path.
+     *
+     * @param filepath the String received as file path
+     */
     public Storage(String filepath) throws DukeException {
         path = Paths.get(filepath);
         list = new File(String.valueOf(path));
@@ -48,6 +53,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Add a <code>task</code> in the file.
+     *
+     * @param task the task to be added to the file
+     */
     public void writeTask(Task task) {
         try {
             FileWriter fw = new FileWriter(String.valueOf(path), true);
@@ -60,6 +70,11 @@ public class Storage {
 
     }
 
+    /**
+     * Update the file from task list.
+     *
+     * @param tasks the updated task list
+     */
     public void updateTasks(TaskList tasks) {
         try {
             ArrayList<String> text = new ArrayList<>();
