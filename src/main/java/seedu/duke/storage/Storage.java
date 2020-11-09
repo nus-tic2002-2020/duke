@@ -37,7 +37,7 @@ public class Storage {
         }
     }
 
-    public void save() throws StorageOperationException {
+    public void save() throws DukeException {
         try {
             FileWriter fw = new FileWriter(filePath);
             for (int i = 0; i < TaskList.length(); ++i) {
@@ -123,15 +123,15 @@ public class Storage {
         return dateTime.format(formatter);
     }
 
-    public static class InvalidStorageFilePathException extends IllegalValueException {
-        public InvalidStorageFilePathException(String message) {
-            super(message);
-        }
-    }
-
-    public static class StorageOperationException extends Exception {
-        public StorageOperationException(String message) {
-            super(message);
-        }
-    }
+//    public static class InvalidStorageFilePathException extends DukeException {
+//        public InvalidStorageFilePathException(String message) {
+//            super(message);
+//        }
+//    }
+//
+//    public static class StorageOperationException extends Exception {
+//        public StorageOperationException(String message) {
+//            super(message);
+//        }
+//    }
 }

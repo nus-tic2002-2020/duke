@@ -1,9 +1,10 @@
 package seedu.duke.parser;
 
 import seedu.duke.commands.*;
+import seedu.duke.exception.DukeException;
 
 public class Parser {
-    public static Command parserCommand(String userInput) {
+    public static Command parserCommand(String userInput) throws DukeException {
 
         switch (userInput.split(" ")[0]) {
             case AddTodoCommand.COMMAND_WORD:
@@ -21,8 +22,8 @@ public class Parser {
             case ByeCommand.COMMAND_WORD:
                 return new ByeCommand(true, userInput);
             default:
-                System.out.println("\t☹ OOPS!!! I'm sorry, but I don't know what that means.");
-                return new Command(false, userInput);
+                throw new DukeException("\t☹ OOPS!!! I'm sorry, but I don't know what that means.");
+                //return new Command(false, userInput);
         }
     }
 }

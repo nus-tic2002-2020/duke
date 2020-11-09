@@ -37,7 +37,7 @@ public class Ui {
                 + "\t| | | | | | | |/ / _ \\\n"
                 + "\t| |_| | |_| |   <  __/\n"
                 + "\t|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println(DIVIDER + "\tHello from\n" + logo + "\tWhat can I do for you?");
+        System.out.println(DIVIDER + "\tHello from\n" + logo + "\tWhat can I do for you?" + DIVIDER);
     }
 
     public void showGoodbyeMessage() {
