@@ -18,10 +18,6 @@ class TaskListTest {
     }
 
     @Test
-    void get() {
-    }
-
-    @Test
     void deleteFromList() {
     }
 

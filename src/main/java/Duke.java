@@ -11,9 +11,10 @@ import java.io.IOException;
 
 //TODO: CLEAN UP!
 //TODO: Exceptions - Probably could double check more,
-// Add more JUnit Testing,
+// Add more JUnit Testing - Will only focus more on Parser and TaskList
 // Work on Individual Features more
 // Make Help Command easier to read etc
+// Double check on assertions
 
 // Individual Features:
 //Better Search - e.g., find items even if the keyword matches the item only partially.

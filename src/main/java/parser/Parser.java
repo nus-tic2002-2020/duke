@@ -11,7 +11,6 @@ import exceptions.DukeException;
  */
 
 public class Parser {
-    String parsedInput;
 
     /**
      *
@@ -21,7 +20,6 @@ public class Parser {
      * @throws
      */
     public Parser(){
-        this.parsedInput = "";
     }
 
     /**
