@@ -1,5 +1,4 @@
 package duke.storage;
-
 import duke.ui.*;
 import duke.task.*;
 import java.io.File;
@@ -36,15 +35,15 @@ public class Storage {
                 String line_item = s.nextLine();
                 String[] split_line_item = line_item.split("\\|", 4);
                 switch (split_line_item[0].trim()) {
-                    case "T":
-                        line_item = "todo " + split_line_item[2].trim();
-                        break;
-                    case "D":
-                        line_item = "deadline " + split_line_item[2].trim() + "/by " + split_line_item[3].trim();
-                        break;
-                    case "E":
-                        line_item = "event " + split_line_item[2].trim() + "/at " + split_line_item[3].trim();
-                        break;
+                case "T":
+                    line_item = "todo " + split_line_item[2].trim();
+                    break;
+                case "D":
+                    line_item = "deadline " + split_line_item[2].trim() + "/by " + split_line_item[3].trim();
+                    break;
+                case "E":
+                    line_item = "event " + split_line_item[2].trim() + "/at " + split_line_item[3].trim();
+                    break;
                 }
                 ui.responses(new_list, line_item);
                 counter++;
@@ -67,16 +66,13 @@ public class Storage {
             try{
                 taskFile.createNewFile();
                 saveList(cur_list);
-            }
-            catch(IOException e){
+            } catch(IOException e){
                 System.out.println("Error creating file");
             }
-        }
-        else{
+        } else{
             try{
                 saveList(cur_list);
-            }
-            catch(IOException e){
+            } catch(IOException e){
                 System.out.println("Error writing to file");
             }
         }
@@ -90,7 +86,7 @@ public class Storage {
      */
     private void saveList(TaskList cur_list) throws IOException{
         FileWriter fw = new FileWriter(pathname);
-        for(int i = 1 ; i <= cur_list.getItem_count() ; i++){
+        for(int i = 1 ; i <= cur_list.getItemCount() ; i++){
             fw.write(cur_list.convert_lineItem(i) + System.lineSeparator());
         }
         fw.close();

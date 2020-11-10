@@ -1,11 +1,6 @@
 package duke.task;
-
-import duke.command.IllegalInputException;
-
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class TaskList{
     /**Variables of TaskList class*/
@@ -18,8 +13,6 @@ public class TaskList{
     public TaskList(){
         this.List = new ArrayList<Task>();
     }
-
-    //getters
 
     /**
      * Method declared to include a top and bottom line for messaage printed by duke
@@ -38,7 +31,7 @@ public class TaskList{
      *
      * @return Amount of items in the TaskList
      */
-    public int getItem_count(){
+    public int getItemCount(){
         return this.item_count;
     }
 
@@ -46,20 +39,25 @@ public class TaskList{
      * Print all items within the TaskList
      */
     public void printList(){
+        //Task Count assertion
+        assert (getItemCount() > 0) : "Task in list should not be less than 0 ";
+
         if(this.List.size() == 0){
             duke_echo("List is empty");
             return;
-        }//if end
+        }
+        //Recurring task checker
         recurring_checker();
+
         System.out.println("\t____________________________________________________________");
         System.out.println("\tHere are the tasks in your list:");
         for(int i = 1 ; i <= item_count ; i++){
-            String tick = (this.List.get(i - 1).getStatus()) ? "✓" : "✗";
+            String tick = (this.List.get(i - 1).getStatus()) ? "\u2713" : "\u2718";
             String to_print = "[" + this.List.get(i - 1).getCat() + "]" + "[" + tick + "] " + this.List.get(i - 1).getDesc();
             System.out.print("\t" + i + ". " + to_print);
             if(this.List.get(i - 1).getCat() != 'T'){
                 String print_line = (this.List.get(i - 1).getCat() == 'D') ? "(by: " : "(at: ";
-                print_line = print_line + this.List.get(i - 1).getTime() + ")";
+                print_line = print_line + this.List.get(i - 1).getDateStr() + ")";
                 System.out.print(print_line);
             }
             System.out.print("\n");
@@ -73,11 +71,11 @@ public class TaskList{
      * @param index of the Task to be printed
      */
     private void print_task(int index){
-        String tick = (this.List.get(index - 1).getStatus()) ? "✓" : "✗";
+        String tick = (this.List.get(index - 1).getStatus()) ? "\u2713" : "\u2718";
         String to_print = "\t[" + this.List.get(index - 1).getCat() + "]" + "[" + tick + "] " + this.List.get(index - 1).getDesc();
         if(this.List.get(index - 1).getCat() != 'T'){
             String print_line = (this.List.get(index - 1).getCat() == 'D') ? "(by: " : "(at ";
-            to_print += (print_line + this.List.get(index - 1).getTime() + ")" );
+            to_print += (print_line + this.List.get(index - 1).getDateStr() + ")" );
         }
         System.out.println(to_print);
     }
@@ -93,7 +91,7 @@ public class TaskList{
         String item_line = this.List.get(index - 1).getCat() + " | " + status + " | "
                 + this.List.get(index - 1).getDesc();
         if(this.List.get(index - 1).getCat() != 'T'){
-            item_line += ("| " + this.List.get(index - 1).getTime());
+            item_line += ("| " + this.List.get(index - 1).getDateStr());
         }
         return item_line;
     }
@@ -101,7 +99,7 @@ public class TaskList{
     public void find(String input){
         String keyword = input.split(" ", 2)[1].trim();
         ArrayList<Integer> match = new ArrayList<Integer>();
-        for(int i = 1 ; i <= this.getItem_count() ; i++){
+        for(int i = 1 ; i <= this.getItemCount() ; i++){
             if(this.List.get(i - 1).getDesc().contains(keyword)){
                 match.add(i);
             }
@@ -113,12 +111,12 @@ public class TaskList{
         System.out.println("\t____________________________________________________________");
         System.out.println("\tHere are the matching tasks in your list:");
         for(int i = 0 ; i < match.size() ; i++){
-            String tick = (this.List.get(match.get(i) - 1).getStatus()) ? "✓" : "✗";
+            String tick = (this.List.get(match.get(i) - 1).getStatus()) ? "\u2713" : "\u2718";
             String to_print = "[" + this.List.get(match.get(i) - 1).getCat() + "]" + "[" + tick + "] " + this.List.get(match.get(i) - 1).getDesc();
             System.out.print("\t" + (i + 1) + ". " + to_print);
             if(this.List.get(match.get(i) - 1).getCat() != 'T'){
                 String print_line = (this.List.get(match.get(i) - 1).getCat() == 'D') ? "(by: " : "(at: ";
-                print_line = print_line + this.List.get(match.get(i) - 1).getTime() + ")";
+                print_line = print_line + this.List.get(match.get(i) - 1).getDateStr() + ")";
                 System.out.print(print_line);
             }
             System.out.print("\n");
@@ -135,26 +133,20 @@ public class TaskList{
             System.out.print("\tGot it. I've updated this task:\n\t");
             print_task(index);
             System.out.println("\t____________________________________________________________");
-        }
-        else if(input.contains("date")){
-            this.List.get(index - 1).updateTime(input_split[3].trim());
-            if(this.List.get(index).getCat() == 'T'){
+        } else if(input.contains("date")){
+            this.List.get(index - 1).updateDate(input_split[3].trim());
+            if(this.List.get(index - 1).getCat() == 'T'){
                 duke_echo("todo do not have date/time!");
-            }
-            else{
+            } else{
                 System.out.println("\t____________________________________________________________");
                 System.out.print("\tGot it. I've updated this task:\n\t");
                 print_task(index);
                 System.out.println("\t____________________________________________________________");
             }
-        }
-        else{
+        } else{
             duke_echo("Incorrect input. Follow this syntax for update: update <index> <desc/date> <new entry>");
         }
     }
-
-    //setters
-
     /**
      * Insertion of a task into TaskList
      *
@@ -167,7 +159,8 @@ public class TaskList{
             time_split = task_split[1].split("/", 2);
             time_split = time_split[1].split(" ", 2);
             String[] date_split = time_split[1].split("/", 3);
-            LocalDate input_date = LocalDate.of(Integer.parseInt(date_split[2]), Integer.parseInt(date_split[1]), Integer.parseInt(date_split[0]));
+            LocalDate input_date = LocalDate.of(Integer.parseInt(date_split[2]),
+                    Integer.parseInt(date_split[1]), Integer.parseInt(date_split[0]));
             if (input_date.compareTo(LocalDate.now()) < 0){
                 duke_echo("Task date shall not be in the past!");
                 return;
@@ -175,18 +168,18 @@ public class TaskList{
         }
 
         switch(task_split[0]){
-            case "todo":
-                List.add(new todo(task_split[1]));
-                break;
-            case "deadline":
-                time_split = task_split[1].split("/", 2);
-                List.add(new deadline(time_split[0], time_split[1].trim()));
-                break;
-            case "event":
-                time_split = task_split[1].split("/", 2);
-                List.add(new event(time_split[0], time_split[1].trim()));
-                break;
-        }//end switch
+        case "todo":
+            List.add(new todo(task_split[1]));
+            break;
+        case "deadline":
+            time_split = task_split[1].split("/", 2);
+            List.add(new deadline(time_split[0], time_split[1].trim()));
+            break;
+        case "event":
+            time_split = task_split[1].split("/", 2);
+            List.add(new event(time_split[0], time_split[1].trim()));
+            break;
+        }
         item_count++;
         System.out.println("\t____________________________________________________________");
         System.out.print("\tGot it. I've added this task:\n\t");
@@ -235,13 +228,11 @@ public class TaskList{
         /*Check if number is within bound*/
         if(index > item_count || index <= 0){
             duke_echo("There are only " + item_count + " items or the value is out of bound!");
-        }
-        else if(this.List.get(index - 1).getStatus()){
+        } else if(this.List.get(index - 1).getStatus()){
             duke_echo("\"" + this.List.get(index - 1).getDesc() + "\" was already marked as done");
-        }
-        else{
+        } else{
             this.List.get(index - 1).mark_completed();
-            String tick = (this.List.get(index - 1).getStatus()) ? "✓" : "✗";
+            String tick = (this.List.get(index - 1).getStatus()) ? "\u2713" : "\u2718";
             duke_echo("Nice! I've marked this task as done:\n\t[" + this.List.get(index - 1).getCat() + "]"
                     + "[" + tick + "] " + this.List.get(index - 1).getDesc());
         }
@@ -268,19 +259,18 @@ public class TaskList{
             }
             int date_diff = this.List.get(index).getDate().compareTo(LocalDate.now());
             if(date_diff > 0){
-                System.out.println("Increment of date will occur");
                 return;
             }
             switch (freq_list[i]){
-                case "daily":
-                    this.List.get(index).incrementTime(1);
-                    break;
-                case "weekly":
-                    this.List.get(index).incrementTime(7);
-                    break;
-                case "monthly":
-                    this.List.get(index).incrementTime(30);
-                    break;
+            case "daily":
+                this.List.get(index).incrementDate(1);
+                break;
+            case "weekly":
+                this.List.get(index).incrementDate(7);
+                break;
+            case "monthly":
+                this.List.get(index).incrementDate(30);
+                break;
             }//end case
         }//end for loop
     }

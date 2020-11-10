@@ -1,10 +1,10 @@
 package duke.ui;
-
-import duke.task.*;
-import duke.storage.*;
-import duke.command.*;
-
+import duke.task.TaskList;
+import duke.storage.Storage;
+import duke.command.IllegalInputException;
 import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class UI {
@@ -15,33 +15,27 @@ public class UI {
      * @param storage Duke's Storage variable
      */
     public void reader(TaskList tasks, Storage storage) {
-        //process user input
-        String user_input;
         Scanner input = new Scanner(System.in);
-        user_input = input.nextLine().trim();
-
-        //deal with inputs
+        String user_input = input.nextLine().trim();
+        //User input assertion
+        assert (!user_input.isBlank()) : "User input should not be blank";
         try{
             responses(tasks, storage, user_input);
-        }
-        catch(IllegalInputException e){ //unknown input
+        } catch(IllegalInputException e){ //unknown input
             System.out.println(" ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-        }
-        catch(ArrayIndexOutOfBoundsException e){ //todo, event & deadline
+        } catch(ArrayIndexOutOfBoundsException e){ //todo, event & deadline
             System.out.println("☹ OOPS!!! The description of " + user_input.trim() + " is invalid.");
             System.out.print("Follow the correct syntax below:\n" +
                     "\ttodo <description>\n"+
                     "\tdeadline <description> /by <DD/MM/YYYY>\n" +
                     "\tevent <description> /at <DD/MM/YYYY>\n" +
-                    "\tupdate <index> <desc/date> <new entry>\n");
-        }
-        catch(NumberFormatException e){ //done
+                    "\tupdate <index> <desc/date> <new entry>\n" +
+                    "\tfind <search description>\n");
+        } catch(NumberFormatException e){ //done
             System.out.println("☹ OOPS!!! The description of a " + user_input.trim() + " cannot be empty.");
-        }
-        catch(IndexOutOfBoundsException e){
+        } catch(IndexOutOfBoundsException e){
             System.out.println("☹ OOPS!!! Delete is out of bound. ");
-        }
-        catch(DateTimeException e){
+        } catch(DateTimeException e){
             System.out.println("☹ OOPS!!! Date format is incorrect or is in the past. ");
         }
     }
@@ -55,37 +49,30 @@ public class UI {
      */
     public void responses(TaskList tasks, Storage storage, String user_input) throws IllegalInputException{
         if(user_input.equals("bye")){ //bye: end duke
-            //save list
             storage.save(tasks);
-            //end duke
             tasks.duke_echo("Bye. Hope to see you again soon!");
             System.exit(0);
-        }//end if
-        else if(user_input.equals("list")){ //list: list items
+        } else if(user_input.equals("list")){ //list: list items
             tasks.printList();
-        }//end else if
-        else if(user_input.contains("done")){ //done: change done to true from false
+        } else if(user_input.contains("done")){ //done: change done to true from false
             if(user_input.equals("done all")){
                 tasks.mark_all_complete();
                 return;
             }
             tasks.mark_completion(user_input);
-        }
-        else if((user_input.contains("todo") || user_input.contains("deadline") || user_input.contains("event"))){ //insertion of item into list
+        } else if((user_input.contains("todo") || user_input.contains("deadline") || user_input.contains("event"))){ //insertion of item into list
             tasks.insert_item(user_input);
-        }//end else if
-        else if(user_input.contains("delete")){
+        } else if(user_input.contains("delete")){
             tasks.delete(user_input);
-        }
-        else if(user_input.contains("find")){
+        } else if(user_input.contains("find")){
             tasks.find(user_input);
-        }
-        else if(user_input.contains("update")){
+        } else if(user_input.contains("update")){
             tasks.update(user_input);
-        }
-        else{
+        } else if(user_input.equals("date now")){
+            DateNow();
+        } else{
             throw new IllegalInputException();
-        }//end else
+        }
     }
     /**
      * This method is used for loading of task from.txt file
@@ -100,9 +87,13 @@ public class UI {
                 return;
             }
             tasks.mark_completion(user_input);
-        }
-        else if((user_input.contains("todo") || user_input.contains("deadline") || user_input.contains("event"))){ //insertion of item into list
+        } else if((user_input.contains("todo") || user_input.contains("deadline") || user_input.contains("event"))){ //insertion of item into list
             tasks.insert_item(user_input);
-        }//end else if
+        }
+    }
+
+    public void DateNow(){
+        LocalDate now =  LocalDate.now();
+        System.out.println(now.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy")));
     }
 }

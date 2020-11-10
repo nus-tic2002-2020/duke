@@ -1,5 +1,4 @@
 package duke.task;
-
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -17,12 +16,12 @@ public class TaskListTest {
 
     @Test
     //test item count and delete
-    public void Test() {
-        assertEquals(3, test.getItem_count());
-        while(test.getItem_count() > 0){
+    public void countTest() {
+        assertEquals(3, test.getItemCount());
+        while(test.getItemCount() > 0){
             test.delete("delete 1");
         }
-        assertEquals(0, test.getItem_count());
+        assertEquals(0, test.getItemCount());
     }
 }
 

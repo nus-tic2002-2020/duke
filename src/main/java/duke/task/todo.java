@@ -1,7 +1,5 @@
 package duke.task;
-
 import java.time.LocalDate;
-import java.util.Date;
 
 public class todo extends Task{
     /**Variables of todo class*/
@@ -17,7 +15,7 @@ public class todo extends Task{
         this.category = 'T';
     }
 
-    public void updateTime(String new_date){
+    public void updateDate(String new_date){
         return;
     }
 
@@ -29,15 +27,10 @@ public class todo extends Task{
     public char getCat(){
         return this.category;
     }
-    /**
-     *Return empty string as todo have to time of completion
-     *
-     * @return empty string
-     */
-    public String getTime(){
+    public String getDateStr(){
         return "";
     }
-    public void incrementTime(int days){
+    public void incrementDate(int days){
         return;
     };
     public LocalDate getDate(){

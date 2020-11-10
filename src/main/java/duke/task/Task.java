@@ -1,7 +1,5 @@
 package duke.task;
-
 import java.time.LocalDate;
-import java.util.Date;
 
 public abstract class Task {
     /**Variables of task parent class*/
@@ -46,10 +44,11 @@ public abstract class Task {
     public void mark_completed(){
         this.Completed = true;
     }
+
     /**Abstract class of task parent class*/
     public abstract char getCat();
-    public abstract String getTime();
     public abstract LocalDate getDate();
-    public abstract void updateTime(String new_date);
-    public abstract void incrementTime(int days);
+    public abstract void updateDate(String new_date);
+    public abstract void incrementDate(int days);
+    public abstract String getDateStr();
 }

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 public class event extends Task{
     /**Variables of event class*/
     private char category;
-    LocalDate date;
+    private LocalDate date;
 
     /**
      *Constructor of event class
@@ -26,19 +26,15 @@ public class event extends Task{
         //System.out.println("Year: " + date.getYear() + " Month: " + date.getMonthValue() + " Day: " + date.getDayOfMonth());
     }
 
-    public void updateTime(String new_date){
+    public void updateDate(String new_date){
         String[] timeParse = new_date.split("/", 3);
         this.date = LocalDate.of(Integer.parseInt(timeParse[2]), Integer.parseInt(timeParse[1]), Integer.parseInt(timeParse[0]));
     }
 
-    /**
-     *Return completion time of a event
-     *
-     * @return Completion time of event
-     */
-    public String getTime(){
+
+    public String getDateStr(){
         return date.getDayOfMonth() + "/" +  date.getMonthValue() + "/" + date.getYear();
-    }
+    };
     /**
      * Return category of the class
      *
@@ -47,7 +43,7 @@ public class event extends Task{
     public char getCat(){
         return this.category;
     }
-    public void incrementTime(int days){
+    public void incrementDate(int days){
         if(days == 30){
             this.date = this.date.plusMonths(1);
             return;

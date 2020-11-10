@@ -1,41 +1,39 @@
 package duke;
-import duke.task.*;
-import duke.ui.*;
-import duke.storage.*;
+import duke.task.TaskList;
+import duke.ui.UI;
+import duke.storage.Storage;
 
 public class Duke {
     /**Variables of Duke Class*/
-    private Storage storage;
-    private TaskList tasks;
-    private UI ui;
+    private Storage newStorage;
+    private TaskList newTaskList;
+    private UI newUI;
 
     /**
      * Constructor of Duke class
      *
-     * @param filepath file path
+     * @param filePath file path
      */
-    public Duke(String filepath){
-        ui = new UI();
-        storage  = new Storage(filepath);
-        tasks = new TaskList();
-        storage.load(tasks, ui);
+    public Duke(String filePath){
+        newUI = new UI();
+        newStorage  = new Storage(filePath);
+        newTaskList = new TaskList();
+        newStorage.load(newTaskList, newUI);
     }
 
     /**
      * Initialize Duke
      */
     public void run(){
-        //Duke header
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("\n\n\n\n\n\n\n\n\n\n\nHello from\n" + logo);
-        duke_says("Hello! I'm Duke\n\tWhat can I do for you?");
-
+        dukeSays("Hello! I'm Duke\n\tWhat can I do for you?");
         while(true){
-            ui.reader(tasks, storage);
+            newUI.reader(newTaskList, newStorage);
         }
     }
 
@@ -44,7 +42,7 @@ public class Duke {
      *
      * @param message to be printed
      */
-    public static void duke_says(String message){
+    public static void dukeSays(String message){
         System.out.println("\t____________________________________________________________");
         System.out.println("\t" + message);
         System.out.println("\t____________________________________________________________");
