@@ -33,4 +33,8 @@ public class ExitCommand extends Command{
         System.out.println("Finished saving Task List to storage");
     }
 
+    public static void printHelp(){
+        System.out.println("To Close this application: bye");
+    }
+
 }

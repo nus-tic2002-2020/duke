@@ -35,4 +35,8 @@ public class DeleteCommand extends Command{
         }
         tasks.printList();
     }
+
+    public static void printHelp(){
+        System.out.println("Deleting a task from the list: delete [option number]");
+    }
 }

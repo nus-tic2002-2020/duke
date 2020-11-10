@@ -64,6 +64,12 @@ public class Parser {
                 option = Integer.parseInt(input.replaceFirst("undone", "").trim());
                 return new ChangeDoneCommand(option,false);
 
+            case "/clear":
+                return new ClearListCommand();
+
+            case "/help":
+                return new HelpCommand();
+
             case "todo":
                 description = input.replaceFirst("todo", "").stripLeading();
                 if(input.isEmpty() == true) {

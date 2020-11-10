@@ -37,4 +37,8 @@ public class RescheduleCommand extends Command{
         }
 
     }
+
+    public static void printHelp(){
+        System.out.println("Reschedule Deadline Command: reschedule [option number] /by [Date and time]");
+    }
 }

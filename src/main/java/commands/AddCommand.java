@@ -45,7 +45,14 @@ public class AddCommand extends Command{
                 System.lineSeparator() + tasks.get(size - 1).toString());
 
 
-        tasks.printTotalTasks();
+        tasks.printNumberOfTasks();
+    }
+
+    public static void printHelp(){
+        System.out.println("Adding a generic task: [description]");
+        System.out.println("Adding a ToDo task: todo [description]");
+        System.out.println("Adding a Deadline task: deadline [description] /by [Date and Time]");
+        System.out.println("Adding a Deadline task: event [description] /at [location]");
     }
 
 }

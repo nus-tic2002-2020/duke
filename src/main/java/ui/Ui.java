@@ -58,7 +58,7 @@ public class Ui {
      * @return the input scanned from user
      */
     public String scanForInput(){
-        System.out.println(System.lineSeparator() + "What can I do for you?");
+        System.out.println(System.lineSeparator() + "What can I do for you? For help, type \"/help\" ");
         return this.scan.nextLine();
     }
 

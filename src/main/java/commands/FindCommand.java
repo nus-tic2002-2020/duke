@@ -33,4 +33,7 @@ public class FindCommand extends Command{
         tasks.findList(keyword);
     }
 
+    public static void printHelp(){
+        System.out.println("To find tasks in the list containing a keyword: find [keyword]");
+    }
 }

@@ -10,9 +10,10 @@ import ui.Ui;
 import java.io.IOException;
 
 //TODO: CLEAN UP!
-//TODO: Exceptions - Probably could double check more, Add more JUnit Testing, Work on Individual Features more
-//TODO: Nice to Have: AddTask(Check for copies)?, add help command (prints commands)
-//TODO: Empty/Delete all (Delete all tasks in the list)
+//TODO: Exceptions - Probably could double check more,
+// Add more JUnit Testing,
+// Work on Individual Features more
+// Make Help Command easier to read etc
 
 // Individual Features:
 //Better Search - e.g., find items even if the keyword matches the item only partially.

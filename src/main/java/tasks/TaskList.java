@@ -185,9 +185,8 @@ public class TaskList {
 
     /**
      * This prints the total number of tasks in the task list
-     *
      */
-    public void printTotalTasks(){
+    public void printNumberOfTasks(){
         int total = tasks.size();
         String ending;
         if(total != 1){
@@ -198,6 +197,13 @@ public class TaskList {
 
         System.out.println("Now you have " + total + ending);
 
+    }
+
+    /**
+     * This clears all the tasks in the list.
+     */
+    public void clearAllTasks(){
+        this.tasks.clear();
     }
 
 }
