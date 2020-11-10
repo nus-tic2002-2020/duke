@@ -95,7 +95,7 @@ public class TaskList {
      * Delete the Task from Task List at the specific index.
      * @param index tarts from 0 till (size - 1).  Meant to indicate the Task's index to delete.
      */
-    public void deleteFromList(int index) throws IndexOutOfBoundsException {
+    public void deleteTask(int index) throws IndexOutOfBoundsException {
         if(index < 0 || index >= tasks.size()){
             throw new IndexOutOfBoundsException();
         }

@@ -20,7 +20,7 @@ public class DeleteCommand extends Command{
     }
 
     /**
-     * This executes the DeleteCommand. It will call the deleteFromList method.
+     * This executes the DeleteCommand. It will call the deleteTask method.
      * @param tasks This is the Task List that contains the list of tasks.
      * @param ui This is the ui, to be used for scanning and printing
      * @param storage This is the storage, used to read and write over the file.
@@ -29,7 +29,7 @@ public class DeleteCommand extends Command{
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
         try{
-            tasks.deleteFromList(option -1);
+            tasks.deleteTask(option - 1);
         }catch(IndexOutOfBoundsException e){
             throw new DukeException("Input option for Delete invalid.");
         }

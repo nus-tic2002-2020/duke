@@ -40,6 +40,7 @@ public class AddCommand extends Command{
         tasks.addTask(taskType,taskDescription,taskSecondPart);
 
         int size = tasks.getSize();
+        assert size > 0: "Size should be more than 0 after adding a task";
         System.out.println(System.lineSeparator() + "Got it. I've added this task:" +
                 System.lineSeparator() + tasks.get(size - 1).toString());
 
