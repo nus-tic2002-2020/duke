@@ -3,9 +3,7 @@ package tasklist;
 import java.util.ArrayList;
 
 import enumerations.SymbolEnum;
-import exceptions.TooManySpacesException;
-import exceptions.NoTimeframeException;
-import exceptions.NoDescriptionException;
+import exceptions.*;
 import exceptions.Exception;
 import task.Task;
 import task.ToDo;
@@ -35,7 +33,7 @@ public class TaskList {
      *
      * @param taskArray The ArrayList of strings (task list) loaded from the text file.
      */
-    public TaskList(ArrayList<String> taskArray) {
+    public TaskList(ArrayList<String> taskArray) throws EndTimeBeforeStartTimeException {
         this.store = new ArrayList<>();
         for (String task : taskArray) {
             String[] splitSections = task.split("\\|");
@@ -107,7 +105,7 @@ public class TaskList {
         String[] splitIndex = input.split(" ");
         int index = Integer.parseInt(splitIndex[1]) - 1;
         store.get(index).setDone();
-        assert store.get(index).getDone().equals("[✓]") : "Failed to set task to done status properly.";
+        assert store.get(index).getDone().equals("Completed: YES") : "Failed to set task to done status properly.";
     }
 
     /**
@@ -211,7 +209,11 @@ public class TaskList {
                 if (catcher(dates[0]) || catcher(dates[1])) {
                     throw new NoTimeframeException();
                 }
-                store.add(new Within(splitFromTo[0].substring(6).trim(), dates[0].trim(), dates[1].trim()));
+                try {
+                    store.add(new Within(splitFromTo[0].substring(6).trim(), dates[0].trim(), dates[1].trim()));
+                } catch (EndTimeBeforeStartTimeException e) {
+                    throw new EndTimeBeforeStartTimeException();
+                }
                 break;
         }
     }

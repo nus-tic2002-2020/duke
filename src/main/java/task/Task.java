@@ -58,9 +58,9 @@ public abstract class Task {
      */
     public String getDone() {
         if (!isDone) {
-            return ("[✗]");
+            return ("Completed: NO");
         }
-            return ("[✓]");
+            return ("Completed: YES");
     }
 
     /**

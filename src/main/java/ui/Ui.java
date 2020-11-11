@@ -32,7 +32,7 @@ public class Ui {
                 + "| |__   _| |_    __| |  /  /     \\  \\    \n"
                 + "|____| |_____|  |____| /__/       \\__\\   \n";
         System.out.println(logo +
-                "\nHello, Lisa here~\nHow can I help you today?\n**Type \"help\" for a list of commands**");
+                "\nHello, Lisa here~\nHow can I help you today?\n**Type \"help\" for a list of commands**\n");
     }
 
     /**
@@ -89,6 +89,13 @@ public class Ui {
      */
     public void showMissingPriorityError() {
         System.out.println("Missing priority setting. Use either NA, LOW, MEDIUM or HIGH.");
+    }
+
+    /**
+     * This method prints an error message when the end time is before the start time of Within task.
+     */
+    public void showImpossibleDateTimeError() {
+        System.out.println("End time is before start time. Please try again.");
     }
 
     /**
@@ -185,10 +192,12 @@ public class Ui {
      */
     public void printTodo(Task task) {
         System.out.println("[T]"
-                + task.getDone()
                 + " "
                 + task.getDescription()
-                + " (Priority: " + task.getPriority()
+                + " (Priority: "
+                + task.getPriority()
+                + ") ("
+                + task.getDone()
                 + ")");
     }
 
@@ -200,7 +209,6 @@ public class Ui {
      */
     public void printDeadline(Task task) {
         System.out.println("[D]"
-                + task.getDone()
                 + " "
                 + task.getDescription()
                 + " (by: "
@@ -215,6 +223,8 @@ public class Ui {
                 + String.format("%02d", task.getDateAndTime().getMinute())
                 + ") (Priority: "
                 + task.getPriority()
+                + ") ("
+                + task.getDone()
                 + ")");
     }
 
@@ -226,7 +236,6 @@ public class Ui {
      */
     public void printEvent(Task task) {
         System.out.println("[E]"
-                + task.getDone()
                 + " "
                 + task.getDescription()
                 + " (at: "
@@ -241,6 +250,8 @@ public class Ui {
                 + String.format("%02d", task.getDateAndTime().getMinute())
                 + ") (Priority: "
                 + task.getPriority()
+                + ") ("
+                + task.getDone()
                 + ")");
     }
 
@@ -252,7 +263,6 @@ public class Ui {
      */
     public void printWithin(Task task) {
         System.out.println("[W]"
-                + task.getDone()
                 + " "
                 + task.getDescription()
                 + " (within: "
@@ -277,6 +287,8 @@ public class Ui {
                 + String.format("%02d", task.getEnd().getMinute())
                 + ") (Priority: "
                 + task.getPriority()
+                + ") ("
+                + task.getDone()
                 + ")");
     }
 

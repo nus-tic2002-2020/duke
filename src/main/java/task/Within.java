@@ -6,6 +6,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
 import enumerations.SymbolEnum;
+import exceptions.EndTimeBeforeStartTimeException;
 
 /**
  * This is the Within class. It is a subclass of Task.
@@ -29,7 +30,7 @@ public class Within extends Task {
      * @throws DateTimeParseException This exception is thrown when the format of the date and time as input by user
      *                                is invalid.
      */
-    public Within(String description, String start, String end) throws DateTimeParseException {
+    public Within(String description, String start, String end) throws EndTimeBeforeStartTimeException {
         super(description);
         this.symbol = SymbolEnum.valueOf("W");
         try {
@@ -38,6 +39,9 @@ public class Within extends Task {
         } catch (DateTimeParseException e) {
             this.start = LocalDateTime.parse(start, formatterLoad());
             this.end = LocalDateTime.parse(end, formatterLoad());
+        }
+        if (this.end.isBefore(this.start)) {
+            throw new EndTimeBeforeStartTimeException();
         }
     }
 

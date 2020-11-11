@@ -1,10 +1,8 @@
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
+import exceptions.*;
 import exceptions.Exception;
-import exceptions.NoDescriptionException;
-import exceptions.NoTimeframeException;
-import exceptions.TooManySpacesException;
 import tasklist.TaskList;
 import storage.Storage;
 import ui.Ui;
@@ -39,7 +37,7 @@ public class Lisa {
      * @param filePath This is path to the text file from the root of the project, in string format.
      * @throws IOException This is the error for input-output. Has to be thrown or programme will not run.
      */
-    public Lisa(String filePath) throws IOException {
+    public Lisa(String filePath) throws IOException, Exception {
         ui = new Ui();
         storage = new Storage(filePath);
         tasks = new TaskList(storage.load());
@@ -81,6 +79,8 @@ public class Lisa {
                             ui.showTooManySpacesError();
                         } catch (DateTimeParseException e) {
                             ui.showDateFormatError1();
+                        } catch (EndTimeBeforeStartTimeException e) {
+                            ui.showImpossibleDateTimeError();
                         }
                         break;
 
@@ -196,8 +196,10 @@ public class Lisa {
                         ui.printByeMessage();
                         break;
                 }
+                System.out.println("");
             } catch (IllegalArgumentException e) {
                 ui.showIllegalArgumentError();
+                System.out.println("");
             }
         }
     }
