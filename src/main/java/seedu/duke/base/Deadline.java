@@ -1,7 +1,5 @@
 package seedu.duke.base;
 
-import seedu.duke.exception.DukeException;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
