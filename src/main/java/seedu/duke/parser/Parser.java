@@ -19,6 +19,8 @@ public class Parser {
                 return new ListCommand(false, ""); //just print
             case DeleteCommand.COMMAND_WORD:
                 return new DeleteCommand(false, userInput);
+            case ScheduleCommand.COMMAND_WORD:
+                return new ScheduleCommand(false, userInput);
             case ByeCommand.COMMAND_WORD:
                 return new ByeCommand(true, userInput);
             default:

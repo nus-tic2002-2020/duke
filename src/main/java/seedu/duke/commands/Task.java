@@ -1,5 +1,7 @@
 package seedu.duke.commands;
 
+import java.time.LocalDateTime;
+
 public class Task {
     public String description;
     public boolean isDone;
@@ -31,5 +33,9 @@ public class Task {
 
     public void setDone() {
         isDone = true;
+    }
+
+    public LocalDateTime getDate(){
+        return null;
     }
 }

@@ -8,7 +8,7 @@ import seedu.duke.commands.Todo;
 public class TodoTest {
     @Test
     @DisplayName("Insert todo finish assignments")
-    public void TestToString() {
+    public void TestGetDescription() {
         Todo todo = new Todo("finish assignments");
         assertEquals("[T][\u2718] finish assignments", todo.getDescription());
 
