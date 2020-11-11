@@ -1,10 +1,11 @@
 package seedu.duke;
 
-import seedu.duke.commands.*;
-import seedu.duke.exception.*;
-import seedu.duke.parser.*;
-import seedu.duke.storage.*;
-import seedu.duke.ui.*;
+import seedu.duke.base.Command;
+import seedu.duke.base.TaskList;
+import seedu.duke.exception.DukeException;
+import seedu.duke.parser.Parser;
+import seedu.duke.storage.Storage;
+import seedu.duke.ui.Ui;
 
 public class Duke {
     private Storage storage;

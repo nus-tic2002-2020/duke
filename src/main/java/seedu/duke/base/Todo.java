@@ -1,4 +1,4 @@
-package seedu.duke.commands;
+package seedu.duke.base;
 
 public class Todo extends Task {
 

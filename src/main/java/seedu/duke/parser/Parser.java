@@ -9,7 +9,7 @@ import seedu.duke.commands.DeleteCommand;
 import seedu.duke.commands.ScheduleCommand;
 import seedu.duke.commands.FindCommand;
 import seedu.duke.commands.ByeCommand;
-import seedu.duke.commands.Command;
+import seedu.duke.base.Command;
 import seedu.duke.exception.DukeException;
 
 public class Parser {

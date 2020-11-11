@@ -1,30 +1,29 @@
-package seedu.duke.commands;
+package seedu.duke.base;
 
-import seedu.duke.exception.DukeException;
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Deadline extends Task {
-    public LocalDateTime by;
+public class Event extends Task {
+    public LocalDateTime at;
 
     /**
-     * Creates Deadline with the task description, date and time according to user input.
+     * Creates Event with the task description, date and time according to user input.
      * @param description       The task description/command from user.
-     * @param by                The task deadline date and time from user.
+     * @param at                The task deadline date and time from user.
      */
-    public Deadline(String description, LocalDateTime by) {
+    public Event(String description, LocalDateTime at) {
         super(description);
-        this.by = by;
+        this.at = at;
     }
 
     /**
-     * Returns the Deadline as a string.
-     * @return String       The deadline in a string type.
+     * Returns the Event as a string.
+     * @return String       The event in a string type.
      */
     @Override
     public String getDescription() {
-        return "[D]" + super.getDescription() + " (by: " + dateToString(by) + ")";
+        return "[E]" + super.getDescription() + " (at: " + dateToString(at) + ")";
     }
 
     /**
@@ -32,7 +31,7 @@ public class Deadline extends Task {
      * @return String       The date and time in a LocalDateTime format.
      */
     public LocalDateTime getDate(){
-        return this.by ;
+        return this.at ;
     }
 
     /**

@@ -1,10 +1,10 @@
 package seedu.duke.storage;
 
-import seedu.duke.commands.Deadline;
-import seedu.duke.commands.Event;
-import seedu.duke.commands.Task;
-import seedu.duke.commands.TaskList;
-import seedu.duke.commands.Todo;
+import seedu.duke.base.Deadline;
+import seedu.duke.base.Event;
+import seedu.duke.base.Task;
+import seedu.duke.base.TaskList;
+import seedu.duke.base.Todo;
 import seedu.duke.exception.DukeException;
 
 import java.io.File;

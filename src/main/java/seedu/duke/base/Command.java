@@ -1,4 +1,4 @@
-package seedu.duke.commands;
+package seedu.duke.base;
 
 import seedu.duke.exception.DukeException;
 import seedu.duke.storage.Storage;
