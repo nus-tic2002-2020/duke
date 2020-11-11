@@ -11,17 +11,24 @@ public class Duke {
     private TaskList taskList;
     private Ui ui;
 
+    /**
+     * Creates Duke with specified filepath and initialised with storage, taskList and ui.
+     * @param   filePath      The file path of the storage file.
+     */
     public Duke(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
         try {
             taskList = new TaskList(storage.load());
         } catch (DukeException e) {
-            //ui.showLoadingError();
+            ui.showLoadingError("Unable to load the task list.");
             taskList = new TaskList();
         }
     }
 
+    /**
+     * Runs the Duke and show the output accordingly.
+     */
     public void run() {
         Ui.showWelcomeMessage();
         boolean isExit = false;
@@ -29,18 +36,19 @@ public class Duke {
         while (!isExit) {
             try {
                 String fullCommand = ui.getUserCommand();
-                //Ui.showLine(); // show the divider line ("_______")
                 Command c = Parser.parserCommand(fullCommand);
                 c.execute(taskList, ui, storage);
                 isExit = c.isExit();
             } catch (Exception e) {
                 Ui.showLoadingError(e.getMessage());
-            } //finally {
-            //Ui.showLine();
-            //}
+            }
         }
     }
 
+    /**
+     * The main method to run Duke.
+     * @param   args       The argument values provided by the user to run Duke.
+     */
     public static void main(String[] args) {
         new Duke("data/taskList.txt").run();
     }

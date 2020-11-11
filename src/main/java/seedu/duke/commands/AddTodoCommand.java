@@ -13,20 +13,20 @@ public class AddTodoCommand extends Command {
     protected Todo todo;
 
     /**
-     * To create AddTodoCommand and initialise the isExit boolean value and description according to user input.
-     * @param   isExit          A boolean value if the exit condition is true.
-     * @param   description     A task description/command from user.
+     * Creates AddTodoCommand and initialise the isExit boolean value and description according to user input.
+     * @param   isExit              The boolean value if the exit condition is true.
+     * @param   description         The task description/command from user.
      */
     public AddTodoCommand(boolean isExit, String description) {
         super(isExit, description);
     }
 
     /**
-     * To create Todo task, check if description is empty prior creating.
-     * @param   taskList                            The array of tasks stored in an ArrayList.
-     * @param   ui                                  The User Interface (UI) to handle interaction with user.
-     * @param   storage                             The storage to handle storing and reading of tasks from a file.
-     * @throws  DukeException                       If the user inputs an empty description, to handle error and exception.
+     * Creates Todo task, check if the description is empty prior creating.
+     * @param   taskList            The array of tasks stored in as an ArrayList.
+     * @param   ui                  The User Interface (UI) to handle the interaction with user.
+     * @param   storage             The storage to handle storing and reading of task from the file.
+     * @throws  DukeException       To handle error and exception, if the user inputs an empty description.
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException{

@@ -9,17 +9,17 @@ public class ListCommand extends Command {
     public static final String LIST_MSG = "Here are the tasks in your list:\n\t";
 
     /**
-     * To create ListCommand and initialise the isExit boolean value and description according to user input.
-     * @param   isExit          A boolean value if the exit condition is true.
-     * @param   description     A task description/command from user.
+     * Creates ListCommand and initialise the isExit boolean value and description according to user input.
+     * @param   isExit              The boolean value if the exit condition is true.
+     * @param   description         The task description/command from user.
      */
     public ListCommand(boolean isExit, String description) {
         super(isExit, description);
     }
 
     /**
-     * To print all the tasks stored in the taskList.
-     * @return   String   The task and its progression status.
+     * Prints all the task stored in the taskList.
+     * @return   String     The task and its progression status.
      */
     public static void getTaskList() {
         System.out.println("\t____________________________________________________________");
@@ -31,11 +31,11 @@ public class ListCommand extends Command {
     }
 
     /**
-     * To print the task list through UI.
-     * @param   taskList                            The array of tasks stored in an ArrayList.
-     * @param   ui                                  The User Interface (UI) to handle interaction with user.
-     * @param   storage                             The storage to handle storing and reading of tasks from a file.
-     * @throws  DukeException                       If the task list is empty description, to handle error and exception.
+     * Prints the task list through User Interface (UI).
+     * @param   taskList            The array of tasks stored in as an ArrayList.
+     * @param   ui                  The User Interface (UI) to handle the interaction with user.
+     * @param   storage             The storage to handle storing and reading of task from the file.
+     * @throws  DukeException       To handle error and exception, if the task list is empty description.
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {

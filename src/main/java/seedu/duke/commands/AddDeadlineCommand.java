@@ -4,7 +4,6 @@ import seedu.duke.exception.DukeException;
 import seedu.duke.storage.Storage;
 import seedu.duke.ui.Ui;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -17,20 +16,20 @@ public class AddDeadlineCommand extends Command {
     protected Deadline deadline;
 
     /**
-     * To create AddDeadlineCommand and initialise the isExit boolean value and description according to user input.
-     * @param   isExit          A boolean value if the exit condition is true.
-     * @param   description     A task description/command from user.
+     * Creates AddDeadlineCommand and initialise the isExit boolean value and description according to user input.
+     * @param   isExit              The boolean value if the exit condition is true.
+     * @param   description         The task description/command from user.
      */
     public AddDeadlineCommand(boolean isExit, String description) {
         super(isExit, description);
     }
 
     /**
-     * To create Deadline task, check both date and description if empty prior creating.
-     * @param   taskList                            The array of tasks stored in an ArrayList.
-     * @param   ui                                  The User Interface (UI) to handle interaction with user.
-     * @param   storage                             The storage to handle storing and reading of tasks from a file.
-     * @throws  DukeException                       If the user inputs an empty description, to handle error and exception.
+     * Creates Deadline task, check if date and description is empty prior creating.
+     * @param   taskList            The array of tasks stored in as an ArrayList.
+     * @param   ui                  The User Interface (UI) to handle the interaction with user.
+     * @param   storage             The storage to handle storing and reading of task from the file.
+     * @throws  DukeException       To handle error and exception, if the user inputs an empty description.
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException{
@@ -48,10 +47,10 @@ public class AddDeadlineCommand extends Command {
     }
 
     /**
-     * To convert the date and time stated by user to a LocalDateTime format of (d/MM/yyyy HHmm)
-     * @param   date            The date from user.
-     * @return  LocalDateTime   The date and time in a LocalDateTime format.
-     * @throws  DukeException   If the input from user is not the format (dd/mm/yyyy HHmm).
+     * Converts the date and time stated by user into the LocalDateTime format: (d/MM/yyyy HHmm).
+     * @param   date                The date stated by user.
+     * @return  LocalDateTime       The date and time in a LocalDateTime format.
+     * @throws  DukeException       To handle error and exception, if the input from user is not the format (dd/mm/yyyy HHmm).
      */
     private LocalDateTime stringToDate(String date) throws DukeException {
         try {

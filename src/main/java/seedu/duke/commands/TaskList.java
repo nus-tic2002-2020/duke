@@ -6,49 +6,49 @@ public class TaskList {
     public static ArrayList<Task> taskList;
 
     /**
-     * To create an ArrayList named taskList and initialised it.
+     * Creates an taskList and initialised it as an empty arraylist.
      */
     public TaskList() {
         this.taskList = new ArrayList<>();
     }
 
     /**
-     *
-     * @param tasks
+     * Creates an taskList and initialised it as a specified type.
+     * @param   tasks       The specified task.
      */
     public TaskList(ArrayList<Task> tasks) {
         this.taskList = tasks;
     }
 
     /**
-     * To add the task to task list.
-     * @param description
+     * Adds the task to task list.
+     * @param   description       The task added into the list.
      */
     public static void setTaskList(Task description) {
         taskList.add(description);
     }
 
     /**
-     * To delete task from task list.
-     * @param description
-     * @return Task
+     * Deletes the task from the task list.
+     * @param    description       The task needed to delete from the task list.
+     * @return   Task              The task deleted.
      */
     public static Task toDelete(int description) {
         return taskList.remove(description);
     }
 
     /**
-     * To get the size of the task list
-     * @return int
+     * Returns the size of the task list.
+     * @return   int       The size of the task list.
      */
     public static int length() {
         return taskList.size();
     }
 
     /**
-     * To retrieve a task from the task list
-     * @param description   The number of the task wanted to retrieve.
-     * @return Task
+     * Returns the specified task from the task list.
+     * @param   description   The index of the specified task.
+     * @return  Task          The specified task.
      */
     public static Task getATask(int description) {
         return taskList.get(description);

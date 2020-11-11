@@ -1,5 +1,12 @@
 package seedu.duke.storage;
 
+import seedu.duke.commands.Deadline;
+import seedu.duke.commands.Event;
+import seedu.duke.commands.Task;
+import seedu.duke.commands.TaskList;
+import seedu.duke.commands.Todo;
+import seedu.duke.exception.DukeException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,14 +17,15 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import seedu.duke.commands.*;
-import seedu.duke.exception.*;
-
 public class Storage {
     private String filePath;
     private File file;
     private Scanner s;
 
+    /**
+     * Creates a storage and initialise with the file path, catch FileNotFoundException and create new file and directory.
+     * @param   filePath       The file path to store the task list.
+     */
     public Storage(String filePath) {
         try {
             this.filePath = filePath;
@@ -28,6 +36,9 @@ public class Storage {
         }
     }
 
+    /**
+     * Creates new file and directory, catch IOException if error in creating the file.
+     */
     public void createFileAndDirectory() {
         try {
             file.createNewFile();
@@ -37,11 +48,14 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the tasks in the task list in the specified format.
+     * @throws   DukeException     To handle error and exception, if error in saving the file.
+     */
     public void save() throws DukeException {
         try {
             FileWriter fw = new FileWriter(filePath);
             for (int i = 0; i < TaskList.length(); ++i) {
-                //fw.write(TaskList.getATask(i).getDescription() + System.lineSeparator());
                 String taskType = "";
                 String date = "";
                 int isDone = 0;
@@ -71,10 +85,15 @@ public class Storage {
             }
             fw.close();
         } catch (IOException ioe) {
-            System.out.println("\t☹ OOPS!!! Error saving the file.");
+            System.out.println("\t☹ OOPS!!! Error in saving the file.");
         }
     }
 
+    /**
+     * Loads the task list from the file and initialise it.
+     * @return   ArrayList<Task>     The task list from the file.
+     * @throws   DukeException       To handle error and exception, if the task list is empty.
+     */
     public ArrayList<Task> load() throws DukeException {
         ArrayList<Task> taskList = new ArrayList<>();
         if (!file.exists() || !file.isFile()) {
@@ -109,29 +128,28 @@ public class Storage {
         return taskList;
     }
 
+    /**
+     * Converts the date and time stated by user into the LocalDateTime format: (d/MM/yyyy HHmm).
+     * @param   date                The date stated by user.
+     * @return  LocalDateTime       The date and time in a LocalDateTime format.
+     * @throws  DukeException       To handle error and exception, if the date loaded from file is not the format (dd/mm/yyyy HHmm).
+     */
     private LocalDateTime stringToDate(String date) throws DukeException {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
             return LocalDateTime.parse(date, formatter);
         } catch (DateTimeParseException e) {
-            throw new DukeException("The date " + date + " loaded from the file is invalid.");
+            throw new DukeException("The date loaded from the file is invalid.");
         }
     }
 
+    /**
+     * Converts the LocalDateTime object to a string object with the format (d/MM/yyyy HHmm).
+     * @param   dateTime            The date and time as a LocalDateTime object.
+     * @return  String              The date and time as a string object.
+     */
     public String dateToString(LocalDateTime dateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
         return dateTime.format(formatter);
     }
-
-//    public static class InvalidStorageFilePathException extends DukeException {
-//        public InvalidStorageFilePathException(String message) {
-//            super(message);
-//        }
-//    }
-//
-//    public static class StorageOperationException extends Exception {
-//        public StorageOperationException(String message) {
-//            super(message);
-//        }
-//    }
 }
