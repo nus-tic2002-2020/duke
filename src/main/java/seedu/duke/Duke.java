@@ -22,7 +22,7 @@ public class Duke {
         try {
             taskList = new TaskList(storage.load());
         } catch (DukeException e) {
-            ui.showLoadingError("Unable to load the task list.");
+            ui.showLoadingError(e.getMessage());
             taskList = new TaskList();
         }
     }
@@ -31,7 +31,7 @@ public class Duke {
      * Runs the Duke and show the output accordingly.
      */
     public void run() {
-        Ui.showWelcomeMessage();
+        //Ui.showWelcomeMessage();
         boolean isExit = false;
 
         while (!isExit) {
@@ -41,9 +41,13 @@ public class Duke {
                 c.execute(taskList, ui, storage);
                 isExit = c.isExit();
             } catch (Exception e) {
-                Ui.showLoadingError(e.getMessage());
+                ui.showLoadingError(e.getMessage());
             }
         }
+    }
+
+    public String getResponse(String input) {
+        return "Duke heard: " + input;
     }
 
     /**

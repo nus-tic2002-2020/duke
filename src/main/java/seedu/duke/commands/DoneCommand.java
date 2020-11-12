@@ -12,8 +12,9 @@ public class DoneCommand extends Command {
 
     /**
      * Creates DoneCommand and initialise the isExit boolean value and description according to user input.
-     * @param   isExit              The boolean value if the exit condition is true.
-     * @param   description         The task description/command from user.
+     *
+     * @param isExit      The boolean value if the exit condition is true.
+     * @param description The task description/command from user.
      */
     public DoneCommand(boolean isExit, String description) {
         super(isExit, description);
@@ -21,13 +22,14 @@ public class DoneCommand extends Command {
 
     /**
      * Marks the task as done, check the task number if empty prior marking it as done.
-     * @param   taskList            The array of tasks stored in as an ArrayList.
-     * @param   ui                  The User Interface (UI) to handle the interaction with user.
-     * @param   storage             The storage to handle storing and reading of task from the file.
-     * @throws  DukeException       To handle error and exception, if the user inputs an empty description.
+     *
+     * @param taskList The array of tasks stored in as an ArrayList.
+     * @param ui       The User Interface (UI) to handle the interaction with user.
+     * @param storage  The storage to handle storing and reading of task from the file.
+     * @throws DukeException To handle error and exception, if the user inputs an empty description.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException{
+    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
         int index = 0;
         if (description.substring(4).equals("")) {
             throw new DukeException("\t☹ OOPS!!! The description of todo cannot be empty.\n");

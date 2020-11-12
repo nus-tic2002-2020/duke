@@ -8,7 +8,8 @@ public class Task {
 
     /**
      * Creates new Task with the task description from user and initialised the task progression status as not complete.
-     * @param   description       The task description/command from user.
+     *
+     * @param description The task description/command from user.
      */
     public Task(String description) {
         this.description = description;
@@ -17,7 +18,8 @@ public class Task {
 
     /**
      * Returns the task progression status as an icon.
-     * @return   String       The task progression status as a tick icon as done or a cross icon as not done.
+     *
+     * @return String       The task progression status as a tick icon as done or a cross icon as not done.
      */
     public String getStatusIcon() {
         return (isDone ? "\u2713" : "\u2718");
@@ -25,7 +27,8 @@ public class Task {
 
     /**
      * Returns the task as string type.
-     * @return   String       The task progression status and task description as a string.
+     *
+     * @return String       The task progression status and task description as a string.
      */
     public String getDescription() {
         return "[" + getStatusIcon() + "] " + this.description;
@@ -38,7 +41,7 @@ public class Task {
         isDone = true;
     }
 
-    public LocalDateTime getDate(){
+    public LocalDateTime getDate() {
         return null;
     }
 }

@@ -10,8 +10,9 @@ public class Command {
 
     /**
      * Creates Command and initialise the isExit boolean value and description according to user input.
-     * @param   isExit              The boolean value if the exit condition is true.
-     * @param   description         The task description/command from user.
+     *
+     * @param isExit      The boolean value if the exit condition is true.
+     * @param description The task description/command from user.
      */
     public Command(boolean isExit, String description) {
         this.isExit = isExit;
@@ -24,11 +25,12 @@ public class Command {
 
     /**
      * Executes the command according to user input and return the result.
-     * @param   taskList            The array of tasks stored in as an ArrayList.
-     * @param   ui                  The User Interface (UI) to handle the interaction with user.
-     * @param   storage             The storage to handle storing and reading of task from the file.
+     *
+     * @param taskList The array of tasks stored in as an ArrayList.
+     * @param ui       The User Interface (UI) to handle the interaction with user.
+     * @param storage  The storage to handle storing and reading of task from the file.
      */
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException{
+    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
         throw new DukeException("No such function yet.");
     }
 }

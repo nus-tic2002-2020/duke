@@ -10,8 +10,9 @@ public class ByeCommand extends Command {
 
     /**
      * Creates ByeCommand and initialise the isExit boolean value and description according to user input.
-     * @param   isExit              The boolean value if the exit condition is true.
-     * @param   description         The task description/command from user.
+     *
+     * @param isExit      The boolean value if the exit condition is true.
+     * @param description The task description/command from user.
      */
     public ByeCommand(boolean isExit, String description) {
         super(isExit, description);
@@ -19,12 +20,13 @@ public class ByeCommand extends Command {
 
     /**
      * Prints bye message through User Interface (UI).
-     * @param   taskList            The array of tasks stored in as an ArrayList.
-     * @param   ui                  The User Interface (UI) to handle the interaction with user.
-     * @param   storage             The storage to handle storing and reading of task from the file.
+     *
+     * @param taskList The array of tasks stored in as an ArrayList.
+     * @param ui       The User Interface (UI) to handle the interaction with user.
+     * @param storage  The storage to handle storing and reading of task from the file.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage){
+    public void execute(TaskList taskList, Ui ui, Storage storage) {
         ui.showGoodbyeMessage();
     }
 }

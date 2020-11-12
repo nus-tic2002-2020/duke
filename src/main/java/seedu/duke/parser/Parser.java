@@ -15,9 +15,10 @@ import seedu.duke.exception.DukeException;
 public class Parser {
     /**
      * Parses the user input and returns the command accordingly.
-     * @param    userInput       The user input.
-     * @return   Command         The command based on the user input.
-     * @throws   DukeException   To handle error and exception, if the user input is invalid.
+     *
+     * @param userInput The user input.
+     * @return Command         The command based on the user input.
+     * @throws DukeException To handle error and exception, if the user input is invalid.
      */
     public static Command parserCommand(String userInput) throws DukeException {
         switch (userInput.split(" ")[0]) {

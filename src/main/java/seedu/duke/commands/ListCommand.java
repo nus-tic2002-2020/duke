@@ -12,8 +12,9 @@ public class ListCommand extends Command {
 
     /**
      * Creates ListCommand and initialise the isExit boolean value and description according to user input.
-     * @param   isExit              The boolean value if the exit condition is true.
-     * @param   description         The task description/command from user.
+     *
+     * @param isExit      The boolean value if the exit condition is true.
+     * @param description The task description/command from user.
      */
     public ListCommand(boolean isExit, String description) {
         super(isExit, description);
@@ -21,7 +22,8 @@ public class ListCommand extends Command {
 
     /**
      * Prints all the task stored in the taskList.
-     * @return   String     The task and its progression status.
+     *
+     * @return String     The task and its progression status.
      */
     public static void getTaskList() {
         System.out.println("\t____________________________________________________________");
@@ -34,10 +36,11 @@ public class ListCommand extends Command {
 
     /**
      * Prints the task list through User Interface (UI).
-     * @param   taskList            The array of tasks stored in as an ArrayList.
-     * @param   ui                  The User Interface (UI) to handle the interaction with user.
-     * @param   storage             The storage to handle storing and reading of task from the file.
-     * @throws  DukeException       To handle error and exception, if the task list is empty description.
+     *
+     * @param taskList The array of tasks stored in as an ArrayList.
+     * @param ui       The User Interface (UI) to handle the interaction with user.
+     * @param storage  The storage to handle storing and reading of task from the file.
+     * @throws DukeException To handle error and exception, if the task list is empty description.
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {

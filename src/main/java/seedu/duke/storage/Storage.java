@@ -24,7 +24,8 @@ public class Storage {
 
     /**
      * Creates a storage and initialise with the file path, catch FileNotFoundException and create new file and directory.
-     * @param   filePath       The file path to store the task list.
+     *
+     * @param filePath The file path to store the task list.
      */
     public Storage(String filePath) {
         try {
@@ -50,7 +51,8 @@ public class Storage {
 
     /**
      * Saves the tasks in the task list in the specified format.
-     * @throws   DukeException     To handle error and exception, if error in saving the file.
+     *
+     * @throws DukeException To handle error and exception, if error in saving the file.
      */
     public void save() throws DukeException {
         try {
@@ -61,25 +63,25 @@ public class Storage {
                 int isDone = 0;
                 Task task = TaskList.getATask(i);
 
-                if (task instanceof Todo){
+                if (task instanceof Todo) {
                     taskType = "T";
-                }else if (task instanceof Event){
+                } else if (task instanceof Event) {
                     taskType = "E";
-                    date = dateToString(((Event)task).at); //casting
-                }else if (task instanceof Deadline){
+                    date = dateToString(((Event) task).at); //casting
+                } else if (task instanceof Deadline) {
                     taskType = "D";
-                    date = dateToString(((Deadline)task).by);
+                    date = dateToString(((Deadline) task).by);
                 }
 
-                if (task.isDone){
+                if (task.isDone) {
                     isDone = 1;
-                }else{
+                } else {
                     isDone = 0;
                 }
 
-                if (date.equals("")){
+                if (date.equals("")) {
                     fw.write(taskType + " | " + Integer.toString(isDone) + " | " + TaskList.getATask(i).description + System.lineSeparator());
-                }else{
+                } else {
                     fw.write(taskType + " | " + Integer.toString(isDone) + " | " + TaskList.getATask(i).description + " | " + date + System.lineSeparator());
                 }
             }
@@ -91,8 +93,9 @@ public class Storage {
 
     /**
      * Loads the task list from the file and initialise it.
-     * @return   ArrayList<Task>     The task list from the file.
-     * @throws   DukeException       To handle error and exception, if the task list is empty.
+     *
+     * @return ArrayList<Task>     The task list from the file.
+     * @throws DukeException To handle error and exception, if the task list is empty.
      */
     public ArrayList<Task> load() throws DukeException {
         ArrayList<Task> taskList = new ArrayList<>();
@@ -103,26 +106,26 @@ public class Storage {
             String line = s.nextLine();
             String[] splitLine = line.split(" \\| ");
             switch (splitLine[0]) {
-                case "T":
-                    Todo newTodo = new Todo(splitLine[2]);
-                    if (splitLine[1].equals("1")) {
-                        newTodo.setDone();
-                    }
-                    taskList.add(newTodo);
-                case "E":
-                    Event newEvent = new Event(splitLine[2], stringToDate(splitLine[3]));
-                    if (splitLine[1].equals("1")) {
-                        newEvent.setDone();
-                    }
-                    taskList.add(newEvent);
-                    break;
-                case "D":
-                    Deadline newDeadline = new Deadline(splitLine[2], stringToDate(splitLine[3]));
-                    if (splitLine[1].equals("1")) {
-                        newDeadline.setDone();
-                    }
-                    taskList.add(newDeadline);
-                    break;
+            case "T":
+                Todo newTodo = new Todo(splitLine[2]);
+                if (splitLine[1].equals("1")) {
+                    newTodo.setDone();
+                }
+                taskList.add(newTodo);
+            case "E":
+                Event newEvent = new Event(splitLine[2], stringToDate(splitLine[3]));
+                if (splitLine[1].equals("1")) {
+                    newEvent.setDone();
+                }
+                taskList.add(newEvent);
+                break;
+            case "D":
+                Deadline newDeadline = new Deadline(splitLine[2], stringToDate(splitLine[3]));
+                if (splitLine[1].equals("1")) {
+                    newDeadline.setDone();
+                }
+                taskList.add(newDeadline);
+                break;
             }
         }
         return taskList;
@@ -130,9 +133,10 @@ public class Storage {
 
     /**
      * Converts the date and time stated by user into the LocalDateTime format: (d/MM/yyyy HHmm).
-     * @param   date                The date stated by user.
-     * @return  LocalDateTime       The date and time in a LocalDateTime format.
-     * @throws  DukeException       To handle error and exception, if the date loaded from file is not the format (dd/mm/yyyy HHmm).
+     *
+     * @param date The date stated by user.
+     * @return LocalDateTime       The date and time in a LocalDateTime format.
+     * @throws DukeException To handle error and exception, if the date loaded from file is not the format (dd/mm/yyyy HHmm).
      */
     private LocalDateTime stringToDate(String date) throws DukeException {
         try {
@@ -145,8 +149,9 @@ public class Storage {
 
     /**
      * Converts the LocalDateTime object to a string object with the format (d/MM/yyyy HHmm).
-     * @param   dateTime            The date and time as a LocalDateTime object.
-     * @return  String              The date and time as a string object.
+     *
+     * @param dateTime The date and time as a LocalDateTime object.
+     * @return String              The date and time as a string object.
      */
     public String dateToString(LocalDateTime dateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");

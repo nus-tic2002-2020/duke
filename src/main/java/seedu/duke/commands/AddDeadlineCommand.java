@@ -20,8 +20,9 @@ public class AddDeadlineCommand extends Command {
 
     /**
      * Creates AddDeadlineCommand and initialise the isExit boolean value and description according to user input.
-     * @param   isExit              The boolean value if the exit condition is true.
-     * @param   description         The task description/command from user.
+     *
+     * @param isExit      The boolean value if the exit condition is true.
+     * @param description The task description/command from user.
      */
     public AddDeadlineCommand(boolean isExit, String description) {
         super(isExit, description);
@@ -29,13 +30,14 @@ public class AddDeadlineCommand extends Command {
 
     /**
      * Creates Deadline task, check if date and description is empty prior creating.
-     * @param   taskList            The array of tasks stored in as an ArrayList.
-     * @param   ui                  The User Interface (UI) to handle the interaction with user.
-     * @param   storage             The storage to handle storing and reading of task from the file.
-     * @throws  DukeException       To handle error and exception, if the user inputs an empty description.
+     *
+     * @param taskList The array of tasks stored in as an ArrayList.
+     * @param ui       The User Interface (UI) to handle the interaction with user.
+     * @param storage  The storage to handle storing and reading of task from the file.
+     * @throws DukeException To handle error and exception, if the user inputs an empty description.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException{
+    public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
         if (description.substring(8).equals("")) {
             throw new DukeException("\t☹ OOPS!!! The description of deadline cannot be empty.\n");
         } else if (description.contains("by  ")) {
@@ -51,9 +53,10 @@ public class AddDeadlineCommand extends Command {
 
     /**
      * Converts the date and time stated by user into the LocalDateTime format: (d/MM/yyyy HHmm).
-     * @param   date                The date stated by user.
-     * @return  LocalDateTime       The date and time in a LocalDateTime format.
-     * @throws  DukeException       To handle error and exception, if the input from user is not the format (dd/mm/yyyy HHmm).
+     *
+     * @param date The date stated by user.
+     * @return LocalDateTime       The date and time in a LocalDateTime format.
+     * @throws DukeException To handle error and exception, if the input from user is not the format (dd/mm/yyyy HHmm).
      */
     private LocalDateTime stringToDate(String date) throws DukeException {
         try {
