@@ -41,9 +41,6 @@ public class TaskList implements Serializable{
 
             /***
              * create new deadline task
-             * @param name
-             * @param done
-             * @param by
              * @param name name of the task
              * @param done whether the task is done
              * @param by date and time of deadline task
@@ -67,9 +64,6 @@ public class TaskList implements Serializable{
         }
             /***
              * create new event task
-             * @param name
-             * @param done
-             * @param at
              * @param name name of the task
              * @param done whether the task is done
              * @param at date and time of event task

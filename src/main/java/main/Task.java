@@ -8,11 +8,17 @@ public class Task implements Serializable {
     protected String taskName;
     protected boolean taskDone;
 
+    /***
+     * deaful constructor
+     */
     public Task(String taskName, boolean taskDone) {
         this.taskName = taskName;
         this.taskDone = taskDone;
     }
 
+    /***
+     * default constructor
+     */
     public Task() {
 
     }
