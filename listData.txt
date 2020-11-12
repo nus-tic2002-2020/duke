@@ -1,52 +1,43 @@
 T
-study math
+eat lunch
 false
 T
-study programming
+netflix
+false
+D
+quiz12
+false
+2020-01-1 00:00AM
+D
+quiz1
+true
+2020-01-1 11:00AM
+T
+drink water
+true
+D
+bubble tea
+false
+2020-11-21 18:00PM
+T
+eat fruits
 false
 T
-walk the dog
+buffet 
 false
 D
-programming quiz
+quiz6
 false
-2020-01-01
+2020-11-13 12:59PM
+E
+concert
+false
+2021-06-1 06:00PM
 D
-math quiz
+11.12 sales
 false
-2010-01-01
-T
-eat 
+2020-11-12 20:00PM
+E
+among us
 false
-T
-@!212
-false
-T
-(*@&^!%@
-false
-T
-a
-false
-D
-buffet
-false
-2020-01-01
-T
-sleep
-false
-D
-drink tehbing
-false
-2020-01-01
-D
-krav maga
-false
-2020-01-01
-D
-softtess
-false
-2021-01-01
-D
-return book
-false
-2020-11-08
+2020-11-14 07:00AM
