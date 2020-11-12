@@ -1,15 +1,26 @@
 package tasklist;
 
-import java.text.ParseException;
-
 public class Task {
-    protected String description;
-    protected boolean isDone;
+    public boolean isDone;
     public String Type = "Task";
+    protected String description;
+    protected int taskIndex;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+    }
+
+    public int getTaskIndex() {
+        return taskIndex;
+    }
+
+    public void setTaskIndex(int i) {
+        taskIndex = i;
+    }
+
+    public void editDone(boolean isItDone) {
+        isDone = isItDone;
     }
 
     public String getStatusIcon() {
@@ -22,6 +33,14 @@ public class Task {
 
     public void markDone() {
         isDone = true;
+    }
+
+    public boolean find(String findDescription) {
+        if (description.contains(findDescription)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public String saveFormat() {

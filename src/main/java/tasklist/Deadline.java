@@ -1,20 +1,33 @@
 package tasklist;
 
-public class Deadline extends Task {
-    protected String byDate;
+//import java.sql.Date;
 
-    public Deadline(String description, String byDate) {
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class Deadline extends Task {
+    protected LocalDateTime byDate;
+    protected String outputDate;
+    protected DateTimeFormatter inputDateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+    protected DateTimeFormatter outputDateFormat = DateTimeFormatter.ofPattern(("MM dd yyyy HH:mm"));
+
+    public Deadline(String description, LocalDateTime byDate) {
         super(description);
         this.byDate = byDate;
+        outputDate = byDate.format(outputDateFormat);
     }
+
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + this.byDate + ")";
+        return "[D]" + super.toString() + " (by: " + byDate.format(inputDateFormat) + ")";
+
     }
 
     @Override
-    public String saveFormat() { return "D" + super.saveFormat() + "|" + this.byDate; }
+    public String saveFormat() {
+        return "D" + super.saveFormat() + "|" + outputDate;
+    }
 
 }
 
