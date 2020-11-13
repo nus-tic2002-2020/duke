@@ -45,10 +45,19 @@ public class TaskList {
     }
     public String markTaskAsDone(int option) {
             Task currTask = taskList.get(option);
-            currTask.isDone = true;
-            String doneMsg = "Task marked as done: \r\n" + currTask.toString();
-            System.out.println(doneMsg);
+            String doneMsg="";
+            if (currTask.isDone==false) {
+                currTask.isDone = true;
+                doneMsg = "Task marked as done: \r\n" + currTask.toString();
+                System.out.println(doneMsg);
+            }
+            else {
+                currTask.isDone = false;
+                doneMsg = "Task undone: \r\n" + currTask.toString();
+                System.out.println(doneMsg);
+            }
             return doneMsg;
+
 
     }
     public String assignPriority(int option, int priority) {

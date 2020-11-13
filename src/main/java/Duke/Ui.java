@@ -71,10 +71,5 @@ public class Ui {
         System.out.println(errorMessage);
         return errorMessage;
     }
-    public static String noSuchCommand() {
-        String errorMessage = "Command does not exists!";
-        System.out.println(errorMessage);
-        return errorMessage;
-    }
 
 }

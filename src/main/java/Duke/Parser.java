@@ -33,6 +33,8 @@ public class Parser {
                     return new PriorityCommand(argStr);
                 case "findp":
                     return new FindPriorityCommand(Integer.parseInt(argStr));
+                case "help":
+                    return new HelpCommand();
                 default:
                     return new WrongCommand(commandStr);
             }
