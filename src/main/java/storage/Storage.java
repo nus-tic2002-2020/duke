@@ -15,6 +15,7 @@ import java.util.Scanner;
  * prints out error when catches IOExpection
  */
 public class Storage {
+
     public static void writeToFile(String fileContent) {
 
         try {

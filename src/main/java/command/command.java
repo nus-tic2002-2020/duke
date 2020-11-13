@@ -99,11 +99,11 @@ public class command {
      */
     public static void eventTask(String userInput) throws StringIndexOutOfBoundsException, DateTimeParseException {
         try {
-        int divPosition = userInput.indexOf("/");
-        String eventDescription = userInput.substring(6, divPosition - 1);
-        CheckEmpty(eventDescription);
-        String dateTime = userInput.substring(divPosition + 4);
-        DateTimeFormatter inputDateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+            int divPosition = userInput.indexOf("/");
+            String eventDescription = userInput.substring(6, divPosition - 1);
+            CheckEmpty(eventDescription);
+            String dateTime = userInput.substring(divPosition + 4);
+            DateTimeFormatter inputDateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
 
 
             LocalDateTime formattedDate = LocalDateTime.parse(dateTime, inputDateFormat);
