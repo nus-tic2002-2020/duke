@@ -57,21 +57,34 @@ public class Parser {
         return localDate;
     }
 
-    public LocalDate getToDate() {
+    public LocalDate getToDate() throws DukeException {
+        int dateIndex = this.getDateIndex() + 1;
+
+        if (dateIndex == (inputs.length + 1) || dateIndex == inputs.length) {
+            throw new DukeException("  ☹ OOPS!!! Please input a timing for this task. " +
+                    "Please follow the format: yyyy-mm-dd");
+        }
+
         String toDate = inputs[inputs.length-1];
         LocalDate localToDate = LocalDate.parse(toDate);
 
         return localToDate;
     }
 
-    public LocalDate getFromDate() {
+    public LocalDate getFromDate() throws DukeException {
+        int dateIndex = this.getDateIndex() + 1;
+
+        if (dateIndex == (inputs.length + 1) || dateIndex == inputs.length) {
+            throw new DukeException("  ☹ OOPS!!! Please input a timing for this task. " +
+                    "Please follow the format: yyyy-mm-dd");
+        }
         String fromDate = inputs[inputs.length-2];
         LocalDate localFromDate = LocalDate.parse(fromDate);
 
         return localFromDate;
     }
 
-    public LocalTime getTime() throws DukeException {
+    public LocalTime getTime() {
         int timeIndex = this.getDateIndex() + 2;
 
         LocalTime timing = LocalTime.parse(inputs[timeIndex]);

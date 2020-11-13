@@ -136,7 +136,7 @@ public class Duke {
             LocalDate fromDate = parser.getFromDate();
             LocalDate toDate = parser.getToDate();
 
-            tasks.addTask(new doWithinPeriod(description, "P", fromDate, toDate, false));
+            tasks.addTask(new DoWithinPeriod(description, "P", fromDate, toDate, false));
 
         } else {
             throw new DukeException("  ☹ OOPS!!! I'm sorry, but I don't know what that means :-(");

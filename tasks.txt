@@ -1,7 +1,6 @@
-E|✘|New Year |Dec 31 2020|23:59
-D|✘|exam is coming |Dec 1 2020|09:00
-T|✓|study
-E|✘|go to city |Oct 11 2000|12:10
-D|✓|closing |Jan 1 2000|01:10
-T|✘|study math
-E|✘|math test |Dec 12 2019|12:00
+T|✘|drawing
+E|✘|dinner|Oct 1 2020|12:12
+D|✓|submit report|Feb 11 2020|23:59
+E|✘|dinner with friends|Oct 10 2020|10:10
+D|✘|homework|Nov 11 2020|12:11
+P|✘|testing lol|Dec 12 2020|Dec 12 2022

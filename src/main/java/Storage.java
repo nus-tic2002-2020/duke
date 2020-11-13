@@ -85,6 +85,24 @@ public class Storage {
                     }
 
                     break;
+                case "P":
+                    String fromDate = inputs[3];
+                    String toDate = inputs[4];
+
+                    DateTimeFormatter fromDateFormatter = DateTimeFormatter.ofPattern("MMM d yyyy");
+                    LocalDate fromLocalDate = LocalDate.parse(fromDate, fromDateFormatter);
+
+                    DateTimeFormatter toDateFormatter = DateTimeFormatter.ofPattern("MMM d yyyy");
+                    LocalDate toLocalDate = LocalDate.parse(toDate, toDateFormatter);
+
+
+                    if (isDone.equals("✘")) {
+                        tasks.add(new DoWithinPeriod(description, taskType, fromLocalDate, toLocalDate,false));
+                    } else {
+                        tasks.add(new DoWithinPeriod(description, taskType, fromLocalDate, toLocalDate, true));
+                    }
+
+                    break;
                 case "T":
                     if (isDone.equals("✘")) {
                         tasks.add(new ToDo(description, taskType, false));

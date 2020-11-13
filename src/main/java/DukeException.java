@@ -1,6 +1,16 @@
 public class DukeException extends Exception{
     String message;
 
+    public DukeException(String message) {
+        this.message = message;
+    }
+
+    public String toString(){
+        return message;
+    }
+
+    /*String message;
+
     public DukeException(String x){
         message = x;
     }
@@ -15,10 +25,10 @@ public class DukeException extends Exception{
             exceptionMessage = "  ☹ OOPS!!! Please input a timing for this task";
         }
         else{
-            exceptionMessage = "  ☹ OOPS!!! I'm sorry, but I don't know what that means :-(";
+            exceptionMessage = "  ☹ OOPS!!! I'm sorry, but I don't know what that means lol :-(";
         }
 
         return exceptionMessage;
-    }
+    }*/
 
 }
