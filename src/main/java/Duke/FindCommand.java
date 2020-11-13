@@ -12,7 +12,10 @@ public class FindCommand extends Command {
      * @param storage  overall storage object
      */
     public String execute(TaskList taskList, Ui ui, Storage storage) {
-        try {
+        if (details.trim().isEmpty()) {
+            return ui.showFindError();
+        }
+        else {
             String findTask = "";
             int counter = 0;
             for (Task task : taskList.taskList) {
@@ -23,9 +26,6 @@ public class FindCommand extends Command {
             }
             System.out.println(findTask);
             return findTask;
-        }
-        catch(Exception e) {
-            return ui.showFindError();
         }
     }
 }

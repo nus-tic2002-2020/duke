@@ -71,5 +71,10 @@ public class Ui {
         System.out.println(errorMessage);
         return errorMessage;
     }
+    public String showFindPriorityError() {
+        String errorMessage = "Keyword cannot be empty and must be an integer";
+        System.out.println(errorMessage);
+        return errorMessage;
+    }
 
 }
