@@ -27,7 +27,7 @@ public class DukeApp {
         //if string doesn't equal to bye
         while (!input.equals("bye")) {
             input = ui.getUserInput();
-            System.out.println(input);
+            //System.out.println(input);
             parser.parseCommand(input, ui, task, storage);
 
         }
