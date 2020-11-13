@@ -12,7 +12,7 @@ public class Task {
 
     private String description;
     private boolean isDone;
-    private static int cumulatedTasksAdded = 0;
+    protected static int cumulatedTasksAdded = 0;
 
 
     /**
@@ -31,8 +31,8 @@ public class Task {
      * If true, it means the task is comepleted.
      * @param value This is the boolean value which indicates if the task is comepleted or not
      */
-    public void changeDoneTo(boolean value){
-        this.isDone = value;
+    public void changeDoneTo(boolean isDone){
+        this.isDone = isDone;
     }
 
 

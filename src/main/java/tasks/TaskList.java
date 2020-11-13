@@ -110,7 +110,6 @@ public class TaskList {
      * @param secondPart This is meant for Deadlines and Events tasks.
      * @throws DukeException This happens when the taskType is not one of the subclasses.
      */
-    //TODO: Need to check for copies
     public void addTask(String taskType, String description, String secondPart) throws DukeException {
         int index = 0;
         int size = 0;

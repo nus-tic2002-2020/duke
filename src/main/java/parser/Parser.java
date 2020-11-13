@@ -13,11 +13,7 @@ import exceptions.DukeException;
 public class Parser {
 
     /**
-     *
-     *
-     * @param
-     * @return
-     * @throws
+     * Constructor for Parser
      */
     public Parser(){
     }
@@ -26,8 +22,8 @@ public class Parser {
      *
      *
      * @param
-     * @return
-     * @throws
+     * @return Command
+     * @throws DukeException, NumberFormatException
      */
     public static Command parse(String input) throws DukeException, NumberFormatException {
         String description = "";

@@ -19,7 +19,7 @@ public class Storage {
     private FileReader fr;
     private BufferedReader br;
 
-    ArrayList<String[]> parsedFile;
+    private ArrayList<String[]> parsedFile;
 
 
     /**

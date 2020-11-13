@@ -55,4 +55,15 @@ public class AddCommand extends Command{
         System.out.println("Adding a Deadline task: event [description] /at [location]");
     }
 
+    public String getTaskType(){
+        return this.taskType;
+    }
+
+    public String getTaskDescription(){
+        return this.taskDescription;
+    }
+
+    public String getTaskSecondPart(){
+        return this.taskSecondPart;
+    }
 }

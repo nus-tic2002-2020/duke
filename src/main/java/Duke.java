@@ -11,9 +11,7 @@ import java.io.IOException;
 
 //TODO: CLEAN UP!
 //TODO: Exceptions - Probably could double check more,
-// Add more JUnit Testing - Will only focus more on Parser and TaskList
 // Work on Individual Features more
-// Make Help Command easier to read etc
 // Double check on assertions
 
 // Individual Features:
@@ -27,6 +25,7 @@ public class Duke {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
+    private Parser parser;
 
 
     /**
@@ -39,6 +38,7 @@ public class Duke {
     public Duke(String filePath) throws DukeException, IOException {
         ui = new Ui();
         storage = new Storage(filePath);
+        parser = new Parser();
         try {
             tasks = new TaskList(storage.load());
         } catch (DukeException e) {
@@ -55,13 +55,16 @@ public class Duke {
      * @throws IOException
      */
     public void run() throws IOException {
+        Command c;
+        String input;
         ui.printIntro();
+
         boolean isRunning = true;
         while (isRunning) {
             try {
-                String input = ui.scanForInput();
-                ui.showLine(); // show the divider line ("_______")
-                Command c = Parser.parse(input);
+                input = ui.scanForInput();
+                ui.showLine();
+                c = parser.parse(input);
                 c.execute(tasks, ui, storage);
                 isRunning = c.isRunning();
             } catch (DukeException e) {
