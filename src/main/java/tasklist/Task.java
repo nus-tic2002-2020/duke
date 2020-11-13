@@ -39,11 +39,7 @@ public class Task {
     }
 
     public boolean find(String findDescription) {
-        if (description.contains(findDescription)) {
-            return true;
-        } else {
-            return false;
-        }
+        return description.contains(findDescription);
     }
 
     public String saveFormat() {

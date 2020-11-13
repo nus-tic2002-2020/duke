@@ -37,7 +37,7 @@ public class UI {
     /**
      * @param listTask print out list of task
      */
-    public static void printUserList( ArrayList<Task> listTask) {
+    public static void printUserList(ArrayList<Task> listTask) {
         printLine();
 
         for (int i = 0; i < listTask.size(); i++) {
@@ -46,7 +46,7 @@ public class UI {
         printLine();
     }
 
-    public static void printInputError () {
+    public static void printInputError() {
         showError();
         System.out.println("\tLet me help you. Type h or help");
     }

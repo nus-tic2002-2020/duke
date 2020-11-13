@@ -43,11 +43,10 @@ public class command {
     }
 
     /**
-     *
      * @param userInput mark the selected task as done
-     * @throws DukeException when error occurs
+     * @throws DukeException         when error occurs
      * @throws NumberFormatException when error occurs
-     * @throws NullPointerException when error occurs
+     * @throws NullPointerException  when error occurs
      */
     public static void doneTask(String userInput) throws StringIndexOutOfBoundsException, NumberFormatException, NullPointerException {
         try {
@@ -73,6 +72,7 @@ public class command {
 
     /**
      * add to do task to list of task
+     *
      * @param userInput adds  to do description
      */
     public static void todoTask(String userInput) {
@@ -93,17 +93,18 @@ public class command {
 
     /**
      * add event to the list of task
+     *
      * @param userInput add event description
      * @throws StringIndexOutOfBoundsException
      * @throws DateTimeParseException
      */
     public static void eventTask(String userInput) throws StringIndexOutOfBoundsException, DateTimeParseException {
         try {
-        int divPosition = userInput.indexOf("/");
-        String eventDescription = userInput.substring(6, divPosition - 1);
-        CheckEmpty(eventDescription);
-        String dateTime = userInput.substring(divPosition + 4);
-        DateTimeFormatter inputDateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
+            int divPosition = userInput.indexOf("/");
+            String eventDescription = userInput.substring(6, divPosition - 1);
+            CheckEmpty(eventDescription);
+            String dateTime = userInput.substring(divPosition + 4);
+            DateTimeFormatter inputDateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
 
 
             LocalDateTime formattedDate = LocalDateTime.parse(dateTime, inputDateFormat);
@@ -122,9 +123,10 @@ public class command {
 
     /**
      * adds deadline task to list of task
+     *
      * @param userInput adds task description, date and time
      * @throws StringIndexOutOfBoundsException prints error message
-     * @throws DateTimeParseException prints the format to use
+     * @throws DateTimeParseException          prints the format to use
      */
 
     public static void deadlineTask(String userInput) throws StringIndexOutOfBoundsException, DateTimeParseException {
@@ -151,11 +153,12 @@ public class command {
 
     /**
      * delete task from list of task
+     *
      * @param userInput deletes task from list of task
      */
     public static void deleteTask(String userInput) {
 
-        int numTask = Integer.valueOf(userInput.substring(7, userInput.length()));
+        int numTask = Integer.valueOf(userInput.substring(7));
         Task t = TaskList.listTask.get(numTask - 1);
         TaskList.listTask.remove(numTask - 1);
         System.out.println("\tNoted. I've removed this task:");
@@ -166,11 +169,12 @@ public class command {
 
     /**
      * find keywords from list of task
+     *
      * @param userInput types in the keywords to search
      * @throws StringIndexOutOfBoundsException
      */
     public static void findTask(String userInput) throws StringIndexOutOfBoundsException {
-        try{
+        try {
             String findDescription = userInput.substring(5);
             CheckEmpty(findDescription);
             ArrayList<Task> result = new ArrayList<Task>();
@@ -178,9 +182,9 @@ public class command {
                 if (task.find(findDescription)) {
                     result.add(task);
                 }
-                UI.printResultSearch(result);
             }
-        }catch (StringIndexOutOfBoundsException e){
+            UI.printResultSearch(result);
+        } catch (StringIndexOutOfBoundsException e) {
             UI.printInputError();
         }
 
@@ -188,6 +192,7 @@ public class command {
 
     /**
      * This prints out help page for user information
+     *
      * @param userInput enters 'h' or help
      */
     public static void helpTask(String userInput) {
@@ -196,6 +201,7 @@ public class command {
 
     /**
      * This is to check that the description is not empty
+     *
      * @param description is not empty
      * @throws StringIndexOutOfBoundsException
      */

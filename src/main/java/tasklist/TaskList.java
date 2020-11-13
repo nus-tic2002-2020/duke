@@ -56,8 +56,7 @@ public class TaskList {
             // find task
             else if (userInput.startsWith("find")) {
                 command.findTask(userInput);
-            }
-            else if (userInput.startsWith("help") || userInput.equals("h")) {
+            } else if (userInput.startsWith("help") || userInput.equals("h")) {
                 command.helpTask(userInput);
             }
             // save task on duke.txt

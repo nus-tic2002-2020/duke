@@ -34,8 +34,9 @@ public class Storage {
     /**
      * This separates the event and deadline task to different variables
      * and add to list of task
-     * @param taskType to identify type of task
-     * @param taskDes to identify task description
+     *
+     * @param taskType     to identify type of task
+     * @param taskDes      to identify task description
      * @param taskDateTime to convert to LocalDateTime
      * @return task to list of task
      */
@@ -98,6 +99,7 @@ public class Storage {
 
     /**
      * This read the saved file into memory
+     *
      * @return list of task
      * @throws FileNotFoundException when file not found
      */
