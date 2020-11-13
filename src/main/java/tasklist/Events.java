@@ -3,6 +3,11 @@ package tasklist;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ *  user key in event and description.
+ *  adds to list of task and prints out
+ *  the event description, date and time.
+ */
 
 public class Events extends Task {
 

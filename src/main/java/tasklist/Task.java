@@ -1,5 +1,8 @@
 package tasklist;
 
+/**
+ * Task inherit by To do, Event and Deadline task
+ */
 public class Task {
     public boolean isDone;
     public String Type = "Task";

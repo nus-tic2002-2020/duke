@@ -1,5 +1,8 @@
 package tasklist;
 
+/**
+ * description adds to do list of task
+ */
 public class Todo extends Task {
     protected boolean isDone;
 

@@ -11,6 +11,9 @@ public class UI {
         System.out.println("\t____________________________________________________________");
     }
 
+    /**
+     *
+     */
     public static void showWelcome() {
 
         String logo = " ____        _        \n"
@@ -31,13 +34,21 @@ public class UI {
         printLine();
     }
 
-    public static void printUserList(ArrayList<Task> listTask) {
+    /**
+     * @param listTask print out list of task
+     */
+    public static void printUserList( ArrayList<Task> listTask) {
         printLine();
 
         for (int i = 0; i < listTask.size(); i++) {
             System.out.println("\t" + (i + 1) + ". " + listTask.get(i).toString());
         }
         printLine();
+    }
+
+    public static void printInputError () {
+        showError();
+        System.out.println("\tLet me help you. Type h or help");
     }
 
     public static void printListEmpty() {
@@ -48,6 +59,9 @@ public class UI {
         System.out.println("\tSuccessfully wrote to the file.");
     }
 
+    /**
+     * @param listItems prints out the number of task entered in the list
+     */
     public static void printNoOfTask(ArrayList<Task> listItems) {
         System.out.println("\tNow you have " + (listItems.size()) + " tasks in the list.");
         printLine();
@@ -60,7 +74,7 @@ public class UI {
 
     public static void printEmptyToDoException() {
         printLine();
-        System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
+        System.out.println("☹ OOPS!!! Incomplete command. The description cannot be empty.");
         printLine();
     }
 
@@ -72,7 +86,7 @@ public class UI {
 
     public static void printDateTimeFormatError() {
         printLine();
-        System.out.println("☹ OOPS!!! Format to key in -> dd/mm/yyyy HHmm.");
+        System.out.println("☹ OOPS!!! Format to key in -> dd/mm/yyyy HHmm");
         printLine();
     }
 }

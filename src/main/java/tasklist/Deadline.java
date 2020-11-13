@@ -5,6 +5,11 @@ package tasklist;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ *  user key in deadline and description.
+ *  adds to list of task and prints out
+ *  the deadline description, date and time.
+ */
 public class Deadline extends Task {
     protected LocalDateTime byDate;
     protected String outputDate;
