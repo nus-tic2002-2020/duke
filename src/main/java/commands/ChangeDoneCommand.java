@@ -13,7 +13,7 @@ import tasks.*;
 
 public class ChangeDoneCommand extends Command{
     private int option = 0;
-    private boolean isDone = false;
+    private boolean isDone;
 
     /**
      * This is the constructor of the DoneCommand.
@@ -22,6 +22,7 @@ public class ChangeDoneCommand extends Command{
      */
     public ChangeDoneCommand(int option, boolean isDone){
         this.option = option;
+        this.isDone = isDone;
     }
 
     /**

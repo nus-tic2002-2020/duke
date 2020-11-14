@@ -1,8 +1,11 @@
 package tasks;
 
 
+
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import exceptions.DukeException;
 
@@ -45,21 +48,42 @@ public class TaskList {
         }
 
         for(int i = 0; i < size; i++){
-            switch(parsedFile.get(i)[0]){
-                case "O":
-                    this.tasks.add(new Task(parsedFile.get(i)[2]));
-                    break;
-                case "T":
-                    this.tasks.add(new ToDo(parsedFile.get(i)[2]));
-                    break;
-                case "D":
-                    this.tasks.add(new Deadline(parsedFile.get(i)[2], parsedFile.get(i)[3]  ));
-                    break;
-                case "E":
-                    this.tasks.add(new Event(parsedFile.get(i)[2],parsedFile.get(i)[3]) );
-                    break;
-                default:
-                    throw new DukeException("Error: File did not show task format.");
+            switch (parsedFile.get(i)[0]) {
+                case "O" -> this.tasks.add(new Task(parsedFile.get(i)[2]));
+                case "T" -> this.tasks.add(new ToDo(parsedFile.get(i)[2]));
+                case "D" -> {
+                    try {
+                        this.tasks.add(new Deadline(parsedFile.get(i)[2],
+                                (LocalDateTime.parse(parsedFile.get(i)[3], DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"))
+                                        .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")))));
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Timing for added deadline invalid," + " using the time now");
+                        this.tasks.add(new Deadline(parsedFile.get(i)[2],
+                                LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))));
+                    }
+                }
+
+                case "E" -> {
+                    try{
+                        int index;
+                        String at;
+                        String end;
+                        index = parsedFile.get(i)[3].lastIndexOf(" - ");
+                        end = parsedFile.get(i)[3].substring(index);
+                        at = parsedFile.get(i)[3].substring(0, index);
+
+                        this.tasks.add(new Event(parsedFile.get(i)[2], (LocalDateTime.parse(at, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm"))
+                                .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))) + end));
+
+                    }catch(DateTimeParseException e){
+                        System.out.println("Timing for added event invalid," + " using the time now");
+                        this.tasks.add(new Event( parsedFile.get(i)[2],
+                                LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")) + " - " +
+                                        LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
+                    }
+
+                }
+                default -> throw new DukeException("Error: File did not show task format.");
             }
 
             if(parsedFile.get(i)[1].equals("1")){
@@ -68,6 +92,7 @@ public class TaskList {
 
         }
 
+        //System.out.println("Loaded Tasks from File");
     }
 
 
@@ -111,33 +136,14 @@ public class TaskList {
      * @throws DukeException This happens when the taskType is not one of the subclasses.
      */
     public void addTask(String taskType, String description, String secondPart) throws DukeException {
-        int index = 0;
-        int size = 0;
 
-        //if(memo.contains(tasks.Task(input)) == true){
-        //System.out.println("Your task is already in the memory.");
-        //return;
-        //}
 
-        switch(taskType){
-            case "task":
-                this.tasks.add( new Task (description) );
-                break;
-
-            case "todo":
-                this.tasks.add(new ToDo(description) );
-                break;
-
-            case "event":
-                this.tasks.add( new Event(description, secondPart) );
-                break;
-
-            case "deadline":
-                this.tasks.add(new Deadline(description, secondPart) );
-                break;
-
-            default:
-                throw new DukeException("Error: Incorrect Task Type in addToList Method");
+        switch (taskType) {
+            case "task" -> this.tasks.add(new Task(description));
+            case "todo" -> this.tasks.add(new ToDo(description));
+            case "event" -> this.tasks.add(new Event(description, secondPart));
+            case "deadline" -> this.tasks.add(new Deadline(description, secondPart));
+            default -> throw new DukeException("Error: Incorrect Task Type in addToList Method");
         }
 
     }
@@ -150,11 +156,27 @@ public class TaskList {
     public void findList(String keyword){
         int size = this.tasks.size();
         int total = 0;
+        String classType = "";
+        switch(keyword){
+            case "Task":
+                classType = Task.class.toString();
+                break;
+            case "ToDo":
+                classType = ToDo.class.toString();
+                break;
+            case "Deadline":
+                classType = Deadline.class.toString();
+                break;
+            case "Event":
+                classType = Event.class.toString();
+                break;
+
+        }
 
         System.out.println(System.lineSeparator() + "Tasks that contain the keyword \"" + keyword + "\":");
         for(int i = 0; i < size; i ++){
 
-            if(this.tasks.get(i).toString().contains(keyword)){
+            if(classType.equals(this.tasks.get(i).getClass().toString()) || this.tasks.get(i).toString().contains(keyword) ){
                 System.out.println(System.lineSeparator() + (total+1) + "." + this.tasks.get(i).toString());
             }
 
@@ -167,8 +189,7 @@ public class TaskList {
      *
      */
     public void printList() {
-        int size = 0;
-        size = this.tasks.size();
+        int size = this.tasks.size();
         if(size == 0){
             System.out.println(System.lineSeparator() + "Task List is empty.");
             return;

@@ -43,12 +43,13 @@ public class Parser {
             throw new DukeException("☹ OOPS!!! You did not enter any command");
         }
 
+        if(input.equals("bye")){
+            return new ExitCommand();
+        }
+
         switch(commandWord){
             case "list":
                 return new ListCommand();
-
-            case "bye":
-                return new ExitCommand();
 
             case "done":
                 option = Integer.parseInt(input.replaceFirst("done", "").trim());
@@ -66,28 +67,34 @@ public class Parser {
 
             case "todo":
                 description = input.replaceFirst("todo", "").stripLeading();
-                if(input.isEmpty() == true) {
-                    System.out.println("☹ OOPS!!! The description of a Todo cannot be empty.");
-                }
                 return new AddCommand("todo", description, secPart);
 
             case "event":
-                index = input.indexOf("/at");
-                secPart = input.substring(index);
-                secPart = secPart.replaceFirst( "/at", "").stripLeading();
+                try{
+                    index = input.indexOf("/at");
+                    secPart = input.substring(index);
+                    secPart = secPart.replaceFirst( "/at", "").stripLeading();
 
-                description = input.substring(0,index - 1);
-                description = description.replaceFirst("event", "").stripLeading();
-                return new AddCommand("event", description, secPart);
+                    description = input.substring(0,index);
+                    description = description.replaceFirst("event", "").stripLeading();
+                }catch(IndexOutOfBoundsException e){
+                    System.out.println("Incomplete Command for Add Event, will autofill");
+                }finally {
+                    return new AddCommand("event", description, secPart);
+                }
 
             case "deadline":
-                index = input.indexOf("/by");
-                secPart = input.substring(index);
-                secPart = secPart.replaceFirst( "/by", "").stripLeading();
-
-                description = input.substring(0,index - 1);
-                description = description.replaceFirst("deadline", "").stripLeading();
-                return new AddCommand("deadline", description, secPart);
+                try{
+                    index = input.indexOf("/by");
+                    secPart = input.substring(index);
+                    secPart = secPart.replaceFirst( "/by", "").stripLeading();
+                    description = input.substring(0,index);
+                    description = description.replaceFirst("deadline", "").stripLeading();
+                }catch(IndexOutOfBoundsException e){
+                    System.out.println("Incomplete Command for Add Deadline, will autofill");
+                }finally {
+                    return new AddCommand("deadline", description, secPart);
+                }
 
             case "delete":
                 option = Integer.parseInt(input.replace("delete", "").trim());
@@ -98,12 +105,12 @@ public class Parser {
                 return new FindCommand(keyword);
 
             case "reschedule":
-                index = input.indexOf("/by");
+                index = input.indexOf("/new");
                 secPart = input.substring(index);
-                secPart = secPart.replaceFirst( "/by", "").stripLeading();
+                secPart = secPart.replaceFirst( "/new", "").stripLeading();
 
                 option = Integer.parseInt
-                        (input.substring(0,index - 1).replaceFirst("reschedule", "").trim());
+                        (input.substring(0,index).replaceFirst("reschedule", "").trim());
                 return new RescheduleCommand(option,secPart);
 
             default:

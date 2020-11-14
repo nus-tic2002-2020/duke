@@ -99,7 +99,7 @@ public class Storage {
     /**
      * This is a mutator that loads the task lists from the file.
      * It will return a list of tasks in form of an ArrayList of Strings. These Strings will be used for
-     * the initialisation of Task List
+     * the initialisation of TaskList
      * @return a list of tasks that are written as strings
      */
     public ArrayList<String[]> load() throws IOException{

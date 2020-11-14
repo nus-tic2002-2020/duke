@@ -60,7 +60,7 @@ public class Task {
      */
     public String toString(){
         String symbol;
-        if(getIsDone() == true){
+        if(this.isDone == true){
             symbol = "\u2713";
         }else{
             symbol = "\u2717";
