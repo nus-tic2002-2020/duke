@@ -15,8 +15,8 @@ import java.time.format.DateTimeParseException;
 
 public class ScheduleCommand extends Command {
     public static final String COMMAND_WORD = "schedule";
-    public static final String SCHEDULE_MSG = "\tHere are the schedule tasks in your list: ";
-    public static final String SCHEDULE_MSG2 = "\t☹ OOPS!!! You have nothing on that day yet.";
+    public static final String SCHEDULE_MSG = "Here are the schedule tasks in your list:";
+    public static final String SCHEDULE_MSG2 = "You have nothing on that day yet.";
 
     /**
      * Creates ScheduleCommand and initialise the isExit boolean value and description according to user input.
@@ -43,11 +43,10 @@ public class ScheduleCommand extends Command {
         List<String> matchedTasksList = new ArrayList<>();
 
         if (description.substring(8).equals("")) {
-            throw new DukeException("\t☹ OOPS!!! The date of schedule cannot be empty.\n");
+            throw new DukeException("\tThe date of schedule cannot be empty.\n");
         }
         description = description.substring(9);
         date = stringToDate(description);  //date from user
-        System.out.println("\t____________________________________________________________");
         for (int i = 0; i < taskList.length(); i++) {
             Task task = taskList.getATask(i);
             if (task.getDate().toLocalDate().equals(date)) {
@@ -56,14 +55,35 @@ public class ScheduleCommand extends Command {
             }
         }
         if (isMatch) {
-            System.out.println(SCHEDULE_MSG);
-            for (int i = 0; i < matchedTasksList.size(); i++) {
-                System.out.println("\t" + (i + 1) + ". " + matchedTasksList.get(i));
-            }
+            ui.showOutputToUser(SCHEDULE_MSG + getIndexedList(matchedTasksList));
         } else {
-            System.out.println(SCHEDULE_MSG2);
+            ui.showOutputToUser(SCHEDULE_MSG2);
         }
-        System.out.println("\t____________________________________________________________");
+    }
+
+    /**
+     * Returns the task with index and description accordingly.
+     * @param indexToShow   The index of the task.
+     * @param task          The task description.
+     * @return String       The task with index in string type.
+     */
+    public static String getTaskString(int indexToShow, String task){
+        return String.format( "%1$d. %2$s", indexToShow, task);
+    }
+
+    /**
+     * Returns the task in the list with index.
+     * @param tasks The task in the task list.
+     * @return String The task with index in string type.
+     */
+    public static String getIndexedList(List<String> tasks){
+        String output = "";
+        int index = 1;
+        for (String task : tasks){
+            output += "\n\t" + getTaskString(index, task);
+            index++;
+        }
+        return output;
     }
 
     /**
@@ -78,7 +98,7 @@ public class ScheduleCommand extends Command {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             return LocalDate.parse(date, formatter);
         } catch (DateTimeParseException e) {
-            throw new DukeException("The format of the date and time must be in this format: DD/MM/YYYY");
+            throw new DukeException("The format of the date and time is not DD/MM/YYYY");
         }
     }
 }

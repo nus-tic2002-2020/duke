@@ -4,9 +4,9 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class Ui {
-    private static final String LS = System.lineSeparator();
-    private static final String DIVIDER = "\n\t____________________________________________________________\n";
+    private static final String DIVIDER = "\n\t_______________________________________________________\n";
     private final Scanner input;
+    private String output;
 
     public Ui() {
         this(System.in);
@@ -23,18 +23,6 @@ public class Ui {
      */
     private static boolean shouldIgnore(String rawInputLine) {
         return rawInputLine.trim().isEmpty();
-    }
-
-    /**
-     * Reads the user input as command.
-     * @return   String       The user input.
-     */
-    public String getUserCommand() {
-        String fullInputLine = input.nextLine();
-        while (shouldIgnore(fullInputLine)) { // silently consume all ignored lines
-            fullInputLine = input.nextLine();
-        }
-        return fullInputLine;
     }
 
     /**
@@ -58,17 +46,39 @@ public class Ui {
     }
 
     /**
+     * Reads the user input as command.
+     * @return   String       The user input.
+     */
+    public String getUserCommand() {
+        String fullInputLine = input.nextLine();
+        while (shouldIgnore(fullInputLine)) { // silently consume all ignored lines
+            fullInputLine = input.nextLine();
+        }
+        return fullInputLine;
+    }
+
+    /**
      * Prints the output accordingly.
      */
-    public void showOutputToUser(String output) {
-        System.out.println(DIVIDER + "\t" + output + DIVIDER);
+    public String showOutput() {
+        //System.out.println(DIVIDER + "\t" + output + DIVIDER);
+        return this.output;
     }
+
+    public void showOutputToUser(String output){
+        this.output = output;
+    }
+
+//    public String showOutput(){
+//        return this.output;
+//    }
 
     /**
      * Prints exception/error message.
      * @param    errorMessage       The exception/error message.
      */
-    public static void showLoadingError(String errorMessage) {
-        System.out.println(DIVIDER + "\t☹ OOPS!!! " + errorMessage + DIVIDER);
+    public String showLoadingError(String errorMessage) {
+        //System.out.println(DIVIDER + "\t☹ OOPS!!! " + errorMessage + DIVIDER);
+        return DIVIDER + "\u2639 OOPS!!! " + errorMessage + DIVIDER;
     }
 }

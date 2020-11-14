@@ -12,8 +12,8 @@ import java.util.List;
 
 public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
-    public static final String FIND_MSG = "\tHere are the tasks in your list: ";
-    public static final String FIND_MSG2 = "\t☹ OOPS!!! You have no matched task.";
+    public static final String FIND_MSG = "Here are the tasks in your list:";
+    public static final String FIND_MSG2 = "\tYou have no matched task.";
 
     /**
      * Creates ScheduleCommand and initialise the isExit boolean value and description according to user input.
@@ -39,10 +39,9 @@ public class FindCommand extends Command {
         List<String> matchedTasksList = new ArrayList<>();
 
         if (description.substring(4).equals("")) {
-            throw new DukeException("\t☹ OOPS!!! The task description of find cannot be empty.\n");
+            throw new DukeException("\tThe task description of find cannot be empty.\n");
         }
         description = description.substring(4);
-        System.out.println("\t____________________________________________________________");
         for (int i = 0; i < taskList.length(); i++) {
             Task task = taskList.getATask(i);
             if (task.getDescription().contains(description)) {
@@ -51,13 +50,34 @@ public class FindCommand extends Command {
             }
         }
         if (isMatch) {
-            System.out.println(FIND_MSG);
-            for (int i = 0; i < matchedTasksList.size(); i++) {
-                System.out.println("\t" + (i + 1) + ". " + matchedTasksList.get(i));
-            }
+            ui.showOutputToUser(FIND_MSG + getIndexedList(matchedTasksList));
         } else {
-            System.out.println(FIND_MSG2);
+            ui.showOutputToUser(FIND_MSG2);
         }
-        System.out.println("\t____________________________________________________________");
+    }
+
+    /**
+     * Returns the task with index and description accordingly.
+     * @param indexToShow   The index of the task.
+     * @param task          The task description.
+     * @return String       The task with index in string type.
+     */
+    public static String getTaskString(int indexToShow, String task){
+        return String.format( "%1$d. %2$s", indexToShow, task);
+    }
+
+    /**
+     * Returns the task in the list with index.
+     * @param tasks The task in the task list.
+     * @return String The task with index in string type.
+     */
+    public static String getIndexedList(List<String> tasks){
+        String output = "";
+        int index = 1;
+        for (String task : tasks){
+            output += "\n\t" + getTaskString(index, task);
+            index++;
+        }
+        return output;
     }
 }

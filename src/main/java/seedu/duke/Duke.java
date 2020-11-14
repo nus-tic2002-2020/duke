@@ -31,7 +31,7 @@ public class Duke {
      * Runs the Duke and show the output accordingly.
      */
     public void run() {
-        //Ui.showWelcomeMessage();
+        ui.showWelcomeMessage();
         boolean isExit = false;
 
         while (!isExit) {
@@ -47,7 +47,15 @@ public class Duke {
     }
 
     public String getResponse(String input) {
-        return "Duke heard: " + input;
+        //return "Duke heard: " + input;
+        try {
+            //String fullCommand = ui.getUserCommand();
+            Command c = Parser.parserCommand(input);
+            c.execute(taskList, ui, storage);
+            return ui.showOutput();
+        } catch (Exception e) {
+            return ui.showLoadingError(e.getMessage());
+        }
     }
 
     /**

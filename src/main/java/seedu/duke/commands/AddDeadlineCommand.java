@@ -31,22 +31,23 @@ public class AddDeadlineCommand extends Command {
     /**
      * Creates Deadline task, check if date and description is empty prior creating.
      *
-     * @param taskList The array of tasks stored in as an ArrayList.
-     * @param ui       The User Interface (UI) to handle the interaction with user.
-     * @param storage  The storage to handle storing and reading of task from the file.
-     * @throws DukeException To handle error and exception, if the user inputs an empty description.
+     * @param taskList          The array of tasks stored in as an ArrayList.
+     * @param ui                The User Interface (UI) to handle the interaction with user.
+     * @param storage           The storage to handle storing and reading of task from the file.
+     * @throws DukeException    To handle error and exception, if the user inputs an empty description.
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
         if (description.substring(8).equals("")) {
-            throw new DukeException("\t☹ OOPS!!! The description of deadline cannot be empty.\n");
+            throw new DukeException("\tThe description of deadline cannot be empty.\n");
         } else if (description.contains("by  ")) {
-            throw new DukeException("\t☹ OOPS!!! The event date cannot be empty.\n");
+            throw new DukeException("\tThe event date cannot be empty.\n");
         }
         String taskDescription = description.substring(9, description.indexOf("by") - 1);
         String taskDate = description.substring(description.indexOf("by") + 3);
         deadline = new Deadline(taskDescription, stringToDate(taskDate));
         taskList.setTaskList(deadline);
+        assert taskList.length() > 0; //taskList size should > 0 after adding new task
         ui.showOutputToUser(DEADLINE_MSG + deadline.getDescription() + DEADLINE_MSG1 + taskList.length() + DEADLINE_MSG2);
         storage.save();
     }
@@ -63,7 +64,7 @@ public class AddDeadlineCommand extends Command {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
             return LocalDateTime.parse(date, formatter);
         } catch (DateTimeParseException e) {
-            throw new DukeException("The format of the date and time must be in this format: DD/MM/YYYY HHmm");
+            throw new DukeException("The format of the date and time is not DD/MM/YYYY HHmm");
         }
     }
 }

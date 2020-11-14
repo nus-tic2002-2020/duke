@@ -20,7 +20,7 @@ import java.time.format.DateTimeParseException;
 public class Storage {
     private String filePath;
     private File file;
-    private Scanner s;
+    private Scanner scan;
 
     /**
      * Creates a storage and initialise with the file path, catch FileNotFoundException and create new file and directory.
@@ -31,7 +31,7 @@ public class Storage {
         try {
             this.filePath = filePath;
             this.file = new File(filePath);
-            s = new Scanner(file);
+            scan = new Scanner(file);
         } catch (FileNotFoundException e) {
             createFileAndDirectory();
         }
@@ -102,8 +102,8 @@ public class Storage {
         if (!file.exists() || !file.isFile()) {
             return taskList;
         }
-        while (s.hasNextLine()) {
-            String line = s.nextLine();
+        while (scan.hasNextLine()) {
+            String line = scan.nextLine();
             String[] splitLine = line.split(" \\| ");
             switch (splitLine[0]) {
             case "T":
@@ -138,7 +138,7 @@ public class Storage {
      * @return LocalDateTime       The date and time in a LocalDateTime format.
      * @throws DukeException To handle error and exception, if the date loaded from file is not the format (dd/mm/yyyy HHmm).
      */
-    private LocalDateTime stringToDate(String date) throws DukeException {
+    public LocalDateTime stringToDate(String date) throws DukeException {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
             return LocalDateTime.parse(date, formatter);

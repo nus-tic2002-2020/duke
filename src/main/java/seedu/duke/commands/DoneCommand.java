@@ -32,7 +32,7 @@ public class DoneCommand extends Command {
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
         int index = 0;
         if (description.substring(4).equals("")) {
-            throw new DukeException("\t☹ OOPS!!! The description of todo cannot be empty.\n");
+            throw new DukeException("\tThe description of todo cannot be empty.\n");
         }
         index = Integer.parseInt(description.substring(5)) - 1;
         (taskList.getATask(index)).setDone();

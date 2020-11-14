@@ -36,10 +36,11 @@ public class AddTodoCommand extends Command {
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
         if (description.substring(4).equals("")) {
-            throw new DukeException("\t☹ OOPS!!! The description of todo cannot be empty.\n");
+            throw new DukeException("\tThe description of todo cannot be empty.\n");
         }
         todo = new Todo(description.substring(5));
         taskList.setTaskList(todo);
+        assert taskList.length() > 0; //taskList size should > 0 after adding new task
         ui.showOutputToUser(TODO_MSG + todo.getDescription() + TODO_MSG1 + taskList.length() + TODO_MSG2);
         storage.save();
     }

@@ -34,12 +34,12 @@ public class DeleteCommand extends Command {
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
         int index = 0;
         if (description.substring(7).equals("")) {
-            throw new DukeException("\t☹ OOPS!!! Which task to delete? \n");
+            throw new DukeException("\tWhich task to delete?\n");
         }
         index = Integer.parseInt(description.substring(7)) - 1;
         ui.showOutputToUser(DELETE_MSG + "\t" + taskList.getATask(index).getDescription());
         taskList.toDelete(index);
-        ui.showOutputToUser(DELETE_MSG1 + taskList.length() + DELETE_MSG2);
+        //ui.showOutputToUser(DELETE_MSG1 + taskList.length() + DELETE_MSG2);
         storage.save();
     }
 }

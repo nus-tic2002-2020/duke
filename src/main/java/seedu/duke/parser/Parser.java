@@ -41,7 +41,7 @@ public class Parser {
         case ByeCommand.COMMAND_WORD:
             return new ByeCommand(true, userInput);
         default:
-            throw new DukeException("\t☹ OOPS!!! I'm sorry, but I don't know what that means.");
+            throw new DukeException("I'm sorry, but I don't know what that means.");
         }
     }
 }
