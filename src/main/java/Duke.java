@@ -1,10 +1,14 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
+import tasks.*;
+import exception.DukeException;
+
 public class Duke {
 
     private static ArrayList<Task> taskList = new ArrayList<>();
     private static final String[] keywords = {"list", "bye", "done", "deadline", "event", "todo", "delete"};
+
 
     private static void addTask(String echo) {
         String description = "";
@@ -58,7 +62,7 @@ public class Duke {
         return echo.split(" ");
     }
 
-    private static void printList(String echo) {
+    private static void printList() {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < taskList.size(); i++) {
             System.out.println(i+1 + "." + taskList.get(i));
@@ -98,7 +102,7 @@ public class Duke {
 
     public static void main(String[] args) throws DukeException {
         Scanner scan = new Scanner(System.in);
-        String echo = "";
+        String echo;
 
         System.out.println("Hello! I'm Duke\nWhat can I do for you?\n");
 
@@ -110,7 +114,7 @@ public class Duke {
                 break;
             }
             else if (echo.equals("list")) {
-                printList(echo);
+                printList();
             }
             else if (echo.contains("done")) {
                 checkForError(echo);
