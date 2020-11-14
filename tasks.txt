@@ -1,6 +1,8 @@
-T|✘|drawing
+T|✓|drawing
 E|✘|dinner|Oct 1 2020|12:12
 D|✓|submit report|Feb 11 2020|23:59
 E|✘|dinner with friends|Oct 10 2020|10:10
 D|✘|homework|Nov 11 2020|12:11
-P|✘|testing lol|Dec 12 2020|Dec 12 2022
+T|✘|play game
+D|✘|faster|Dec 12 2020|23:49
+P|✘|collection|Dec 1 2020|Dec 21 2020

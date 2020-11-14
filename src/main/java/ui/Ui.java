@@ -1,3 +1,8 @@
+package ui;
+
+import tasks.Task;
+import tasks.TaskList;
+import exception.DukeException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,7 +19,7 @@ public class Ui {
         System.out.println("Hello,\n" + logo + "   I'm Pi,\n" + "   What can I do for you?");
         showLine();
 
-        //ArrayList<Task> tasks = new ArrayList<Task>();
+        //ArrayList<tasks.Task> tasks = new ArrayList<tasks.Task>();
     }
 
     public Ui() {

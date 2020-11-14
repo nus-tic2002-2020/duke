@@ -1,24 +1,28 @@
+package tasks;
+
+import tasks.Task;
+
 import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Deadline extends Task {
-    //private String by;
+public class Event extends Task {
+    //private String time;
     private LocalDate date;
     private LocalTime timing;
 
-    public Deadline(String description, String taskType, LocalDate date, LocalTime timing) {
+    public Event(String description, String taskType, LocalDate date, LocalTime timing){
         super(description, taskType);
         this.date = date;
         this.timing = timing;
-        //this.by = by;
+        //this.time = time;
     }
 
-    public Deadline(String description, String taskType, LocalDate date, LocalTime timing, boolean isDone) {
+    public Event(String description, String taskType, LocalDate date, LocalTime timing, boolean isDone) {
         super(description, taskType, isDone);
         this.date = date;
         this.timing = timing;
-        //this.by = by;
+        //this.time = time;
     }
 
     public String getDate() {
@@ -30,9 +34,9 @@ public class Deadline extends Task {
     }
 
     @Override
-    public String getTaskListInfo() {
-        return super.getTaskListInfo() + " by " + this.getDate() + " " + this.getTiming();
-        //return "[D]" + super.getTaskListInfo() + " (by: " + by + ")";
+    public String getTaskListInfo(){
+        return super.getTaskListInfo() + " at " + this.getDate() + " " + this.getTiming();
+        //return "[E]" + super.getTaskListInfo() + " (at: " + time + ")";
     }
 
     public String formatForFile() {

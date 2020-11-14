@@ -1,4 +1,6 @@
-public class ToDo extends Task{
+package tasks;
+import tasks.ToDo;
+public class ToDo extends Task {
     public ToDo (String description,String taskType){
         super(description, taskType);
     }

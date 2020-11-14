@@ -1,3 +1,7 @@
+package storage;
+
+import tasks.*;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;

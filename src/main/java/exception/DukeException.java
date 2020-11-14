@@ -1,3 +1,5 @@
+package exception;
+
 public class DukeException extends Exception{
     String message;
 
@@ -11,7 +13,7 @@ public class DukeException extends Exception{
 
     /*String message;
 
-    public DukeException(String x){
+    public exception.DukeException(String x){
         message = x;
     }
 

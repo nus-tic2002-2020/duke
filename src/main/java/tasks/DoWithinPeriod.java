@@ -1,7 +1,11 @@
+package tasks;
+
+import tasks.Task;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class DoWithinPeriod extends Task{
+public class DoWithinPeriod extends Task {
     private LocalDate fromDate;
     private LocalDate toDate;
 
