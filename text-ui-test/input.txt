@@ -1,5 +1,29 @@
-hello
-happy
+/help
+jumping jacks
+todo house chores
+deadline school homework /by 20/12/2020 10:10:10
+event birthday dinner /at 10/12/2020 18:30 – 22:00
+deadline essay /by 24/11/2020 23:59:59
+done 1
+done 5
+done 3
+delete 1
+undone 2
 list
-done 2
+running
+reschedule 2 /new 18/12/2020 23:59:59
+reschedule 3 /new 11/12/2020 19:30 – 23:00
+todo Write Deadlines for myself
+find home
+find ho
+find Deadline
+find essay
+list
+/clear
+hopping
+todo math homework
+deadline application /by 30/12/2020 23:59:59
+event dinner with family /at 26/12/2020 17:00 – 21:30
 bye
+
+

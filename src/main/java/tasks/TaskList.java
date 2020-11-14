@@ -1,12 +1,12 @@
 package tasks;
 
 
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+
 import exceptions.DukeException;
 
 
@@ -23,9 +23,8 @@ public class TaskList {
 
     /**
      * This is the constructor of the TaskList. It initialises the ArrayList for tasks.
-     *
      */
-    public TaskList(){
+    public TaskList() {
         this.tasks = new ArrayList<Task>();
     }
 
@@ -36,18 +35,18 @@ public class TaskList {
      *
      * @param parsedFile This is the ArrayList of Strings
      * @throws DukeException This is thrown when the parsedFile does not follow the expected format
-     * for the class Type section.
+     *                       for the class Type section.
      */
-    public TaskList(ArrayList<String[]> parsedFile) throws DukeException{
+    public TaskList(ArrayList<String[]> parsedFile) throws DukeException {
         this.tasks = new ArrayList<Task>();
         int size = 0;
-        try{
+        try {
             size = parsedFile.size();
-        }catch(NullPointerException e){
-            System.out.println("Task List is loading empty storage");
+        } catch (NullPointerException e) {
+            System.out.println("Error: Null pointer from parsedFile in TaskList initialisation");
         }
 
-        for(int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             switch (parsedFile.get(i)[0]) {
                 case "O" -> this.tasks.add(new Task(parsedFile.get(i)[2]));
                 case "T" -> this.tasks.add(new ToDo(parsedFile.get(i)[2]));
@@ -64,7 +63,7 @@ public class TaskList {
                 }
 
                 case "E" -> {
-                    try{
+                    try {
                         int index;
                         String at;
                         String end;
@@ -75,9 +74,9 @@ public class TaskList {
                         this.tasks.add(new Event(parsedFile.get(i)[2], (LocalDateTime.parse(at, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm"))
                                 .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))) + end));
 
-                    }catch(DateTimeParseException e){
+                    } catch (DateTimeParseException | StringIndexOutOfBoundsException e) {
                         System.out.println("Timing for added event invalid," + " using the time now");
-                        this.tasks.add(new Event( parsedFile.get(i)[2],
+                        this.tasks.add(new Event(parsedFile.get(i)[2],
                                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")) + " - " +
                                         LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
                     }
@@ -86,21 +85,21 @@ public class TaskList {
                 default -> throw new DukeException("Error: File did not show task format.");
             }
 
-            if(parsedFile.get(i)[1].equals("1")){
-                this.tasks.get(this.tasks.size()-1).changeDoneTo(true);
+            if (parsedFile.get(i)[1].equals("1")) {
+                this.tasks.get(this.tasks.size() - 1).changeDoneTo(true);
             }
 
         }
 
-        //System.out.println("Loaded Tasks from File");
     }
 
 
     /**
      * This is used to get the size of the Task List.
+     *
      * @return size of Task List
      */
-    public int getSize(){
+    public int getSize() {
         return this.tasks.size();
     }
 
@@ -111,17 +110,18 @@ public class TaskList {
      * @return Task at the specific index of the ArrayList
      */
     //Maybe throw exception
-    public Task get(int index){
+    public Task get(int index) {
         return this.tasks.get(index);
     }
 
 
     /**
      * Delete the Task from Task List at the specific index.
+     *
      * @param index tarts from 0 till (size - 1).  Meant to indicate the Task's index to delete.
      */
     public void deleteTask(int index) throws IndexOutOfBoundsException {
-        if(index < 0 || index >= tasks.size()){
+        if (index < 0 || index >= tasks.size()) {
             throw new IndexOutOfBoundsException();
         }
         this.tasks.remove(index);
@@ -130,20 +130,19 @@ public class TaskList {
     /**
      * This is to add a Task to the Task List. The type of task will depend on the taskType parameter
      *
-     * @param taskType This is meant for the different task subclasses
+     * @param taskType    This is meant for the different task subclasses
      * @param description This is meant for the description/activity of the task
-     * @param secondPart This is meant for Deadlines and Events tasks.
+     * @param secondPart  This is meant for Deadlines and Events tasks.
      * @throws DukeException This happens when the taskType is not one of the subclasses.
      */
     public void addTask(String taskType, String description, String secondPart) throws DukeException {
-
 
         switch (taskType) {
             case "task" -> this.tasks.add(new Task(description));
             case "todo" -> this.tasks.add(new ToDo(description));
             case "event" -> this.tasks.add(new Event(description, secondPart));
             case "deadline" -> this.tasks.add(new Deadline(description, secondPart));
-            default -> throw new DukeException("Error: Incorrect Task Type in addToList Method");
+            default -> throw new DukeException("Error: Incorrect Task Type in addTask Method");
         }
 
     }
@@ -151,33 +150,25 @@ public class TaskList {
 
     /**
      * This is to find Tasks that contain the keyword from the Task List
+     *
      * @param keyword This is the keyword which the Task List will search for containing the keyword
      */
-    public void findList(String keyword){
+    public void findList(String keyword) {
         int size = this.tasks.size();
         int total = 0;
-        String classType = "";
-        switch(keyword){
-            case "Task":
-                classType = Task.class.toString();
-                break;
-            case "ToDo":
-                classType = ToDo.class.toString();
-                break;
-            case "Deadline":
-                classType = Deadline.class.toString();
-                break;
-            case "Event":
-                classType = Event.class.toString();
-                break;
-
-        }
+        String classType = switch (keyword) {
+            case "Task" -> Task.class.toString();
+            case "ToDo" -> ToDo.class.toString();
+            case "Deadline" -> Deadline.class.toString();
+            case "Event" -> Event.class.toString();
+            default -> "";
+        };
 
         System.out.println(System.lineSeparator() + "Tasks that contain the keyword \"" + keyword + "\":");
-        for(int i = 0; i < size; i ++){
+        for (int i = 0; i < size; i++) {
 
-            if(classType.equals(this.tasks.get(i).getClass().toString()) || this.tasks.get(i).toString().contains(keyword) ){
-                System.out.println(System.lineSeparator() + (total+1) + "." + this.tasks.get(i).toString());
+            if (this.tasks.get(i).toString().contains(keyword) || classType.equals(this.tasks.get(i).getClass().toString())) {
+                System.out.println(System.lineSeparator() + (total + 1) + "." + this.tasks.get(i).toString());
             }
 
         }
@@ -185,19 +176,18 @@ public class TaskList {
 
 
     /**
-     *  This prints the Tasks in the Task List
-     *
+     * This prints the Tasks in the Task List
      */
     public void printList() {
         int size = this.tasks.size();
-        if(size == 0){
+        if (size == 0) {
             System.out.println(System.lineSeparator() + "Task List is empty.");
             return;
         }
 
         System.out.println(System.lineSeparator() + "Task List:");
-        for(int i = 0; i < size; i ++){
-            System.out.println(System.lineSeparator() + (i+1) + "." + this.tasks.get(i).toString());
+        for (int i = 0; i < size; i++) {
+            System.out.println(System.lineSeparator() + (i + 1) + "." + this.tasks.get(i).toString());
         }
 
     }
@@ -206,12 +196,12 @@ public class TaskList {
     /**
      * This prints the total number of tasks in the task list
      */
-    public void printNumberOfTasks(){
+    public void printNumberOfTasks() {
         int total = tasks.size();
         String ending;
-        if(total != 1){
+        if (total != 1) {
             ending = " tasks in the list.";
-        }else{
+        } else {
             ending = " task in the list";
         }
 
@@ -222,7 +212,7 @@ public class TaskList {
     /**
      * This clears all the tasks in the list.
      */
-    public void clearAllTasks(){
+    public void clearAllTasks() {
         this.tasks.clear();
     }
 

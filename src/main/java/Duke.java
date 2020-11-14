@@ -6,7 +6,6 @@ import tasks.TaskList;
 import ui.Ui;
 
 
-
 import java.io.IOException;
 
 //TODO: CLEAN UP!
@@ -31,11 +30,12 @@ public class Duke {
     /**
      * Used to create a new Duke Instance. Initialise the ui,storage and tasks.
      * tasks will load from the storage. If there is an error, it will initialise on its own.
+     *
      * @param filePath The String filePath to storage
-     * @throws DukeException, IOException
+     * @throws IOException
      */
 
-    public Duke(String filePath) throws DukeException, IOException {
+    public Duke(String filePath) throws IOException {
         ui = new Ui();
         storage = new Storage(filePath);
         parser = new Parser();
@@ -48,10 +48,10 @@ public class Duke {
     }
 
 
-
     /**
      * Used to keep the Duke Chat bot running. Scan for input then Parse the input into a command
      * Afterwards, execute the command. The process will keep running until the user types "bye"
+     *
      * @throws IOException
      */
     public void run() throws IOException {
@@ -79,7 +79,7 @@ public class Duke {
     }
 
 
-    public static void main(String[] args) throws IOException, DukeException {
+    public static void main(String[] args) throws IOException {
         new Duke("data/tasks_list.txt").run();
     }
 }

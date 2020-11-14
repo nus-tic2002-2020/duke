@@ -10,42 +10,38 @@ import ui.Ui;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
-public class RescheduleCommand extends Command{
+public class RescheduleCommand extends Command {
 
     String newDateTime;
     int option = 0;
 
-    public RescheduleCommand(int option, String newDateTime){
+    public RescheduleCommand(int option, String newDateTime) {
         this.newDateTime = newDateTime;
         this.option = option;
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws DateTimeParseException, IndexOutOfBoundsException {
-        try{
-            if(tasks.get(this.option-1) instanceof Deadline){
-                ((Deadline) (tasks.get(this.option-1))).rescheduleBy(this.newDateTime);
-                System.out.println("Rescheduled Date time: " + tasks.get(this.option-1).toString());
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
+        try {
+
+            if (tasks.get(this.option - 1) instanceof Deadline) {
+                ((Deadline) (tasks.get(this.option - 1))).rescheduleBy(this.newDateTime);
+                ui.printMessage("Rescheduled Date time: " + tasks.get(this.option - 1).toString());
+            }else if (tasks.get(this.option - 1) instanceof Event) {
+                ((Event) (tasks.get(this.option - 1))).rescheduleAt(this.newDateTime);
+                ui.printMessage("Rescheduled Date time: " + tasks.get(this.option - 1).toString());
+            }else{
+                throw new DukeException("Error: You did not reschedule on a Deadline or Event");
             }
 
-            if(tasks.get(this.option-1) instanceof Event){
-                ((Event) (tasks.get(this.option-1))).rescheduleAt(this.newDateTime);
-                System.out.println("Rescheduled Date time: " + tasks.get(this.option-1).toString());
-            }
-
-
-        }catch(DateTimeParseException e){
-            System.out.println("Invalid Date Time set for /by. It will be set to the current " +
-                    "time. Format should be \"dd MMM yyyy H:m:s\" ");
-            throw e;
-        }catch(IndexOutOfBoundsException e){
-            System.out.println("Index out of bounds error");
-            throw e;
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException("Error: Input option for Reschedule command is invalid");
         }
 
     }
 
-    public static void printHelp(){
+    public static void printHelp() {
         System.out.println("Reschedule a Deadline: reschedule [option number] /new [Date and time]");
+        System.out.println("Reschedule a Deadline: reschedule [option number] /new [Date and time] - [Time]");
     }
 }

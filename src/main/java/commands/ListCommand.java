@@ -14,13 +14,14 @@ public class ListCommand extends Command {
     /**
      * This is the constructor for the ListCommand.
      */
-    public ListCommand(){
+    public ListCommand() {
     }
 
     /**
      * This executes the ListCommand. It will call the printList method from the TaskList class.
-     * @param tasks This is the list of Tasks
-     * @param ui This is the ui, to be used for scanning and printing
+     *
+     * @param tasks   This is the list of Tasks
+     * @param ui      This is the ui, to be used for scanning and printing
      * @param storage This is the storage, used to read and write over the file.
      */
     @Override
@@ -28,7 +29,7 @@ public class ListCommand extends Command {
         tasks.printList();
     }
 
-    public static void printHelp(){
+    public static void printHelp() {
         System.out.println("To print the list of tasks: list");
     }
 }

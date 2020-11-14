@@ -10,30 +10,11 @@ class TaskListTest {
     @Test
     void getSize_success() throws DukeException {
         TaskList tasks = new TaskList();
-        tasks.addTask("todo","running","");
-        tasks.addTask("task","jumping","");
-        tasks.addTask("event","hopping", "home");
-        tasks.addTask("deadline", "walking","02 Feb 2020 10:10:10");
+        tasks.addTask("todo", "running", "");
+        tasks.addTask("task", "jumping", "");
+        tasks.addTask("event", "hopping", "home");
+        tasks.addTask("deadline", "walking", "02/02/2020 10:10:10");
         assertEquals(4, tasks.getSize());
     }
 
-    @Test
-    void deleteFromList() {
-    }
-
-    @Test
-    void addTask() {
-    }
-
-    @Test
-    void findList() {
-    }
-
-    @Test
-    void printList() {
-    }
-
-    @Test
-    void printTotalTasks() {
-    }
 }

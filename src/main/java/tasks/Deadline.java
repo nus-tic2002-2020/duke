@@ -18,14 +18,15 @@ public class Deadline extends Task {
 
     /**
      * This is a constructor for the Deadline class
+     *
      * @param description This describe the task for the deadline
-     * @param by This represents the date and time of the deadline
+     * @param by          This represents the date and time of the deadline
      */
     public Deadline(String description, String by) {
         super(description);
-        try{
+        try {
             this.by = LocalDateTime.parse(by, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
-        }catch(DateTimeParseException e){
+        } catch (DateTimeParseException e) {
             this.by = LocalDateTime.now();
             System.out.println("Invalid Date Time set for /by. It will be set to the current " +
                     "time. Format should be \"dd/MM/yyyy HH:mm:ss\" ");
@@ -35,17 +36,18 @@ public class Deadline extends Task {
 
     /**
      * This is an accessor of the "by" object which represents the date and time of the dateline
+     *
      * @return the dateline of the task
      */
-    public String getBy(){
+    public String getBy() {
         return this.by.format(DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
     }
 
 
-    public void rescheduleBy(String by){
-        try{
+    public void rescheduleBy(String by) {
+        try {
             this.by = LocalDateTime.parse(by, DateTimeFormatter.ofPattern("dd/M/yyyy HH:mm:ss"));
-        }catch(DateTimeParseException e){
+        } catch (DateTimeParseException e) {
             this.by = LocalDateTime.now();
             System.out.println("Invalid Date Time set for /by. It will be set to the current " +
                     "time. Format should be \"dd/MM/yyyy HH:mm:ss\" ");
@@ -54,9 +56,10 @@ public class Deadline extends Task {
 
     /**
      * This converts the Deadline to a String object for printing.
+     *
      * @return the deadline written as a String
      */
-    public String toString(){
+    public String toString() {
         return "[D]" + super.toString() + " (by: " + this.getBy() + ")";
     }
 }

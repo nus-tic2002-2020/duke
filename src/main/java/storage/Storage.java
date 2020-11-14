@@ -2,6 +2,7 @@ package storage;
 
 import java.io.*;
 import java.util.ArrayList;
+
 import tasks.*;
 
 
@@ -24,19 +25,20 @@ public class Storage {
 
     /**
      * This is the constructor for the Storage Class.
+     *
      * @param filePath This is the filePath of the text file.
      */
     public Storage(String filePath) throws IOException {
 
         this.directory = new File("data");
-        if(this.directory.isDirectory() == false || this.directory.exists() == false){
+        if (this.directory.isDirectory() == false || this.directory.exists() == false) {
             System.out.println("Directory \"data\" is not found, creating a new one");
             this.directory.mkdir();
         }
 
         this.f = new File(filePath);
 
-        if(this.f.isFile() == false || this.f.exists() == false){
+        if (this.f.isFile() == false || this.f.exists() == false) {
             System.out.println("File \"duke.text\" is not found, creating a new one");
             this.f.createNewFile();
         }
@@ -46,6 +48,7 @@ public class Storage {
 
     /**
      * This is a mutator. It writes the Task List details into a file.
+     *
      * @param tasks This is the list of tasks that the user has entered.
      */
     public void save(TaskList tasks) throws IOException {
@@ -53,7 +56,7 @@ public class Storage {
         FileWriter fw = new FileWriter(this.filePath);
 
         int size = tasks.getSize();
-        if(size == 0){
+        if (size == 0) {
             System.out.println("Task List is empty. Nothing to save.");
             return;
         }
@@ -64,9 +67,9 @@ public class Storage {
         String secPart = "";
         int done = 0;
 
-        for(int i = 0; i < size; i ++){
+        for (int i = 0; i < size; i++) {
             temp = tasks.get(i).getClass().toString();
-            switch(temp){
+            switch (temp) {
                 case "class tasks.Task":
                     firstPart = "O | ";
                     break;
@@ -75,18 +78,18 @@ public class Storage {
                     break;
                 case "class tasks.Deadline":
                     firstPart = "D | ";
-                    secPart = " | " + ((Deadline)tasks.get(i)).getBy();
+                    secPart = " | " + ((Deadline) tasks.get(i)).getBy();
                     break;
                 case "class tasks.Event":
                     firstPart = "E | ";
-                    secPart = " | " + ((Event)tasks.get(i)).getAt();
+                    secPart = " | " + ((Event) tasks.get(i)).getAt();
                     break;
                 default:
                     System.out.println("Did not get Class from Task List:" + tasks.get(i).toString());
                     continue;
             }
 
-            done = (tasks.get(i).getIsDone()) ? 1:0;
+            done = (tasks.get(i).getIsDone()) ? 1 : 0;
             text = firstPart + done + " | " + tasks.get(i).getDescription() + secPart;
             fw.write(text + System.lineSeparator());
             text = "";
@@ -100,17 +103,18 @@ public class Storage {
      * This is a mutator that loads the task lists from the file.
      * It will return a list of tasks in form of an ArrayList of Strings. These Strings will be used for
      * the initialisation of TaskList
+     *
      * @return a list of tasks that are written as strings
      */
-    public ArrayList<String[]> load() throws IOException{
+    public ArrayList<String[]> load() throws IOException {
         this.f = new File(this.filePath);
-        this.fr =new FileReader(this.f);
+        this.fr = new FileReader(this.f);
         this.br = new BufferedReader(this.fr);
-        this.parsedFile =  new ArrayList<String[]> ();
+        this.parsedFile = new ArrayList<String[]>();
         String line;
 
-        while((line = this.br.readLine())!=null){
-            this.parsedFile.add(line.split(" \\| ") );
+        while ((line = this.br.readLine()) != null) {
+            this.parsedFile.add(line.split(" \\| "));
         }
         this.fr.close();
         return this.parsedFile;

@@ -7,8 +7,8 @@ import ui.Ui;
 
 import java.io.IOException;
 
-public class ClearListCommand extends Command{
-    public ClearListCommand(){
+public class ClearListCommand extends Command {
+    public ClearListCommand() {
     }
 
     @Override
@@ -17,7 +17,7 @@ public class ClearListCommand extends Command{
         tasks.printList();
     }
 
-    public static void printHelp(){
+    public static void printHelp() {
         System.out.println("Clearing the task list: /clear");
     }
 }
