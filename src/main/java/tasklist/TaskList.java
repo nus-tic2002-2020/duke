@@ -64,7 +64,7 @@ public class TaskList {
                     break;
             }
 
-            if (splitSections[1].trim().equals("✓")) {
+            if (splitSections[1].trim().equals("OK")) {
                 store.get(store.size()-1).setDone();
             }
         }
@@ -96,8 +96,8 @@ public class TaskList {
      *
      * @param input This is the input by the user in the form of "done (index)".
      * @return Returns false if the task has already been marked completed. True if otherwise.
-     * @throws TooManySpacesException TooManySpacesException This exception is thrown when double spacing is detected. Double spacing leads to
-     *                                many errors
+     * @throws TooManySpacesException TooManySpacesException This exception is thrown when double spacing is detected.
+     * Double spacing leads to many errors
      */
     public boolean setDone(String input) throws TooManySpacesException {
         if (input.contains("  ")) {

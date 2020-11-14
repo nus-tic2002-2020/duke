@@ -105,7 +105,7 @@ public class Storage {
 
         while (scanner.hasNextLine()) {
             if (counter == index ) { // Cursor reached the desired line.
-                fw.write(scanner.nextLine().replaceAll("✗", "✓") + "\n");
+                fw.write(scanner.nextLine().replaceAll("NOT OK", "OK") + "\n");
             }
             else {
                 fw.write(scanner.nextLine() + "\n");
@@ -179,7 +179,7 @@ public class Storage {
 
         switch (symbol) {
             case T:
-                fw.write("T | ✗ | "
+                fw.write("T | NOT OK | "
                         + task.getDescription()
                         + " | "
                         + task.getPriority()
@@ -187,7 +187,7 @@ public class Storage {
                 break;
 
             case D:
-                fw.write("D | ✗ | " + task.getDescription()
+                fw.write("D | NOT OK | " + task.getDescription()
                         + " | "
                         + String.format("%02d", task.getDateAndTime().getDayOfMonth())
                         + "/"
@@ -204,7 +204,7 @@ public class Storage {
                 break;
 
             case E:
-                fw.write("E | ✗ | " + task.getDescription()
+                fw.write("E | NOT OK | " + task.getDescription()
                         + " | "
                         + String.format("%02d", task.getDateAndTime().getDayOfMonth())
                         + "/"
@@ -221,7 +221,7 @@ public class Storage {
                 break;
 
             case W:
-                fw.write("W | ✗ | "
+                fw.write("W | NOT OK | "
                         + task.getDescription()
                         + " | "
                         + String.format("%02d", task.getStart().getDayOfMonth())
