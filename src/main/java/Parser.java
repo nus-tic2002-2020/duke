@@ -14,7 +14,11 @@ public class Parser {
     }
 
 
-    public int getTaskIndex() {
+    public int getTaskIndex(int size) throws DukeException{
+        if (Integer.valueOf(inputs[1]) > size) {
+            throw new DukeException("  ☹ OOPS!!! You have entered an invalid index.");
+        }
+
         return Integer.valueOf(inputs[1]);
     }
 
@@ -84,8 +88,13 @@ public class Parser {
         return localFromDate;
     }
 
-    public LocalTime getTime() {
+    public LocalTime getTime() throws DukeException {
         int timeIndex = this.getDateIndex() + 2;
+
+        if (timeIndex == inputs.length) {
+            throw new DukeException("  ☹ OOPS!!! Please input a timing for this task. " +
+                    "Please follow this format: HH:mm (12:30)");
+        }
 
         LocalTime timing = LocalTime.parse(inputs[timeIndex]);
 

@@ -45,10 +45,14 @@ public class Duke {
             if (parser.getUserCommand().equals("list")) {
                 ui.printList(tasks);
             } else if (parser.getUserCommand().contains("done")) {
-                int finishedTask = parser.getTaskIndex();
-                tasks.getTask(finishedTask - 1).markAsDone();
+                try {
+                    int finishedTask = parser.getTaskIndex(tasks.size());
+                    tasks.getTask(finishedTask - 1).markAsDone();
 
-                ui.printDoneMessage(tasks, finishedTask - 1);
+                    ui.printDoneMessage(tasks, finishedTask - 1);
+                } catch (DukeException exception) {
+                    System.out.println(exception);
+                }
 
                 try {
                     storage.updateFile(tasks);
@@ -57,12 +61,15 @@ public class Duke {
                 }
 
             } else if (parser.getUserCommand().contains("delete")) {
-                int removedTask = parser.getTaskIndex();
+                try {
+                    int removedTask = parser.getTaskIndex(tasks.size());
 
-                ui.printDeleteMessage(tasks, removedTask - 1);
-                tasks.deletedTask(removedTask - 1);
-                ui.printUpdateMessage(tasks);
-
+                    ui.printDeleteMessage(tasks, removedTask - 1);
+                    tasks.deletedTask(removedTask - 1);
+                    ui.printUpdateMessage(tasks);
+                } catch (DukeException exception) {
+                    System.out.println(exception);
+                }
                 //System.out.println("Now you have " + tasks.size() + " task(s) in the list.");
 
                 try {
