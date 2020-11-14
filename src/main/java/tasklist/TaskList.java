@@ -86,7 +86,7 @@ public class TaskList {
      * @param input This is the input by the user, to be tested for error.
      * @return Returns true if the description is missing, false if a description is present.
      */
-    public boolean catcher(String input) {
+    public boolean errorCatch(String input) {
         String[] splitDescription = input.split(" ");
         return input.trim().length() == splitDescription[0].length();
     }
@@ -95,17 +95,22 @@ public class TaskList {
      * This method sets the status of the selected task to 'done'.
      *
      * @param input This is the input by the user in the form of "done (index)".
-     * @throws TooManySpacesException This exception is thrown when double spacing is detected. Double spacing leads to
-     *                                many errors.
+     * @return Returns false if the task has already been marked completed. True if otherwise.
+     * @throws TooManySpacesException TooManySpacesException This exception is thrown when double spacing is detected. Double spacing leads to
+     *                                many errors
      */
-    public void setDone(String input) throws TooManySpacesException {
+    public boolean setDone(String input) throws TooManySpacesException {
         if (input.contains("  ")) {
             throw new TooManySpacesException();
         }
         String[] splitIndex = input.split(" ");
         int index = Integer.parseInt(splitIndex[1]) - 1;
+        if (store.get(index).getDone().equals(("Completed: YES"))) {
+            return false;
+        }
         store.get(index).setDone();
         assert store.get(index).getDone().equals("Completed: YES") : "Failed to set task to done status properly.";
+        return true;
     }
 
     /**
@@ -121,6 +126,13 @@ public class TaskList {
         }
         String[] splitIndex = input.split(" ");
         int index = Integer.parseInt(splitIndex[1]) - 1;
+        if (index > store.size()-1) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (!input.toUpperCase().contains("HIGH") && !input.toUpperCase().contains("MEDIUM")
+                && !input.toUpperCase().contains("LOW") && !input.toUpperCase().contains("NA")) {
+            throw new IllegalArgumentException();
+        }
         store.get(index).setPriority(splitIndex[2].trim());
         assert store.get(index).getPriority().toString().equals(splitIndex[2].toUpperCase())
                 : "Setting of priority was incorrect.";
@@ -160,7 +172,7 @@ public class TaskList {
 
         switch (symbol) {
             case T:
-                if (catcher(input)) {
+                if (errorCatch(input)) {
                     throw new NoDescriptionException();
                 }
                 if (input.contains("  ")) {
@@ -170,43 +182,55 @@ public class TaskList {
                 break;
 
             case D:
-                if (catcher(input)) {
+                if (errorCatch(input)) {
                     throw new NoDescriptionException();
                 }
                 if (input.contains("  ")) {
                     throw new TooManySpacesException();
                 }
+                if (!input.toLowerCase().contains("/by")) {
+                    throw new IndexOutOfBoundsException();
+                }
                 String[] splitBy = input.split("/by");
-                if (catcher(splitBy[1])) {
+                if (splitBy.length == 1 || splitBy[1].equals(" ")) {
                     throw new NoTimeframeException();
                 }
                 store.add(new Deadline(splitBy[0].substring(8).trim(), splitBy[1].trim()));
                 break;
 
             case E:
-                if (catcher(input)) {
+                if (errorCatch(input)) {
                     throw new NoDescriptionException();
                 }
                 if (input.contains("  ")) {
                     throw new TooManySpacesException();
                 }
+                if (!input.toLowerCase().contains("/at")) {
+                    throw new IndexOutOfBoundsException();
+                }
                 String[] splitAt = input.split("/at");
-                if (catcher(splitAt[1])) {
+                if (splitAt.length == 1 || splitAt[1].equals(" ")) {
                     throw new NoTimeframeException();
                 }
                 store.add(new Event(splitAt[0].substring(5).trim(), splitAt[1].trim()));
                 break;
 
             case W:
-                if (catcher(input)) {
+                if (errorCatch(input)) {
                     throw new NoDescriptionException();
                 }
                 if (input.contains("  ")) {
                     throw new TooManySpacesException();
                 }
+                if (!input.toLowerCase().contains("/from") || !input.toLowerCase().contains("/to")) {
+                    throw new IndexOutOfBoundsException();
+                }
                 String[] splitFromTo = input.split("/from");
+                if (splitFromTo.length == 1) {
+                    throw new NoTimeframeException();
+                }
                 String[] dates = splitFromTo[1].split("/to");
-                if (catcher(dates[0]) || catcher(dates[1])) {
+                if (dates.length == 1) {
                     throw new NoTimeframeException();
                 }
                 try {

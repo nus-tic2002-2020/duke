@@ -148,9 +148,12 @@ public class Lisa {
                                 ui.printEmptyListMessage();
                                 break;
                             }
-                            tasks.setDone(input);
-                            storage.setDone(input);
-                            ui.printDoneMessage();
+                            if (!tasks.setDone(input)) {
+                                ui.printAlreadyDoneMessage();
+                            } else {
+                                storage.setDone(input);
+                                ui.printDoneMessage();
+                            }
                         } catch (NumberFormatException | NullPointerException | IndexOutOfBoundsException e) {
                             ui.showInvalidNumberError();
                         } catch (TooManySpacesException e) {
@@ -167,12 +170,12 @@ public class Lisa {
                             tasks.setPriority(input);
                             storage.setPriority(input);
                             ui.printPriorityMessage();
-                        } catch (IllegalArgumentException e) {
-                            ui.showIncorrectPriorityError();
                         } catch (TooManySpacesException e) {
                             ui.showTooManySpacesError();
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                            ui.showMissingPriorityError();
+                        } catch (NullPointerException | IndexOutOfBoundsException e) {
+                            ui.showInvalidNumberError();
+                        } catch (IllegalArgumentException e ) {
+                            ui.showIncorrectPriorityError();
                         }
                         break;
 
@@ -196,10 +199,8 @@ public class Lisa {
                         ui.printByeMessage();
                         break;
                 }
-                System.out.println("");
             } catch (IllegalArgumentException e) {
                 ui.showIllegalArgumentError();
-                System.out.println("");
             }
         }
     }

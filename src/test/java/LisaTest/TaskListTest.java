@@ -2,6 +2,7 @@ package LisaTest;
 
 import enumerations.PriorityEnum;
 import enumerations.SymbolEnum;
+import exceptions.EndTimeBeforeStartTimeException;
 import tasklist.TaskList;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class TaskListTest {
      * This tests the constructor of TaskList. Ensures that the change of format from text file to system is proper.
      */
     @Test
-    public void constructorTest() {
+    public void constructorTest() throws EndTimeBeforeStartTimeException {
         ArrayList taskArray = constructArray();
         TaskList tasks = new TaskList(taskArray);
 
@@ -91,13 +92,13 @@ public class TaskListTest {
     }
 
     @Test
-    public void catcherTest() {
+    public void catcherTest() throws EndTimeBeforeStartTimeException {
         ArrayList taskArray = constructArray();
         TaskList tasks = new TaskList(taskArray);
 
-        assertTrue(tasks.catcher("TODO"));
-        assertTrue(tasks.catcher("TODO "));
-        assertFalse(tasks.catcher("TODO d"));
-        assertFalse(tasks.catcher("TODO d d"));
+        assertTrue(tasks.errorCatch("TODO"));
+        assertTrue(tasks.errorCatch("TODO "));
+        assertFalse(tasks.errorCatch("TODO d"));
+        assertFalse(tasks.errorCatch("TODO d d"));
     }
 }

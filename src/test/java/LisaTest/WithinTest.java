@@ -2,6 +2,7 @@ package LisaTest;
 
 import enumerations.PriorityEnum;
 import enumerations.SymbolEnum;
+import exceptions.EndTimeBeforeStartTimeException;
 import task.Task;
 import task.Within;
 
@@ -30,7 +31,7 @@ public class WithinTest {
      * 7) End LocalDateTime
      */
     @Test
-    public void constructorTest() {
+    public void constructorTest() throws EndTimeBeforeStartTimeException {
         Task test = new Within("tEsT cAsE", "10/10/2020 10:10", "23/8/2025 03:20");
         assertEquals("tEsT cAsE", test.getDescription());
         assertEquals(SymbolEnum.W, test.getSymbol());
@@ -50,7 +51,7 @@ public class WithinTest {
      * 1) setDone
      */
     @Test
-    public void setDoneTest() {
+    public void setDoneTest() throws EndTimeBeforeStartTimeException {
         Task test = new Within("tEsT cAsE", "10/10/2020 10:10", "23/8/2025 03:20");
         test.setDone();
         assertEquals("[✓]", test.getDone());
@@ -61,7 +62,7 @@ public class WithinTest {
      * 1) setPriority
      */
     @Test
-    public void setPriorityTest() {
+    public void setPriorityTest() throws EndTimeBeforeStartTimeException {
         Task test = new Within("tEsT cAsE", "10/10/2020 10:10", "23/8/2025 03:20");
         test.setPriority("hiGh");
         assertEquals(PriorityEnum.HIGH, test.getPriority());

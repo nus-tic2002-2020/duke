@@ -18,7 +18,7 @@ import task.Task;
  * task.
  *
  * @author Aloysius Wong
- * @Version 1.0
+ * @version 1.0
  * @since 08-11-2020
  */
 public class Storage {

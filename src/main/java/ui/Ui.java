@@ -46,7 +46,7 @@ public class Ui {
      * This method prints an error message when date and time is missing.
      */
     public void showNoTimeFrameError() {
-        System.out.println("I need a timeframe or my code will be blown away!");
+        System.out.println("I need a proper timeframe or my code will be blown away!");
     }
 
     /**
@@ -135,6 +135,10 @@ public class Ui {
      */
     public void printByeMessage() {
         System.out.println("Goodbye~ Hope to see you again soon! :3");
+    }
+
+    public void printAlreadyDoneMessage() {
+        System.out.println("This task has already been marked done.");
     }
 
     /**
@@ -354,7 +358,7 @@ public class Ui {
 
             switch (symbol) {
                 case T:
-                    if (task.getDescription().contains(query[1].trim())) {
+                    if (task.getDescription().toUpperCase().contains(query[1].trim().toUpperCase())) {
                         if (index == 1) {
                             System.out.println (headers[1]);
                         }
@@ -365,7 +369,7 @@ public class Ui {
                     }
 
                 case D:
-                    if (task.getDescription().contains(query[1].trim())) {
+                    if (task.getDescription().toUpperCase().contains(query[1].trim().toUpperCase())) {
                         if (index == 1) {
                             System.out.println (headers[1]);
                         }
@@ -376,7 +380,7 @@ public class Ui {
                     }
 
                 case E:
-                    if (task.getDescription().contains(query[1].trim())) {
+                    if (task.getDescription().toUpperCase().contains(query[1].trim().toUpperCase())) {
                         if (index == 1) {
                             System.out.println (headers[1]);
                         }
@@ -387,7 +391,7 @@ public class Ui {
                     }
 
                 case W:
-                    if (task.getDescription().contains(query[1].trim())) {
+                    if (task.getDescription().toUpperCase().contains(query[1].trim().toUpperCase())) {
                         if (index == 1) {
                             System.out.println (headers[1]);
                         }

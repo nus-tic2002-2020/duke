@@ -1,5 +1,6 @@
 package LisaTest;
 
+import exceptions.EndTimeBeforeStartTimeException;
 import task.*;
 
 import java.io.ByteArrayOutputStream;
@@ -19,7 +20,6 @@ import static org.junit.Assert.assertEquals;
  * @since 08-11-2020
  */
 public class UiTest {
-    private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
     Ui ui = new Ui();
 
@@ -62,7 +62,7 @@ public class UiTest {
      * This method tests printWithin in Ui class.
      */
     @Test
-    public void printWithinTest() {
+    public void printWithinTest() throws EndTimeBeforeStartTimeException {
         System.setOut(new PrintStream(outputStreamCaptor));
         Task test = new Within("TEST CASE", "01/02/2020 03:04", "05/06/2020 07:08");
         ui.printWithin(test);

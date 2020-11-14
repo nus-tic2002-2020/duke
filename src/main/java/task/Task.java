@@ -17,8 +17,8 @@ public abstract class Task {
      */
     protected PriorityEnum priority;
     protected String description;
-    public boolean isDone;
     protected SymbolEnum symbol;
+    public boolean isDone;
 
     /**
      * This creates the Task-class object. This constructor is never called by itself, it is only called through it's
