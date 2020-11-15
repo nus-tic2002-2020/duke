@@ -6,19 +6,38 @@ import ui.Ui;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * Handle user inputs.
+ */
 public class Parser {
     private String[] inputs;
     private Ui ui;
 
+    /**
+     * Constructor.
+     *
+     * @param input User's command.
+     */
     public Parser(String input) {
         this.inputs = input.split(" ");
     }
 
+    /**
+     * Return user input as command.
+     *
+     * @return Command of user input.
+     */
     public String getUserCommand() {
         return inputs[0];
     }
 
-
+    /**
+     * Return index of specific task.
+     *
+     * @param size number of tasks in the list.
+     * @return Index of that specific task.
+     * @throws DukeException Exception message.
+     */
     public int getTaskIndex(int size) throws DukeException{
         if (Integer.valueOf(inputs[1]) > size) {
             throw new DukeException("  ☹ OOPS!!! You have entered an invalid index.");
@@ -27,6 +46,12 @@ public class Parser {
         return Integer.valueOf(inputs[1]);
     }
 
+    /**
+     * Return the task's description.
+     *
+     * @return Description of task.
+     * @throws DukeException Exception message.
+     */
     public String getDescription() throws DukeException{
         if (inputs.length == 1) {
             throw new DukeException("  ☹ OOPS!!! The description of a " + inputs[0] + " cannot be empty!");
@@ -42,6 +67,11 @@ public class Parser {
         return description;
     }
 
+    /**
+     * Return index of the date based on user input (deadline/event).
+     *
+     * @return Index of date.
+     */
     public int getDateIndex() {
         int i = 2;
 
@@ -52,6 +82,12 @@ public class Parser {
         return i;
     }
 
+    /**
+     * Return date of deadline or event.
+     *
+     * @return Date of deadline or event.
+     * @throws DukeException Exception message.
+     */
     public LocalDate getDate() throws DukeException {
         int dateIndex = this.getDateIndex() + 1;
 
@@ -65,6 +101,12 @@ public class Parser {
         return localDate;
     }
 
+    /**
+     * Return 'to date' of Do within the period task.
+     *
+     * @return 'To date' of Do within the period task.
+     * @throws DukeException Exception message.
+     */
     public LocalDate getToDate() throws DukeException {
         int dateIndex = this.getDateIndex() + 1;
 
@@ -79,6 +121,12 @@ public class Parser {
         return localToDate;
     }
 
+    /**
+     * Return 'from date' of Do within the period task.
+     *
+     * @return 'From date' of Do within the period task.
+     * @throws DukeException Exception message.
+     */
     public LocalDate getFromDate() throws DukeException {
         int dateIndex = this.getDateIndex() + 1;
 
@@ -92,6 +140,12 @@ public class Parser {
         return localFromDate;
     }
 
+    /**
+     * Return time of deadline/event.
+     *
+     * @return Time of deadline/event.
+     * @throws DukeException Exception message.
+     */
     public LocalTime getTime() throws DukeException {
         int timeIndex = this.getDateIndex() + 2;
 

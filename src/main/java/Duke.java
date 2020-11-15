@@ -13,6 +13,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.nio.file.NoSuchFileException;
 
+/**
+ * Pi is a chatbot that helps user to manage different type of tasks.
+ * User can add, delete, list, find, snooze and done his tasks.
+ * Data is saved to text file. System will prompt user if there is no file.
+ * Otherwise system will create a file to save data.
+ */
 public class Duke {
 
     private Storage storage;
@@ -20,6 +26,11 @@ public class Duke {
     private Ui ui;
 
 
+    /**
+     * To construct Pi application.
+     *
+     * @param filePath file path that used to save data.
+     */
     public Duke(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -39,6 +50,10 @@ public class Duke {
         new Duke("tasks.txt").run();
     }
 
+    /**
+     * Run the application.
+     * Chatbot will do different tasks based on user's input.
+     */
     public void run() {
         ui.showLogo();
         String input = ui.readCommand();
@@ -51,7 +66,7 @@ public class Duke {
             } else if (parser.getUserCommand().contains("done")) {
                 try {
                     int finishedTask = parser.getTaskIndex(tasks.size());
-                    assert finishedTask > 0:"Invalid number, index shall be greater than 0.";
+                    assert finishedTask > 0 : "Invalid number, index shall be greater than 0.";
                     tasks.getTask(finishedTask - 1).markAsDone();
 
                     ui.printDoneMessage(tasks, finishedTask - 1);
@@ -68,7 +83,7 @@ public class Duke {
             } else if (parser.getUserCommand().contains("delete")) {
                 try {
                     int removedTask = parser.getTaskIndex(tasks.size());
-                    assert removedTask > 0:"Invalid number, index shall be greater than 0.";
+                    assert removedTask > 0 : "Invalid number, index shall be greater than 0.";
 
                     ui.printDeleteMessage(tasks, removedTask - 1);
                     tasks.deletedTask(removedTask - 1);
@@ -92,6 +107,22 @@ public class Duke {
                 } catch (DukeException exception) {
                     ui.printExceptionMessage(exception);
                 }
+            } else if (parser.getUserCommand().contains("snooze")) {
+                try {
+                    int snoozedTask = parser.getTaskIndex(tasks.size());
+                    tasks.snoozedTask(snoozedTask - 1);
+                    tasks.snoozePostpone(tasks.getTask(snoozedTask-1));
+                } catch (DukeException exception) {
+                    System.out.println(exception);
+                }
+
+
+                try {
+                    storage.updateFile(tasks);
+                } catch (IOException exception) {
+                    System.out.println("☹ OOPS: " + exception.getMessage());
+                }
+
             } else {
                 try {
                     this.addTask(parser);
@@ -115,7 +146,7 @@ public class Duke {
 
 
 
-    /***
+    /**
      * Add different tasks to the list
      *
      * @param parser To get the user's input

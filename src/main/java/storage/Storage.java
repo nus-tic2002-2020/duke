@@ -16,12 +16,19 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
 
-
+/**
+ * Loading tasks from text file and save tasks to file.
+ */
 public class Storage {
 
     private String filePath;
     private static ArrayList<Task> tasks = new ArrayList<>();
 
+    /**
+     * Constructor.
+     *
+     * @param filePath text file path to save tasks.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
@@ -39,7 +46,7 @@ public class Storage {
         writer.close();
     }
 
-    /***
+    /**
      * To load the saved tasks in the text file
      *
      * @return Displays the tasks that are saved previously in the text file
