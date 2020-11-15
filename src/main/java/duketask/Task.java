@@ -1,5 +1,7 @@
 package duketask;
 
+import dukeexception.DukeException;
+
 public class Task {
     protected String[] buffer;
     protected String description;

@@ -40,11 +40,11 @@ public class Duke {
 
         while (!exit) {
             try {
-                String[] command = ui.readCommand();
-                Command cmd = new Command(command);
-                cmd.check(tasks);
-                cmd.execute(tasks, ui, storage);
-                exit = cmd.isExit();
+                String[] input = ui.readCommand();
+                Command command = new Command(input);
+                command.check(tasks);
+                command.execute(tasks, ui, storage);
+                exit = command.isExit();
             } catch (DukeException e) {
                 ui.showError(e.getMessage());
             }

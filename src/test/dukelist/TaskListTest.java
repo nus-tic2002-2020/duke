@@ -60,7 +60,7 @@ class TaskListTest {
         TaskList test = new TaskList();
         test.addTask(new Todo("testTodo"));
         test.addTask(new Event("testEvent /at 10/10/1990 1500"));
-        assertEquals("testEvent",test.findTask("en").getTask(0).getDescription());
+        assertEquals("2.[E][✘] testEvent (at: 10 Oct 1990, 03:00PM)",test.findTask("en").get(0));
     }
 
     @Test

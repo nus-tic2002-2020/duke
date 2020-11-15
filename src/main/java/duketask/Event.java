@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Event extends Todo {
+    private boolean isFormatted;
     private LocalDateTime atDateTime;
     private String formattedDateTime;
     private DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
@@ -20,26 +21,35 @@ public class Event extends Todo {
         assert !schedule.isEmpty() : "Schedule is not provided";
 
         if (taskData.contains("/at")) {
-            atDateTime = LocalDateTime.parse(schedule, inputFormat);
-            formattedDateTime = atDateTime.format(outputFormat);
+            formatDateTime();
         }
     }
 
     /**
-     * Format Event <code>datetime</code> to the "dd MMM yyyy, hh:mma" format.
+     * Format Event<code>schedule</code> to the "dd MMM yyyy, hh:mma" format.
+     * If cannot be formatted, the schedule would stay the same.
      */
     private void formatDateTime() {
-        atDateTime = LocalDateTime.parse(schedule, inputFormat);
-        formattedDateTime = atDateTime.format(outputFormat);
+        try {
+            atDateTime = LocalDateTime.parse(schedule, inputFormat);
+            formattedDateTime = atDateTime.format(outputFormat);
+            isFormatted = true;
+        }catch (Exception e){
+            isFormatted = false;
+        }
     }
 
     /**
-     * Return Event task <code>datetime</code> in "dd MMM yyyy, hh:mma" format.
+     * Return Event task <code>schedule</code>.
      *
-     * @return formatted datetime as a String
+     * @return schedule String of the Event task, or the formatted datetime as a String
      */
-    private String getFormattedDateTime() {
-        return formattedDateTime;
+    @Override
+    protected String getSchedule() {
+        if(isFormatted){
+            return formattedDateTime;
+        }
+        return schedule;
     }
 
     /**
@@ -68,9 +78,8 @@ public class Event extends Todo {
         }
         description = buffer[0].trim();
         schedule = buffer[1].split("\\s", 2)[1].trim();
-        if(!isDuration) {
-            formatDateTime();
-        }
+        isDuration = false;
+        formatDateTime();
     }
 
     /**
@@ -95,6 +104,6 @@ public class Event extends Todo {
         if (isDuration) {
             return String.format("[E][%s] %s (takes: %s)", getStatusIcon(), getDescription(), getSchedule());
         }
-        return String.format("[E][%s] %s (at: %s)", getStatusIcon(), getDescription(), getFormattedDateTime());
+        return String.format("[E][%s] %s (at: %s)", getStatusIcon(), getDescription(), getSchedule());
     }
 }

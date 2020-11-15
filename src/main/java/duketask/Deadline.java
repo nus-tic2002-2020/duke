@@ -1,9 +1,12 @@
 package duketask;
 
+import dukeexception.DukeException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Todo {
+    private boolean isFormatted;
     private LocalDateTime byDateTime;
     private String formattedDateTime;
     private DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
@@ -20,26 +23,35 @@ public class Deadline extends Todo {
         assert !schedule.isEmpty() : "Schedule is not provided";
 
         if (taskData.contains("/by")) {
-            byDateTime = LocalDateTime.parse(schedule, inputFormat);
-            formattedDateTime = byDateTime.format(outputFormat);
+            formatDateTime();
         }
     }
 
     /**
-     * Format Deadline <code>datetime</code> to the "dd MMM yyyy, hh:mma" format.
+     * Format Deadline <code>schedule</code> to the "dd MMM yyyy, hh:mma" format.
+     * If cannot be formatted, the schedule would stay the same.
      */
     private void formatDateTime() {
-        byDateTime = LocalDateTime.parse(schedule, inputFormat);
-        formattedDateTime = byDateTime.format(outputFormat);
+        try {
+            byDateTime = LocalDateTime.parse(schedule, inputFormat);
+            formattedDateTime = byDateTime.format(outputFormat);
+            isFormatted = true;
+        }catch (Exception e){
+            isFormatted = false;
+        }
     }
 
     /**
-     * Return Deadline task <code>datetime</code> in "dd MMM yyyy, hh:mma" format.
+     * Return Deadline task <code>schedule</code>.
      *
-     * @return formatted datetime as a String
+     * @return schedule String of the Deadline task, or the formatted datetime as a String
      */
-    private String getFormattedDateTime() {
-        return formattedDateTime;
+    @Override
+    protected String getSchedule() {
+        if(isFormatted){
+            return formattedDateTime;
+        }
+        return schedule;
     }
 
     /**
@@ -68,9 +80,8 @@ public class Deadline extends Todo {
         }
         description = buffer[0].trim();
         schedule = buffer[1].split("\\s", 2)[1].trim();
-        if(!isDuration) {
-            formatDateTime();
-        }
+        isDuration = false;
+        formatDateTime();
     }
 
     /**
@@ -95,6 +106,6 @@ public class Deadline extends Todo {
         if (isDuration) {
             return String.format("[D][%s] %s (takes: %s)", getStatusIcon(), getDescription(), getSchedule());
         }
-        return String.format("[D][%s] %s (by: %s)", getStatusIcon(), getDescription(), getFormattedDateTime());
+        return String.format("[D][%s] %s (by: %s)", getStatusIcon(), getDescription(), getSchedule());
     }
 }

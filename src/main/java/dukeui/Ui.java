@@ -55,7 +55,8 @@ public class Ui {
                 + "|____/ \\__,_|_|\\_\\___|\n";
 
         line();
-        System.out.println(ANSI_YELLOW + logo + "Hello! I'm Duke\n" + "What can I do for you?" + ANSI_RESET);
+        System.out.println(ANSI_YELLOW + logo + "Hello! I'm Duke\n" + "What can I do for you?\n" +
+                "(Key in 'help' for available commands)" + ANSI_RESET);
         line();
     }
 
@@ -95,7 +96,7 @@ public class Ui {
         line();
         System.out.println(ANSI_YELLOW + "   Here are the tasks in your list:" + ANSI_RESET);
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(ANSI_YELLOW + "   " + String.valueOf(i + 1) + "." + tasks.getTask(i) + ANSI_RESET);
+            System.out.println(ANSI_YELLOW + "     " + String.valueOf(i + 1) + "." + tasks.getTask(i) + ANSI_RESET);
         }
         line();
     }
@@ -103,13 +104,13 @@ public class Ui {
     /**
      * To display the <code>find result</code> of the key word to user UI.
      *
-     * @param tasks the task list with the find result
+     * @param result the String ArrayList task list with the find result
      */
-    public void findTask(TaskList tasks) {
+    public void findTask(ArrayList<String> result) {
         line();
         System.out.println(ANSI_YELLOW + "   Here are the matching tasks in your list:" + ANSI_RESET);
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(ANSI_YELLOW + "   " + String.valueOf(i + 1) + "." + tasks.getTask(i) + ANSI_RESET);
+        for (int i = 0; i < result.size(); i++) {
+            System.out.println(ANSI_YELLOW + "     " + result.get(i) + ANSI_RESET);
         }
         line();
     }
@@ -124,12 +125,33 @@ public class Ui {
     }
 
     /**
-     * To display a <code>bye message</code> to user UI.
+     * To display <code>valid commands</code> to user UI.
      */
     public void help() {
         line();
         System.out.println(ANSI_YELLOW + "   The valid commands are:\n" +
-                "   todo, deadline, event, delete, done, update, find,\ncopy, bye" + ANSI_RESET);
+                "     'list', to list out the current tasks\n" +
+                "     'todo description', or 'todo description /takes duration'.\n" +
+                "     example: 'todo finish reports /takes 1 day'\n" +
+                "     'deadline description /by date and time', or 'deadline description /takes duration'.\n" +
+                "     example: 'deadline submit report /by 11/11/2020 1500' \n" +
+                "     'event description /at date time', or 'event description /takes duration'.\n" +
+                "     example: 'event prepare report /at 11/11/2020 1500' \n" +
+                "     'delete index of the task', to delete a task.\n" +
+                "     example: 'delete 2'\n" +
+                "     'done index of the task', to change status to done.\n" +
+                "     example: 'done 2'\n" +
+                "     'undone index of the task', to change status to not done.\n" +
+                "     example: 'undone 2'\n" +
+                "     'copy index of the task', to copy a task.\n" +
+                "     example: 'copy 2'\n" +
+                "     'find keyword', to find a task based on the keyword.\n" +
+                "     example: 'find Jason'\n" +
+                "     'update index of th task /des /by /at /takes or /reset', to update a task.\n" +
+                "     example: 'update 2 /des finalise report'\n" +
+                "     example: 'update 3 /at 12/12/2020 1100'\n" +
+                "     example: 'update 4 /reset mark report /by 12/12/2020 1100'\n" +
+                "     'bye', to exit the program." + ANSI_RESET);
         line();
     }
 
@@ -169,7 +191,7 @@ public class Ui {
     public void doneTask(Task task) {
         line();
         System.out.println(ANSI_YELLOW + "   This task's status has been updated:\n"
-                + "   " + task + ANSI_RESET);
+                + "     " + task + ANSI_RESET);
         line();
     }
 
@@ -181,7 +203,7 @@ public class Ui {
     public void updateTask(Task task) {
         line();
         System.out.println(ANSI_YELLOW + "   This task's information has been updated:\n"
-                + "   " + task + ANSI_RESET);
+                + "     " + task + ANSI_RESET);
         line();
     }
 

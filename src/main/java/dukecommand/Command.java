@@ -99,6 +99,8 @@ public class Command {
             throw new DukeException("   Invalid index number of the task, issue 'list' to check the task's index");
         } else if (command[0].equals("done") && !isIndex(command[1], tasks.size())) {
             throw new DukeException("   Invalid index number of the task, issue 'list' to check the task's index");
+        } else if (command[0].equals("undone") && !isIndex(command[1], tasks.size())) {
+            throw new DukeException("   Invalid index number of the task, issue 'list' to check the task's index");
         } else if (command[0].equals("find") && command.length < 2) {
             throw new DukeException("   Provide the key word to find the task");
         } else if (command[0].equals("copy") && !isIndex(command[1], tasks.size())) {

@@ -1,5 +1,6 @@
 package dukelist;
 
+import dukeexception.DukeException;
 import duketask.Deadline;
 import duketask.Event;
 import duketask.Task;
@@ -74,18 +75,21 @@ public class TaskList {
      * Find the tasks contains the <code>keyword</code> in the task list.
      *
      * @param key the String of the find keyword
-     * @return the task list of the tasks with the keyword
+     * @return the String ArrayList task list of the tasks with the keyword
      */
-    public TaskList findTask(String key) {
-        TaskList results = new TaskList();
+    public ArrayList<String> findTask(String key) {
+        //TaskList results = new TaskList();
+        ArrayList<String> result = new ArrayList<>();
+        int counter = 0;
 
         for (Task task : tasks) {
             if (task.find(key)) {
-                results.addTask(task);
+                result.add(String.valueOf(counter + 1) + "." + task);
             }
+            counter++;
         }
 
-        return results;
+        return result;
     }
 
     /**
