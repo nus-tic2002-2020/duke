@@ -5,8 +5,8 @@ import exception.DukeException;
 
 public class TaskList {
 
-    public static ArrayList<Task> taskList = new ArrayList<>();
-    private static final String[] keywords = {"list", "bye", "done", "deadline", "event", "todo", "delete"};
+    public static ArrayList<Task> tasks = new ArrayList<>();
+    private static final String[] keywords = {"list", "bye", "done", "deadline", "event", "todo", "delete", "undone"};
 
     public static void addTask(String echo) {
         String description = "";
@@ -42,17 +42,19 @@ public class TaskList {
     }
 
     public static void createNewTask(Task newTask) {
-        taskList.add(newTask);
+        tasks.add(newTask);
+        System.out.println("-----------------------------------------------");
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + newTask.toString());
         System.out.println("Now you have " + numberOfTask() + " task in the list.");
+        System.out.println("-----------------------------------------------");
     }
 
     public static void deleteTask(String index) {
         int numberIndex = Integer.parseInt(index);
         System.out.println("Noted. I've removed this task: ");
-        System.out.println("  " + taskList.get(numberIndex - 1).toString());
-        taskList.remove(numberIndex - 1);
+        System.out.println("  " + tasks.get(numberIndex - 1).toString());
+        tasks.remove(numberIndex - 1);
         System.out.println("Now you have " + numberOfTask() + " task in the list.");
     }
 
@@ -60,23 +62,8 @@ public class TaskList {
         return echo.split(" ");
     }
 
-    public static void printList() {
-        System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < taskList.size(); i++) {
-            System.out.println(i+1 + "." + taskList.get(i));
-        }
-    }
-
-    public static void taskDone(String echo) {
-        String[] splitMessage = echo.split(" ");
-        int item = Integer.parseInt(splitMessage[1]) - 1;
-        taskList.get(item).markAsDone();
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println("  " + taskList.get(item).toString());
-    }
-
     public static int numberOfTask() {
-        return taskList.size();
+        return tasks.size();
     }
 
     public static void checkForError(String echo) throws DukeException {
@@ -96,5 +83,9 @@ public class TaskList {
         else if (splitMessage.length == 1) {
             throw new DukeException("☹ OOPS!!! The description of a " + splitMessage[0] + " cannot be empty.");
         }
+    }
+
+    public static Task getTask(int taskIndex) {
+        return tasks.get(taskIndex);
     }
 }

@@ -18,6 +18,10 @@ public class Task {
         this.isDone = true;
     }
 
+    public void markAsUndone() {
+        this.isDone = false;
+    }
+
     @Override
     public String toString() {
         return description;

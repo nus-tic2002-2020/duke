@@ -1,30 +1,40 @@
-import java.util.Scanner;
 import tasks.*;
 import exception.DukeException;
+import ui.Ui;
 
 public class Duke {
 
     private static TaskList tasks;
+    private static Ui ui;
 
-    public static void main(String[] args) throws DukeException {
-        Scanner scan = new Scanner(System.in);
-        String echo;
+    public Duke() {
 
-        System.out.println("Hello! I'm Duke\nWhat can I do for you?\n");
+        Ui ui = new Ui();
+        ui.showWelcome();
+    }
+
+    public void run() throws DukeException {
 
         while (true) {
-            echo = scan.nextLine();
+            String echo;
+            echo = ui.readCommand();
 
             if (echo.equals("bye")) {
                 System.out.println("See you!");
                 break;
             }
             else if (echo.equals("list")) {
-                tasks.printList();
+                System.out.println("-----------------------------------------------");
+                ui.printTasks(tasks);
+                System.out.println("-----------------------------------------------");
+            }
+            else if (echo.contains("undone")) {
+                tasks.checkForError(echo);
+                ui.taskUndone(tasks, echo);
             }
             else if (echo.contains("done")) {
                 tasks.checkForError(echo);
-                tasks.taskDone(echo);
+                ui.taskDone(tasks, echo);
             }
             else if (echo.contains("delete")) {
                 String[] splitMessage = tasks.messageSplitter(echo);
@@ -35,5 +45,9 @@ public class Duke {
                 tasks.addTask(echo);
             }
         }
+    }
+
+    public static void main(String[] args) throws DukeException {
+        new Duke().run();
     }
 }
