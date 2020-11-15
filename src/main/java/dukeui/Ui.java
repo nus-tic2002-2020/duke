@@ -8,10 +8,6 @@ import java.util.Scanner;
 
 public class Ui {
 
-    protected static final String ANSI_RED = "\u001B[31m";
-    protected static final String ANSI_YELLOW = "\u001B[33m";
-    protected static final String ANSI_BLUE = "\u001B[34m";
-    protected static final String ANSI_RESET = "\u001B[0m";
     protected String[] userInput;
     protected ArrayList<String> validInput;
 
@@ -37,9 +33,7 @@ public class Ui {
      * To display a <code>horizontal line</code> in user UI.
      */
     private static void line() {
-        System.out.print(ANSI_BLUE);
         for (int i = 0; i < 50; i++) System.out.print("─");
-        System.out.print(ANSI_RESET);
         System.out.print("\n");
     }
 
@@ -54,8 +48,8 @@ public class Ui {
                 + "|____/ \\__,_|_|\\_\\___|\n";
 
         line();
-        System.out.println(ANSI_YELLOW + logo + "Hello! I'm Duke\n" + "What can I do for you?\n" +
-                "(Key in 'help' for available commands)" + ANSI_RESET);
+        System.out.println(logo + "Hello! I'm Duke\n" + "What can I do for you?\n" +
+                "(Key in 'help' for available commands)");
         line();
     }
 
@@ -82,7 +76,7 @@ public class Ui {
      */
     public void showError(String error) {
         line();
-        System.out.println(ANSI_RED + "   " + error + ANSI_RESET);
+        System.out.println("   " + error);
         line();
     }
 
@@ -93,9 +87,9 @@ public class Ui {
      */
     public void showList(TaskList tasks) {
         line();
-        System.out.println(ANSI_YELLOW + "   Here are the tasks in your list:" + ANSI_RESET);
+        System.out.println("   Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(ANSI_YELLOW + "     " + String.valueOf(i + 1) + "." + tasks.getTask(i) + ANSI_RESET);
+            System.out.println("     " + String.valueOf(i + 1) + "." + tasks.getTask(i));
         }
         line();
     }
@@ -107,9 +101,9 @@ public class Ui {
      */
     public void findTask(ArrayList<String> result) {
         line();
-        System.out.println(ANSI_YELLOW + "   Here are the matching tasks in your list:" + ANSI_RESET);
+        System.out.println("   Here are the matching tasks in your list:");
         for (int i = 0; i < result.size(); i++) {
-            System.out.println(ANSI_YELLOW + "     " + result.get(i) + ANSI_RESET);
+            System.out.println("     " + result.get(i));
         }
         line();
     }
@@ -119,7 +113,7 @@ public class Ui {
      */
     public void bye() {
         line();
-        System.out.println(ANSI_YELLOW + "   Bye. Hope to see you again soon!" + ANSI_RESET);
+        System.out.println("   Bye. Hope to see you again soon!");
         line();
     }
 
@@ -128,7 +122,7 @@ public class Ui {
      */
     public void help() {
         line();
-        System.out.println(ANSI_YELLOW + "   The valid commands are:\n" +
+        System.out.println("   The valid commands are:\n" +
                 "     'list', to list out the current tasks\n" +
                 "     'todo description', or 'todo description /takes duration'.\n" +
                 "     example: 'todo finish reports /takes 1 day'\n" +
@@ -150,7 +144,7 @@ public class Ui {
                 "     example: 'update 2 /des finalise report'\n" +
                 "     example: 'update 3 /at 12/12/2020 1100'\n" +
                 "     example: 'update 4 /reset mark report /by 12/12/2020 1100'\n" +
-                "     'bye', to exit the program." + ANSI_RESET);
+                "     'bye', to exit the program.");
         line();
     }
 
@@ -162,9 +156,9 @@ public class Ui {
      */
     public void addTask(Task task, int tasksSize) {
         line();
-        System.out.println(ANSI_YELLOW + "   Got it. I've added this task: \n"
+        System.out.println("   Got it. I've added this task: \n"
                 + "     " + task
-                + "\n   Now you have " + tasksSize + " tasks in the list." + ANSI_RESET);
+                + "\n   Now you have " + tasksSize + " tasks in the list.");
         line();
     }
 
@@ -176,9 +170,9 @@ public class Ui {
      */
     public void deleteTask(Task task, int tasksSize) {
         line();
-        System.out.println(ANSI_YELLOW + "   Noted. I've removed this task:\n"
+        System.out.println("   Noted. I've removed this task:\n"
                 + "     " + task
-                + "\n   Now you have " + tasksSize + " tasks in the list." + ANSI_RESET);
+                + "\n   Now you have " + tasksSize + " tasks in the list.");
         line();
     }
 
@@ -189,8 +183,8 @@ public class Ui {
      */
     public void doneTask(Task task) {
         line();
-        System.out.println(ANSI_YELLOW + "   This task's status has been updated:\n"
-                + "     " + task + ANSI_RESET);
+        System.out.println("   This task's status has been updated:\n"
+                + "     " + task);
         line();
     }
 
@@ -201,8 +195,8 @@ public class Ui {
      */
     public void updateTask(Task task) {
         line();
-        System.out.println(ANSI_YELLOW + "   This task's information has been updated:\n"
-                + "     " + task + ANSI_RESET);
+        System.out.println("   This task's information has been updated:\n"
+                + "     " + task);
         line();
     }
 
@@ -214,9 +208,9 @@ public class Ui {
      */
     public void copyTask(Task task, int tasksSize) {
         line();
-        System.out.println(ANSI_YELLOW + "   This task has been copied:\n"
+        System.out.println("   This task has been copied:\n"
                 + "     " + task
-                + "\n   Now you have " + tasksSize + " tasks in the list." + ANSI_RESET);
+                + "\n   Now you have " + tasksSize + " tasks in the list.");
         line();
     }
 

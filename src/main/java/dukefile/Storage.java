@@ -30,7 +30,7 @@ public class Storage {
             File dir = new File(list.getParent());
 
             if (!dir.isDirectory()) {
-                System.out.println("   Directory did not exist, creating directory\n"
+                System.out.println("\n   Directory does not exist, creating directory\n"
                         + "     " + dir.getAbsolutePath());
                 dir.mkdir();
             }
@@ -40,7 +40,7 @@ public class Storage {
             } catch (IOException e) {
                 throw new DukeException(e.getMessage());
             }
-            System.out.println("   File did not exist in the directory, creating file\n"
+            System.out.println("\n   File does not exist in the directory, creating file\n"
                     + "     " + list.getName());
         } else {
             FileWriter fw = null;
@@ -58,9 +58,10 @@ public class Storage {
      *
      * @param task the task to be added to the file
      */
-    public void writeTask(Task task) {
+    public void writeTask(Task task, int size) {
         try {
             FileWriter fw = new FileWriter(String.valueOf(path), true);
+            fw.write(String.valueOf(size));
             fw.write(String.valueOf(task));
             fw.write("\n");
             fw.close();
@@ -85,7 +86,7 @@ public class Storage {
             BufferedWriter wr1 = new BufferedWriter(fw);
 
             for (int i = 0; i < text.size(); i++) {
-                wr1.write(text.get(i));
+                wr1.write(String.valueOf(i + 1) + text.get(i));
                 wr1.write("\n");
             }
 
