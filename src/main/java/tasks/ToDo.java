@@ -14,8 +14,4 @@ public class ToDo extends Task {
         return super.getTaskListInfo();
     }
 
-    /*public String formatForFile() {
-        return "T" + super.formatForFile() + super.getDescription();
-    }
-*/
 }

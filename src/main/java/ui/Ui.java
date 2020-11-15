@@ -19,7 +19,6 @@ public class Ui {
         System.out.println("Hello,\n" + logo + "   I'm Pi,\n" + "   What can I do for you?");
         showLine();
 
-        //ArrayList<tasks.Task> tasks = new ArrayList<tasks.Task>();
     }
 
     public Ui() {

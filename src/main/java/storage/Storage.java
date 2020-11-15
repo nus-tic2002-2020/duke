@@ -1,7 +1,11 @@
 package storage;
 
-import tasks.*;
-
+import tasks.TaskList;
+import tasks.Deadline;
+import tasks.DoWithinPeriod;
+import tasks.Event;
+import tasks.Task;
+import tasks.ToDo;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
@@ -54,68 +58,66 @@ public class Storage {
 
 
             switch (taskType){
-                case "E":
-                    String eventDate = inputs[3];
-                    String eventTime = inputs[4];
+            case "E":
+                String eventDate = inputs[3];
+                String eventTime = inputs[4];
 
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy");
-                    LocalDate localDate = LocalDate.parse(eventDate, formatter);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy");
+                LocalDate localDate = LocalDate.parse(eventDate, formatter);
 
-                    formatter = DateTimeFormatter.ofPattern("HH:mm");
-                    LocalTime localTime = LocalTime.parse(eventTime, formatter);
+                formatter = DateTimeFormatter.ofPattern("HH:mm");
+                LocalTime localTime = LocalTime.parse(eventTime, formatter);
 
-                    if (isDone.equals("✘")) {
-                        tasks.add(new Event(description, taskType, localDate, localTime, false));
-                    } else {
-                        tasks.add(new Event(description, taskType, localDate, localTime, true));
-                    }
+                if (isDone.equals("✘")) {
+                    tasks.add(new Event(description, taskType, localDate, localTime, false));
+                } else {
+                    tasks.add(new Event(description, taskType, localDate, localTime, true));
+                }
 
-                    break;
-                case "D":
-                    String deadlineDate = inputs[3];
-                    String deadlineTime = inputs[4];
+                break;
+            case "D":
+                String deadlineDate = inputs[3];
+                String deadlineTime = inputs[4];
 
-                    DateTimeFormatter deadlineFormatter = DateTimeFormatter.ofPattern("MMM d yyyy");
-                    LocalDate deadlineLocalDate = LocalDate.parse(deadlineDate, deadlineFormatter);
+                DateTimeFormatter deadlineFormatter = DateTimeFormatter.ofPattern("MMM d yyyy");
+                LocalDate deadlineLocalDate = LocalDate.parse(deadlineDate, deadlineFormatter);
 
-                    deadlineFormatter = DateTimeFormatter.ofPattern("HH:mm");
-                    LocalTime deadlineLocalTime = LocalTime.parse(deadlineTime, deadlineFormatter);
+                deadlineFormatter = DateTimeFormatter.ofPattern("HH:mm");
+                LocalTime deadlineLocalTime = LocalTime.parse(deadlineTime, deadlineFormatter);
+
+                if (isDone.equals("✘")) {
+                    tasks.add(new Deadline(description, taskType, deadlineLocalDate, deadlineLocalTime,false));
+                } else {
+                    tasks.add(new Deadline(description, taskType, deadlineLocalDate, deadlineLocalTime, true));
+                }
+
+                break;
+            case "P":
+                String fromDate = inputs[3];
+                String toDate = inputs[4];
+
+                DateTimeFormatter fromDateFormatter = DateTimeFormatter.ofPattern("MMM d yyyy");
+                LocalDate fromLocalDate = LocalDate.parse(fromDate, fromDateFormatter);
+
+                DateTimeFormatter toDateFormatter = DateTimeFormatter.ofPattern("MMM d yyyy");
+                LocalDate toLocalDate = LocalDate.parse(toDate, toDateFormatter);
 
 
-                    if (isDone.equals("✘")) {
-                        tasks.add(new Deadline(description, taskType, deadlineLocalDate, deadlineLocalTime,false));
-                    } else {
-                        tasks.add(new Deadline(description, taskType, deadlineLocalDate, deadlineLocalTime, true));
-                    }
+                if (isDone.equals("✘")) {
+                    tasks.add(new DoWithinPeriod(description, taskType, fromLocalDate, toLocalDate,false));
+                } else {
+                    tasks.add(new DoWithinPeriod(description, taskType, fromLocalDate, toLocalDate, true));
+                }
 
-                    break;
-                case "P":
-                    String fromDate = inputs[3];
-                    String toDate = inputs[4];
-
-                    DateTimeFormatter fromDateFormatter = DateTimeFormatter.ofPattern("MMM d yyyy");
-                    LocalDate fromLocalDate = LocalDate.parse(fromDate, fromDateFormatter);
-
-                    DateTimeFormatter toDateFormatter = DateTimeFormatter.ofPattern("MMM d yyyy");
-                    LocalDate toLocalDate = LocalDate.parse(toDate, toDateFormatter);
-
-
-                    if (isDone.equals("✘")) {
-                        tasks.add(new DoWithinPeriod(description, taskType, fromLocalDate, toLocalDate,false));
-                    } else {
-                        tasks.add(new DoWithinPeriod(description, taskType, fromLocalDate, toLocalDate, true));
-                    }
-
-                    break;
-                case "T":
-                    if (isDone.equals("✘")) {
-                        tasks.add(new ToDo(description, taskType, false));
-                    } else {
-                        tasks.add(new ToDo(description, taskType, true));
-                    }
-                    break;
+                break;
+            case "T":
+                if (isDone.equals("✘")) {
+                    tasks.add(new ToDo(description, taskType, false));
+                } else {
+                    tasks.add(new ToDo(description, taskType, true));
+                }
+                break;
             }
-
         }
         return tasks;
     }

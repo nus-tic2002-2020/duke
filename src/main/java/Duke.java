@@ -1,9 +1,13 @@
 import exception.DukeException;
 import parser.Parser;
 import storage.Storage;
-import tasks.*;
+import tasks.TaskList;
+import tasks.Deadline;
+import tasks.DoWithinPeriod;
+import tasks.Event;
+import tasks.Task;
+import tasks.ToDo;
 import ui.Ui;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -47,6 +51,7 @@ public class Duke {
             } else if (parser.getUserCommand().contains("done")) {
                 try {
                     int finishedTask = parser.getTaskIndex(tasks.size());
+                    assert finishedTask > 0:"Invalid number, index shall be greater than 0.";
                     tasks.getTask(finishedTask - 1).markAsDone();
 
                     ui.printDoneMessage(tasks, finishedTask - 1);
@@ -63,6 +68,7 @@ public class Duke {
             } else if (parser.getUserCommand().contains("delete")) {
                 try {
                     int removedTask = parser.getTaskIndex(tasks.size());
+                    assert removedTask > 0:"Invalid number, index shall be greater than 0.";
 
                     ui.printDeleteMessage(tasks, removedTask - 1);
                     tasks.deletedTask(removedTask - 1);
@@ -70,7 +76,6 @@ public class Duke {
                 } catch (DukeException exception) {
                     System.out.println(exception);
                 }
-                //System.out.println("Now you have " + tasks.size() + " task(s) in the list.");
 
                 try {
                     storage.updateFile(tasks);
@@ -80,24 +85,18 @@ public class Duke {
 
             } else if (parser.getUserCommand().contains("find")) {
                 try {
-                    //this.findTask(parser);
                     String keyword = parser.getDescription();
-                    //ArrayList<String> targets = tasks.findTargets(keyword);
+
                     tasks.find(keyword);
 
                 } catch (DukeException exception) {
                     ui.printExceptionMessage(exception);
                 }
-
-                //String findKeyword = input.substring(5);
-                //tasks.findTask(findKeyword);
-
             } else {
                 try {
                     this.addTask(parser);
 
                     ui.printUpdateMessage(tasks);
-                    //System.out.println("Now you have " + tasks.size() + " task(s) in the list.");
 
                     try {
                         storage.updateFile(tasks);

@@ -29,7 +29,6 @@ public class Parser {
 
     public String getDescription() throws DukeException{
         if (inputs.length == 1) {
-            //ui.showLine();
             throw new DukeException("  ☹ OOPS!!! The description of a " + inputs[0] + " cannot be empty!");
         }
 
@@ -105,7 +104,4 @@ public class Parser {
 
         return timing;
     }
-
-
-
 }
