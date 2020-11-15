@@ -37,10 +37,10 @@ public class Task {
     /**
      * Return a symbol to show a task status.
      *
-     * @return Return ✓ if task is done or ✘ if not.
+     * @return Return Y if task is done or X if not.
      */
     public String getStatusIcon() {
-        return (isDone ? "\u2713" : "\u2718"); //return symbols (✓ : ✘)
+        return (isDone ? "Y" : "X"); //return symbols (✓ : ✘)
     }
 
     /**

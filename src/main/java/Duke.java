@@ -8,10 +8,12 @@ import tasks.Event;
 import tasks.Task;
 import tasks.ToDo;
 import ui.Ui;
+import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.nio.file.NoSuchFileException;
+import java.util.ArrayList;
 
 /**
  * Pi is a chatbot that helps user to manage different type of tasks.
@@ -40,7 +42,7 @@ public class Duke {
         } catch (IOException e) {
             if (!(e instanceof NoSuchFileException)) {
                 ui.showLoadingError("File not found or unable to load the tasks");
-                e.printStackTrace();
+                //e.printStackTrace();
             }
             tasks = new TaskList();
         }
@@ -100,18 +102,17 @@ public class Duke {
 
             } else if (parser.getUserCommand().contains("find")) {
                 try {
-                    String keyword = parser.getDescription();
-
-                    tasks.find(keyword);
+                    this.findTask(parser);
 
                 } catch (DukeException exception) {
                     ui.printExceptionMessage(exception);
                 }
             } else if (parser.getUserCommand().contains("snooze")) {
                 try {
-                    int snoozedTask = parser.getTaskIndex(tasks.size());
-                    tasks.snoozedTask(snoozedTask - 1);
-                    tasks.snoozePostpone(tasks.getTask(snoozedTask-1));
+                    this.snoozeTask(parser);
+                    //int snoozedTask = parser.getTaskIndex(tasks.size());
+                    //tasks.snoozedTask(snoozedTask - 1);
+                    //tasks.snoozePostpone(tasks.getTask(snoozedTask-1));
                 } catch (DukeException exception) {
                     System.out.println(exception);
                 }
@@ -143,8 +144,6 @@ public class Duke {
         }
         ui.printByeMessage();
     }
-
-
 
     /**
      * Add different tasks to the list
@@ -180,6 +179,34 @@ public class Duke {
         }
 
         ui.printAddMessage(tasks);
+    }
+
+    /**
+     * Function to find the task description from user command.
+     *
+     * @param parser To interpret user input command.
+     * @throws DukeException Error message.
+     */
+    public void findTask(Parser parser) throws DukeException {
+        String keyword = parser.getDescription();
+
+        ArrayList<String> targets = tasks.findTargets(keyword);
+
+        ui.printTargets(targets);
+    }
+
+    /**
+     * Function to find the task by using task index number that user wants to postpone.
+     *
+     * @param parser To interpret user input command.
+     * @throws DukeException Error message.
+     */
+    public void snoozeTask(Parser parser) throws DukeException {
+        int snoozedTask = parser.getTaskIndex(tasks.size());
+
+        tasks.snoozedTask(snoozedTask - 1);
+
+        ui.snooze(tasks.snoozePostpone(tasks.getTask(snoozedTask-1)));
     }
 
 }

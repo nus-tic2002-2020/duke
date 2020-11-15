@@ -34,7 +34,7 @@ public class Storage {
     }
 
     public void updateFile(TaskList tasks) throws IOException {
-        FileWriter writer = new FileWriter("tasks.txt",false);
+        FileWriter writer = new FileWriter(filePath,false);
 
         if (tasks.size() != 0) {
             writer.write(tasks.getTask(0).formatForFile());
@@ -53,7 +53,8 @@ public class Storage {
      * @throws FileNotFoundException To show error message when file could not be found
      */
     public ArrayList<Task> loadFile () throws FileNotFoundException {
-        File file = new File ("tasks.txt");
+        ArrayList<Task> tasks = new ArrayList<Task>();
+        File file = new File (filePath);
         Scanner readFile = new Scanner (file);
 
         while (readFile.hasNext()) {
@@ -75,7 +76,7 @@ public class Storage {
                 formatter = DateTimeFormatter.ofPattern("HH:mm");
                 LocalTime localTime = LocalTime.parse(eventTime, formatter);
 
-                if (isDone.equals("✘")) {
+                if (isDone.equals("X")) {
                     tasks.add(new Event(description, taskType, localDate, localTime, false));
                 } else {
                     tasks.add(new Event(description, taskType, localDate, localTime, true));
@@ -92,7 +93,7 @@ public class Storage {
                 deadlineFormatter = DateTimeFormatter.ofPattern("HH:mm");
                 LocalTime deadlineLocalTime = LocalTime.parse(deadlineTime, deadlineFormatter);
 
-                if (isDone.equals("✘")) {
+                if (isDone.equals("X")) {
                     tasks.add(new Deadline(description, taskType, deadlineLocalDate, deadlineLocalTime,false));
                 } else {
                     tasks.add(new Deadline(description, taskType, deadlineLocalDate, deadlineLocalTime, true));
@@ -110,7 +111,7 @@ public class Storage {
                 LocalDate toLocalDate = LocalDate.parse(toDate, toDateFormatter);
 
 
-                if (isDone.equals("✘")) {
+                if (isDone.equals("X")) {
                     tasks.add(new DoWithinPeriod(description, taskType, fromLocalDate, toLocalDate,false));
                 } else {
                     tasks.add(new DoWithinPeriod(description, taskType, fromLocalDate, toLocalDate, true));
@@ -118,7 +119,7 @@ public class Storage {
 
                 break;
             case "T":
-                if (isDone.equals("✘")) {
+                if (isDone.equals("X")) {
                     tasks.add(new ToDo(description, taskType, false));
                 } else {
                     tasks.add(new ToDo(description, taskType, true));
@@ -128,5 +129,4 @@ public class Storage {
         }
         return tasks;
     }
-
 }

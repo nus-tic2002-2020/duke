@@ -192,4 +192,20 @@ public class Ui {
         System.out.println("Postpone 7 days: " + tasks.getTaskListInfo());
     }
 
+    /**
+     * Print a list to user when task is found, or no task is found in the list.
+     *
+     * @param results Found tasks in the list.
+     */
+    public void printTargets(ArrayList<String> results) {
+        System.out.println("Here are the matching tasks in your list:");
+
+        if (results.size() == 0){
+            System.out.println("   ☹ OOPS!!!, No record found!");
+        }
+
+        for (int i = 1; i < results.size() + 1; i++) {
+            System.out.println(i + ". " + results.get(i - 1));
+        }
+    }
 }

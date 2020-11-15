@@ -82,8 +82,9 @@ public class TaskList {
      * Set a new date (7 days later) for postponed task.
      *
      * @param overdueTask Overdue task in task list.
+     * @return Return the task with reset postponed (new) date.
      */
-    public void snoozePostpone(Task overdueTask) {
+    public Task snoozePostpone(Task overdueTask) {
         if (overdueTask instanceof Deadline) {
             ((Deadline)overdueTask).getDate();
         }
@@ -95,8 +96,7 @@ public class TaskList {
         LocalDate newLocalDate = oldLocalDate.plusDays(7);
         ((Deadline)overdueTask).setDate(newLocalDate);
 
-        ui.snooze(overdueTask);
-
+        return overdueTask;
     }
 
 
@@ -104,16 +104,18 @@ public class TaskList {
      * Search for the task that user wants to find in the list.
      *
      * @param keyword The task that user is looking for.
+     * @return Return the found task.
      */
-    public void find (String keyword) {
-        ArrayList<Task> results = new ArrayList<>();
-        for (Task task: tasks) {
-            if (task.getDescription().contains(keyword)) {
-                results.add(task);
+    public ArrayList<String> findTargets(String keyword) {
+        ArrayList<String> targets = new ArrayList<String>();
+
+        for (int i = 0; i < this.size(); i++) {
+            if (this.getTask(i).getDescription().contains(keyword)) {
+                targets.add(this.getTask(i).getTaskListInfo());
             }
         }
-        ui.printFoundKeyword(results);
-    }
 
+        return targets;
+    }
 
 }
