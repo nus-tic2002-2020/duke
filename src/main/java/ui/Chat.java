@@ -61,7 +61,7 @@ public class Chat extends Duke {
 		try {
 			serviceType= ServiceType.valueOf(input);
 		} catch (Exception e) {
-			throw new DukeException("Sorry I cannot understand you.");
+			throw new DukeException("");
 		}
 
 		switch (serviceType) {
@@ -92,7 +92,6 @@ public class Chat extends Duke {
 			} else {
 				try {
 					LocalDate d = processDate(data);
-					GUI.guiOutput("Here are the tasks in your list on " + data + ":");
 					listAllwithDate(d);
 				} catch (NumberFormatException e) {
 					throw new DukeException("Invalid date");
@@ -191,7 +190,7 @@ public class Chat extends Duke {
 			try {
 				task.add(count, new Task(data, userInput));
 				if (print) {
-					printAddedTasks(task.get(count).toString());
+					printAddedTasks(task.get(count).printTask());
 				}
 				count++;
 			} catch (RuntimeException e) {
@@ -232,16 +231,20 @@ public class Chat extends Duke {
 		int n = 1;
 		if (count == 0) {
 			GUI.guiOutput("There are no items currently in the list");
-		}
+		}	
 		for (int a = 0; a < count; a++) {
 			LocalDate date = task.get(a).getDate();
 			if (date != null && date.equals(d)) {
+				if(n==1) {
+					GUI.guiOutput("Here are the tasks in your list on " + d + ":");
+				}
 				GUI.guiOutput(n + ". " + task.get(a).printTask());
 				n++;
 			}
+		}	
+		if (n == 1) {
+			GUI.guiOutput("Oh you dont have a task on that day!");
 		}
-		if (n == 1)
-			GUI.guiOutput("Oh you dont have a task on that day");
 	}
 
 	public static void listAllwithKey(String keyword)
@@ -272,8 +275,9 @@ public class Chat extends Duke {
 			return true;
 		for (int a = 0; a < count; a++) {
 			Task t = task.get(a);
-			if (t.getTime() == TIME_NULL || t.getDate() == null)
+			if (t.getTime() == TIME_NULL || t.getDate() == null) {
 				return true;
+				}
 			if (t.getDate().isEqual(date) && t.getTime() == time) {
 				GUI.guiOutputWarning("New task was not added because it corrupt with " + t.printTask());
 				return false;

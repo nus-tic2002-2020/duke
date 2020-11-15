@@ -73,6 +73,7 @@ public class GUI extends JFrame {
 				try {
 					String input =txtSend.getText().trim();
 					txtSend.setText("");
+					txtChatRecord.setCaretPosition(txtChatRecord.getDocument().getLength());
 					guiInput(input);
 				} catch (DukeException | IOException | MissDescException e) {
 					// TODO Auto-generated catch block
@@ -157,10 +158,10 @@ public class GUI extends JFrame {
 			StyleConstants.setForeground(styleDuke, Color.red);
 			StyleConstants.setBold(styleDuke, true);
 			doc.insertString(doc.getLength(), "\nDuke: ", styleDuke);
-			isYourTurn = true;
 		}
 		Style style = txtChatRecord.addStyle("", null);
 		StyleConstants.setForeground(style, Color.red);
 		doc.insertString(doc.getLength(), "\n" + output, style);
+			isYourTurn = true;
 	}
 }

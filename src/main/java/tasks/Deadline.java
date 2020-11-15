@@ -19,9 +19,13 @@ public class Deadline extends Task {
 	}
 
 	@Override
+	public LocalDate getDate() {
+		return this.date;
+	}
+	@Override
 	public String printTask() {
 		return "[D]" + "[" + getIcon() + "] " + getTitle() + " (by: "
-				+ date.format(DateTimeFormatter.ofPattern("MMM/dd/yyyy")) + " " + time + ")";
+				+ date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")) + " " + time + ")";
 	}
 
 }
