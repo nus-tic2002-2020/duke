@@ -1,5 +1,6 @@
 @ECHO OFF
 
+if exist \data del \data
 REM create bin directory if it doesn't exist
 if not exist ..\bin mkdir ..\bin
 
@@ -19,3 +20,5 @@ java -classpath ..\bin Duke < input.txt > ACTUAL.TXT
 
 REM compare the output to the expected output
 FC ACTUAL.TXT EXPECTED.TXT
+
+pause

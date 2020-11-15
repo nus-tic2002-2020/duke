@@ -1,0 +1,6 @@
+T | 0 | house chores
+D | 0 | school homework | 18 Dec 2020 23:59:59
+E | 0 | birthday dinner | 11 Dec 2020 19:30 - 23:00
+D | 1 | essay | 24 Nov 2020 23:59:59
+O | 0 | running
+T | 0 | Write Deadlines for myself

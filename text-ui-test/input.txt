@@ -1,0 +1,26 @@
+/help
+jumping jacks
+todo house chores
+deadline school homework /by 20/12/2020 10:10:10
+event birthday dinner /at 10/12/2020 18:30 – 22:00
+deadline essay /by 24/11/2020 23:59:59
+list
+done 1
+done 5
+done 3
+delete 1
+undone 2
+list
+running
+reschedule 2 /new 18/12/2020 23:59:59
+reschedule 3 /new 11/12/2020 19:30 - 23:00
+todo Write Deadlines for myself
+find home
+find ho
+find Deadline
+find Event
+find ToDo
+find Task
+find essay
+list
+bye
