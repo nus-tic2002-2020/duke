@@ -70,9 +70,9 @@ public class Task {
         String symbol;
 
         if (this.isDone) {
-            symbol = "\u2713";
+            symbol = "+";
         } else {
-            symbol = "\u2718";
+            symbol = "-";
         }
 
         return ("[" + symbol + "] " + getDescription());

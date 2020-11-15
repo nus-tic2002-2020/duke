@@ -40,7 +40,7 @@ public class Ui {
      * This prints the dashed line used to separate printed lines/sections.
      */
     public void showLine() {
-        System.out.println("____________________________________");
+        System.out.println("___________________________________________________");
     }
 
     /**
