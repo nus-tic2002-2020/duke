@@ -48,7 +48,7 @@ public class command {
      * @throws NumberFormatException when error occurs
      * @throws NullPointerException  when error occurs
      */
-    public static void doneTask(String userInput) throws StringIndexOutOfBoundsException, NumberFormatException, NullPointerException {
+    public static void doneTask(String userInput) throws StringIndexOutOfBoundsException, NumberFormatException, IndexOutOfBoundsException {
         try {
             int filteredNumber = Integer.parseInt(userInput.substring(5));
             TaskList.listTask.get(filteredNumber - 1).markDone();
@@ -61,12 +61,12 @@ public class command {
             UI.printLine();
             System.out.println("\t☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             UI.printLine();
-        } catch (NullPointerException e) {
+        } catch (StringIndexOutOfBoundsException e) {
+            UI.printEmptyToDoException();
+        } catch (IndexOutOfBoundsException e) {
             UI.printLine();
             System.out.println("\t☹ OOPS!!! Numbers out of range :-(");
             UI.printLine();
-        } catch (StringIndexOutOfBoundsException e) {
-            UI.printEmptyToDoException();
         }
     }
 
@@ -157,16 +157,23 @@ public class command {
      * @param userInput deletes task from list of task
      */
     public static void deleteTask(String userInput) {
-
-        int numTask = Integer.valueOf(userInput.substring(7));
-        Task t = TaskList.listTask.get(numTask - 1);
-        TaskList.listTask.remove(numTask - 1);
-        System.out.println("\tNoted. I've removed this task:");
-        System.out.println("\t" + t.toString());
-        UI.printNoOfTask(TaskList.listTask);
-        UI.printLine();
+        try {
+            int numTask = Integer.valueOf(userInput.substring(7));
+            assert numTask > TaskList.listTask.size() : "Not in the list of task";
+            Task t = TaskList.listTask.get(numTask - 1);
+            TaskList.listTask.remove(numTask - 1);
+            System.out.println("\tNoted. I've removed this task:");
+            System.out.println("\t" + t.toString());
+            UI.printNoOfTask(TaskList.listTask);
+            UI.printLine();
+        } catch (StringIndexOutOfBoundsException e) {
+            UI.printEmptyToDoException();
+        } catch (IndexOutOfBoundsException e) {
+            UI.printLine();
+            System.out.println("\t☹ OOPS!!! Numbers out of range :-(");
+            UI.printLine();
+        }
     }
-
     /**
      * find keywords from list of task
      *

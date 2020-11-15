@@ -63,6 +63,7 @@ public class TaskList {
             else if (userInput.startsWith("save")) {
                 command.save();
             } else {
+                assert userInput == null:"There is no input.";
                 UI.printInputError();
             }
 
