@@ -1,6 +1,5 @@
 package dukelist;
 
-import dukeexception.DukeException;
 import duketask.Deadline;
 import duketask.Event;
 import duketask.Task;

@@ -1,6 +1,5 @@
 package dukeui;
 
-import dukeexception.DukeException;
 import dukelist.TaskList;
 import duketask.Task;
 

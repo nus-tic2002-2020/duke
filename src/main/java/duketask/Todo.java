@@ -1,7 +1,5 @@
 package duketask;
 
-import dukeexception.DukeException;
-
 public class Todo extends Task {
     protected String schedule;
     protected boolean isDuration;
