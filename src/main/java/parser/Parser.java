@@ -102,7 +102,7 @@ public class Parser {
                     description = input.substring(0, index);
                     description = description.replaceFirst("deadline", "").trim();
                 } catch (StringIndexOutOfBoundsException e) {
-                    throw new DukeException("Error: Incomplete Command for Add Deadline");
+                    throw new DukeException("Error: Incomplete Command for Add Deadline.");
                 }
 
                 return new AddCommand("deadline", description, secPart);

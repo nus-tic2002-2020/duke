@@ -168,7 +168,8 @@ public class TaskList {
         for (int i = 0; i < size; i++) {
 
             if (this.tasks.get(i).toString().contains(keyword) || classType.equals(this.tasks.get(i).getClass().toString())) {
-                System.out.println(System.lineSeparator() + (total + 1) + "." + this.tasks.get(i).toString());
+                total = total + 1;
+                System.out.println(System.lineSeparator() + (total) + "." + this.tasks.get(i).toString());
             }
 
         }

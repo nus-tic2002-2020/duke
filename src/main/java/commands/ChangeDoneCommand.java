@@ -36,9 +36,17 @@ public class ChangeDoneCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
         try {
+            String doneLevel;
             tasks.get(option - 1).changeDoneTo(isDone);
-            ui.printMessage(System.lineSeparator() + "Nice! I've marked this task as done:" +
+            if (isDone) {
+                doneLevel = " done:";
+            } else {
+                doneLevel = " not done:";
+            }
+
+            ui.printMessage(System.lineSeparator() + "Nice! I've marked this task as" + doneLevel +
                     System.lineSeparator() + tasks.get(option - 1).toString());
+
 
         } catch (IndexOutOfBoundsException e) {
             throw new DukeException("Input option for ChangeDone Command invalid");
