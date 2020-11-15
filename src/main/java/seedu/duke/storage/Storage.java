@@ -45,7 +45,7 @@ public class Storage {
             file.createNewFile();
             throw new IOException();
         } catch (IOException e) {
-            System.out.println("\t☹ OOPS!!! Error creating file.");
+            System.out.println("Error creating file.");
         }
     }
 
@@ -87,7 +87,7 @@ public class Storage {
             }
             fw.close();
         } catch (IOException ioe) {
-            System.out.println("\t☹ OOPS!!! Error in saving the file.");
+            System.out.println("Error in saving the file.");
         }
     }
 

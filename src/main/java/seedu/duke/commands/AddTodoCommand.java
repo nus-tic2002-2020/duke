@@ -10,8 +10,8 @@ import seedu.duke.ui.Ui;
 public class AddTodoCommand extends Command {
 
     public static final String COMMAND_WORD = "todo";
-    public static final String TODO_MSG = "Got it. I've added this task:\n\t";
-    public static final String TODO_MSG1 = "\n\tNow you have ";
+    public static final String TODO_MSG = "Got it. I've added this task:\n";
+    public static final String TODO_MSG1 = "\nNow you have ";
     public static final String TODO_MSG2 = " in task list.";
     protected Todo todo;
 
@@ -36,7 +36,7 @@ public class AddTodoCommand extends Command {
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
         if (description.substring(4).equals("")) {
-            throw new DukeException("\tThe description of todo cannot be empty.\n");
+            throw new DukeException("The description of todo cannot be empty.");
         }
         todo = new Todo(description.substring(5));
         taskList.setTaskList(todo);

@@ -8,7 +8,7 @@ import seedu.duke.ui.Ui;
 
 public class DoneCommand extends Command {
     public static final String COMMAND_WORD = "done";
-    public static final String DONE_MSG = "Nice! I have marked this task as done: \n\t";
+    public static final String DONE_MSG = "Nice! I have marked this task as done:\n";
 
     /**
      * Creates DoneCommand and initialise the isExit boolean value and description according to user input.
@@ -32,7 +32,7 @@ public class DoneCommand extends Command {
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
         int index = 0;
         if (description.substring(4).equals("")) {
-            throw new DukeException("\tThe description of todo cannot be empty.\n");
+            throw new DukeException("Which task is done?");
         }
         index = Integer.parseInt(description.substring(5)) - 1;
         (taskList.getATask(index)).setDone();

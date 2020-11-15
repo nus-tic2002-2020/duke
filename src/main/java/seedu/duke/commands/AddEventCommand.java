@@ -13,8 +13,8 @@ import java.time.format.DateTimeParseException;
 
 public class AddEventCommand extends Command {
     public static final String COMMAND_WORD = "event";
-    public static final String EVENT_MSG = "Got it. I've added this task:\n\t";
-    public static final String EVENT_MSG1 = "\n\tNow you have ";
+    public static final String EVENT_MSG = "Got it. I've added this task:\n";
+    public static final String EVENT_MSG1 = "\nNow you have ";
     public static final String EVENT_MSG2 = " in task list.";
     protected Event event;
 
@@ -39,9 +39,9 @@ public class AddEventCommand extends Command {
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
         if (description.substring(5).equals("")) {
-            throw new DukeException("\tThe description of event cannot be empty.\n");
-        } else if (description.contains("at  ")) {
-            throw new DukeException("\tThe event date cannot be empty.\n");
+            throw new DukeException("The description of event cannot be empty.");
+        } else if (!description.contains("at")) {
+            throw new DukeException("The event date cannot be empty.");
         }
         String taskDescription = description.substring(6, description.indexOf("at") - 1);
         String taskDate = description.substring(description.indexOf("at") + 3);
@@ -59,7 +59,7 @@ public class AddEventCommand extends Command {
      * @return LocalDateTime       The date and time in a LocalDateTime format.
      * @throws DukeException To handle error and exception, if the input from user is not the format (dd/mm/yyyy HHmm).
      */
-    private LocalDateTime stringToDate(String date) throws DukeException {
+    public LocalDateTime stringToDate(String date) throws DukeException {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
             return LocalDateTime.parse(date, formatter);

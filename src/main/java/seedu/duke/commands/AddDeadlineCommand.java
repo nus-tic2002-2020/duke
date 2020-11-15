@@ -13,8 +13,8 @@ import java.time.format.DateTimeParseException;
 
 public class AddDeadlineCommand extends Command {
     public static final String COMMAND_WORD = "deadline";
-    public static final String DEADLINE_MSG = "Got it. I've added this task:\n\t";
-    public static final String DEADLINE_MSG1 = "\n\tNow you have ";
+    public static final String DEADLINE_MSG = "Got it. I've added this task:\n";
+    public static final String DEADLINE_MSG1 = "\nNow you have ";
     public static final String DEADLINE_MSG2 = " in task list.";
     protected Deadline deadline;
 
@@ -39,9 +39,9 @@ public class AddDeadlineCommand extends Command {
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws DukeException {
         if (description.substring(8).equals("")) {
-            throw new DukeException("\tThe description of deadline cannot be empty.\n");
-        } else if (description.contains("by  ")) {
-            throw new DukeException("\tThe event date cannot be empty.\n");
+            throw new DukeException("The description of deadline cannot be empty.");
+        } else if (!description.contains("by")) {
+            throw new DukeException("The date cannot be empty.");
         }
         String taskDescription = description.substring(9, description.indexOf("by") - 1);
         String taskDate = description.substring(description.indexOf("by") + 3);
@@ -59,7 +59,7 @@ public class AddDeadlineCommand extends Command {
      * @return LocalDateTime       The date and time in a LocalDateTime format.
      * @throws DukeException To handle error and exception, if the input from user is not the format (dd/mm/yyyy HHmm).
      */
-    private LocalDateTime stringToDate(String date) throws DukeException {
+    public LocalDateTime stringToDate(String date) throws DukeException {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm");
             return LocalDateTime.parse(date, formatter);

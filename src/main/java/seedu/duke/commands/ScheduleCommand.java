@@ -43,7 +43,7 @@ public class ScheduleCommand extends Command {
         List<String> matchedTasksList = new ArrayList<>();
 
         if (description.substring(8).equals("")) {
-            throw new DukeException("\tThe date of schedule cannot be empty.\n");
+            throw new DukeException("The date of schedule cannot be empty.");
         }
         description = description.substring(9);
         date = stringToDate(description);  //date from user
@@ -93,7 +93,7 @@ public class ScheduleCommand extends Command {
      * @return LocalDate           The date in a LocalDateTime format.
      * @throws DukeException To handle error and exception, if the input from user is not the format (dd/mm/yyyy HHmm).
      */
-    private LocalDate stringToDate(String date) throws DukeException {
+    public LocalDate stringToDate(String date) throws DukeException {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             return LocalDate.parse(date, formatter);

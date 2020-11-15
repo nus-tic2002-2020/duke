@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class Ui {
-    private static final String DIVIDER = "\n\t_______________________________________________________\n";
+    private static final String DIVIDER = "_______________________________________________________\n";
     private final Scanner input;
     private String output;
 
@@ -35,14 +35,14 @@ public class Ui {
                 + "\t| | | | | | | |/ / _ \\\n"
                 + "\t| |_| | |_| |   <  __/\n"
                 + "\t|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println(DIVIDER + "\tHello from\n" + logo + "\tWhat can I do for you?" + DIVIDER);
+        System.out.println(DIVIDER + "\tHello from\n" + logo + "\tWhat can I do for you?\n" + DIVIDER);
     }
 
     /**
      * Prints goodbye message.
      */
     public void showGoodbyeMessage() {
-        System.out.println(DIVIDER + "\tBye. Hope to see you again soon." + DIVIDER);
+        output = DIVIDER + "Bye. Hope to see you again soon.\n" + DIVIDER;
     }
 
     /**
@@ -61,7 +61,6 @@ public class Ui {
      * Prints the output accordingly.
      */
     public String showOutput() {
-        //System.out.println(DIVIDER + "\t" + output + DIVIDER);
         return this.output;
     }
 
@@ -69,16 +68,11 @@ public class Ui {
         this.output = output;
     }
 
-//    public String showOutput(){
-//        return this.output;
-//    }
-
     /**
      * Prints exception/error message.
      * @param    errorMessage       The exception/error message.
      */
     public String showLoadingError(String errorMessage) {
-        //System.out.println(DIVIDER + "\t☹ OOPS!!! " + errorMessage + DIVIDER);
-        return DIVIDER + "\u2639 OOPS!!! " + errorMessage + DIVIDER;
+        return DIVIDER + "\u2639 OOPS!!! " + errorMessage + "\n" + DIVIDER;
     }
 }

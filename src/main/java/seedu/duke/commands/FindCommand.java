@@ -13,7 +13,7 @@ import java.util.List;
 public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
     public static final String FIND_MSG = "Here are the tasks in your list:";
-    public static final String FIND_MSG2 = "\tYou have no matched task.";
+    public static final String FIND_MSG2 = "You have no matched task.";
 
     /**
      * Creates ScheduleCommand and initialise the isExit boolean value and description according to user input.
@@ -39,7 +39,7 @@ public class FindCommand extends Command {
         List<String> matchedTasksList = new ArrayList<>();
 
         if (description.substring(4).equals("")) {
-            throw new DukeException("\tThe task description of find cannot be empty.\n");
+            throw new DukeException("The task description of find cannot be empty.");
         }
         description = description.substring(4);
         for (int i = 0; i < taskList.length(); i++) {

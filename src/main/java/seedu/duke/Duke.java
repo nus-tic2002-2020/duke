@@ -47,9 +47,7 @@ public class Duke {
     }
 
     public String getResponse(String input) {
-        //return "Duke heard: " + input;
         try {
-            //String fullCommand = ui.getUserCommand();
             Command c = Parser.parserCommand(input);
             c.execute(taskList, ui, storage);
             return ui.showOutput();
