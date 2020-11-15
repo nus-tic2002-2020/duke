@@ -28,8 +28,8 @@ public class Event extends Task {
         try {
 
             index = at.indexOf(" - ");
-            this.end = LocalTime.parse(at.substring(index).replace(" - ", "").stripLeading(), DateTimeFormatter.ofPattern("H:m"));
-            this.start = LocalDateTime.parse(at.substring(0, index).replaceFirst("/at", "").stripLeading(), DateTimeFormatter.ofPattern("dd/M/yyyy H:m"));
+            this.end = LocalTime.parse(at.substring(index).replace(" - ", "").trim(), DateTimeFormatter.ofPattern("HH:mm"));
+            this.start = LocalDateTime.parse(at.substring(0, index).replaceFirst("/at", "").trim(), DateTimeFormatter.ofPattern("dd/M/yyyy HH:mm"));
         } catch (DateTimeParseException | StringIndexOutOfBoundsException e) {
             this.start = LocalDateTime.now();
             this.end = LocalTime.now();
@@ -61,9 +61,9 @@ public class Event extends Task {
         int index;
         try {
             index = at.indexOf(" - ");
-            this.end = LocalTime.parse(at.substring(index).replace(" - ", "").stripLeading(),
+            this.end = LocalTime.parse(at.substring(index).replace(" - ", "").trim(),
                     DateTimeFormatter.ofPattern("HH:mm"));
-            this.start = LocalDateTime.parse(at.substring(0, index).replaceFirst("/at", "").stripLeading(),
+            this.start = LocalDateTime.parse(at.substring(0, index).replaceFirst("/at", "").trim(),
                     DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
         } catch (DateTimeParseException | StringIndexOutOfBoundsException e) {
             this.start = LocalDateTime.now();

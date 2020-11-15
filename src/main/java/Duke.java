@@ -79,7 +79,7 @@ public class Duke {
     }
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException{
         new Duke("data/tasks_list.txt").run();
     }
 }

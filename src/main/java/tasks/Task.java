@@ -1,6 +1,12 @@
 package tasks;
 
 
+import java.io.OutputStreamWriter;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 /**
  * Represents the Parent Class Task. It has a String for the description of the task.
  * The boolean is meant to indicate if the task is done.
@@ -28,9 +34,9 @@ public class Task {
 
     /**
      * This changes the isDone boolean to the parameter "value". Which is either true or false.
-     * If true, it means the task is comepleted.
+     * If true, it means the task is completed.
      *
-     * @param value This is the boolean value which indicates if the task is comepleted or not
+     * @param isDone This is the boolean value which indicates if the task is completed or not
      */
     public void changeDoneTo(boolean isDone) {
         this.isDone = isDone;
@@ -41,7 +47,6 @@ public class Task {
      * This is an accessor of the description
      *
      * @return the description of the task.
-     * @throws
      */
     public String getDescription() {
         return this.description;
@@ -60,15 +65,16 @@ public class Task {
      * This converts the Task to a String for printing
      *
      * @return the Task in the form of a String
-     * @throws
      */
     public String toString() {
         String symbol;
-        if (this.isDone == true) {
+
+        if (this.isDone) {
             symbol = "\u2713";
         } else {
-            symbol = "\u2717";
+            symbol = "\u2718";
         }
+
         return ("[" + symbol + "] " + getDescription());
     }
 

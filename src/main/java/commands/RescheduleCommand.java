@@ -27,10 +27,10 @@ public class RescheduleCommand extends Command {
             if (tasks.get(this.option - 1) instanceof Deadline) {
                 ((Deadline) (tasks.get(this.option - 1))).rescheduleBy(this.newDateTime);
                 ui.printMessage("Rescheduled Date time: " + tasks.get(this.option - 1).toString());
-            }else if (tasks.get(this.option - 1) instanceof Event) {
+            } else if (tasks.get(this.option - 1) instanceof Event) {
                 ((Event) (tasks.get(this.option - 1))).rescheduleAt(this.newDateTime);
                 ui.printMessage("Rescheduled Date time: " + tasks.get(this.option - 1).toString());
-            }else{
+            } else {
                 throw new DukeException("Error: You did not reschedule on a Deadline or Event");
             }
 

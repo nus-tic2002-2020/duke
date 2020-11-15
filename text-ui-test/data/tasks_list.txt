@@ -1,4 +1,4 @@
 O | 0 | hopping
 T | 0 | math homework
 D | 0 | application | 30 Dec 2020 23:59:59
-E | 0 | dinner with family | 15 Nov 2020 06:10 - 06:10
+E | 0 | dinner with family | 15 Nov 2020 08:22 - 08:22
