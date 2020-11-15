@@ -2,6 +2,7 @@ package duke.task;
 
 import duke.command.Duke;
 import duke.command.DukeException;
+import duke.io.Savable;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -12,15 +13,26 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 
+/**
+ * Event Task format
+ * Implements {@link DatedTask} to be used with {@link duke.command.ScheduleCommand}
+ */
 public class Event extends Task implements DatedTask {
 
     protected LocalDateTime at;
     protected LocalDateTime end;
 
+    /**
+     * Default Constructor with no task description.
+     */
     public Event() {
         this("");
     }
 
+    /**
+     * Constructor with task description
+     * @param description
+     */
     public Event(String description) {
         super(description);
         this.at  = LocalDateTime.now();
@@ -28,22 +40,45 @@ public class Event extends Task implements DatedTask {
         this.type = TaskType.EVENT;
     }
 
+    /**
+     * Getter for /at date time
+     * @return at date time as LocalDateTime
+     */
     public LocalDateTime getAt() {
         return at;
     }
 
+    /**
+     * Getter for /end date time
+     * @return end date time as LocalDateTime
+     */
     public LocalDateTime getEnd() {
         return end;
     }
 
+    /**
+     * Setter for /at date time
+     * @param at date time as LocalDateTime
+     */
     public void setAt(LocalDateTime at) {
         this.at = at;
     }
 
+    /**
+     * Setter for /end date time
+     * @param end date time as LocalDateTime
+     */
     public void setEnd(LocalDateTime end) {
         this.end = end;
     }
 
+    /**
+     * Set /at and /end date time in string formats.
+     * Automatically parsed string (e.g. yyyy-MM-dd HH:mm or yyyy-MM-dd hh:mm a) to LocalDateTime.
+     * @param at in string
+     * @param end in string
+     * @throws DukeException if /end happens before /at
+     */
     public void setDuration(String at, String end) throws DukeException {
 
         // Process start date time
@@ -91,6 +126,10 @@ public class Event extends Task implements DatedTask {
         }
     }
 
+    /**
+     * Get display friendly string for {@link Savable} event.
+     * @return display friendly string
+     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -114,12 +153,21 @@ public class Event extends Task implements DatedTask {
         return builder.toString();
     }
 
+    /**
+     * Convert to savable string for {@link Savable} event.
+     * @return savable string for disk storage
+     */
     @Override
     public String toSavableString() {
         return String.format("%s|%s|%s", super.toSavableString(),
                 at.toEpochSecond(ZoneOffset.UTC), end.toEpochSecond(ZoneOffset.UTC));
     }
 
+    /**
+     * Convert from raw task data format into Event object
+     * @param savableString as raw data format
+     * @throws DukeException if raw format is wrong
+     */
     @Override
     public void fromSavableString(String savableString) throws DukeException {
         super.fromSavableString(savableString);
@@ -143,6 +191,10 @@ public class Event extends Task implements DatedTask {
         }
     }
 
+    /**
+     * Getter to work with {@link Comparable} using /at date time.
+     * @return at as LocalDateTime
+     */
     @Override
     public LocalDateTime getComparableDateTime() {
         return this.at;

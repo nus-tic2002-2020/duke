@@ -26,6 +26,10 @@ import duke.io.Storage;
 import duke.io.Ui;
 import duke.task.*;
 
+/**
+ * Duke application main logic.
+ * Supports javafx GUI using {@link Application} class.
+ */
 public class Duke extends Application {
 
     private ScrollPane scrollPane;
@@ -44,10 +48,17 @@ public class Duke extends Application {
     protected TaskManager taskManager;
     protected Ui ui;
 
+    /**
+     * Default Constructor using FILE_PATH constant.
+     */
     public Duke() {
         this(FILE_PATH);
     }
 
+    /**
+     * Constructor using custom file path for tasks data.
+     * @param filePath for tasks data saved on disk
+     */
     public Duke(String filePath) {
         storageTasks = new Storage(filePath);
         ui = new Ui();
@@ -62,6 +73,9 @@ public class Duke extends Application {
         }
     }
 
+    /**
+     * Run Duke routing for command line.
+     */
     public void run() {
         ui.welcome();
 
@@ -96,18 +110,30 @@ public class Duke extends Application {
 
     }
 
+    /**
+     * Main method entry point for duke application command line
+     * @param args from Java options
+     */
     public static void main(String[] args) {
         Duke duke = new Duke(FILE_PATH);
         duke.run();
     }
 
+    /**
+     * GUI start. Initialise all GUI components and handle user inputs.
+     * @param stage
+     * @throws Exception
+     * @see Application
+     */
     @Override
     public void start(Stage stage) throws Exception {
-       /*Label helloWorld = new Label("Hello World!"); // Creating a new Label control
+        /*
+        Label helloWorld = new Label("Hello World!"); // Creating a new Label control
         Scene scene = new Scene(helloWorld); // Setting the scene to be our Label
 
         primaryStage.setScene(scene); // Setting the stage to show our screen
-        primaryStage.show(); // Render the stage.*/
+        primaryStage.show(); // Render the stage.
+        */
 
         //Step 1. Setting up required components
 
@@ -196,7 +222,8 @@ public class Duke extends Application {
      * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
      * the dialog container. Clears the user input after processing.
      */
-    /*private void handleUserInput() {
+    /*
+    private void handleUserInput() {
         Label userText = new Label(userInput.getText());
         Label dukeText = new Label(getResponse(userInput.getText()));
         dialogContainer.getChildren().addAll(
@@ -204,7 +231,8 @@ public class Duke extends Application {
                 new DialogBox(dukeText, new ImageView(duke))
         );
         userInput.clear();
-    }*/
+    }
+    */
 
     /**
      * Iteration 3
@@ -221,8 +249,8 @@ public class Duke extends Application {
 
     /**
      * Process user input from GUI
-     * @param input
-     * @return
+     * @param input from user as raw command string
+     * @return command output string
      */
     private String getResponse(String input) {
         //return "Duke heard: " + input;

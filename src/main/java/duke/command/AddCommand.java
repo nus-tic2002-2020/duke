@@ -10,25 +10,51 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Command to add new {@link Task}
+ * @see duke.command.Command
+ */
 public class AddCommand extends Command{
 
     protected Task task;
 
+    /**
+     * Constructor for instantiating new AddCommand
+     * @param task to be added
+     * @param args of raw user command for further processing in downstream classes
+     */
     public AddCommand(Task task, String[] args) {
         super(args);
         this.task = task;
     }
 
+    /**
+     * Getter for Command Type enum
+     * @return CommandType
+     * @see  CommandType
+     */
     @Override
     public CommandType getType() {
         return CommandType.ADD;
     }
 
+    /**
+     * Getter for exit behavior to be used by calling application
+     * @return exit status, always false
+     */
     @Override
     public boolean isExit() {
         return false;
     }
 
+    /**
+     * Execute AddCommand with {@link Task}
+     * @param taskManager
+     * @param ui
+     * @param storage
+     * @return boolean
+     * @throws DukeException if error writing to disk
+     */
     @Override
     public boolean execute(TaskManager taskManager, Ui ui, Storage storage) throws DukeException {
         assert ui != null : "Command ui cannot be null";

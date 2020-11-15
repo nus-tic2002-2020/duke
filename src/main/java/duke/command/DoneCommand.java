@@ -10,22 +10,47 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Command to mark {@link Task} as done
+ * @see duke.command.Command
+ */
 public class DoneCommand extends Command{
 
+    /**
+     * Constructor for instantiating new DoneCommand
+     * @param args of raw user command for further processing in downstream classes
+     */
     public DoneCommand(String[] args) {
         super(args);
     }
 
+    /**
+     * Getter for Command Type enum
+     * @return CommandType
+     * @see  CommandType
+     */
     @Override
     public CommandType getType() {
         return CommandType.DONE;
     }
 
+    /**
+     * Getter for exit behavior to be used by calling application
+     * @return exit status, always false
+     */
     @Override
     public boolean isExit() {
         return false;
     }
 
+    /**
+     * Execute DoneCommand with args using task number in {@link TaskManager}
+     * @param taskManager
+     * @param ui
+     * @param storage
+     * @return boolean
+     * @throws DukeException if error writing to disk
+     */
     @Override
     public boolean execute(TaskManager taskManager, Ui ui, Storage storage) throws DukeException {
         assert ui != null : "Command ui cannot be null";

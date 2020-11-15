@@ -8,6 +8,11 @@ import javafx.application.Application;
  * Command Line mode usage: -c
  */
 public class Launcher {
+
+    /**
+     * Main entry point for Duke application
+     * @param args from Java options
+     */
     public static void main(String[] args) {
         if (args.length > 0 && args[0].equalsIgnoreCase("-c")) {
             // Launch Command Line mode
@@ -17,4 +22,5 @@ public class Launcher {
             Application.launch(Duke.class, args);
         }
     }
+
 }

@@ -8,22 +8,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Storage class for writing and reading disk text data
+ */
 public class Storage {
 
     protected String filePath;
 
+    /**
+     * Getting for file path
+     * @return file path as string
+     */
     public String getFilePath() {
         return filePath;
     }
 
+    /**
+     * Constructor with file path
+     * @param filePath of text data in disk
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Load all lines from file, create file if do not yet exist.
+     * @return all lines in file
+     * @throws IOException if error reading or writing to file path
+     */
     public List<String> load() throws IOException {
         return readAll(true);
     }
 
+    /**
+     * Read all lines from file
+     * @param createIfNotExist automatically create file, do not create if false
+     * @return all lines in file
+     * @throws IOException if error reading or writing to file path
+     */
     public List<String> readAll(boolean createIfNotExist) throws IOException{
         ArrayList<String> arrFile = new ArrayList<String>();
         File f = new File(filePath);
@@ -47,6 +69,11 @@ public class Storage {
         return arrFile;
     }
 
+    /**
+     * Write list of {@link Savable} objects to file path, existing file will be overwritten.
+     * @param savableList list of savable objects
+     * @throws IOException if error reading or writing to file path
+     */
     public void writeAll(List<Savable> savableList) throws IOException {
         int i = 0;
         for (Savable s: savableList) {

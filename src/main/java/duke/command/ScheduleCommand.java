@@ -13,22 +13,48 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ScheduleCommand extends Command{
+/**
+ * Command to display {@link Task} according to {@link LocalDate} provided
+ * @see duke.command.Command
+ */
+public class ScheduleCommand extends Command {
 
+    /**
+     * Constructor for instantiating new ScheduleCommand
+     * @param args of raw user command for further processing in downstream classes
+     */
     public ScheduleCommand(String[] args) {
         super(args);
     }
 
+    /**
+     * Getter for Command Type enum
+     * @return CommandType
+     * @see  CommandType
+     */
     @Override
     public CommandType getType() {
         return CommandType.FIND;
     }
 
+    /**
+     * Getter for exit behavior to be used by calling application
+     * @return exit status, always false
+     */
     @Override
     public boolean isExit() {
         return false;
     }
 
+    /**
+     * Execute ScheduleCommand to display {@link Task} inside {@link TaskManager} with string date from args.
+     * Date string is converted into {@link LocalDate} internally.
+     * @param taskManager
+     * @param ui
+     * @param storage
+     * @return boolean
+     * @throws DukeException if date format is wrong
+     */
     @Override
     public boolean execute(TaskManager taskManager, Ui ui, Storage storage) throws DukeException {
 

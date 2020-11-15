@@ -10,22 +10,47 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Command to delete {@link Task} from {@link TaskManager}
+ * @see duke.command.Command
+ */
 public class DeleteCommand extends Command{
 
+    /**
+     * Constructor for instantiating new DeleteCommand
+     * @param args of raw user command for further processing in downstream classes
+     */
     public DeleteCommand(String[] args) {
         super(args);
     }
 
+    /**
+     * Getter for Command Type enum
+     * @return CommandType
+     * @see  CommandType
+     */
     @Override
     public CommandType getType() {
         return CommandType.DELETE;
     }
 
+    /**
+     * Getter for exit behavior to be used by calling application
+     * @return exit status, always false
+     */
     @Override
     public boolean isExit() {
         return false;
     }
 
+    /**
+     * Execute DeleteCommand with using args task number in {@link TaskManager}
+     * @param taskManager
+     * @param ui
+     * @param storage
+     * @return boolean
+     * @throws DukeException if error writing to disk
+     */
     @Override
     public boolean execute(TaskManager taskManager, Ui ui, Storage storage) throws DukeException {
         assert ui != null : "Command ui cannot be null";

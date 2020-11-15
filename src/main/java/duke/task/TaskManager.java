@@ -7,22 +7,42 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TaskManager for managing all tasks for Duke
+ */
 public class TaskManager {
 
     private List<Task> tasks;
 
+    /**
+     * Default Constructor to initialise task list
+     */
     public TaskManager() {
         this.tasks = new ArrayList<Task>();
     }
 
+    /**
+     * Getter for task list
+     * @return list of tasks
+     */
     public List<Task> getTasks() {
         return tasks;
     }
 
+    /**
+     * Setter for task list
+     * @param tasks as list
+     */
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
 
+    /**
+     * Setter for task list from list of raw char separated task data
+     * @param rawList of char separated task data
+     * @param separator character
+     * @throws DukeException if raw data format is wrong
+     */
     public void setTasksFromRaw(List<String> rawList, String separator) throws DukeException {
         assert rawList != null: "List of raw tasks cannot be null";
         assert separator != null: "Separator for splitting raw tasks cannot be null";
@@ -41,29 +61,33 @@ public class TaskManager {
 
             Task newTask = null;
             switch (type) {
-                case DEADLINE:
-                    newTask = new Deadline();
-                    newTask.fromSavableString(raw);
-                    break;
-                case EVENT:
-                    newTask = new Event();
-                    newTask.fromSavableString(raw);
-                    break;
-                case TODO:
-                    newTask = new Todo();
-                    newTask.fromSavableString(raw);
-                    break;
-                case DEFAULT:
-                    newTask = new Task();
-                    newTask.fromSavableString(raw);
+            case DEADLINE:
+                newTask = new Deadline();
+                newTask.fromSavableString(raw);
+                break;
+            case EVENT:
+                newTask = new Event();
+                newTask.fromSavableString(raw);
+                break;
+            case TODO:
+                newTask = new Todo();
+                newTask.fromSavableString(raw);
+                break;
+            case DEFAULT:
+                newTask = new Task();
+                newTask.fromSavableString(raw);
             }
             this.add(newTask);
         }
     }
 
+    /**
+     * Delete method for tasks by task number, supports mass delete operation
+     * @param args from delete command containing task numbers
+     * @return deleted tasks
+     * @throws DukeException if task(s) not found
+     */
     public List<Task> delete(String[] args) throws DukeException {
-        //System.out.println("    ____________________________________________________________");
-        //System.out.println("    Song la! Lim peh help you remove this task(s):");
 
         ArrayList<Task> tasksToRemove = new ArrayList<Task>();
         ArrayList<Integer> errorIndices = new ArrayList<Integer>();
@@ -85,28 +109,24 @@ public class TaskManager {
 
         }
 
-        // Print deleted task
-        //for (Task t: tasksToRemove) {
-        //    System.out.printf("       %s\n", t.toString());
-        //}
-
         // Delete all tasks in collection
         tasks.removeAll(tasksToRemove);
-
-        //System.out.printf("    Now you have %d tasks in the list.\n", tasks.size());
 
         if (errorIndices.size() > 0) { // raise exception for wrong index
             throw new DukeException(String.format("Err... cannot find these task(s) leh - %s", errorIndices.toString()),
                     DukeException.DukeError.TASK_NOT_FOUND);
         }
 
-        //System.out.println("    ____________________________________________________________");
         return tasksToRemove;
     }
 
+    /**
+     * Done method for tasks by task number, supports mass done operation
+     * @param args from done command containing task numbers
+     * @return tasks marked as done
+     */
     public List<Task> done(String[] args) {
-        //System.out.println("    ____________________________________________________________");
-        //System.out.println("    Power la! I've marked this task(s) as done:");
+
         ArrayList<Task> listDoneTasks = new ArrayList<Task>();
 
         for (int i = 1; i < args.length; i++) { // Skip first: command
@@ -120,8 +140,6 @@ public class TaskManager {
 
                     t.markAsDone();
 
-                    // Print done task
-                    //System.out.printf("       %s\n", t.toString());
                     listDoneTasks.add(t);
                 }
 
@@ -130,32 +148,23 @@ public class TaskManager {
             }
 
         }
-        //System.out.println("    ____________________________________________________________");
+
         return listDoneTasks;
     }
 
-    public void add(Task t) throws DukeException {
-        //boolean ok = true;
-        //nt intCount = tasks.size();
-        //System.out.println("    ____________________________________________________________");
-        //System.out.println("    Got it. I've added this task:");
-        //if (intCount < MAX_TASKS) {
-        //tasks[countTasks++] = t;
-        tasks.add(t);
-        //intCount = tasks.size();
-        //countTasks++;
-        //System.out.printf("      %s\n", t);
-        //} else {
-        //    ok = false;
-        //}
-        //System.out.printf("    Now you have %d tasks in the list.\n", intCount);
-        //System.out.println("    ____________________________________________________________");
-
-        //if (!ok) {
-        //    throw new DukeException("Peiseh, my task list is full!", DukeException.DukeError.MEMORY_FULL);
-        //}
+    /**
+     * Adds a task to task list
+     * @param task to be added
+     */
+    public void add(Task task) {
+        tasks.add(task);
     }
 
+    /**
+     * Find tasks by matching keyword string. Case insensitive.
+     * @param keyword string
+     * @return list of tasks found
+     */
     public List<Task> findTasks(String keyword) {
         ArrayList<Task> foundTasks = new ArrayList<Task>();
         for (Task t: this.tasks) {
@@ -166,6 +175,11 @@ public class TaskManager {
         return foundTasks;
     }
 
+    /**
+     * Find tasks by {@link LocalDate}. Tasks must implement {@link LocalDate} interface.
+     * @param date
+     * @return list of Task as {@link LocalDate}
+     */
     public List<DatedTask> findTasks(LocalDate date) {
         ArrayList<DatedTask> foundTasks = new ArrayList<DatedTask>();
         for (Task t: this.tasks) {
@@ -173,16 +187,16 @@ public class TaskManager {
             LocalDate taskDate;
 
             switch (t.getType()) {
-                case DEADLINE:
-                    Deadline deadline = (Deadline) t;
-                    taskDate = deadline.getBy().toLocalDate();
-                    break;
-                case EVENT:
-                    Event event = (Event) t;
-                    taskDate = event.getAt().toLocalDate();
-                    break;
-                default:
-                    continue;
+            case DEADLINE:
+                Deadline deadline = (Deadline) t;
+                taskDate = deadline.getBy().toLocalDate();
+                break;
+            case EVENT:
+                Event event = (Event) t;
+                taskDate = event.getAt().toLocalDate();
+                break;
+            default:
+                continue;
             }
 
             if (date.isEqual(taskDate)) {
@@ -192,17 +206,20 @@ public class TaskManager {
         return foundTasks;
     }
 
+    /**
+     * Get list of tasks as string for display
+     * @return list of tasks as friendly string
+     */
     public List<String> getPrintableTasks() {
-        //System.out.println("    ____________________________________________________________");
+
         ArrayList<String> listString = new ArrayList<String>();
-        //System.out.println("    Here are the tasks in your list:");
+
         int intCount = tasks.size();
         for(int i = 0; i < intCount; i++) {
             Task t = tasks.get(i);
-            //System.out.printf("     %d.%s\n", i+1, t);
             listString.add(String.format("%d.%s", i + 1, t));
         }
-        //System.out.println("    ____________________________________________________________");
+
         return listString;
     }
 

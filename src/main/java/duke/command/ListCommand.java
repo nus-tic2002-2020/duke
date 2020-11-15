@@ -7,18 +7,38 @@ import duke.task.TaskManager;
 
 import java.util.List;
 
+/**
+ * Command to list {@link Task} in {@link TaskManager}
+ * @see duke.command.Command
+ */
 public class ListCommand extends Command{
 
+    /**
+     * Getter for Command Type enum
+     * @return CommandType
+     * @see  CommandType
+     */
     @Override
     public CommandType getType() {
         return CommandType.LIST;
     }
 
+    /**
+     * Getter for exit behavior to be used by calling application
+     * @return exit status, always false
+     */
     @Override
     public boolean isExit() {
         return false;
     }
 
+    /**
+     * Execute ListCommand on {@link TaskManager}
+     * @param taskManager
+     * @param ui
+     * @param storage
+     * @return boolean
+     */
     @Override
     public boolean execute(TaskManager taskManager, Ui ui, Storage storage) {
 

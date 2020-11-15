@@ -7,22 +7,47 @@ import duke.task.TaskManager;
 
 import java.util.List;
 
+/**
+ * Command to find {@link Task} using keyword and display to user
+ * @see duke.command.Command
+ */
 public class FindCommand extends Command{
 
+    /**
+     * Constructor for instantiating new FindCommand
+     * @param args of raw user command for further processing in downstream classes
+     */
     public FindCommand(String[] args) {
         super(args);
     }
 
+    /**
+     * Getter for Command Type enum
+     * @return CommandType
+     * @see  CommandType
+     */
     @Override
     public CommandType getType() {
         return CommandType.FIND;
     }
 
+    /**
+     * Getter for exit behavior to be used by calling application
+     * @return exit status, always false
+     */
     @Override
     public boolean isExit() {
         return false;
     }
 
+    /**
+     * Execute FindCommand for matching {@link Task} using args keyword
+     * @param taskManager
+     * @param ui
+     * @param storage
+     * @return boolean
+     * @throws DukeException if find command missing keyword argument
+     */
     @Override
     public boolean execute(TaskManager taskManager, Ui ui, Storage storage) throws DukeException {
 
