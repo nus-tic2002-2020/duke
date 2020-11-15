@@ -8,6 +8,9 @@ public class Ui {
 
     public Ui() {}
 
+    /**
+     * Welcome message to show to the user when starting up Duke
+     */
     public static void showWelcome(){
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"

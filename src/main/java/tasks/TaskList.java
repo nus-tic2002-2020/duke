@@ -8,6 +8,10 @@ public class TaskList {
     public static ArrayList<Task> tasks = new ArrayList<>();
     private static final String[] keywords = {"list", "bye", "done", "deadline", "event", "todo", "delete", "undone"};
 
+    /**
+     * Add different kind of tasks such as Deadline, Event, Todo
+     * @param echo String value from user input
+     */
     public static void addTask(String echo) {
         String description = "";
         String by = "";
@@ -66,6 +70,10 @@ public class TaskList {
         return tasks.size();
     }
 
+    /**
+     * Check for errors from user input and throws exception if found
+     * @param echo String value from user input
+     */
     public static void checkForError(String echo) throws DukeException {
         boolean flag = true;
         String[] splitMessage = echo.split(" ");
