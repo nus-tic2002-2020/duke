@@ -8,7 +8,6 @@ import javafx.application.Application;
  * Command Line mode usage: -c
  */
 public class Launcher {
-
     /**
      * Main entry point for Duke application
      * @param args from Java options

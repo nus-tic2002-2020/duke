@@ -86,7 +86,6 @@ public class Ui {
 
     /**
      * Helper method to print and return horizontal line
-     * @return command line horizontal line string
      */
     public void echoLine() {
         System.out.println("    ____________________________________________________________");

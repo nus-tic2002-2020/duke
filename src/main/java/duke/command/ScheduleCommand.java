@@ -63,6 +63,11 @@ public class ScheduleCommand extends Command {
         assert storage != null : "Command storage cannot be null";
         assert taskManager != null : "Command task cannot be null";
 
+        if (super.args == null || super.args.length < 2) { // at least 1 command argument, else error
+            throw new DukeException("Eh, where your date ah?",
+                    DukeException.DukeError.MISSING_ARGUMENT);
+        }
+
         String keyword = String.valueOf(super.args[1]);
         LocalDate localDate;
         try {
