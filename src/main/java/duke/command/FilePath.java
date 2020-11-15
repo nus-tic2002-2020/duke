@@ -58,7 +58,9 @@ public class FilePath {
         }
         else {
             System.out.println("Please view the list of the files in the current directory\n");
-            for (String l : input) { System.out.println(l);}
+            for (String l : input) {
+                System.out.println(l);
+            }
 
             System.out.println("\nPlease type the name of the file including the file extension. E.g. duke.txt\n");
 
@@ -72,7 +74,9 @@ public class FilePath {
                     System.out.println("Thank you for your response");
                 }
             }
-            if (!(found)) {throw new DukeException("Error, please entire a filename that exists within this directory");}
+            if (!(found)) {
+                throw new DukeException("Error, please entire a filename that exists within this directory");
+            }
         }
     }
 
