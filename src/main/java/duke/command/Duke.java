@@ -40,9 +40,9 @@ public class Duke extends Application {
     private static final String FILE_PATH = "data/tasks.ssv";
     private static final String DATA_SEPARATOR = "|";
 
-    private Storage storageTasks;
-    private TaskManager taskManager;
-    private Ui ui;
+    protected Storage storageTasks;
+    protected TaskManager taskManager;
+    protected Ui ui;
 
     public Duke() {
         this(FILE_PATH);
@@ -157,7 +157,7 @@ public class Duke extends Application {
         AnchorPane.setLeftAnchor(userInput , 1.0);
         AnchorPane.setBottomAnchor(userInput, 1.0);
 
-        //Step 3. Add functionality to handle user input.
+        // Step 3. Add functionality to handle user input.
         sendButton.setOnMouseClicked((event) -> {
             handleUserInput();
         });
@@ -166,8 +166,14 @@ public class Duke extends Application {
             handleUserInput();
         });
 
-        //Scroll down to the end every time dialogContainer's height changes.
+        // Scroll down to the end every time dialogContainer's height changes.
         dialogContainer.heightProperty().addListener((observable) -> scrollPane.setVvalue(1.0));
+
+        // Show welcome message
+        Label dukeWelcome = getDialogLabel(ui.welcome() + "\n" + ui.greet());
+        dialogContainer.getChildren().addAll(
+                DialogBox.getDukeDialog(dukeWelcome, new ImageView(duke))
+        );
 
     }
 
@@ -214,8 +220,9 @@ public class Duke extends Application {
     }
 
     /**
-     * You should have your own function to generate a response to user input.
-     * Replace this stub with your completed method.
+     * Process user input from GUI
+     * @param input
+     * @return
      */
     private String getResponse(String input) {
         //return "Duke heard: " + input;
