@@ -3,6 +3,7 @@
     <option name="MAIN_CLASS_NAME" value="duke.io.Launcher" />
     <module name="duke.main" />
     <option name="PROGRAM_PARAMETERS" value="-c" />
+    <option name="VM_PARAMETERS" value="-Dfile.encoding=UTF-8" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="duke.command.*" />
