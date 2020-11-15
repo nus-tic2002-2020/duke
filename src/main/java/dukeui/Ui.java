@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
-
     protected String[] userInput;
     protected ArrayList<String> validInput;
 

@@ -1,6 +1,0 @@
-1[T][✘] clean kitchen
-2[D][✓] pay rent (by: 11 Nov 2020, 11:00AM)
-3[E][✘] meet Jason (takes: 12 Dec 2020, 03:00PM)
-4[D][✓] meet Kevin (by: 09 Sep 2020, 01:00PM)
-5[E][✘] submit report (takes: 2h)
-6[E][✘] meet Jason (takes: 12/12/2020 1500)
