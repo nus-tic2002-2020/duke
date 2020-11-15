@@ -1,4 +1,3 @@
-deadline return book /by 2020-01-01 1300
-event tgterer /by 2019-04-04 0800
-deadline return book2 /by 2020-01-01 1400
-deadline return book2 /by 2020-01-01 1401
+event dance part /by 2019-04-04 0800
+deadline return second book /by 2020-01-01 1800
+

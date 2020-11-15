@@ -22,6 +22,12 @@ public class Deadline extends Task {
 	public LocalDate getDate() {
 		return this.date;
 	}
+
+	@Override
+	public int getTime() {
+		return this.time;
+	}
+	
 	@Override
 	public String printTask() {
 		return "[D]" + "[" + getIcon() + "] " + getTitle() + " (by: "

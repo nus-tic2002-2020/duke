@@ -276,7 +276,7 @@ public class Chat extends Duke {
 		for (int a = 0; a < count; a++) {
 			Task t = task.get(a);
 			if (t.getTime() == TIME_NULL || t.getDate() == null) {
-				return true;
+				continue;
 				}
 			if (t.getDate().isEqual(date) && t.getTime() == time) {
 				GUI.guiOutputWarning("New task was not added because it corrupt with " + t.printTask());

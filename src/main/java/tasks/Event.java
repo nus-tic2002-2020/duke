@@ -24,6 +24,11 @@ public class Event extends Task {
 	}
 
 	@Override
+	public int getTime() {
+		return this.time;
+	}
+	
+	@Override
 	public String printTask() {
 		return "[E]" + "[" + getIcon() + "] " + getTitle() + " (at: "
 				+ date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy")) + " " + time + ")";
