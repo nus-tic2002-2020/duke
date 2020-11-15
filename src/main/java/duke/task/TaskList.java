@@ -3,7 +3,6 @@ package duke.task;
 import duke.command.Undo;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -129,11 +128,11 @@ public class TaskList {
     /**
      * This method is to add a Deadline task.
      * @param line Provides the description of the task.
-     * @param localDateTime Provides the scheduled Date / Time of the completion of the task.
+     * @param localDate Provides the scheduled Date of the completion of the task.
      * @throws DukeException Throws various exceptions if the user-input is invalid.
      */
 
-    public static void Deadline(String line, LocalDateTime localDateTime) throws DukeException {
+    public static void Deadline(String line, LocalDate localDate) throws DukeException {
         if (line.trim().length() < 9) throw new DukeException("Error: Description of task cannot be empty.\n");
         if (!line.contains("/")) throw new DukeException("Error: Please specify time.\n");
         int m = line.toLowerCase().indexOf("deadline");
@@ -143,18 +142,18 @@ public class TaskList {
             if (l.description.equals(description))
                 throw new DukeException("Error: Task has already been added previously\n");
         }
-        list.add(new Deadline(description, localDateTime));
+        list.add(new Deadline(description, localDate));
         UpdateStatus();
     }
 
     /**
      * This method is to add an Event task.
      * @param line Provides the description of the task.
-     * @param localDateTime Provides the scheduled Date / Time of the completion of the task.
+     * @param localDate Provides the scheduled Date of the completion of the task.
      * @throws DukeException Throws various exceptions if the user-input is invalid.
      */
 
-    public static void Event(String line, LocalDateTime localDateTime) throws DukeException {
+    public static void Event(String line, LocalDate localDate) throws DukeException {
         if (line.trim().length() < 6) throw new DukeException("Error: Description of task cannot be empty.\n");
         if (!line.contains("/")) throw new DukeException("Error: Please specify time.\n");
         int m = line.toLowerCase().indexOf("event");
@@ -164,7 +163,7 @@ public class TaskList {
             if (l.description.equals(description))
                 throw new DukeException("Error: Task has already been added previously\n");
         }
-        list.add(new Event(description, localDateTime));
+        list.add(new Event(description, localDate));
         UpdateStatus();
     }
 
@@ -179,7 +178,7 @@ public class TaskList {
         System.out.println("Here are the tasks that fall within this date\n");
         for (Task l : list) {
             if (l.toString().contains("[D]")) {
-                LocalDate target = (((Deadline) l).localDateTime).toLocalDate();
+                LocalDate target = (((Deadline) l).localDate);
                 if (target.equals(localDate)) {
                     System.out.println(l);
                     match = true;
@@ -187,7 +186,7 @@ public class TaskList {
             }
             if (l.toString().contains("[E]")) {
                 assert l instanceof Event;
-                LocalDate target = (((Event) l).localDateTime).toLocalDate();
+                LocalDate target = (((Event) l).localDate);
                 if (target.equals(localDate)) {
                     System.out.println(l);
                     match = true;

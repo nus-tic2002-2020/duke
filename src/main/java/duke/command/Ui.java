@@ -45,7 +45,7 @@ public class Ui {
                 "Event        'Y' /at 'Z'\n" +
                 "Deadline     'Y' /by 'Z'\n" +
                 "Occurrence       /on 'Z'"   +  "    //Specify which events / deadlines occur on a particular date\n\n" +
-                "Where 'X' refers to the task number, 'Y' refers to the task description and 'Z' refers to the date.\n");
+                "Where 'X' refers to the task number, 'Y' refers to the task description and 'Z' refers to the date using the format YYYY-MM-DD.\n");
         while (true) {
             try {
                 command();

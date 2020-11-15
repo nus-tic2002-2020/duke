@@ -29,7 +29,6 @@ public class Duke {
      */
 
     public static void main(String[] args) throws DukeException, IOException {
-        DateTimeList.main(); //Initialize DateTimeFormats
         Ui.main(); //Start interaction with User
     }
 }

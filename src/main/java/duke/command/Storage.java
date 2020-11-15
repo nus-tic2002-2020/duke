@@ -4,6 +4,7 @@ import duke.task.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -41,14 +42,14 @@ public class Storage {
                 int n = current.indexOf(")");
 
                 String description = current.substring(7,m-1);
-                LocalDateTime localDateTime = Parser.parse(current.substring(0,n));
+                LocalDate localDate = Parser.parse(current.substring(0,n));
 
-                assert localDateTime != null;
+                assert localDate != null;
                 if (current.contains("[D]")) {
-                    list.add(new Deadline(description, localDateTime));
+                    list.add(new Deadline(description, localDate));
                 }
                 else {
-                    list.add(new Event(description, localDateTime));
+                    list.add(new Event(description, localDate));
                 }
                 if (current.contains("\u2713")) list.get(count).setStatus(true);
             }
