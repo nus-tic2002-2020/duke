@@ -1,7 +1,6 @@
 package duke.task;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 /**
  * This program is a child of the Task program. It helps add an additional classification to the Task program.
@@ -9,9 +8,7 @@ import java.time.format.DateTimeFormatter;
  */
 
 public class Deadline extends Task{
-    protected String formattedDateTime;
     protected LocalDate localDate;
-    protected DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd y");
 
     /**
      * This method initialized an deadline task that takes in 2 parameters and creates the task.
@@ -22,7 +19,6 @@ public class Deadline extends Task{
     public Deadline(String description, LocalDate localDate) {
         super(description);
         this.localDate = localDate;
-        this.formattedDateTime = localDate.format(formatter);
     }
 
     /**
@@ -32,6 +28,6 @@ public class Deadline extends Task{
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + formattedDateTime + ")";
+        return "[D]" + super.toString() + " (by: " + localDate + ")";
     }
 }
