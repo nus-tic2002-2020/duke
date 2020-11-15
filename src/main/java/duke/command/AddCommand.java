@@ -14,7 +14,8 @@ public class AddCommand extends Command{
 
     protected Task task;
 
-    public AddCommand(Task task) {
+    public AddCommand(Task task, String[] args) {
+        super(args);
         this.task = task;
     }
 
@@ -30,6 +31,11 @@ public class AddCommand extends Command{
 
     @Override
     public boolean execute(TaskManager taskManager, Ui ui, Storage storage) throws DukeException {
+        assert ui != null : "Command ui cannot be null";
+        assert outputs != null : "Command outputs cannot be null";
+        assert storage != null : "Command storage cannot be null";
+        assert taskManager != null : "Command task cannot be null";
+        assert task != null : "Command task cannot be null";
 
         ui.echo("Got it. I've added this task:");
         outputs.add("Got it. I've added this task:");

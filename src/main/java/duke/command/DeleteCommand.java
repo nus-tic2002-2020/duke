@@ -28,6 +28,11 @@ public class DeleteCommand extends Command{
 
     @Override
     public boolean execute(TaskManager taskManager, Ui ui, Storage storage) throws DukeException {
+        assert ui != null : "Command ui cannot be null";
+        assert outputs != null : "Command outputs cannot be null";
+        assert storage != null : "Command storage cannot be null";
+        assert taskManager != null : "Command task cannot be null";
+
         List<Task> removedTasks = taskManager.delete(super.args);
 
         List<Task> tasks = taskManager.getTasks();

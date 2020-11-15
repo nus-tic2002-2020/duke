@@ -24,6 +24,9 @@ public class TaskManager {
     }
 
     public void setTasksFromRaw(List<String> rawList, String separator) throws DukeException {
+        assert rawList != null: "List of raw tasks cannot be null";
+        assert separator != null: "Separator for splitting raw tasks cannot be null";
+
         for (String raw: rawList) {
             String[] arrSplit = raw.split(separator);
 

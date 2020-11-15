@@ -58,12 +58,12 @@ public abstract class Command {
                                 DukeException.DukeError.MISSING_ARGUMENT);
                     }
                     //addTask(new Todo(text));
-                    command = new AddCommand(new Todo(text));
+                    command = new AddCommand(new Todo(text), args);
                     break;
                 case "deadline":
                     text = readInputParameter(args, "/by");
                     if (text.isBlank()) {
-                        throw new DukeException("The description of a todo cannot be empty.",
+                        throw new DukeException("The description of a deadline cannot be empty.",
                                 DukeException.DukeError.MISSING_ARGUMENT);
                     }
                     String by = readSlashParameter(args, "/by", true);
@@ -72,7 +72,7 @@ public abstract class Command {
                                 DukeException.DukeError.MISSING_ARGUMENT);
                     }
                     //addTask(new Deadline(text, by));
-                    command = new AddCommand(new Deadline(text, by));
+                    command = new AddCommand(new Deadline(text, by), args);
                     break;
                 case "event":
                     text = readInputParameter(args, "/at");
@@ -89,7 +89,7 @@ public abstract class Command {
                     //addTask(new Event(text, at));
                     Event event = new Event(text);
                     event.setDuration(at, end);
-                    command = new AddCommand(event);
+                    command = new AddCommand(event, args);
                     break;
                 case "find":
                     command = new FindCommand(args);

@@ -2,6 +2,7 @@ package duke.command;
 
 import duke.io.Storage;
 import duke.io.Ui;
+import duke.task.Task;
 import duke.task.TaskManager;
 
 import java.util.List;
@@ -20,6 +21,11 @@ public class ListCommand extends Command{
 
     @Override
     public boolean execute(TaskManager taskManager, Ui ui, Storage storage) {
+
+        assert ui != null : "Command ui cannot be null";
+        assert outputs != null : "Command outputs cannot be null";
+        assert taskManager != null : "Command taskManager cannot be null";
+
         List<String> tasks = taskManager.getPrintableTasks();
 
         ui.echo("Here are the tasks in your list:");

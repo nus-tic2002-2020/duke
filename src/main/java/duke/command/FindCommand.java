@@ -26,6 +26,11 @@ public class FindCommand extends Command{
     @Override
     public boolean execute(TaskManager taskManager, Ui ui, Storage storage) throws DukeException {
 
+        assert ui != null : "Command ui cannot be null";
+        assert outputs != null : "Command outputs cannot be null";
+        assert storage != null : "Command storage cannot be null";
+        assert taskManager != null : "Command task cannot be null";
+
         if (super.args == null || super.args.length < 2) { // at least 1 command argument, else error
             throw new DukeException("Must provide keyword for find command leh!",
                     DukeException.DukeError.MISSING_ARGUMENT);
