@@ -1,10 +1,53 @@
+import dukecommand.Command;
+import dukeexception.DukeException;
+import dukefile.Storage;
+import dukelist.TaskList;
+import dukeui.Ui;
+
 public class Duke {
+
+    private Storage storage;
+    private Ui ui;
+    private TaskList tasks;
+    private boolean exit;
+
+    /**
+     * Constructor of <code>Duke</code> class, initialize task list, user ui, user list file path and value of exit.
+     *
+     * @param filePath the file path to save the task list file
+     */
+    public Duke(String filePath) {
+
+        try {
+            ui = new Ui();
+            storage = new Storage(filePath);
+            tasks = new TaskList();
+            exit = false;
+        } catch (DukeException e) {
+            ui.showError(e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
+        new Duke("data/tasks.txt").run();
+    }
+
+    /**
+     * Method to start the Duke program.
+     */
+    public void run() {
+        ui.welcomeMessage();
+
+        while (!exit) {
+            try {
+                String[] input = ui.readCommand();
+                Command command = new Command(input);
+                command.check(tasks);
+                command.execute(tasks, ui, storage);
+                exit = command.isExit();
+            } catch (DukeException e) {
+                ui.showError(e.getMessage());
+            }
+        }
     }
 }
