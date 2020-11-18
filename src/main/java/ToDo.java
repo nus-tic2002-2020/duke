@@ -1,9 +1,16 @@
 public class ToDo extends Task {
 
     protected String description;
+    private char category;
 
     public ToDo(String description) {
         super(description);
+        this.category = 'T';
+
+    }
+
+    public String getTime(){
+        return null;
     }
     /*
         System.out.println("Got it. I've added this task: ");
@@ -17,6 +24,9 @@ public class ToDo extends Task {
             }
         }
     }*/
+    public char getD(){
+        return this.category;
+    }
 
     @Override
     public String toString(){
