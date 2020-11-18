@@ -40,7 +40,7 @@ public class Event extends Task {
      */
     public String getTime(){
 
-        return this.at;
+        return date.getDayOfMonth() + "/" +  date.getMonthValue() + "/" + date.getYear();
     }
 
     /**
