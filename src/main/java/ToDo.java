@@ -16,10 +16,10 @@ public class ToDo extends Task {
     }
 
     /**
-     * constructor of getTime which is null for ToDo
+     * constructor of getTime which is blank for ToDo
      */
     public String getTime(){
-        return null;
+        return "";
     }
 
     /**

@@ -1,5 +1,8 @@
 package duke.task;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Deadline extends Task {
 
     /**
@@ -7,6 +10,7 @@ public class Deadline extends Task {
      */
     protected String by;
     private char category;
+    LocalDate date;
 
     /**
      * Constructor of deadline class
@@ -15,17 +19,22 @@ public class Deadline extends Task {
      */
     public Deadline(String description, String by) {
         super(description);
-       String[] time = by.split(" ",2);
-       this.by = time[1];
+       String[] time = by.split(" ",2); //split to at and after
+       //this.by = time[1];
         this.category = 'D';
+        if (time[1].contains(" ")){
+            time[1]=time[1].substring(0,time[1].indexOf(" "));
+        }
+        String[] split_date = time[1].split("/",3); //split at the dates
+        date = LocalDate.of(Integer.parseInt(split_date[2]),Integer.parseInt(split_date[1]),Integer.parseInt(split_date[0]));
+       // System.out.println(date.format(DateTimeFormatter.ofPattern("MMM d yyyy")));
     }
 
     /**
      * Getter of deadline due
      */
     public  String getTime(){
-
-        return this.by;
+        return date.getDayOfMonth() + "/" +  date.getMonthValue() + "/" + date.getYear();
     }
 
     /**
@@ -41,7 +50,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() + " (by: " + date.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
     }
 }
 
