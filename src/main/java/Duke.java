@@ -13,6 +13,13 @@ public class Duke {
     private TaskList tasks;
     private Storage storage;
 
+    /**
+    *constructor of Duke class
+    *
+    * @param location of file
+    *
+    */
+
     public Duke(String filepath) {
         ui = new UI();
         storage = new Storage(filepath);
@@ -21,6 +28,9 @@ public class Duke {
         storage.LoadFile(tasks, ui);
     }
 
+    /**
+     * welcome message/launch message
+     */
     public void welcome(){
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -31,13 +41,20 @@ public class Duke {
         System.out.println("Hello! I'm Duke\nWhat can I do for you?");
     }
 
+    /**
+     * Initialize Duke
+     */
     public void run() {
         while (true) {
             ui.read(tasks, storage);
         }
     }
 
+    /**
+     * First line of code, taking in .txt file to run
+     */
     public static void main(String[] args) {
+
         new Duke("duke.txt").run();
     }
 }

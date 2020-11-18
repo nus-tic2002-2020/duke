@@ -15,10 +15,20 @@ public class Storage {
 
     private String location;
 
+    /**
+     *constructor of Storage class
+     */
     public Storage(String path){
         this.location = path;
     }
 
+    /**
+     *Load existing saved .txt file for Duke and add to List
+     *
+     * @param list of TaskList
+     * @param UI for Duke
+     *
+     */
     public void LoadFile (TaskList new_tasks, UI ui){
         File f = new File(location);
         try {
@@ -44,6 +54,12 @@ public class Storage {
         }
     }
 
+    /**
+     * save TaskList into .txt file
+     *
+     * @param List of task in ArrayList
+     *
+     */
     public  void save (TaskList current_tasks){
         File f = new File(location);
         if (f.exists()) {

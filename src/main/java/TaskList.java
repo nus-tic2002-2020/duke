@@ -4,18 +4,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TaskList {
-
+    /**variables of TaskList */
     public ArrayList<Task> List;
     public static int count = 0;
 
+    /**constructor of TaskList*/
     public TaskList() {
         this.List = new ArrayList<Task>();
     }
 
+    /**getter of count in TaskList*/
     public int getCount() {
         return this.count;
     }
-
+    /**
+     * Prints out items in List*/
     public void printList() {
         if (List.size() == 0) {
             System.out.println("List is empty");
@@ -27,13 +30,19 @@ public class TaskList {
             }
         }
     }
-
+    /**
+     * Writes items in List in certain format
+     * @return the format specified
+     */
     public String writetoList(int index){
         String status = List.get(index).getStatus()? "1" : "0";
         String linebyline = List.get(index).getD() + " | " + status + " | " + List.get(index).getDescription() + " | " + List.get(index).getTime();
         return linebyline;
     }
 
+    /**
+     * Checks on which method to call upon checking the first keyword of input
+     */
     public void AddTask(String input) {
         String[] num = input.split(" ",2);
             String command = num[0];
@@ -67,7 +76,9 @@ public class TaskList {
         System.out.println("Now you have " + List.size() + " tasks in the list.");
     }
 
-
+    /**
+     * Tasks are marked as done
+     */
     public void Taskdone(String input) {
         System.out.println("Nice! I've marked this task as done: ");
         String[] num = input.split(" ");
@@ -81,6 +92,9 @@ public class TaskList {
         }
     }
 
+    /**
+     * Tasks are deleted from the List
+     */
     public void deleteTask(String[] num) {
         System.out.println("Noted. I've removed this task: ");
         for (int i = 1; i < num.length; i++) { //skip 0 as text, looking for the number
