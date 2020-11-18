@@ -1,20 +1,25 @@
 package duke.task;
-
+import duke.ui.*;
+import duke.task.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 public class TaskList {
     /**variables of TaskList */
     public ArrayList<Task> List;
+    public ArrayList<Task> Tentative_List;
     public static int count = 0;
 
     /**constructor of TaskList*/
     public TaskList() {
+
         this.List = new ArrayList<Task>();
     }
 
     /**getter of count in TaskList*/
     public int getCount() {
+
         return this.count;
     }
     /**
@@ -43,37 +48,57 @@ public class TaskList {
     /**
      * Checks on which method to call upon checking the first keyword of input
      */
-    public void AddTask(String input) {
+    public boolean AddTask(String input) {
         String[] num = input.split(" ",2);
             String command = num[0];
             String[] split_t;
+            if (TaskConfirmed(num[1])){
+                return false;
+            }
             System.out.println("Got it. I've added this task: : ");
             switch (command) {
-                case "done":
+            case "done":
                     Taskdone(input);
                     break;
-                case "todo":
+            case "todo":
                     List.add(new ToDo(num[1]));
                     break;
-                case "deadline":
+            case "deadline":
                     split_t = num[1].split("/", 2);
                     List.add(new Deadline(split_t[0].trim(), split_t[1].trim()));
                     break;
-                case "event":
+            case "event":
                     split_t = num[1].split("/", 2);
                     List.add(new Event(split_t[0].trim(), split_t[1].trim()));
                     break;
-                case "delete":
+            case "delete":
                     deleteTask(num);
                     break;
-                case "bye":
-                    System.out.print("Bye. Hope to see you again soon!");
+            case "confirm":
+                    TaskConfirmed(num[1]);
                     break;
             }
             count++;
         int a = List.size();
         System.out.println(List.get(count-1));
         System.out.println("Now you have " + List.size() + " tasks in the list.");
+        return true;
+    }
+
+    public boolean TaskConfirmed(String input) {
+        for (int i = 1; i <= List.size(); i++) {
+            // List.get(i - 1).getDescription();
+            Task t = List.get(i - 1);
+            //  String a = Parse
+            if (input.contains(t.getDescription())) {
+                System.out.println("Sorry this is a duplicate, please try again");
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        return false;
     }
 
     /**
@@ -91,6 +116,7 @@ public class TaskList {
             }
         }
     }
+
 
     /**
      * Tasks are deleted from the List

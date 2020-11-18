@@ -5,6 +5,8 @@ import duke.storage.*;
 import duke.command.*;
 
 import java.util.Scanner;
+import java.util.ArrayList;
+
 
 //taking input and giving responses
 public class UI {
@@ -43,29 +45,35 @@ public class UI {
         if (/*num.length > 0 && */!num[0].isBlank()) {
             String command = num[0];
             switch (command) {
-                case "bye":
+            case "bye":
                     store.save(tasks);
                     System.out.println("Bye. Hope to see you again soon!");
                     System.exit(0);
-                case "list":
+            case "list":
                     tasks.printList();
                     break;
-                case "done":
+            case "done":
                     tasks.Taskdone(input);
                     break;
-                case "todo":
+            case "todo":
                     tasks.AddTask(input);
                     break;
-                case "deadline":
+            case "deadline":
                     tasks.AddTask(input);
                     break;
-                case "event":
+            case "event":
                     tasks.AddTask(input);
                     break;
-                case "delete":
+            case "delete":
                     tasks.AddTask(input);
                     break;
-                default:
+                case "confirm":
+                    tasks.TaskConfirmed(input);
+                    break;
+          //  case "tentative":
+             //       tasks.TentativelyAddTask(input);
+            //        break;
+            default:
                     throw new DukeException();
             }
         }

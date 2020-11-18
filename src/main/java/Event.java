@@ -35,6 +35,11 @@ public class Event extends Task {
         return this.category;
     }
 
+    @Override
+    public String getDescription(){
+
+        return this.description;
+    }
     /**
      * Getter of when event is at
      */

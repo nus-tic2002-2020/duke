@@ -11,6 +11,7 @@ public class Deadline extends Task {
     protected String by;
     private char category;
     LocalDate date;
+    private String description;
 
     /**
      * Constructor of deadline class
@@ -20,7 +21,8 @@ public class Deadline extends Task {
     public Deadline(String description, String by) {
         super(description);
        String[] time = by.split(" ",2); //split to at and after
-       //this.by = time[1];
+        this.description = description;
+       this.by = time[1];
         this.category = 'D';
         if (time[1].contains(" ")){
             time[1]=time[1].substring(0,time[1].indexOf(" "));
@@ -30,6 +32,11 @@ public class Deadline extends Task {
        // System.out.println(date.format(DateTimeFormatter.ofPattern("MMM d yyyy")));
     }
 
+    @Override
+    public String getDescription(){
+
+        return this.description;
+    }
     /**
      * Getter of deadline due
      */
@@ -43,6 +50,10 @@ public class Deadline extends Task {
     public char getD(){
 
         return this.category;
+    }
+
+    public  String getby(){
+        return date.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 
     /**

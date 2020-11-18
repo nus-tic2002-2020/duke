@@ -1,12 +1,14 @@
+import duke.task.*;
+import duke.ui.*;
+import duke.storage.*;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
-import duke.task.*;
-import duke.ui.*;
-import duke.storage.*;
+
 
 public class Duke {
     private UI ui;
