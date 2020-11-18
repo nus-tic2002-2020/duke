@@ -1,3 +1,9 @@
+package duke.ui;
+
+import duke.task.*;
+import duke.storage.*;
+import duke.command.*;
+
 import java.util.Scanner;
 
 //taking input and giving responses
