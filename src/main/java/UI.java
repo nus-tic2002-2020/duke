@@ -67,12 +67,9 @@ public class UI {
             case "delete":
                     tasks.AddTask(input);
                     break;
-                case "confirm":
-                    tasks.TaskConfirmed(input);
+            case "find":
+                    tasks.FindTask(input);
                     break;
-          //  case "tentative":
-             //       tasks.TentativelyAddTask(input);
-            //        break;
             default:
                     throw new DukeException();
             }

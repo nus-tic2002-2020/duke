@@ -3,6 +3,7 @@ import duke.ui.*;
 import duke.task.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class TaskList {
@@ -52,7 +53,7 @@ public class TaskList {
         String[] num = input.split(" ",2);
             String command = num[0];
             String[] split_t;
-            if (TaskConfirmed(num[1])){
+            if (DuplicateTask(num[1])){
                 return false;
             }
             System.out.println("Got it. I've added this task: : ");
@@ -74,8 +75,8 @@ public class TaskList {
             case "delete":
                     deleteTask(num);
                     break;
-            case "confirm":
-                    TaskConfirmed(num[1]);
+            case "find":
+                    FindTask(num[1]);
                     break;
             }
             count++;
@@ -85,7 +86,7 @@ public class TaskList {
         return true;
     }
 
-    public boolean TaskConfirmed(String input) {
+    public boolean DuplicateTask(String input) {
         for (int i = 1; i <= List.size(); i++) {
             // List.get(i - 1).getDescription();
             Task t = List.get(i - 1);
@@ -101,6 +102,25 @@ public class TaskList {
         return false;
     }
 
+    public void FindTask (String input) {
+        String[] remove_find_word = input.split(" ", 2);
+        int findtaskcounter = 0;
+        ArrayList<Task> foundList = new ArrayList<Task>();
+        for (Task t : List) {
+            if (t.getDescription().contains(remove_find_word[1])) {
+                foundList.add(t);
+                findtaskcounter++;
+            }
+        }
+        if (foundList.size() == 0) {
+            System.out.println("Sorry no matching tasks found");
+            return;
+        }
+        System.out.println("Here are the matching tasks in your list:");
+        for (int i = 1; i <= findtaskcounter; i++) {
+            System.out.println(foundList.get(i - 1));
+        }
+    }
     /**
      * Tasks are marked as done
      */
