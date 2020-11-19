@@ -23,6 +23,7 @@ public class UI {
       //  while (flag == 0) {
             String line = in.nextLine();
             input = line.trim();
+            assert(!input.isBlank()): "Input should not be blank";
             try {
                 text(tasks, store, input);
 

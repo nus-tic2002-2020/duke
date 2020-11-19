@@ -26,6 +26,7 @@ public class TaskList {
     /**
      * Prints out items in List*/
     public void printList() {
+        assert (List.size()>=0):"List shouldn't be negative";
         if (List.size() == 0) {
             System.out.println("List is empty");
         } else {
